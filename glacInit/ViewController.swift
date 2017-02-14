@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 
         let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
         let sideView = UIView(frame: CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
-        sideView.backgroundColor = UIColor.blue
+        sideView.backgroundColor = UIColor(hexString: "#424242")
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
@@ -41,12 +41,15 @@ class ViewController: UIViewController {
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
-        let d = UIView(frame: CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 150, height: 150))
+        let d = UIView(frame: CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100))
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = d.frame
-        //blurEffectView.alpha = 0.8
+        blurEffectView.layer.cornerRadius = 50
+        blurEffectView.clipsToBounds = true;
+
+        blurEffectView.alpha = 0.9
 
         blurEffectView.tag = tag
         tag += 1
@@ -58,8 +61,9 @@ class ViewController: UIViewController {
 
     func addBlack(xLoc: CGFloat, yLoc: CGFloat){
 
-        let d = UIView(frame: CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 150, height: 150))
+        let d = UIView(frame: CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100))
         d.backgroundColor = UIColor.black
+        d.layer.cornerRadius = 50
 
         d.tag = tag
         tag += 1
@@ -80,16 +84,22 @@ class ViewController: UIViewController {
         imageView.addGestureRecognizer(tapGestureRecognizer)
 
     }
-    
+
     func addBlurButton(sideView: UIView){
 
         let screenHeight = screenSize.height
         
         blurButton.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight/8, width: 100, height: 100)
-        blurButton.backgroundColor = UIColor.green
+        blurButton.backgroundColor = UIColor(hexString: "#1B5E20")
         blurButton.layer.cornerRadius = blurButton.frame.size.width/2
         blurButton.addTarget(self, action: #selector(blurTap), for: .touchUpInside)
+
+        let label = UILabel(frame: CGRect(x: sideView.frame.size.width/2 - 25, y: screenHeight/8, width: 100, height: 100))
+        label.text = "Blur"
+        label.textColor = UIColor.white
+
         sideView.addSubview(blurButton)
+        sideView.addSubview(label)
     }
 
     func addBlackButton(sideView: UIView){
@@ -97,10 +107,16 @@ class ViewController: UIViewController {
         let screenHeight = screenSize.height
 
         blackButton.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight/3, width: 100, height: 100)
-        blackButton.backgroundColor = UIColor.gray
+        blackButton.backgroundColor = UIColor(hexString: "#0D47A1")
         blackButton.layer.cornerRadius = blurButton.frame.size.width/2
         blackButton.addTarget(self, action: #selector(blackTap), for: .touchUpInside)
+
+        let label = UILabel(frame: CGRect(x: sideView.frame.size.width/2 - 25, y: screenHeight/3, width: 100, height: 100))
+        label.text = "Blind"
+        label.textColor = UIColor.white
+
         sideView.addSubview(blackButton)
+        sideView.addSubview(label)
     }
 
     func addUndoButton(sideView: UIView){
@@ -108,10 +124,16 @@ class ViewController: UIViewController {
         let screenHeight = screenSize.height
 
         undoButton.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight/2, width: 100, height: 100)
-        undoButton.backgroundColor = UIColor.red
+        undoButton.backgroundColor = UIColor(hexString: "#b71c1c")
         undoButton.layer.cornerRadius = blurButton.frame.size.width/2
         undoButton.addTarget(self, action: #selector(undoTap), for: .touchUpInside)
+
+        let label = UILabel(frame: CGRect(x: sideView.frame.size.width/2 - 25, y: screenHeight/2, width: 100, height: 100))
+        label.text = "Undo"
+        label.textColor = UIColor.white
+
         sideView.addSubview(undoButton)
+        sideView.addSubview(label)
     }
     
     func blurTap(sender: UIButton!) {
@@ -155,6 +177,26 @@ class ViewController: UIViewController {
         else if(isBlack) {
             addBlack(xLoc: touchPoint.x, yLoc: touchPoint.y)
         }
+    }
+}
+
+extension UIColor {
+    convenience init(hexString: String) {
+        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt32()
+        Scanner(string: hex).scanHexInt32(&int)
+        let a, r, g, b: UInt32
+        switch hex.characters.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 }
 
