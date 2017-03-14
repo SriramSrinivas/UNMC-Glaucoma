@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         addBlurButton(sideView: sideView)
         addBlackButton(sideView: sideView)
         addUndoButton(sideView: sideView)
+        addSlider(sideView: sideView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,7 +74,7 @@ class ViewController: UIViewController {
     
     func loadImage(mainImgView: UIView){
 
-        let image = UIImage(named: "tes");
+        let image = UIImage(named: "tes-1");
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
         //imageView.contentMode = UIViewContentMode.scaleAspectFit
@@ -135,6 +136,18 @@ class ViewController: UIViewController {
         sideView.addSubview(undoButton)
         sideView.addSubview(label)
     }
+
+    func addSlider(sideView: UIView){
+
+        let screenHeight = screenSize.height
+        let slider = UISwitch()
+
+        slider.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight - 200, width: 100, height: 100)
+        slider.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
+        //slider.addTarget(self, action: #selector(undoTap), for: .touchUpInside)
+
+        sideView.addSubview(slider)
+    }
     
     func blurTap(sender: UIButton!) {
         isBlur = true
@@ -156,6 +169,13 @@ class ViewController: UIViewController {
         if(tag != 1) {
             tag -= 1
         }
+    }
+
+    func switchChanged(mySwitch: UISwitch) {
+        let value = mySwitch.isOn
+
+        print("Curr Switch : \(value)")
+        // Do something
     }
 
     func makeBorder(btn: UIButton){
