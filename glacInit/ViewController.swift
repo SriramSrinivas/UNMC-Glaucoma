@@ -22,17 +22,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
-        let sideView = UIView(frame: CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
-        sideView.backgroundColor = UIColor(hexString: "#424242")
+        let sideView = SideView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
+        //let sideView = UIView(frame: CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
+        //sideView.backgroundColor = UIColor(hexString: "#424242")
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
+        //view.addSubview(sideView)
 
         loadImage(mainImgView: mainImgView)
-        addBlurButton(sideView: sideView)
-        addBlackButton(sideView: sideView)
-        addUndoButton(sideView: sideView)
-        addSlider(sideView: sideView)
+        //addBlurButton(sideView: sideView)
+        //addBlackButton(sideView: sideView)
+        //addUndoButton(sideView: sideView)
+        //addSlider(sideView: sideView)
     }
 
     override func didReceiveMemoryWarning() {
