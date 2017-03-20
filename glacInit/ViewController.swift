@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         //view.addSubview(sideView)
 
         loadImage(mainImgView: mainImgView)
+        addGridLines(view: mainImgView)
         //addBlurButton(sideView: sideView)
         //addBlackButton(sideView: sideView)
         //addUndoButton(sideView: sideView)
@@ -147,6 +148,18 @@ class ViewController: UIViewController {
         //slider.addTarget(self, action: #selector(undoTap), for: .touchUpInside)
 
         sideView.addSubview(slider)
+    }
+
+    func addGridLines(view: UIView) {
+
+        let line1 = UIBezierPath()
+        line1.move(to: CGPoint(x: 20, y: 100))
+        line1.addLine(to: CGPoint(x: 400, y: 200))
+
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = line1.cgPath
+        shapeLayer.lineWidth = 100.0
+        view.layer.addSublayer(shapeLayer)
     }
     
     func blurTap(sender: UIButton!) {
