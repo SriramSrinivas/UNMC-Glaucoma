@@ -1,12 +1,5 @@
-//
-//  ViewController.swift
-//  glacInit
-//
-//  Created by Parshav Chauhan on 2/11/17.
-//  Copyright © 2017 Parshav Chauhan. All rights reserved.
-//
-
 import UIKit
+import VisualEffectView
 
 class ViewController: UIViewController {
         
@@ -14,6 +7,8 @@ class ViewController: UIViewController {
     let blurButton = UIButton()
     let blackButton = UIButton()
     let undoButton = UIButton()
+    let gridRect1 = UIButton()
+    let gridRect2 = UIButton()
     var isBlur: Bool = false
     var isBlack: Bool = false
     var tag = 2
@@ -26,13 +21,12 @@ class ViewController: UIViewController {
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
-        //view.addSubview(sideView)
 
         loadImage(mainImgView: mainImgView)
-        //addBlurButton(sideView: sideView)
-        //addBlackButton(sideView: sideView)
-        //addUndoButton(sideView: sideView)
-        //addSlider(sideView: sideView)
+        addGridLines(view: mainImgView)
+        showGridLines()
+
+        addBlur(view: mainImgView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,7 +51,13 @@ class ViewController: UIViewController {
 
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        self.view.addSubview(blurEffectView)
+        //self.view.addSubview(blurEffectView)
+    }
+
+    func addBlur(view: UIView){
+        let blur = VisualEffectView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        blur.blurRadius = 10
+        view.addSubview(blur)
     }
 
     func addBlack(xLoc: CGFloat, yLoc: CGFloat){
@@ -147,6 +147,27 @@ class ViewController: UIViewController {
         //slider.addTarget(self, action: #selector(undoTap), for: .touchUpInside)
 
         sideView.addSubview(slider)
+    }
+
+    func addGridLines(view: UIView) {
+
+        gridRect1.frame = CGRect(x: view.frame.size.width/3 , y: -10, width: view.frame.size.width/3 , height: (view.frame.size.height) + 20)
+        gridRect1.layer.borderWidth = 4
+        gridRect1.layer.borderColor = UIColor.white.cgColor
+
+        gridRect2.frame = CGRect(x: -10, y: view.frame.size.height/3, width: (view.frame.size.width) + 20, height: view.frame.height/3)
+        gridRect2.layer.borderWidth = 4
+        gridRect2.layer.borderColor = UIColor(hexString: "F44556").cgColor
+    }
+
+    func hideGridLines(){
+        gridRect1.removeFromSuperview()
+        gridRect2.removeFromSuperview()
+    }
+
+    func showGridLines(){
+        view.addSubview(gridRect1)
+        view.addSubview(gridRect2)
     }
     
     func blurTap(sender: UIButton!) {

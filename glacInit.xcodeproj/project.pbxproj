@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		33F4E8C52B9DDE1F2DA5B021 /* ToggleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F4E8B09E9A3D5A6FB61164 /* ToggleTest.swift */; };
+		0FD24FC8BEB7454FD0814B55 /* Pods_glacInit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FF6EEF7E87E90F7E13CB4E /* Pods_glacInit.framework */; };
 		33F4EDE549E4639653C7ED1C /* SideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F4E8A5B0D9CC07BA9140D9 /* SideView.swift */; };
-		74F7BB8FAE3CEB8A706D697D /* Pods_glacInit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FF6EEF7E87E90F7E13CB4E /* Pods_glacInit.framework */; };
 		753A2D7141F89F7141A3E06B /* Pods_glacInitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5954356F73D8C979F42E4B76 /* Pods_glacInitTests.framework */; };
 		7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65A1E50020A003ACC5F /* AppDelegate.swift */; };
 		7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65C1E50020A003ACC5F /* ViewController.swift */; };
@@ -41,7 +40,6 @@
 /* Begin PBXFileReference section */
 		08843755EC2939FFFE785AB5 /* Pods-glacInitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitUITests/Pods-glacInitUITests.release.xcconfig"; sourceTree = "<group>"; };
 		33F4E8A5B0D9CC07BA9140D9 /* SideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideView.swift; sourceTree = "<group>"; };
-		33F4E8B09E9A3D5A6FB61164 /* ToggleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleTest.swift; sourceTree = "<group>"; };
 		3D970461C6AD33F91841D653 /* Pods-glacInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.debug.xcconfig"; sourceTree = "<group>"; };
 		4811ECE61C227719ADCE1745 /* Pods-glacInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.release.xcconfig"; sourceTree = "<group>"; };
 		5760E2D06B454BB71A67455E /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitTests/Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -70,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74F7BB8FAE3CEB8A706D697D /* Pods_glacInit.framework in Frameworks */,
+				0FD24FC8BEB7454FD0814B55 /* Pods_glacInit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +136,6 @@
 				7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */,
 				7752F6661E50020A003ACC5F /* Info.plist */,
 				33F4E8A5B0D9CC07BA9140D9 /* SideView.swift */,
-				33F4E8B09E9A3D5A6FB61164 /* ToggleTest.swift */,
 			);
 			path = glacInit;
 			sourceTree = "<group>";
@@ -456,7 +453,6 @@
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
 				33F4EDE549E4639653C7ED1C /* SideView.swift in Sources */,
-				33F4E8C52B9DDE1F2DA5B021 /* ToggleTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,6 +705,7 @@
 				7752F6811E50020A003ACC5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7752F6821E50020A003ACC5F /* Build configuration list for PBXNativeTarget "glacInitTests" */ = {
 			isa = XCConfigurationList;
@@ -717,6 +714,7 @@
 				7752F6841E50020A003ACC5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7752F6851E50020A003ACC5F /* Build configuration list for PBXNativeTarget "glacInitUITests" */ = {
 			isa = XCConfigurationList;
@@ -725,6 +723,7 @@
 				7752F6871E50020A003ACC5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
