@@ -7,31 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094B0616A350E544198797188845698A /* Pods-glacInit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6ABBC64A927312956F489C71E6A73A /* Pods-glacInit-dummy.m */; };
+		151974A22DC00E17B6B83B7060A9BBD9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		2D4B28F3C4A135568AB94C6E67C3DB2D /* Pods-glacInitUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FF07D0C1FCD91AD726A3E66A1E3DA2C5 /* Pods-glacInitUITests-dummy.m */; };
-		2FEF4988E52B87FC62C157D33E2C3479 /* Pods-glacInit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0FA006810FE6F4B82507BABA0C277 /* Pods-glacInit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		33D52D05C15657BD6CE64765E5355E7B /* Pods-glacInit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6ABBC64A927312956F489C71E6A73A /* Pods-glacInit-dummy.m */; };
+		4E0591136196E3FE1CCD81898F8F337D /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9705A643A316F29762AA94F649A844D /* VisualEffectView.swift */; };
+		76EA350A44478EEB5E5F32191A28C896 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		7B3F78FBA0DC9388362595D1E090C384 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		86CA45C679551ED0DF93BA8DC7683181 /* Pods-glacInitUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DE2C5ADD3DE0E0CAEED6D8CDF003079A /* Pods-glacInitUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		988B115D2FF200EA5EE358C3834558D4 /* Pods-glacInit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0FA006810FE6F4B82507BABA0C277 /* Pods-glacInit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A253EF01B9DFAC56556BF2E83116C3FB /* VisualEffectView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 40FDA2C7734EEC0CC416BA4B0882EE27 /* VisualEffectView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE055719385B0A32E3051DC2AB1D8E4C /* Pods-glacInitTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 643CA655A9787E8DD4F787DF2351BD6F /* Pods-glacInitTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2A1F37868EDB27639809C061EE1752B /* VisualEffectView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A0C57B3738071B2842E70BB46C68F2 /* VisualEffectView-dummy.m */; };
 		BA2CEF86E76DF4C86CA43A7C591C2C12 /* Pods-glacInitTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D14E8565719959D521BD1AB957700CD /* Pods-glacInitTests-dummy.m */; };
 		C635D6DF0489869AC5DBCD96EDC6C2CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
-		CD255F3376A52F7BBC379F51F11D6828 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6D74219CB23921158E7794BD09692D62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA928112BB2ABB035098A06FE1C2D0B3;
+			remoteInfo = VisualEffectView;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		05404A7F777499130E710C06B55B520E /* Pods-glacInitTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-glacInitTests.modulemap"; sourceTree = "<group>"; };
 		061C419F26F8422395D0057153EB971E /* Pods-glacInitUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		068A43C0FBE6F1999F58AC15CF459532 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E2DD6052978ADE13BA3C4EB381C4F84 /* Pods-glacInitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		184361624393F731549072CA46BA610B /* Pods_glacInitUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitUITests.framework; path = "Pods-glacInitUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		185089270B3689AEC34A5814237F86CE /* VisualEffectView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VisualEffectView-prefix.pch"; sourceTree = "<group>"; };
 		1C6EEC474AB6EC6BB305CBE69C8F83F3 /* Pods-glacInitTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-glacInitTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		212D3F21A2B9D9D402F95065CA3E12E4 /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
 		2AB957E20F45DEF0291B7A55557C3F29 /* Pods-glacInitTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitTests-frameworks.sh"; sourceTree = "<group>"; };
+		36FCACE5E6506C1C285EB8D01F217E1A /* VisualEffectView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VisualEffectView.framework; path = VisualEffectView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A4D78AF242580143756570A0E25FA3E /* VisualEffectView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VisualEffectView.xcconfig; sourceTree = "<group>"; };
 		3BC0B532264D4139F03C5754A5DF5A68 /* Pods-glacInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInit.debug.xcconfig"; sourceTree = "<group>"; };
+		40FDA2C7734EEC0CC416BA4B0882EE27 /* VisualEffectView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VisualEffectView-umbrella.h"; sourceTree = "<group>"; };
 		4D14E8565719959D521BD1AB957700CD /* Pods-glacInitTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-glacInitTests-dummy.m"; sourceTree = "<group>"; };
 		50D6E27599C182AE2EC4FEE17B42D2D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		527EB6E83DAEAC2EBD30A87C81A28046 /* Pods_glacInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitTests.framework; path = "Pods-glacInitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61662B38D8426E3A3A530D989EB50734 /* Pods_glacInit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInit.framework; path = "Pods-glacInit.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		62A6E0CF522F5E58D1255A11E4470921 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643CA655A9787E8DD4F787DF2351BD6F /* Pods-glacInitTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-glacInitTests-umbrella.h"; sourceTree = "<group>"; };
-		7AC6E9073EE0A6A4EBD3A714D7FC6CE6 /* Pods_glacInit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInit.framework; path = "Pods-glacInit.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		719AD03909971F932239202B914A4E81 /* VisualEffectView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VisualEffectView.modulemap; sourceTree = "<group>"; };
+		72A0C57B3738071B2842E70BB46C68F2 /* VisualEffectView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VisualEffectView-dummy.m"; sourceTree = "<group>"; };
 		7C4F4EE3288BB3D61D9D912C423B89EE /* Pods-glacInitUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitUITests-frameworks.sh"; sourceTree = "<group>"; };
 		803D6D90A43DD31BA628D315FFFB24B6 /* Pods-glacInit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-glacInit.modulemap"; sourceTree = "<group>"; };
 		846A7F2577AA9E7034F66EBB9A038267 /* Pods-glacInitTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-glacInitTests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -50,18 +71,27 @@
 		CD1AC3CF412CD946DCCDE1057A3D8045 /* Pods-glacInit-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInit-resources.sh"; sourceTree = "<group>"; };
 		CD38F822C7888B30168FEAF057C02950 /* Pods-glacInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInit.release.xcconfig"; sourceTree = "<group>"; };
 		D58BB2ACDDA91C3BAA526FA56C9174E0 /* Pods-glacInit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-glacInit-acknowledgements.plist"; sourceTree = "<group>"; };
+		D9705A643A316F29762AA94F649A844D /* VisualEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VisualEffectView.swift; path = Sources/VisualEffectView.swift; sourceTree = "<group>"; };
 		DE2C5ADD3DE0E0CAEED6D8CDF003079A /* Pods-glacInitUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-glacInitUITests-umbrella.h"; sourceTree = "<group>"; };
+		E64BA7E30C951C2F2A188CE4AFBCD328 /* Pods_glacInitUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitUITests.framework; path = "Pods-glacInitUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5C2EE94D498D292EEC949B17FD678B5 /* Pods-glacInitTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitTests-resources.sh"; sourceTree = "<group>"; };
-		FDCE16A15069D118E7B3DC079A2E131E /* Pods_glacInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitTests.framework; path = "Pods-glacInitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF07D0C1FCD91AD726A3E66A1E3DA2C5 /* Pods-glacInitUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-glacInitUITests-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1C6C9F42047C80C39DFE1F27F6E280B2 /* Frameworks */ = {
+		6BB506AC4892E798AF4AFFC1E902A99B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD255F3376A52F7BBC379F51F11D6828 /* Foundation.framework in Frameworks */,
+				151974A22DC00E17B6B83B7060A9BBD9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AEA369494DA6D749E3C92A99E7B26738 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76EA350A44478EEB5E5F32191A28C896 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,24 +150,33 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		7C768587F5C300619244BAA763038109 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8AEDF510FE87FBFA3E59F152A8E59457 /* VisualEffectView */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				95F27CEB4477135DD789D9516A1F9D79 /* Products */,
+				7C768587F5C300619244BAA763038109 /* Pods */,
+				98D86D485E8A1C898B4CF2935B4F2E10 /* Products */,
 				741D89AEE4676859181793AB87231ABB /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		95F27CEB4477135DD789D9516A1F9D79 /* Products */ = {
+		8AEDF510FE87FBFA3E59F152A8E59457 /* VisualEffectView */ = {
 			isa = PBXGroup;
 			children = (
-				7AC6E9073EE0A6A4EBD3A714D7FC6CE6 /* Pods_glacInit.framework */,
-				FDCE16A15069D118E7B3DC079A2E131E /* Pods_glacInitTests.framework */,
-				184361624393F731549072CA46BA610B /* Pods_glacInitUITests.framework */,
+				D9705A643A316F29762AA94F649A844D /* VisualEffectView.swift */,
+				9C7CAB72C36060A1D1C0E34A1B719AB1 /* Support Files */,
 			);
-			name = Products;
+			name = VisualEffectView;
+			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
 		970A39C46347ED0870BAF91A6718C345 /* Pods-glacInitUITests */ = {
@@ -156,6 +195,31 @@
 			);
 			name = "Pods-glacInitUITests";
 			path = "Target Support Files/Pods-glacInitUITests";
+			sourceTree = "<group>";
+		};
+		98D86D485E8A1C898B4CF2935B4F2E10 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				61662B38D8426E3A3A530D989EB50734 /* Pods_glacInit.framework */,
+				527EB6E83DAEAC2EBD30A87C81A28046 /* Pods_glacInitTests.framework */,
+				E64BA7E30C951C2F2A188CE4AFBCD328 /* Pods_glacInitUITests.framework */,
+				36FCACE5E6506C1C285EB8D01F217E1A /* VisualEffectView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C7CAB72C36060A1D1C0E34A1B719AB1 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				62A6E0CF522F5E58D1255A11E4470921 /* Info.plist */,
+				719AD03909971F932239202B914A4E81 /* VisualEffectView.modulemap */,
+				3A4D78AF242580143756570A0E25FA3E /* VisualEffectView.xcconfig */,
+				72A0C57B3738071B2842E70BB46C68F2 /* VisualEffectView-dummy.m */,
+				185089270B3689AEC34A5814237F86CE /* VisualEffectView-prefix.pch */,
+				40FDA2C7734EEC0CC416BA4B0882EE27 /* VisualEffectView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/VisualEffectView";
 			sourceTree = "<group>";
 		};
 		A9EB80AAB4EEDDCA1C7DCF4C55952227 /* Pods-glacInit */ = {
@@ -195,11 +259,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		24CF6945130FD7F2DFDC90186E5A7164 /* Headers */ = {
+		32A620887507A6C28FC10AAF2EC4B4D2 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FEF4988E52B87FC62C157D33E2C3479 /* Pods-glacInit-umbrella.h in Headers */,
+				A253EF01B9DFAC56556BF2E83116C3FB /* VisualEffectView-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +272,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				86CA45C679551ED0DF93BA8DC7683181 /* Pods-glacInitUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4CB43A7EE1808E296F4F2EF733F4814 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				988B115D2FF200EA5EE358C3834558D4 /* Pods-glacInit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,24 +300,7 @@
 			);
 			name = "Pods-glacInitUITests";
 			productName = "Pods-glacInitUITests";
-			productReference = 184361624393F731549072CA46BA610B /* Pods_glacInitUITests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		1C559C02CEB641AC6CA8C679E1D2FFB9 /* Pods-glacInit */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8DC3C947A327F998CD5F34E95F3A3C40 /* Build configuration list for PBXNativeTarget "Pods-glacInit" */;
-			buildPhases = (
-				575AA497C8675F7240F220CDEA278D8D /* Sources */,
-				1C6C9F42047C80C39DFE1F27F6E280B2 /* Frameworks */,
-				24CF6945130FD7F2DFDC90186E5A7164 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-glacInit";
-			productName = "Pods-glacInit";
-			productReference = 7AC6E9073EE0A6A4EBD3A714D7FC6CE6 /* Pods_glacInit.framework */;
+			productReference = E64BA7E30C951C2F2A188CE4AFBCD328 /* Pods_glacInitUITests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		A668EB4804CD11BD74E5477B801C9A1C /* Pods-glacInitTests */ = {
@@ -262,7 +317,42 @@
 			);
 			name = "Pods-glacInitTests";
 			productName = "Pods-glacInitTests";
-			productReference = FDCE16A15069D118E7B3DC079A2E131E /* Pods_glacInitTests.framework */;
+			productReference = 527EB6E83DAEAC2EBD30A87C81A28046 /* Pods_glacInitTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FA928112BB2ABB035098A06FE1C2D0B3 /* VisualEffectView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73144A6F608FBE4426EA656404606000 /* Build configuration list for PBXNativeTarget "VisualEffectView" */;
+			buildPhases = (
+				BD6ED82FDE6BF987D90821639CA1A0FD /* Sources */,
+				AEA369494DA6D749E3C92A99E7B26738 /* Frameworks */,
+				32A620887507A6C28FC10AAF2EC4B4D2 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VisualEffectView;
+			productName = VisualEffectView;
+			productReference = 36FCACE5E6506C1C285EB8D01F217E1A /* VisualEffectView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FC0650391F5C0A12BF872CE2EF768CA4 /* Pods-glacInit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A64028E4AC5A502FD0B53CB600A06E4 /* Build configuration list for PBXNativeTarget "Pods-glacInit" */;
+			buildPhases = (
+				D8742329DE039B471AD29CDAA153D20A /* Sources */,
+				6BB506AC4892E798AF4AFFC1E902A99B /* Frameworks */,
+				F4CB43A7EE1808E296F4F2EF733F4814 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A7E0C62A6184F0A0D06515891EE9613 /* PBXTargetDependency */,
+			);
+			name = "Pods-glacInit";
+			productName = "Pods-glacInit";
+			productReference = 61662B38D8426E3A3A530D989EB50734 /* Pods_glacInit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -282,31 +372,33 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 95F27CEB4477135DD789D9516A1F9D79 /* Products */;
+			productRefGroup = 98D86D485E8A1C898B4CF2935B4F2E10 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1C559C02CEB641AC6CA8C679E1D2FFB9 /* Pods-glacInit */,
+				FC0650391F5C0A12BF872CE2EF768CA4 /* Pods-glacInit */,
 				A668EB4804CD11BD74E5477B801C9A1C /* Pods-glacInitTests */,
 				138B4DB3CE4240F203F38E5C8A0EF7E4 /* Pods-glacInitUITests */,
+				FA928112BB2ABB035098A06FE1C2D0B3 /* VisualEffectView */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		575AA497C8675F7240F220CDEA278D8D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				33D52D05C15657BD6CE64765E5355E7B /* Pods-glacInit-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B107B1A0F4FC58E3F370CBE620341DF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2D4B28F3C4A135568AB94C6E67C3DB2D /* Pods-glacInitUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD6ED82FDE6BF987D90821639CA1A0FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2A1F37868EDB27639809C061EE1752B /* VisualEffectView-dummy.m in Sources */,
+				4E0591136196E3FE1CCD81898F8F337D /* VisualEffectView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,10 +410,63 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D8742329DE039B471AD29CDAA153D20A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				094B0616A350E544198797188845698A /* Pods-glacInit-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3A7E0C62A6184F0A0D06515891EE9613 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VisualEffectView;
+			target = FA928112BB2ABB035098A06FE1C2D0B3 /* VisualEffectView */;
+			targetProxy = 6D74219CB23921158E7794BD09692D62 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		05C2AD94367C0E6D706F2BC3095C83E4 /* Release */ = {
+		236BFB7E766C620DA5207D6F5C437FDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BC0B532264D4139F03C5754A5DF5A68 /* Pods-glacInit.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-glacInit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-glacInit/Pods-glacInit.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_glacInit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		576F1B89CAD72D721015D1E73FE5BE30 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CD38F822C7888B30168FEAF057C02950 /* Pods-glacInit.release.xcconfig */;
 			buildSettings = {
@@ -355,41 +500,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		4A91C3455FC985A7D79FD4B36C2BEF1C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3BC0B532264D4139F03C5754A5DF5A68 /* Pods-glacInit.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-glacInit/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-glacInit/Pods-glacInit.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_glacInit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -464,6 +574,39 @@
 				PRODUCT_NAME = Pods_glacInitUITests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AC1029CD8C7235217AE234D80315FEE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A4D78AF242580143756570A0E25FA3E /* VisualEffectView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/VisualEffectView/VisualEffectView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/VisualEffectView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/VisualEffectView/VisualEffectView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = VisualEffectView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -615,6 +758,38 @@
 			};
 			name = Debug;
 		};
+		F39F2D8F93030E70138C62B50584D7AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A4D78AF242580143756570A0E25FA3E /* VisualEffectView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/VisualEffectView/VisualEffectView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/VisualEffectView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/VisualEffectView/VisualEffectView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = VisualEffectView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -627,11 +802,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8DC3C947A327F998CD5F34E95F3A3C40 /* Build configuration list for PBXNativeTarget "Pods-glacInit" */ = {
+		73144A6F608FBE4426EA656404606000 /* Build configuration list for PBXNativeTarget "VisualEffectView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4A91C3455FC985A7D79FD4B36C2BEF1C /* Debug */,
-				05C2AD94367C0E6D706F2BC3095C83E4 /* Release */,
+				AC1029CD8C7235217AE234D80315FEE8 /* Debug */,
+				F39F2D8F93030E70138C62B50584D7AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -641,6 +816,15 @@
 			buildConfigurations = (
 				EA25565658871315511DA53D56DC139F /* Debug */,
 				C4C1249F1DEB9EE21265B79D3E0DEBF2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9A64028E4AC5A502FD0B53CB600A06E4 /* Build configuration list for PBXNativeTarget "Pods-glacInit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				236BFB7E766C620DA5207D6F5C437FDA /* Debug */,
+				576F1B89CAD72D721015D1E73FE5BE30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

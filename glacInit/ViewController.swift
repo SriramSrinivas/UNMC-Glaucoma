@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  glacInit
-//
-//  Created by Parshav Chauhan on 2/11/17.
-//  Copyright © 2017 Parshav Chauhan. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
@@ -14,6 +6,8 @@ class ViewController: UIViewController {
     let blurButton = UIButton()
     let blackButton = UIButton()
     let undoButton = UIButton()
+    let gridRect1 = UIButton()
+    let gridRect2 = UIButton()
     var isBlur: Bool = false
     var isBlack: Bool = false
     var tag = 2
@@ -26,14 +20,10 @@ class ViewController: UIViewController {
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
-        //view.addSubview(sideView)
 
-        loadImage(mainImgView: mainImgView)
+        //loadImage(mainImgView: mainImgView)
         addGridLines(view: mainImgView)
-        //addBlurButton(sideView: sideView)
-        //addBlackButton(sideView: sideView)
-        //addUndoButton(sideView: sideView)
-        //addSlider(sideView: sideView)
+        showGridLines()
     }
 
     override func didReceiveMemoryWarning() {
@@ -152,14 +142,23 @@ class ViewController: UIViewController {
 
     func addGridLines(view: UIView) {
 
-        let line1 = UIBezierPath()
-        line1.move(to: CGPoint(x: 20, y: 100))
-        line1.addLine(to: CGPoint(x: 400, y: 200))
+        gridRect1.frame = CGRect(x: view.frame.size.width/3 , y: -10, width: view.frame.size.width/3 , height: (view.frame.size.height) + 20)
+        gridRect1.layer.borderWidth = 4
+        gridRect1.layer.borderColor = UIColor.white.cgColor
 
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = line1.cgPath
-        shapeLayer.lineWidth = 100.0
-        view.layer.addSublayer(shapeLayer)
+        gridRect2.frame = CGRect(x: -10, y: view.frame.size.height/3, width: (view.frame.size.width) + 20, height: view.frame.height/3)
+        gridRect2.layer.borderWidth = 4
+        gridRect2.layer.borderColor = UIColor(hexString: "F44556").cgColor
+    }
+
+    func hideGridLines(){
+        gridRect1.removeFromSuperview()
+        gridRect2.removeFromSuperview()
+    }
+
+    func showGridLines(){
+        view.addSubview(gridRect1)
+        view.addSubview(gridRect2)
     }
     
     func blurTap(sender: UIButton!) {
