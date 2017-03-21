@@ -1,4 +1,5 @@
 import UIKit
+import VisualEffectView
 
 class ViewController: UIViewController {
         
@@ -21,9 +22,11 @@ class ViewController: UIViewController {
         view.addSubview(mainImgView)
         view.addSubview(sideView)
 
-        //loadImage(mainImgView: mainImgView)
+        loadImage(mainImgView: mainImgView)
         addGridLines(view: mainImgView)
         showGridLines()
+
+        addBlur(view: mainImgView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,7 +51,13 @@ class ViewController: UIViewController {
 
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        self.view.addSubview(blurEffectView)
+        //self.view.addSubview(blurEffectView)
+    }
+
+    func addBlur(view: UIView){
+        let blur = VisualEffectView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        blur.blurRadius = 10
+        view.addSubview(blur)
     }
 
     func addBlack(xLoc: CGFloat, yLoc: CGFloat){
