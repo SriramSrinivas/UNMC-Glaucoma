@@ -18,16 +18,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        mainImgView.addGestureRecognizer(tap)
+
         let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
 
         loadImage(mainImgView: mainImgView)
-        addGridLines(view: mainImgView)
-        showGridLines()
-
-        addBlur(view: mainImgView)
+        //addGridLines(view: mainImgView)
 
         addToggle(sideView: sideView)
         addSlider(sideView: sideView)
@@ -74,40 +74,15 @@ class ViewController: UIViewController {
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
-        let d = UIView(frame: CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100))
-
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = d.frame
-        blurEffectView.layer.cornerRadius = 50
-        blurEffectView.clipsToBounds = true;
-
-        blurEffectView.alpha = 0.9
-
-        blurEffectView.tag = tag
-        tag += 1
-
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        //self.view.addSubview(blurEffectView)
-    }
-
-    func addBlur(view: UIView){
-        let blur = VisualEffectView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 300, height: 300)
+        blur.layer.borderWidth = 10
+        blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
         blur.blurRadius = 10
-        view.addSubview(blur)
-    }
 
-    func addBlack(xLoc: CGFloat, yLoc: CGFloat){
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        blur.addGestureRecognizer(gestureRecognizer)
 
-        let d = UIView(frame: CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100))
-        d.backgroundColor = UIColor.black
-        d.layer.cornerRadius = 50
-
-        d.tag = tag
-        tag += 1
-
-        self.view.addSubview(d)
+        self.view.addSubview(blur)
     }
     
     func loadImage(mainImgView: UIView){
@@ -115,30 +90,7 @@ class ViewController: UIViewController {
         let image = UIImage(named: "tes-1");
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
-        //imageView.contentMode = UIViewContentMode.scaleAspectFit
         mainImgView.addSubview(imageView)
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-
-    }
-
-    func addUndoButton(sideView: UIView){
-
-        let screenHeight = screenSize.height
-
-        undoButton.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight/2, width: 100, height: 100)
-        undoButton.backgroundColor = UIColor(hexString: "#b71c1c")
-        undoButton.layer.cornerRadius = blurButton.frame.size.width/2
-        undoButton.addTarget(self, action: #selector(undoTap), for: .touchUpInside)
-
-        let label = UILabel(frame: CGRect(x: sideView.frame.size.width/2 - 25, y: screenHeight/2, width: 100, height: 100))
-        label.text = "Undo"
-        label.textColor = UIColor.white
-
-        sideView.addSubview(undoButton)
-        sideView.addSubview(label)
     }
 
     func addToggle(sideView: UIView){
@@ -173,30 +125,9 @@ class ViewController: UIViewController {
         gridRect2.layer.borderColor = UIColor(hexString: "F44556").cgColor
     }
 
-    func hideGridLines(){
-        gridRect1.removeFromSuperview()
-        gridRect2.removeFromSuperview()
-    }
-
-    func showGridLines(){
-        view.addSubview(gridRect1)
-        view.addSubview(gridRect2)
-    }
-    
     func blurTap(sender: UIButton!) {
-        /*isBlur = true
-        isBlack = false
-        makeBorder(btn: blurButton)
-        removeBorder(btn: blackButton)*/
-
+        isBlur = true
         print("BLur Tapped")
-    }
-
-    func blackTap(sender: UIButton!){
-        isBlur = false
-        isBlack = true
-        makeBorder(btn: blackButton)
-        removeBorder(btn: blurButton)
     }
 
     func undoTap(sender: UIButton!){
@@ -213,9 +144,22 @@ class ViewController: UIViewController {
         print("Curr Switch : \(value)")
         switch (value) {
         case true:
-            showGridLines()
+            print("Hi")
         case false:
-            hideGridLines()
+            print("Bye")
+        }
+    }
+
+    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+
+        print("Handle Pan")
+
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+
+            let translation = gestureRecognizer.translation(in: self.view)
+            // note: 'view' is optional and need to be unwrapped
+            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+            gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
         }
     }
 
@@ -226,24 +170,14 @@ class ViewController: UIViewController {
         blur.blurRadius = CGFloat(value)
     }
 
-    func makeBorder(btn: UIButton){
-        btn.layer.borderWidth = 4
-        btn.layer.borderColor = UIColor.white.cgColor
-    }
-
-    func removeBorder(btn: UIButton){
-        btn.layer.borderWidth = 0
-    }
-
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        let tappedImage = tapGestureRecognizer.view as! UIImageView
-        let touchPoint = tapGestureRecognizer.location(in: tappedImage)
+        let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
 
         if(isBlur) {
             addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
         }
         else if(isBlack) {
-            addBlack(xLoc: touchPoint.x, yLoc: touchPoint.y)
+            print("No")
         }
     }
 }
