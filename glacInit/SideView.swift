@@ -2,8 +2,6 @@ import UIKit
 
 class SideView: UIView {
 
-    let views = [UIView]()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(hexString: "#424242")

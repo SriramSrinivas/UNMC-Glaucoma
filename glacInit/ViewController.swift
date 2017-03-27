@@ -4,6 +4,7 @@ import VisualEffectView
 class ViewController: UIViewController {
         
     let screenSize: CGRect = UIScreen.main.bounds
+    let blur = VisualEffectView()
     let blurButton = UIButton()
     let blackButton = UIButton()
     let undoButton = UIButton()
@@ -17,7 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
-        let sideView = SideView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
+        let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
@@ -27,11 +28,48 @@ class ViewController: UIViewController {
         showGridLines()
 
         addBlur(view: mainImgView)
+
+        addToggle(sideView: sideView)
+        addSlider(sideView: sideView)
+
+        initSideView(sideView: sideView)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func initSideView(sideView: UIView){
+
+        let bButton = UIButton()
+        bButton.setTitle("Blur", for: UIControlState.normal)
+        bButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        bButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        bButton.backgroundColor = UIColor(hexString: "#00BCD4")
+        bButton.addTarget(self, action: #selector(blurTap), for: .touchUpInside)
+
+        let cloneButton = UIButton()
+        cloneButton.setTitle("Clone", for: UIControlState.normal)
+        cloneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        cloneButton.backgroundColor = UIColor(hexString: "#0D47A1")
+        //blkButton.addTarget(self, action: #selector(blackTap), for: .touchUpInside)
+
+        let stackView = UIStackView()
+        stackView.axis = UILayoutConstraintAxis.vertical
+        stackView.distribution = UIStackViewDistribution.equalSpacing
+        stackView.alignment = UIStackViewAlignment.center
+        stackView.spacing = 20.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        stackView.addArrangedSubview(bButton)
+        stackView.addArrangedSubview(cloneButton)
+
+        sideView.addSubview(stackView)
+
+        stackView.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
     }
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
@@ -86,40 +124,6 @@ class ViewController: UIViewController {
 
     }
 
-    func addBlurButton(sideView: UIView){
-
-        let screenHeight = screenSize.height
-        
-        blurButton.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight/8, width: 100, height: 100)
-        blurButton.backgroundColor = UIColor(hexString: "#1B5E20")
-        blurButton.layer.cornerRadius = blurButton.frame.size.width/2
-        blurButton.addTarget(self, action: #selector(blurTap), for: .touchUpInside)
-
-        let label = UILabel(frame: CGRect(x: sideView.frame.size.width/2 - 25, y: screenHeight/8, width: 100, height: 100))
-        label.text = "Blur"
-        label.textColor = UIColor.white
-
-        sideView.addSubview(blurButton)
-        sideView.addSubview(label)
-    }
-
-    func addBlackButton(sideView: UIView){
-
-        let screenHeight = screenSize.height
-
-        blackButton.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight/3, width: 100, height: 100)
-        blackButton.backgroundColor = UIColor(hexString: "#0D47A1")
-        blackButton.layer.cornerRadius = blurButton.frame.size.width/2
-        blackButton.addTarget(self, action: #selector(blackTap), for: .touchUpInside)
-
-        let label = UILabel(frame: CGRect(x: sideView.frame.size.width/2 - 25, y: screenHeight/3, width: 100, height: 100))
-        label.text = "Blind"
-        label.textColor = UIColor.white
-
-        sideView.addSubview(blackButton)
-        sideView.addSubview(label)
-    }
-
     func addUndoButton(sideView: UIView){
 
         let screenHeight = screenSize.height
@@ -137,14 +141,23 @@ class ViewController: UIViewController {
         sideView.addSubview(label)
     }
 
-    func addSlider(sideView: UIView){
+    func addToggle(sideView: UIView){
 
         let screenHeight = screenSize.height
-        let slider = UISwitch()
+        let toggle = UISwitch()
 
-        slider.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight - 200, width: 100, height: 100)
-        slider.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
-        //slider.addTarget(self, action: #selector(undoTap), for: .touchUpInside)
+        toggle.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight - 200, width: 100, height: 100)
+        toggle.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
+
+        sideView.addSubview(toggle)
+    }
+
+    func addSlider(sideView: UIView){
+
+        let slider = UISlider()
+
+        slider.frame = CGRect(x: sideView.frame.size.width/3, y: screenSize.height - 100, width: 100, height: 100)
+        slider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
 
         sideView.addSubview(slider)
     }
@@ -171,10 +184,12 @@ class ViewController: UIViewController {
     }
     
     func blurTap(sender: UIButton!) {
-        isBlur = true
+        /*isBlur = true
         isBlack = false
         makeBorder(btn: blurButton)
-        removeBorder(btn: blackButton)
+        removeBorder(btn: blackButton)*/
+
+        print("BLur Tapped")
     }
 
     func blackTap(sender: UIButton!){
@@ -193,10 +208,22 @@ class ViewController: UIViewController {
     }
 
     func switchChanged(mySwitch: UISwitch) {
-        let value = mySwitch.isOn
+        var value = mySwitch.isOn
 
         print("Curr Switch : \(value)")
-        // Do something
+        switch (value) {
+        case true:
+            showGridLines()
+        case false:
+            hideGridLines()
+        }
+    }
+
+    func sliderChanged(slider: UISlider){
+        var value = slider.value
+
+        value = value*10
+        blur.blurRadius = CGFloat(value)
     }
 
     func makeBorder(btn: UIButton){
