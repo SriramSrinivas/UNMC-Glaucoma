@@ -6,13 +6,11 @@ class ViewController: UIViewController {
     let screenSize: CGRect = UIScreen.main.bounds
     let blur = VisualEffectView()
     let blurButton = UIButton()
-    let blackButton = UIButton()
-    let undoButton = UIButton()
-    let gridRect1 = UIButton()
-    let gridRect2 = UIButton()
     var isBlur: Bool = false
-    var isBlack: Bool = false
-    var tag = 2
+    let sideStack = UIStackView()
+    let controlStack = UIStackView()
+
+    var views = [UIView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +25,11 @@ class ViewController: UIViewController {
         view.addSubview(sideView)
 
         loadImage(mainImgView: mainImgView)
-        //addGridLines(view: mainImgView)
 
         addToggle(sideView: sideView)
-        addSlider(sideView: sideView)
 
         initSideView(sideView: sideView)
+        initSaveCancel(sideView: sideView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,30 +51,64 @@ class ViewController: UIViewController {
         cloneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         cloneButton.backgroundColor = UIColor(hexString: "#0D47A1")
-        //blkButton.addTarget(self, action: #selector(blackTap), for: .touchUpInside)
+        cloneButton.addTarget(self, action: #selector(cloneTap), for: .touchUpInside)
 
-        let stackView = UIStackView()
-        stackView.axis = UILayoutConstraintAxis.vertical
-        stackView.distribution = UIStackViewDistribution.equalSpacing
-        stackView.alignment = UIStackViewAlignment.center
-        stackView.spacing = 20.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        sideStack.axis = UILayoutConstraintAxis.vertical
+        sideStack.distribution = UIStackViewDistribution.equalSpacing
+        sideStack.alignment = UIStackViewAlignment.center
+        sideStack.spacing = 20.0
+        sideStack.translatesAutoresizingMaskIntoConstraints = false
 
-        stackView.addArrangedSubview(bButton)
-        stackView.addArrangedSubview(cloneButton)
+        sideStack.addArrangedSubview(bButton)
+        sideStack.addArrangedSubview(cloneButton)
 
-        sideView.addSubview(stackView)
+        sideView.addSubview(sideStack)
 
-        stackView.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
+        sideStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        sideStack.centerYAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
+    }
+
+    func initSaveCancel(sideView: UIView){
+
+        let save = UIButton()
+        save.setTitle("Save", for: UIControlState.normal)
+        save.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        save.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        save.backgroundColor = UIColor(hexString: "#4CAF50")
+        save.addTarget(self, action: #selector(saveTap), for: .touchUpInside)
+
+        let cancel = UIButton()
+        cancel.setTitle("Cancel", for: UIControlState.normal)
+        cancel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        cancel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        cancel.backgroundColor = UIColor(hexString: "#f44336")
+        cancel.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
+
+        controlStack.axis = UILayoutConstraintAxis.horizontal
+        controlStack.distribution = UIStackViewDistribution.equalSpacing
+        controlStack.alignment = UIStackViewAlignment.center
+        controlStack.spacing = 10.0
+        controlStack.translatesAutoresizingMaskIntoConstraints = false
+
+        controlStack.addArrangedSubview(save)
+        controlStack.addArrangedSubview(cancel)
+
+        sideView.addSubview(controlStack)
+
+        controlStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        controlStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
+
+        controlStack.isHidden = true
     }
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
-        blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 300, height: 300)
-        blur.layer.borderWidth = 10
+        blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
+        blur.layer.borderWidth = 5
         blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
         blur.blurRadius = 10
+
+        blur.isHidden = false
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         blur.addGestureRecognizer(gestureRecognizer)
@@ -104,37 +135,94 @@ class ViewController: UIViewController {
         sideView.addSubview(toggle)
     }
 
-    func addSlider(sideView: UIView){
+    func addSlider(view: UIView){
 
-        let slider = UISlider()
+        let text = UITextField()
+        text.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        text.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        text.text = "Text"
+        text.textColor = UIColor.green
 
-        slider.frame = CGRect(x: sideView.frame.size.width/3, y: screenSize.height - 100, width: 100, height: 100)
-        slider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+        let text1 = UITextField()
+        text1.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        text1.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        text1.text = "Text"
+        text1.textColor = UIColor.green
 
-        sideView.addSubview(slider)
+        let radSlider = UISlider()
+        radSlider.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        radSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        radSlider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+
+        let sizeSlider = UISlider()
+        sizeSlider.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        sizeSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        //sizeSlider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+
+        let sliderStack = UIStackView()
+        sliderStack.axis = UILayoutConstraintAxis.vertical
+        sliderStack.distribution = UIStackViewDistribution.equalSpacing
+        sliderStack.alignment = UIStackViewAlignment.center
+        sliderStack.spacing = 10.0
+        sliderStack.translatesAutoresizingMaskIntoConstraints = false
+
+        //sliderStack.addArrangedSubview(radSlider)
+        sliderStack.addArrangedSubview(text1)
+        sliderStack.addArrangedSubview(text)
+        //sliderStack.addArrangedSubview(sizeSlider)
+
+        view.addSubview(sliderStack)
+
+        sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        sliderStack.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    func addGridLines(view: UIView) {
+    func addGridLineUpdate(mainView: UIView){
 
-        gridRect1.frame = CGRect(x: view.frame.size.width/3 , y: -10, width: view.frame.size.width/3 , height: (view.frame.size.height) + 20)
-        gridRect1.layer.borderWidth = 4
-        gridRect1.layer.borderColor = UIColor.white.cgColor
-
-        gridRect2.frame = CGRect(x: -10, y: view.frame.size.height/3, width: (view.frame.size.width) + 20, height: view.frame.height/3)
-        gridRect2.layer.borderWidth = 4
-        gridRect2.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        let doYourPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 100, height: 100))
+        doYourPath.move(to: CGPoint(x: 300, y: 300))
+        let layer = CAShapeLayer()
+        layer.path = doYourPath.cgPath
+        layer.strokeColor = UIColor.white.cgColor
+        layer.fillColor = UIColor.white.cgColor
+        mainView.layer.addSublayer(layer)
     }
 
-    func blurTap(sender: UIButton!) {
+    func blurTap(sender: UIButton!){
         isBlur = true
-        print("BLur Tapped")
+        showStack(stack: .controlStack)
     }
 
-    func undoTap(sender: UIButton!){
-        let viewWithTag = self.view.viewWithTag(tag - 1)
-        viewWithTag?.removeFromSuperview()
-        if(tag != 1) {
-            tag -= 1
+    func saveTap(sender: UIButton!){
+        let tempView = VisualEffectView()
+        tempView.frame = blur.frame
+        tempView.blurRadius = 2
+        blur.isHidden = true
+        self.view.addSubview(tempView)
+
+        showStack(stack: .sideStack)
+        isBlur = false
+    }
+
+    func cancelTap(sender: UIButton!){
+        blur.isHidden = true
+
+        showStack(stack: .sideStack)
+        isBlur = false
+    }
+
+    func cloneTap(sender: UIButton!){
+
+    }
+
+    func showStack(stack: stackType){
+        switch(stack){
+            case .sideStack:
+                sideStack.isHidden = false
+                controlStack.isHidden = true
+            case .controlStack:
+                sideStack.isHidden = true
+                controlStack.isHidden = false
         }
     }
 
@@ -151,8 +239,6 @@ class ViewController: UIViewController {
     }
 
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-
-        print("Handle Pan")
 
         if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
 
@@ -176,10 +262,11 @@ class ViewController: UIViewController {
         if(isBlur) {
             addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
         }
-        else if(isBlack) {
-            print("No")
-        }
     }
+}
+
+enum stackType{
+    case sideStack, controlStack
 }
 
 extension UIColor {
