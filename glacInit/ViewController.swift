@@ -6,13 +6,9 @@ class ViewController: UIViewController {
     let screenSize: CGRect = UIScreen.main.bounds
     let blur = VisualEffectView()
     let blurButton = UIButton()
-    let blackButton = UIButton()
-    let undoButton = UIButton()
-    let gridRect1 = UIButton()
-    let gridRect2 = UIButton()
     var isBlur: Bool = false
-    var isBlack: Bool = false
-    var tag = 2
+
+    var views = [UIView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +23,6 @@ class ViewController: UIViewController {
         view.addSubview(sideView)
 
         loadImage(mainImgView: mainImgView)
-        //addGridLines(view: mainImgView)
 
         addToggle(sideView: sideView)
         addSlider(sideView: sideView)
@@ -54,7 +49,7 @@ class ViewController: UIViewController {
         cloneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         cloneButton.backgroundColor = UIColor(hexString: "#0D47A1")
-        //blkButton.addTarget(self, action: #selector(blackTap), for: .touchUpInside)
+        cloneButton.addTarget(self, action: #selector(cloneTap), for: .touchUpInside)
 
         let stackView = UIStackView()
         stackView.axis = UILayoutConstraintAxis.vertical
@@ -74,10 +69,12 @@ class ViewController: UIViewController {
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
-        blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 300, height: 300)
-        blur.layer.borderWidth = 10
+        blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
+        blur.layer.borderWidth = 5
         blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
         blur.blurRadius = 10
+
+        blur.isHidden = false
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         blur.addGestureRecognizer(gestureRecognizer)
@@ -108,21 +105,21 @@ class ViewController: UIViewController {
 
         let slider = UISlider()
 
-        slider.frame = CGRect(x: sideView.frame.size.width/3, y: screenSize.height - 100, width: 100, height: 100)
+        slider.frame = CGRect(x: sideView.frame.size.width/3, y: screenSize.height*(3/4), width: 100, height: 100)
         slider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
 
         sideView.addSubview(slider)
     }
 
-    func addGridLines(view: UIView) {
+    func addGridLineUpdate(mainView: UIView){
 
-        gridRect1.frame = CGRect(x: view.frame.size.width/3 , y: -10, width: view.frame.size.width/3 , height: (view.frame.size.height) + 20)
-        gridRect1.layer.borderWidth = 4
-        gridRect1.layer.borderColor = UIColor.white.cgColor
-
-        gridRect2.frame = CGRect(x: -10, y: view.frame.size.height/3, width: (view.frame.size.width) + 20, height: view.frame.height/3)
-        gridRect2.layer.borderWidth = 4
-        gridRect2.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        let doYourPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 100, height: 100))
+        doYourPath.move(to: CGPoint(x: 300, y: 300))
+        let layer = CAShapeLayer()
+        layer.path = doYourPath.cgPath
+        layer.strokeColor = UIColor.white.cgColor
+        layer.fillColor = UIColor.white.cgColor
+        mainView.layer.addSublayer(layer)
     }
 
     func blurTap(sender: UIButton!) {
@@ -130,12 +127,13 @@ class ViewController: UIViewController {
         print("BLur Tapped")
     }
 
-    func undoTap(sender: UIButton!){
-        let viewWithTag = self.view.viewWithTag(tag - 1)
-        viewWithTag?.removeFromSuperview()
-        if(tag != 1) {
-            tag -= 1
-        }
+    func cloneTap(sender: UIButton!){
+        let tempView = VisualEffectView()
+        tempView.frame = blur.frame
+        tempView.blurRadius = 2
+        blur.isHidden = true
+        self.view.addSubview(tempView)
+        print("cloneTap : \(tempView.frame)")
     }
 
     func switchChanged(mySwitch: UISwitch) {
@@ -151,8 +149,6 @@ class ViewController: UIViewController {
     }
 
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-
-        print("Handle Pan")
 
         if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
 
@@ -175,9 +171,6 @@ class ViewController: UIViewController {
 
         if(isBlur) {
             addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
-        }
-        else if(isBlack) {
-            print("No")
         }
     }
 }
