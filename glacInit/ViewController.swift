@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         loadImage(mainImgView: mainImgView)
 
         addToggle(sideView: sideView)
-        addSlider(sideView: sideView)
 
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
@@ -136,14 +135,46 @@ class ViewController: UIViewController {
         sideView.addSubview(toggle)
     }
 
-    func addSlider(sideView: UIView){
+    func addSlider(view: UIView){
 
-        let slider = UISlider()
+        let text = UITextField()
+        text.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        text.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        text.text = "Text"
+        text.textColor = UIColor.green
 
-        slider.frame = CGRect(x: sideView.frame.size.width/3, y: screenSize.height*(3/4), width: 100, height: 100)
-        slider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+        let text1 = UITextField()
+        text1.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        text1.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        text1.text = "Text"
+        text1.textColor = UIColor.green
 
-        sideView.addSubview(slider)
+        let radSlider = UISlider()
+        radSlider.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        radSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        radSlider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+
+        let sizeSlider = UISlider()
+        sizeSlider.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        sizeSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        //sizeSlider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+
+        let sliderStack = UIStackView()
+        sliderStack.axis = UILayoutConstraintAxis.vertical
+        sliderStack.distribution = UIStackViewDistribution.equalSpacing
+        sliderStack.alignment = UIStackViewAlignment.center
+        sliderStack.spacing = 10.0
+        sliderStack.translatesAutoresizingMaskIntoConstraints = false
+
+        //sliderStack.addArrangedSubview(radSlider)
+        sliderStack.addArrangedSubview(text1)
+        sliderStack.addArrangedSubview(text)
+        //sliderStack.addArrangedSubview(sizeSlider)
+
+        view.addSubview(sliderStack)
+
+        sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        sliderStack.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
     func addGridLineUpdate(mainView: UIView){
