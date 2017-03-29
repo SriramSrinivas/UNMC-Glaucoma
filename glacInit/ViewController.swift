@@ -7,6 +7,8 @@ class ViewController: UIViewController {
     let blur = VisualEffectView()
     let blurButton = UIButton()
     var isBlur: Bool = false
+    let sideStack = UIStackView()
+    let controlStack = UIStackView()
 
     var views = [UIView]()
 
@@ -28,6 +30,7 @@ class ViewController: UIViewController {
         addSlider(sideView: sideView)
 
         initSideView(sideView: sideView)
+        initSaveCancel(sideView: sideView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,20 +54,52 @@ class ViewController: UIViewController {
         cloneButton.backgroundColor = UIColor(hexString: "#0D47A1")
         cloneButton.addTarget(self, action: #selector(cloneTap), for: .touchUpInside)
 
-        let stackView = UIStackView()
-        stackView.axis = UILayoutConstraintAxis.vertical
-        stackView.distribution = UIStackViewDistribution.equalSpacing
-        stackView.alignment = UIStackViewAlignment.center
-        stackView.spacing = 20.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        sideStack.axis = UILayoutConstraintAxis.vertical
+        sideStack.distribution = UIStackViewDistribution.equalSpacing
+        sideStack.alignment = UIStackViewAlignment.center
+        sideStack.spacing = 20.0
+        sideStack.translatesAutoresizingMaskIntoConstraints = false
 
-        stackView.addArrangedSubview(bButton)
-        stackView.addArrangedSubview(cloneButton)
+        sideStack.addArrangedSubview(bButton)
+        sideStack.addArrangedSubview(cloneButton)
 
-        sideView.addSubview(stackView)
+        sideView.addSubview(sideStack)
 
-        stackView.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
+        sideStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        sideStack.centerYAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
+    }
+
+    func initSaveCancel(sideView: UIView){
+
+        let save = UIButton()
+        save.setTitle("Save", for: UIControlState.normal)
+        save.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        save.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        save.backgroundColor = UIColor(hexString: "#4CAF50")
+        save.addTarget(self, action: #selector(saveTap), for: .touchUpInside)
+
+        let cancel = UIButton()
+        cancel.setTitle("Cancel", for: UIControlState.normal)
+        cancel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        cancel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        cancel.backgroundColor = UIColor(hexString: "#f44336")
+        cancel.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
+
+        controlStack.axis = UILayoutConstraintAxis.horizontal
+        controlStack.distribution = UIStackViewDistribution.equalSpacing
+        controlStack.alignment = UIStackViewAlignment.center
+        controlStack.spacing = 10.0
+        controlStack.translatesAutoresizingMaskIntoConstraints = false
+
+        controlStack.addArrangedSubview(save)
+        controlStack.addArrangedSubview(cancel)
+
+        sideView.addSubview(controlStack)
+
+        controlStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        controlStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
+
+        controlStack.isHidden = true
     }
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
@@ -122,18 +157,42 @@ class ViewController: UIViewController {
         mainView.layer.addSublayer(layer)
     }
 
-    func blurTap(sender: UIButton!) {
+    func blurTap(sender: UIButton!){
         isBlur = true
-        print("BLur Tapped")
+        showStack(stack: .controlStack)
     }
 
-    func cloneTap(sender: UIButton!){
+    func saveTap(sender: UIButton!){
         let tempView = VisualEffectView()
         tempView.frame = blur.frame
         tempView.blurRadius = 2
         blur.isHidden = true
         self.view.addSubview(tempView)
-        print("cloneTap : \(tempView.frame)")
+
+        showStack(stack: .sideStack)
+        isBlur = false
+    }
+
+    func cancelTap(sender: UIButton!){
+        blur.isHidden = true
+
+        showStack(stack: .sideStack)
+        isBlur = false
+    }
+
+    func cloneTap(sender: UIButton!){
+
+    }
+
+    func showStack(stack: stackType){
+        switch(stack){
+            case .sideStack:
+                sideStack.isHidden = false
+                controlStack.isHidden = true
+            case .controlStack:
+                sideStack.isHidden = true
+                controlStack.isHidden = false
+        }
     }
 
     func switchChanged(mySwitch: UISwitch) {
@@ -173,6 +232,10 @@ class ViewController: UIViewController {
             addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
         }
     }
+}
+
+enum stackType{
+    case sideStack, controlStack
 }
 
 extension UIColor {
