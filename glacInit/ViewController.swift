@@ -30,6 +30,8 @@ class ViewController: UIViewController {
 
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
+
+        addGridLineUpdate(mainView: mainImgView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -122,6 +124,14 @@ class ViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
         mainImgView.addSubview(imageView)
+
+        let drawImage = image?.cgImage!.cropping(to: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let bimage = UIImage(cgImage: drawImage!)
+        let s = UIImageView(image: bimage)
+        s.backgroundColor = UIColor.black
+
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        blur.addGestureRecognizer(gestureRecognizer)
     }
 
     func addToggle(sideView: UIView){
@@ -179,13 +189,30 @@ class ViewController: UIViewController {
 
     func addGridLineUpdate(mainView: UIView){
 
-        let doYourPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 100, height: 100))
-        doYourPath.move(to: CGPoint(x: 300, y: 300))
-        let layer = CAShapeLayer()
-        layer.path = doYourPath.cgPath
-        layer.strokeColor = UIColor.white.cgColor
-        layer.fillColor = UIColor.white.cgColor
-        mainView.layer.addSublayer(layer)
+        let line1 = UIButton()
+        line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 10, height: mainView.frame.height)
+        line1.layer.borderWidth = 10
+        line1.layer.borderColor = UIColor.green.cgColor
+
+        let line2 = UIButton()
+        line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 10, height: mainView.frame.height)
+        line2.layer.borderWidth = 10
+        line2.layer.borderColor = UIColor.green.cgColor
+
+        let line3 = UIButton()
+        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.3, width: mainView.frame.width, height: 10)
+        line3.layer.borderWidth = 10
+        line3.layer.borderColor = UIColor.gray.cgColor
+
+        let line4 = UIButton()
+        line4.frame = CGRect(x: 0, y: mainView.frame.height*0.66, width: mainView.frame.width, height: 10)
+        line4.layer.borderWidth = 10
+        line4.layer.borderColor = UIColor.gray.cgColor
+
+        mainView.addSubview(line1)
+        mainView.addSubview(line2)
+        mainView.addSubview(line3)
+        mainView.addSubview(line4)
     }
 
     func blurTap(sender: UIButton!){
