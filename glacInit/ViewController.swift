@@ -7,10 +7,12 @@ class ViewController: UIViewController {
     let blur = VisualEffectView()
     let blurButton = UIButton()
     var isBlur: Bool = false
+
     let sideStack = UIStackView()
     let controlStack = UIStackView()
+    let toggleStack = UIStackView()
 
-    var views = [UIView]()
+    var gridViews = [UIView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +28,11 @@ class ViewController: UIViewController {
 
         loadImage(mainImgView: mainImgView)
 
-        addToggle(sideView: sideView)
-
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
+        initToggleStack(sideView: sideView)
+
+        addGridLineUpdate(mainView: mainImgView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,6 +104,33 @@ class ViewController: UIViewController {
         controlStack.isHidden = true
     }
 
+    func initToggleStack(sideView: UIView){
+
+        let gridSwitch = UISwitch()
+        gridSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        gridSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        gridSwitch.isOn = true
+        gridSwitch.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
+
+        let origSwitch = UISwitch()
+        origSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        origSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
+
+        toggleStack.axis = UILayoutConstraintAxis.vertical
+        toggleStack.distribution = UIStackViewDistribution.equalSpacing
+        toggleStack.alignment = UIStackViewAlignment.center
+        toggleStack.spacing = 5.0
+        toggleStack.translatesAutoresizingMaskIntoConstraints = false
+
+        toggleStack.addArrangedSubview(gridSwitch)
+        toggleStack.addArrangedSubview(origSwitch)
+
+        sideView.addSubview(toggleStack)
+
+        toggleStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        toggleStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
+    }
+
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
         blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
@@ -122,17 +152,14 @@ class ViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
         mainImgView.addSubview(imageView)
-    }
 
-    func addToggle(sideView: UIView){
+        let drawImage = image?.cgImage!.cropping(to: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let bimage = UIImage(cgImage: drawImage!)
+        let s = UIImageView(image: bimage)
+        s.backgroundColor = UIColor.black
 
-        let screenHeight = screenSize.height
-        let toggle = UISwitch()
-
-        toggle.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight - 200, width: 100, height: 100)
-        toggle.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
-
-        sideView.addSubview(toggle)
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        blur.addGestureRecognizer(gestureRecognizer)
     }
 
     func addSlider(view: UIView){
@@ -179,13 +206,34 @@ class ViewController: UIViewController {
 
     func addGridLineUpdate(mainView: UIView){
 
-        let doYourPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 100, height: 100))
-        doYourPath.move(to: CGPoint(x: 300, y: 300))
-        let layer = CAShapeLayer()
-        layer.path = doYourPath.cgPath
-        layer.strokeColor = UIColor.white.cgColor
-        layer.fillColor = UIColor.white.cgColor
-        mainView.layer.addSublayer(layer)
+        let line1 = UIButton()
+        line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 10, height: mainView.frame.height)
+        line1.layer.borderWidth = 10
+        line1.layer.borderColor = UIColor.green.cgColor
+
+        let line2 = UIButton()
+        line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 10, height: mainView.frame.height)
+        line2.layer.borderWidth = 10
+        line2.layer.borderColor = UIColor.green.cgColor
+
+        let line3 = UIButton()
+        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.3, width: mainView.frame.width, height: 10)
+        line3.layer.borderWidth = 10
+        line3.layer.borderColor = UIColor.gray.cgColor
+
+        let line4 = UIButton()
+        line4.frame = CGRect(x: 0, y: mainView.frame.height*0.66, width: mainView.frame.width, height: 10)
+        line4.layer.borderWidth = 10
+        line4.layer.borderColor = UIColor.gray.cgColor
+
+        gridViews.append(line1)
+        gridViews.append(line2)
+        gridViews.append(line3)
+        gridViews.append(line4)
+
+        for i in gridViews {
+            mainView.addSubview(i)
+        }
     }
 
     func blurTap(sender: UIButton!){
@@ -229,12 +277,15 @@ class ViewController: UIViewController {
     func switchChanged(mySwitch: UISwitch) {
         var value = mySwitch.isOn
 
-        print("Curr Switch : \(value)")
         switch (value) {
-        case true:
-            print("Hi")
         case false:
-            print("Bye")
+            for i in gridViews {
+                i.isHidden = true
+            }
+        case true:
+            for i in gridViews {
+                i.isHidden = false
+            }
         }
     }
 
