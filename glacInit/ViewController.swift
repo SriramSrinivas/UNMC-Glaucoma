@@ -7,10 +7,12 @@ class ViewController: UIViewController {
     let blur = VisualEffectView()
     let blurButton = UIButton()
     var isBlur: Bool = false
+
     let sideStack = UIStackView()
     let controlStack = UIStackView()
+    let toggleStack = UIStackView()
 
-    var views = [UIView]()
+    var gridViews = [UIView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +28,9 @@ class ViewController: UIViewController {
 
         loadImage(mainImgView: mainImgView)
 
-        addToggle(sideView: sideView)
-
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
+        initToggleStack(sideView: sideView)
 
         addGridLineUpdate(mainView: mainImgView)
     }
@@ -103,6 +104,33 @@ class ViewController: UIViewController {
         controlStack.isHidden = true
     }
 
+    func initToggleStack(sideView: UIView){
+
+        let gridSwitch = UISwitch()
+        gridSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        gridSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        gridSwitch.isOn = true
+        gridSwitch.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
+
+        let origSwitch = UISwitch()
+        origSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        origSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
+
+        toggleStack.axis = UILayoutConstraintAxis.vertical
+        toggleStack.distribution = UIStackViewDistribution.equalSpacing
+        toggleStack.alignment = UIStackViewAlignment.center
+        toggleStack.spacing = 5.0
+        toggleStack.translatesAutoresizingMaskIntoConstraints = false
+
+        toggleStack.addArrangedSubview(gridSwitch)
+        toggleStack.addArrangedSubview(origSwitch)
+
+        sideView.addSubview(toggleStack)
+
+        toggleStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        toggleStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
+    }
+
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
         blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
@@ -132,17 +160,6 @@ class ViewController: UIViewController {
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         blur.addGestureRecognizer(gestureRecognizer)
-    }
-
-    func addToggle(sideView: UIView){
-
-        let screenHeight = screenSize.height
-        let toggle = UISwitch()
-
-        toggle.frame = CGRect(x: sideView.frame.size.width/4, y: screenHeight - 200, width: 100, height: 100)
-        toggle.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
-
-        sideView.addSubview(toggle)
     }
 
     func addSlider(view: UIView){
@@ -209,10 +226,14 @@ class ViewController: UIViewController {
         line4.layer.borderWidth = 10
         line4.layer.borderColor = UIColor.gray.cgColor
 
-        mainView.addSubview(line1)
-        mainView.addSubview(line2)
-        mainView.addSubview(line3)
-        mainView.addSubview(line4)
+        gridViews.append(line1)
+        gridViews.append(line2)
+        gridViews.append(line3)
+        gridViews.append(line4)
+
+        for i in gridViews {
+            mainView.addSubview(i)
+        }
     }
 
     func blurTap(sender: UIButton!){
@@ -256,12 +277,15 @@ class ViewController: UIViewController {
     func switchChanged(mySwitch: UISwitch) {
         var value = mySwitch.isOn
 
-        print("Curr Switch : \(value)")
         switch (value) {
-        case true:
-            print("Hi")
         case false:
-            print("Bye")
+            for i in gridViews {
+                i.isHidden = true
+            }
+        case true:
+            for i in gridViews {
+                i.isHidden = false
+            }
         }
     }
 
