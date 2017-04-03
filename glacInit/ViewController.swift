@@ -153,7 +153,7 @@ class ViewController: UIViewController {
         imageView.image = image
         mainImgView.addSubview(imageView)
 
-        let image2 = image!.crop(rect: CGRect(x: 200, y: 200, width: 400, height: 200))
+        let image2 = image!.crop(rect: CGRect(x: 500, y: 500, width: 400, height: 400))
         let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         image2view.backgroundColor = UIColor(patternImage: image2)
         let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
