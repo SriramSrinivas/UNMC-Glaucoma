@@ -148,15 +148,18 @@ class ViewController: UIViewController {
     
     func loadImage(mainImgView: UIView){
 
-        let image = UIImage(named: "tes-1");
+        var image = UIImage(named: "tes-1");
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
         mainImgView.addSubview(imageView)
 
-        let drawImage = image?.cgImage!.cropping(to: CGRect(x: 0, y: 0, width: 320, height: 480))
-        let bimage = UIImage(cgImage: drawImage!)
-        let s = UIImageView(image: bimage)
-        s.backgroundColor = UIColor.black
+        let image2 = image!.crop(rect: CGRect(x: 200, y: 200, width: 400, height: 200))
+        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        image2view.backgroundColor = UIColor(patternImage: image2)
+        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        image2view.addGestureRecognizer(gestureRecognizer1)
+        view.addSubview(image2view)
+
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         blur.addGestureRecognizer(gestureRecognizer)
@@ -337,6 +340,20 @@ extension UIColor {
             (a, r, g, b) = (255, 0, 0, 0)
         }
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+}
+
+extension UIImage {
+    func crop( rect: CGRect) -> UIImage {
+        var rect = rect
+        rect.origin.x*=self.scale
+        rect.origin.y*=self.scale
+        rect.size.width*=self.scale
+        rect.size.height*=self.scale
+
+        let imageRef = self.cgImage!.cropping(to: rect)
+        let image = UIImage(cgImage: imageRef!, scale: 5, orientation: self.imageOrientation)
+        return image
     }
 }
 
