@@ -145,7 +145,7 @@ class ViewController: UIViewController {
 
         self.view.addSubview(blur)
     }
-    
+
     func loadImage(mainImgView: UIView){
 
         var image = UIImage(named: "tes-1");
@@ -153,8 +153,8 @@ class ViewController: UIViewController {
         imageView.image = image
         mainImgView.addSubview(imageView)
 
-        let image2 = image!.crop(rect: CGRect(x: 500, y: 500, width: 400, height: 400))
-        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        let image2 = image!.crop(rect: CGRect(x: 500, y: 500, width: 800, height: 800))
+        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         image2view.backgroundColor = UIColor(patternImage: image2)
         let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         image2view.addGestureRecognizer(gestureRecognizer1)
@@ -356,4 +356,3 @@ extension UIImage {
         return image
     }
 }
-
