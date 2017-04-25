@@ -7,11 +7,14 @@ class ViewController: UIViewController {
     let blur = VisualEffectView()
     let blurButton = UIButton()
     var isBlur: Bool = false
+    let tempFrame = UIView()
+    var bckImage = UIImage()
 
     let sideStack = UIStackView()
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
     let sliderStack = UIStackView()
+    let cloneStack = UIStackView()
 
     var gridViews = [UIView]()
     
@@ -36,6 +39,7 @@ class ViewController: UIViewController {
         initToggleStack(sideView: sideView)
         
         addSlider(view: sideView)
+        addCloneSideStack(sideView: sideView)
 
         addGridLineUpdate(mainView: mainImgView)
     }
@@ -135,6 +139,38 @@ class ViewController: UIViewController {
         toggleStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
         toggleStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
     }
+    
+    func addCloneSideStack(sideView: UIView){
+        
+        let cloneButton = UIButton()
+        cloneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        cloneButton.addTarget(self, action: #selector(cloneToTap), for: .touchUpInside)
+        cloneButton.setTitle("Clone To", for: UIControlState.normal)
+        cloneButton.backgroundColor = UIColor.red
+        
+        let sizeSlider = UISlider()
+        sizeSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        sizeSlider.widthAnchor.constraint(equalToConstant: (sideView.frame.width - 50)).isActive = true
+        sizeSlider.minimumValue = 1
+        sizeSlider.maximumValue = 4
+        
+        cloneStack.axis = UILayoutConstraintAxis.vertical
+        cloneStack.distribution = UIStackViewDistribution.equalSpacing
+        cloneStack.alignment = UIStackViewAlignment.center
+        cloneStack.spacing = 5.0
+        cloneStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        cloneStack.addArrangedSubview(cloneButton)
+        cloneStack.addArrangedSubview(sizeSlider)
+        
+        sideView.addSubview(cloneStack)
+        
+        cloneStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
+        cloneStack.bottomAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
+        
+        cloneStack.isHidden = true
+    }
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
 
@@ -154,18 +190,12 @@ class ViewController: UIViewController {
 
     func loadImage(mainImgView: UIView){
 
-        let image = UIImage(named: "tes-1");
+        let image = UIImage(named: "tes-1")
+        bckImage = image!
+        
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
         mainImgView.addSubview(imageView)
-
-        let image2 = image!.crop(rect: CGRect(x: 500, y: 500, width: 800, height: 800))
-        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        image2view.backgroundColor = UIColor(patternImage: image2)
-        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        image2view.addGestureRecognizer(gestureRecognizer1)
-        view.addSubview(image2view)
-
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         blur.addGestureRecognizer(gestureRecognizer)
@@ -276,7 +306,25 @@ class ViewController: UIViewController {
     }
 
     func cloneTap(sender: UIButton!){
+        
+        sideStack.isHidden = true
+        cloneStack.isHidden = false
+        
+        tempFrame.isHidden = false
 
+        tempFrame.frame = CGRect(x: 400, y: 400, width: 100, height: 100)
+        tempFrame.layer.borderWidth = 5
+        tempFrame.layer.borderColor = UIColor(hexString: "F44556").cgColor
+
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        tempFrame.addGestureRecognizer(gestureRecognizer)
+        
+        view.addSubview(tempFrame)
+    }
+    
+    func cloneToTap(sender: UIButton!){
+        
+        addClone(xLoc: tempFrame.frame.origin.x, yLoc: tempFrame.frame.origin.y)
     }
 
     func showStack(stack: stackType){
@@ -331,6 +379,17 @@ class ViewController: UIViewController {
         
         blur.blurRadius = CGFloat(value)
         tBlurInt = blur.blurRadius
+    }
+    
+    func addClone(xLoc: CGFloat, yLoc: CGFloat){
+        
+        let image2 = bckImage.crop(rect: CGRect(x: (xLoc*5), y: (yLoc*5), width: 500, height: 500))
+        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        image2view.backgroundColor = UIColor(patternImage: image2)
+        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        image2view.addGestureRecognizer(gestureRecognizer1)
+        
+        view.addSubview(image2view)
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
