@@ -11,8 +11,11 @@ class ViewController: UIViewController {
     let sideStack = UIStackView()
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
+    let sliderStack = UIStackView()
 
     var gridViews = [UIView]()
+    
+    var tBlurInt = CGFloat()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +34,8 @@ class ViewController: UIViewController {
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
         initToggleStack(sideView: sideView)
+        
+        addSlider(view: sideView)
 
         addGridLineUpdate(mainView: mainImgView)
     }
@@ -137,6 +142,7 @@ class ViewController: UIViewController {
         blur.layer.borderWidth = 5
         blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
         blur.blurRadius = 10
+        tBlurInt = blur.blurRadius
 
         blur.isHidden = false
 
@@ -145,7 +151,7 @@ class ViewController: UIViewController {
 
         self.view.addSubview(blur)
     }
-    
+
     func loadImage(mainImgView: UIView){
 
         let image = UIImage(named: "tes-1");
@@ -153,10 +159,13 @@ class ViewController: UIViewController {
         imageView.image = image
         mainImgView.addSubview(imageView)
 
-        let drawImage = image?.cgImage!.cropping(to: CGRect(x: 0, y: 0, width: 320, height: 480))
-        let bimage = UIImage(cgImage: drawImage!)
-        let s = UIImageView(image: bimage)
-        s.backgroundColor = UIColor.black
+        let image2 = image!.crop(rect: CGRect(x: 500, y: 500, width: 800, height: 800))
+        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        image2view.backgroundColor = UIColor(patternImage: image2)
+        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        image2view.addGestureRecognizer(gestureRecognizer1)
+        view.addSubview(image2view)
+
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         blur.addGestureRecognizer(gestureRecognizer)
@@ -164,44 +173,49 @@ class ViewController: UIViewController {
 
     func addSlider(view: UIView){
 
-        let text = UITextField()
-        text.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        text.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        text.text = "Text"
-        text.textColor = UIColor.green
+        let intText = UILabel()
+        intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        intText.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        intText.text = "Blur Intensity"
+        intText.textColor = UIColor.white
 
-        let text1 = UITextField()
-        text1.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        text1.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        text1.text = "Text"
-        text1.textColor = UIColor.green
-
-        let radSlider = UISlider()
-        radSlider.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        radSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        radSlider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+        let sizeText = UILabel()
+        sizeText.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        sizeText.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        sizeText.text = "Blur Size"
+        sizeText.textColor = UIColor.white
 
         let sizeSlider = UISlider()
-        sizeSlider.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        sizeSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         sizeSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        //sizeSlider.addTarget(self, action: #selector(sliderChanged), for: UIControlEvents.valueChanged)
+        sizeSlider.addTarget(self, action: #selector(sliderSize), for: UIControlEvents.valueChanged)
+        sizeSlider.minimumValue = 1
+        sizeSlider.maximumValue = 4
 
-        let sliderStack = UIStackView()
+        let intSlider = UISlider()
+        intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControlEvents.valueChanged)
+        intSlider.minimumValue = 1
+        intSlider.maximumValue = 10
+
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
         sliderStack.alignment = UIStackViewAlignment.center
         sliderStack.spacing = 10.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
-        //sliderStack.addArrangedSubview(radSlider)
-        sliderStack.addArrangedSubview(text1)
-        sliderStack.addArrangedSubview(text)
-        //sliderStack.addArrangedSubview(sizeSlider)
+        sliderStack.addArrangedSubview(sizeText)
+        sliderStack.addArrangedSubview(sizeSlider)
+        sliderStack.addArrangedSubview(intText)
+        sliderStack.addArrangedSubview(intSlider)
 
         view.addSubview(sliderStack)
 
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        sliderStack.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        sliderStack.isHidden = true
     }
 
     func addGridLineUpdate(mainView: UIView){
@@ -239,12 +253,14 @@ class ViewController: UIViewController {
     func blurTap(sender: UIButton!){
         isBlur = true
         showStack(stack: .controlStack)
+        sliderStack.isHidden = false
+        addBlur(xLoc: 300, yLoc: 300)
     }
 
     func saveTap(sender: UIButton!){
         let tempView = VisualEffectView()
         tempView.frame = blur.frame
-        tempView.blurRadius = 2
+        tempView.blurRadius = tBlurInt
         blur.isHidden = true
         self.view.addSubview(tempView)
 
@@ -268,6 +284,7 @@ class ViewController: UIViewController {
             case .sideStack:
                 sideStack.isHidden = false
                 controlStack.isHidden = true
+                sliderStack.isHidden = true
             case .controlStack:
                 sideStack.isHidden = true
                 controlStack.isHidden = false
@@ -275,7 +292,7 @@ class ViewController: UIViewController {
     }
 
     func switchChanged(mySwitch: UISwitch) {
-        var value = mySwitch.isOn
+        let value = mySwitch.isOn
 
         switch (value) {
         case false:
@@ -300,43 +317,28 @@ class ViewController: UIViewController {
         }
     }
 
-    func sliderChanged(slider: UISlider){
-        var value = slider.value
+    func sliderSize(slider: UISlider){
+        let value = slider.value
 
-        value = value*10
+        print("Value : \(value)")
+        
+        blur.frame.size.height = 100*CGFloat(value)
+        blur.frame.size.width = 100*CGFloat(value)
+    }
+    
+    func sliderIntensity(slider: UISlider){
+        let value = slider.value
+        
         blur.blurRadius = CGFloat(value)
+        tBlurInt = blur.blurRadius
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
+        let _ = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
 
-        if(isBlur) {
-            addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
-        }
-    }
-}
-
-enum stackType{
-    case sideStack, controlStack
-}
-
-extension UIColor {
-    convenience init(hexString: String) {
-        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int = UInt32()
-        Scanner(string: hex).scanHexInt32(&int)
-        let a, r, g, b: UInt32
-        switch hex.characters.count {
-        case 3: // RGB (12-bit)
-            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: // RGB (24-bit)
-            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8: // ARGB (32-bit)
-            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-        default:
-            (a, r, g, b) = (255, 0, 0, 0)
-        }
-        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+        //if(isBlur) {
+            //addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
+        //}
     }
 }
 
