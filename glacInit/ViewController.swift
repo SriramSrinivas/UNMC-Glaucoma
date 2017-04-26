@@ -42,7 +42,8 @@ class ViewController: UIViewController {
 
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
-        initToggleStack(sideView: sideView)
+        //initToggleStack(sideView: sideView)
+        initToggle(sideView: sideView)
         
         addSlider(view: sideView)
         addCloneSideStack(sideView: sideView)
@@ -154,8 +155,10 @@ class ViewController: UIViewController {
         origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
         
         let temp = UIButton()
-        temp.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        temp.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        temp.heightAnchor.constraint(equalToConstant: 50).isActive = false
+        temp.widthAnchor.constraint(equalToConstant: 100).isActive = false
+        temp.isEnabled = false
+        temp.isOpaque = true
 
         toggleStack.axis = UILayoutConstraintAxis.vertical
         toggleStack.distribution = UIStackViewDistribution.equalSpacing
@@ -165,11 +168,42 @@ class ViewController: UIViewController {
 
         toggleStack.addArrangedSubview(gridSwitch)
         toggleStack.addArrangedSubview(origSwitch)
+        toggleStack.addArrangedSubview(temp)
 
         sideView.addSubview(toggleStack)
 
         toggleStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
         toggleStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
+    }
+    
+    func initToggle(sideView: UIView){
+        
+        let gridHeight = sideView.frame.size.height*0.75
+        let origHeight = sideView.frame.size.height*0.85
+    
+        let gridSwitch = UISwitch()
+        gridSwitch.frame = CGRect(x: 30, y: gridHeight, width: 50, height: 100)
+        gridSwitch.isOn = true
+        gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControlEvents.valueChanged)
+        
+        let origSwitch = UISwitch()
+        origSwitch.frame = CGRect(x: 30, y: origHeight, width: 50, height: 100)
+        origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
+        
+        let gridText = UILabel()
+        gridText.frame = CGRect(x: 100, y: gridHeight, width: 150, height: 50)
+        gridText.text = "Grid"
+        gridText.textColor = UIColor.white
+        
+        let origText = UILabel()
+        origText.frame = CGRect(x: 100, y: origHeight, width: 150, height: 50)
+        origText.text = "Original"
+        origText.textColor = UIColor.white
+        
+        sideView.addSubview(gridSwitch)
+        sideView.addSubview(origSwitch)
+        sideView.addSubview(gridText)
+        sideView.addSubview(origText)
     }
     
     func addCloneSideStack(sideView: UIView){
