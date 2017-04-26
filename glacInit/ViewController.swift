@@ -8,12 +8,14 @@ class ViewController: UIViewController {
     let blur = VisualEffectView()
     let blurButton = UIButton()
     var isBlur: Bool = false
+    var isHideMode: Bool = false
     let tempFrame = UIView()
     let tempFrameColor = UIView()
     var bckImage = UIImage()
     let colorPicker = SwiftHSVColorPicker()
     
     let doggoImage = UIView()
+    let trashImage = UIView()
 
     let sideStack = UIStackView()
     let controlStack = UIStackView()
@@ -50,6 +52,7 @@ class ViewController: UIViewController {
         addColorPicker(sideView: sideView)
         
         addDoggo()
+        addTrash()
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,7 +98,7 @@ class ViewController: UIViewController {
 
         sideStack.addArrangedSubview(bButton)
         sideStack.addArrangedSubview(cloneButton)
-        sideStack.addArrangedSubview(colorButton)
+        //sideStack.addArrangedSubview(colorButton)
         sideStack.addArrangedSubview(hideButton)
 
         sideView.addSubview(sideStack)
@@ -149,6 +152,10 @@ class ViewController: UIViewController {
         origSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
         origSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
         origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
+        
+        let temp = UIButton()
+        temp.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        temp.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
         toggleStack.axis = UILayoutConstraintAxis.vertical
         toggleStack.distribution = UIStackViewDistribution.equalSpacing
@@ -339,20 +346,28 @@ class ViewController: UIViewController {
         self.view.addSubview(tempView)
 
         showStack(stack: .sideStack)
+        cloneStack.isHidden = true
         isBlur = false
+        isHideMode = false
     }
 
     func cancelTap(sender: UIButton!){
         blur.isHidden = true
 
         showStack(stack: .sideStack)
+        cloneStack.isHidden = true
         isBlur = false
+        isHideMode = false
+        
+        doggoImage.isHidden = false
+        trashImage.isHidden = false
     }
 
     func cloneTap(sender: UIButton!){
         
         sideStack.isHidden = true
         cloneStack.isHidden = false
+        controlStack.isHidden = false
         
         tempFrame.isHidden = false
 
@@ -381,13 +396,17 @@ class ViewController: UIViewController {
     }
     
     func hideTap(sender: UIButton!){
-        print("Position : \(doggoImage.frame.origin.x) and \(doggoImage.frame.origin.y)")
+        
+        print("Position : \(trashImage.frame.origin.x) and \(trashImage.frame.origin.y)")
+        
+        sideStack.isHidden = true
+        controlStack.isHidden = false
+        isHideMode = true
     }
     
     func addDoggo(){
         
         var image = UIImage(named: "doggo")
-        bckImage = image!
         
         image! = resizeImage(image: image!, targetSize: CGSize(width: 90, height: 90))
         
@@ -400,6 +419,23 @@ class ViewController: UIViewController {
         doggoImage.addGestureRecognizer(gestureRecognizer1)
         
         view.addSubview(doggoImage)
+    }
+    
+    func addTrash(){
+        
+        var image = UIImage(named: "trashcan")
+        
+        image! = resizeImage(image: image!, targetSize: CGSize(width: 130, height: 130))
+        
+        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
+        imageView.image = image
+        
+        trashImage.frame = CGRect(x: -21, y: 366, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        trashImage.backgroundColor = UIColor(patternImage: image!)
+        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(trashTap))
+        trashImage.addGestureRecognizer(gestureRecognizer1)
+        
+        view.addSubview(trashImage)
     }
     
     func cloneToTap(sender: UIButton!){
@@ -454,6 +490,18 @@ class ViewController: UIViewController {
     
     func doggoTap(sender: UITapGestureRecognizer!){
         print("Tap Doggo")
+        
+        if (isHideMode) {
+            doggoImage.isHidden = true
+        }
+    }
+    
+    func trashTap(sender: UITapGestureRecognizer!){
+        print("Tap Trash")
+        
+        if (isHideMode) {
+            trashImage.isHidden = true
+        }
     }
 
     func sliderSize(slider: UISlider){
