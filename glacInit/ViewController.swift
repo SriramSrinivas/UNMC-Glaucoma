@@ -1,5 +1,6 @@
 import UIKit
 import VisualEffectView
+import SwiftHSVColorPicker
 
 class ViewController: UIViewController {
         
@@ -8,7 +9,11 @@ class ViewController: UIViewController {
     let blurButton = UIButton()
     var isBlur: Bool = false
     let tempFrame = UIView()
+    let tempFrameColor = UIView()
     var bckImage = UIImage()
+    let colorPicker = SwiftHSVColorPicker()
+    
+    let doggoImage = UIView()
 
     let sideStack = UIStackView()
     let controlStack = UIStackView()
@@ -17,9 +22,8 @@ class ViewController: UIViewController {
     let cloneStack = UIStackView()
 
     var gridViews = [UIView]()
-    
     var tBlurInt = CGFloat()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +46,10 @@ class ViewController: UIViewController {
         addCloneSideStack(sideView: sideView)
 
         addGridLineUpdate(mainView: mainImgView)
+        
+        addColorPicker(sideView: sideView)
+        
+        addDoggo()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +72,20 @@ class ViewController: UIViewController {
         cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         cloneButton.backgroundColor = UIColor(hexString: "#0D47A1")
         cloneButton.addTarget(self, action: #selector(cloneTap), for: .touchUpInside)
+        
+        let colorButton = UIButton()
+        colorButton.setTitle("Color Tint", for: UIControlState.normal)
+        colorButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        colorButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        colorButton.backgroundColor = UIColor(hexString: "#E91E63")
+        colorButton.addTarget(self, action: #selector(colorTap), for: .touchUpInside)
+        
+        let hideButton = UIButton()
+        hideButton.setTitle("Hide Object", for: .normal)
+        hideButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        hideButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        hideButton.backgroundColor = UIColor(hexString: "651FFF")
+        hideButton.addTarget(self, action: #selector(hideTap), for: .touchUpInside)
 
         sideStack.axis = UILayoutConstraintAxis.vertical
         sideStack.distribution = UIStackViewDistribution.equalSpacing
@@ -73,6 +95,8 @@ class ViewController: UIViewController {
 
         sideStack.addArrangedSubview(bButton)
         sideStack.addArrangedSubview(cloneButton)
+        sideStack.addArrangedSubview(colorButton)
+        sideStack.addArrangedSubview(hideButton)
 
         sideView.addSubview(sideStack)
 
@@ -119,11 +143,12 @@ class ViewController: UIViewController {
         gridSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
         gridSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
         gridSwitch.isOn = true
-        gridSwitch.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
+        gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControlEvents.valueChanged)
 
         let origSwitch = UISwitch()
         origSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
         origSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
 
         toggleStack.axis = UILayoutConstraintAxis.vertical
         toggleStack.distribution = UIStackViewDistribution.equalSpacing
@@ -173,6 +198,9 @@ class ViewController: UIViewController {
     }
 
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
+        
+        tempFrameColor.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+    
 
         blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
         blur.layer.borderWidth = 5
@@ -190,7 +218,7 @@ class ViewController: UIViewController {
 
     func loadImage(mainImgView: UIView){
 
-        let image = UIImage(named: "tes-1")
+        let image = UIImage(named: "mainTes")
         bckImage = image!
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
@@ -279,6 +307,22 @@ class ViewController: UIViewController {
             mainView.addSubview(i)
         }
     }
+    
+    func addColorPicker(sideView: UIView){
+        
+        colorPicker.frame = CGRect(x: 0, y: 0, width: 250, height: 250)
+        sideView.addSubview(colorPicker)
+        colorPicker.setViewColor(UIColor.red)
+        colorPicker.isHidden = true
+        
+        tempFrameColor.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        tempFrameColor.layer.borderWidth = 5
+        tempFrameColor.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        
+        self.view.addSubview(tempFrameColor)
+        
+        tempFrameColor.isHidden = true
+    }
 
     func blurTap(sender: UIButton!){
         isBlur = true
@@ -322,6 +366,42 @@ class ViewController: UIViewController {
         view.addSubview(tempFrame)
     }
     
+    func colorTap(sender: UIButton!){
+        
+        sideStack.isHidden = true
+        colorPicker.isHidden = false
+        
+        tempFrameColor.isHidden = false
+        
+        tempFrameColor.backgroundColor = colorPicker.color
+        
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        tempFrameColor.addGestureRecognizer(gestureRecognizer)
+
+    }
+    
+    func hideTap(sender: UIButton!){
+        print("Position : \(doggoImage.frame.origin.x) and \(doggoImage.frame.origin.y)")
+    }
+    
+    func addDoggo(){
+        
+        var image = UIImage(named: "doggo")
+        bckImage = image!
+        
+        image! = resizeImage(image: image!, targetSize: CGSize(width: 90, height: 90))
+        
+        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
+        imageView.image = image
+        
+        doggoImage.frame = CGRect(x: 413, y: 413, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        doggoImage.backgroundColor = UIColor(patternImage: image!)
+        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(doggoTap))
+        doggoImage.addGestureRecognizer(gestureRecognizer1)
+        
+        view.addSubview(doggoImage)
+    }
+    
     func cloneToTap(sender: UIButton!){
         
         addClone(xLoc: tempFrame.frame.origin.x, yLoc: tempFrame.frame.origin.y)
@@ -339,7 +419,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func switchChanged(mySwitch: UISwitch) {
+    func toggleGrid(mySwitch: UISwitch) {
         let value = mySwitch.isOn
 
         switch (value) {
@@ -353,6 +433,13 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func toggleOriginal(mySwitch: UISwitch) {
+        let _ = mySwitch.isOn
+        
+        let color = colorPicker.color
+        print("Color : \(color.debugDescription)")
+    }
 
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
 
@@ -363,6 +450,10 @@ class ViewController: UIViewController {
             gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
             gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
         }
+    }
+    
+    func doggoTap(sender: UITapGestureRecognizer!){
+        print("Tap Doggo")
     }
 
     func sliderSize(slider: UISlider){
@@ -383,7 +474,7 @@ class ViewController: UIViewController {
     
     func addClone(xLoc: CGFloat, yLoc: CGFloat){
         
-        let image2 = bckImage.crop(rect: CGRect(x: (xLoc*5), y: (yLoc*5), width: 500, height: 500))
+        let image2 = bckImage.crop(rect: CGRect(x: (xLoc), y: (yLoc), width: 700, height: 700))
         let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         image2view.backgroundColor = UIColor(patternImage: image2)
         let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
@@ -398,6 +489,32 @@ class ViewController: UIViewController {
         //if(isBlur) {
             //addBlur(xLoc: touchPoint.x, yLoc: touchPoint.y)
         //}
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }
 

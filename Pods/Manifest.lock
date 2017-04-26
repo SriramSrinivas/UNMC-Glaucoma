@@ -1,12 +1,15 @@
 PODS:
+  - SwiftHSVColorPicker (1.1.1)
   - VisualEffectView (2.0.4)
 
 DEPENDENCIES:
+  - SwiftHSVColorPicker
   - VisualEffectView
 
 SPEC CHECKSUMS:
+  SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
   VisualEffectView: 38e6dd10e7cef1155c53b099b458b78bcab52cef
 
-PODFILE CHECKSUM: bf95b8d49e29b2b4ad608692282bc9e8497656e4
+PODFILE CHECKSUM: bd162c1aa6f9502c84420fa7b0fc91caa6bae727
 
 COCOAPODS: 1.2.0
