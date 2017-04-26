@@ -34,6 +34,7 @@ class ViewController: UIViewController {
         mainImgView.addGestureRecognizer(tap)
 
         let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
+        sideView.layer.zPosition = 1
 
         view.addSubview(mainImgView)
         view.addSubview(sideView)
@@ -42,7 +43,6 @@ class ViewController: UIViewController {
 
         initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
-        //initToggleStack(sideView: sideView)
         initToggle(sideView: sideView)
         
         addSlider(view: sideView)
@@ -139,41 +139,6 @@ class ViewController: UIViewController {
         controlStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
 
         controlStack.isHidden = true
-    }
-
-    func initToggleStack(sideView: UIView){
-
-        let gridSwitch = UISwitch()
-        gridSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        gridSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        gridSwitch.isOn = true
-        gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControlEvents.valueChanged)
-
-        let origSwitch = UISwitch()
-        origSwitch.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        origSwitch.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
-        
-        let temp = UIButton()
-        temp.heightAnchor.constraint(equalToConstant: 50).isActive = false
-        temp.widthAnchor.constraint(equalToConstant: 100).isActive = false
-        temp.isEnabled = false
-        temp.isOpaque = true
-
-        toggleStack.axis = UILayoutConstraintAxis.vertical
-        toggleStack.distribution = UIStackViewDistribution.equalSpacing
-        toggleStack.alignment = UIStackViewAlignment.center
-        toggleStack.spacing = 5.0
-        toggleStack.translatesAutoresizingMaskIntoConstraints = false
-
-        toggleStack.addArrangedSubview(gridSwitch)
-        toggleStack.addArrangedSubview(origSwitch)
-        toggleStack.addArrangedSubview(temp)
-
-        sideView.addSubview(toggleStack)
-
-        toggleStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
-        toggleStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
     }
     
     func initToggle(sideView: UIView){
@@ -322,27 +287,21 @@ class ViewController: UIViewController {
         let line1 = UIButton()
         line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 10, height: mainView.frame.height)
         line1.layer.borderWidth = 10
-        line1.layer.borderColor = UIColor.green.cgColor
+        line1.layer.borderColor = UIColor.red.cgColor
 
         let line2 = UIButton()
         line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 10, height: mainView.frame.height)
         line2.layer.borderWidth = 10
-        line2.layer.borderColor = UIColor.green.cgColor
+        line2.layer.borderColor = UIColor.red.cgColor
 
         let line3 = UIButton()
-        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.3, width: mainView.frame.width, height: 10)
+        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 10)
         line3.layer.borderWidth = 10
-        line3.layer.borderColor = UIColor.gray.cgColor
-
-        let line4 = UIButton()
-        line4.frame = CGRect(x: 0, y: mainView.frame.height*0.66, width: mainView.frame.width, height: 10)
-        line4.layer.borderWidth = 10
-        line4.layer.borderColor = UIColor.gray.cgColor
+        line3.layer.borderColor = UIColor.red.cgColor
 
         gridViews.append(line1)
         gridViews.append(line2)
         gridViews.append(line3)
-        gridViews.append(line4)
 
         for i in gridViews {
             mainView.addSubview(i)
