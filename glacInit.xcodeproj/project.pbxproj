@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		74F7BB8FAE3CEB8A706D697D /* Pods_glacInit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FF6EEF7E87E90F7E13CB4E /* Pods_glacInit.framework */; };
+		0FD24FC8BEB7454FD0814B55 /* Pods_glacInit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FF6EEF7E87E90F7E13CB4E /* Pods_glacInit.framework */; };
 		753A2D7141F89F7141A3E06B /* Pods_glacInitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5954356F73D8C979F42E4B76 /* Pods_glacInitTests.framework */; };
 		7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65A1E50020A003ACC5F /* AppDelegate.swift */; };
 		7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65C1E50020A003ACC5F /* ViewController.swift */; };
@@ -16,6 +16,7 @@
 		7752F6651E50020A003ACC5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */; };
 		7752F6701E50020A003ACC5F /* glacInitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F66F1E50020A003ACC5F /* glacInitTests.swift */; };
 		7752F67B1E50020A003ACC5F /* glacInitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F67A1E50020A003ACC5F /* glacInitUITests.swift */; };
+		77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D171D01EAFA0EC00B008B5 /* Extentions.swift */; };
 		8536404FE714EB1674500C2A /* Pods_glacInitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 671CC94F97E866EBB5CBE4E6 /* Pods_glacInitUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		7752F6761E50020A003ACC5F /* glacInitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glacInitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F67A1E50020A003ACC5F /* glacInitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glacInitUITests.swift; sourceTree = "<group>"; };
 		7752F67C1E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77D171D01EAFA0EC00B008B5 /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		9912BB1BC35276704E37FFEF /* Pods-glacInitUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitUITests/Pods-glacInitUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1FF6EEF7E87E90F7E13CB4E /* Pods_glacInit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_glacInit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3E6FF3B170AD72899324664 /* Pods-glacInitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitTests/Pods-glacInitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -66,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74F7BB8FAE3CEB8A706D697D /* Pods_glacInit.framework in Frameworks */,
+				0FD24FC8BEB7454FD0814B55 /* Pods_glacInit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +131,7 @@
 			children = (
 				7752F65A1E50020A003ACC5F /* AppDelegate.swift */,
 				7752F65C1E50020A003ACC5F /* ViewController.swift */,
+				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
 				7752F65E1E50020A003ACC5F /* Main.storyboard */,
 				7752F6611E50020A003ACC5F /* Assets.xcassets */,
 				7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */,
@@ -449,6 +452,7 @@
 			files = (
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
+				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +705,7 @@
 				7752F6811E50020A003ACC5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7752F6821E50020A003ACC5F /* Build configuration list for PBXNativeTarget "glacInitTests" */ = {
 			isa = XCConfigurationList;
@@ -709,6 +714,7 @@
 				7752F6841E50020A003ACC5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7752F6851E50020A003ACC5F /* Build configuration list for PBXNativeTarget "glacInitUITests" */ = {
 			isa = XCConfigurationList;
@@ -717,6 +723,7 @@
 				7752F6871E50020A003ACC5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
