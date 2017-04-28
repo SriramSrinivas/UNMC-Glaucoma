@@ -211,6 +211,7 @@ class ViewController: UIViewController {
         blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
         blur.layer.borderWidth = 5
         blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        blur.layer.cornerRadius = 50
         blur.blurRadius = 10
         tBlurInt = blur.blurRadius
 
