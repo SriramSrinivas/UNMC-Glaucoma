@@ -29,8 +29,8 @@ class ViewController: UIViewController {
 
         let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
         mainImgView.isUserInteractionEnabled = true
-        //let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-        //mainImgView.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        mainImgView.addGestureRecognizer(tap)
 
         let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
         sideView.layer.zPosition = 1
@@ -41,14 +41,14 @@ class ViewController: UIViewController {
 
         loadImage(mainImgView: mainImgView)
 
-        initSideView(sideView: sideView)
-        initSaveCancel(sideView: sideView)
-        initToggle(sideView: sideView)
+        //initSideView(sideView: sideView)
+        //initSaveCancel(sideView: sideView)
+        //initToggle(sideView: sideView)
         
-        addSlider(view: sideView)
-        addCloneSideStack(sideView: sideView)
+        //addSlider(view: sideView)
+        //addCloneSideStack(sideView: sideView)
 
-        addGridLineUpdate(mainView: mainImgView)
+        //addGridLineUpdate(mainView: mainImgView)
         
         addDoggo()
         addTrash()
@@ -485,6 +485,13 @@ class ViewController: UIViewController {
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let _ = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
+        
+        print("Image Tapped")
+        
+        let c = CustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        c.addGestureRecognizer(gestureRecognizer1)
+        view.addSubview(c)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
