@@ -19,10 +19,14 @@ class ViewController: UIViewController {
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
     let sliderStack = UIStackView()
-    let cloneStack = UIStackView()
 
     var gridViews = [UIView]()
     var tBlurInt = CGFloat()
+    
+    var customViewList = [CustomView]()
+    var currView = CustomView()
+    var iterVal = 0
+    var editMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +46,10 @@ class ViewController: UIViewController {
         loadImage(mainImgView: mainImgView)
 
         //initSideView(sideView: sideView)
-        //initSaveCancel(sideView: sideView)
+        initSaveCancel(sideView: sideView)
         //initToggle(sideView: sideView)
         
-        //addSlider(view: sideView)
-        //addCloneSideStack(sideView: sideView)
+        addSlider(view: sideView)
 
         //addGridLineUpdate(mainView: mainImgView)
         
@@ -128,7 +131,7 @@ class ViewController: UIViewController {
         controlStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
         controlStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
 
-        controlStack.isHidden = true
+        //controlStack.isHidden = true
     }
     
     func initToggle(sideView: UIView){
@@ -161,38 +164,6 @@ class ViewController: UIViewController {
         sideView.addSubview(origText)
     }
     
-    func addCloneSideStack(sideView: UIView){
-        
-        let cloneButton = UIButton()
-        cloneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        cloneButton.addTarget(self, action: #selector(cloneToTap), for: .touchUpInside)
-        cloneButton.setTitle("Clone To", for: UIControlState.normal)
-        cloneButton.backgroundColor = UIColor.red
-        
-        let sizeSlider = UISlider()
-        sizeSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        sizeSlider.widthAnchor.constraint(equalToConstant: (sideView.frame.width - 50)).isActive = true
-        sizeSlider.minimumValue = 1
-        sizeSlider.maximumValue = 4
-        
-        cloneStack.axis = UILayoutConstraintAxis.vertical
-        cloneStack.distribution = UIStackViewDistribution.equalSpacing
-        cloneStack.alignment = UIStackViewAlignment.center
-        cloneStack.spacing = 5.0
-        cloneStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        cloneStack.addArrangedSubview(cloneButton)
-        cloneStack.addArrangedSubview(sizeSlider)
-        
-        sideView.addSubview(cloneStack)
-        
-        cloneStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
-        cloneStack.bottomAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
-        
-        cloneStack.isHidden = true
-    }
-
     func addBlur(xLoc: CGFloat, yLoc: CGFloat){
         
         tempFrameColor.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -270,7 +241,7 @@ class ViewController: UIViewController {
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        sliderStack.isHidden = true
+        //sliderStack.isHidden = true
     }
 
     func addGridLineUpdate(mainView: UIView){
@@ -306,35 +277,9 @@ class ViewController: UIViewController {
         addBlur(xLoc: 300, yLoc: 300)
     }
 
-    func saveTap(sender: UIButton!){
-        let tempView = VisualEffectView()
-        tempView.frame = blur.frame
-        tempView.blurRadius = tBlurInt
-        blur.isHidden = true
-        self.view.addSubview(tempView)
-
-        showStack(stack: .sideStack)
-        cloneStack.isHidden = true
-        isBlur = false
-        isHideMode = false
-    }
-
-    func cancelTap(sender: UIButton!){
-        blur.isHidden = true
-
-        showStack(stack: .sideStack)
-        cloneStack.isHidden = true
-        isBlur = false
-        isHideMode = false
-        
-        doggoImage.isHidden = false
-        trashImage.isHidden = false
-    }
-
     func cloneTap(sender: UIButton!){
         
         sideStack.isHidden = true
-        cloneStack.isHidden = false
         controlStack.isHidden = false
         
         tempFrame.isHidden = false
@@ -345,8 +290,6 @@ class ViewController: UIViewController {
 
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         tempFrame.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(tempFrame)
     }
 
     
@@ -428,17 +371,6 @@ class ViewController: UIViewController {
     func toggleOriginal(mySwitch: UISwitch) {
         let _ = mySwitch.isOn
     }
-
-    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-
-        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-
-            let translation = gestureRecognizer.translation(in: self.view)
-            // note: 'view' is optional and need to be unwrapped
-            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-            gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
-        }
-    }
     
     func doggoTap(sender: UITapGestureRecognizer!){
         print("Tap Doggo")
@@ -482,16 +414,75 @@ class ViewController: UIViewController {
         
         view.addSubview(image2view)
     }
+    
+    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        
+        if editMode == true {
+            if gestureRecognizer.view is CustomView {
+                let temp = gestureRecognizer.view as! CustomView
+                if temp.editMode {
+                    if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+                        let translation = gestureRecognizer.translation(in: self.view)
+                        gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+                        gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
+                    }
+                }
+            }
+        }
+    }
+
+    func handleCustomViewTap(_ gestureRecognizer: UITapGestureRecognizer){
+        
+        if(gestureRecognizer.view is CustomView) {
+            currView = gestureRecognizer.view as! CustomView
+            for i in customViewList {
+                if i.customViewID != currView.customViewID {
+                    i.selected(isSelected: false)
+                    i.editMode = false
+                }
+            }
+            currView.selected(isSelected: true)
+            currView.editMode = true
+            editMode = true
+        }
+    }
+    
+    func saveTap(sender: UIButton!){
+        editMode = false
+        currView.selected(isSelected: false)
+        currView.editMode = false
+    }
+    
+    func cancelTap(sender: UIButton!){
+        editMode = false
+        currView.selected(isSelected: false)
+        currView.editMode = false
+    }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let _ = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         print("Image Tapped")
         
-        let c = CustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        c.addGestureRecognizer(gestureRecognizer1)
-        view.addSubview(c)
+        if editMode == false{
+        
+            let c = CustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+            c.customViewID = iterVal
+            c.selected(isSelected: true)
+            c.editMode = true
+            iterVal += 1
+            customViewList.append(c)
+            let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+            c.addGestureRecognizer(gestureRecognizer1)
+            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap))
+            c.addGestureRecognizer(gestureTap)
+        
+            view.addSubview(c)
+            
+            currView = c
+            
+            editMode = true
+        }
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

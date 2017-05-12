@@ -5,20 +5,27 @@ import VisualEffectView
 class CustomView: UIView {
     
     let blur = VisualEffectView()
+    var customViewID = 0
+    var editMode = true
     
     override init(frame: CGRect) {
         blur.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-        
         super.init(frame: frame)
         
-        addSubview(blur)
-        
-        //layer.cornerRadius = frame.size.width/2
-        
-        blur.layer.cornerRadius = frame.size.width/2
-        blur.layer.borderWidth = 5
         blur.blurRadius = 10
-        blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        
+        addSubview(blur)
+    }
+    
+    func selected(isSelected: Bool){
+        switch isSelected {
+        case true:
+            blur.layer.borderWidth = 5
+            blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        case false:
+            blur.layer.borderWidth = 0
+        default: break
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
