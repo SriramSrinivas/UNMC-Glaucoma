@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     var gridViews = [UIView]()
     var tBlurInt = CGFloat()
     
+    let intSlider = UISlider()
     var customViewList = [CustomView]()
     var currView = CustomView()
     var iterVal = 0
@@ -37,7 +38,7 @@ class ViewController: UIViewController {
         mainImgView.addGestureRecognizer(tap)
 
         let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
-        sideView.layer.zPosition = 1
+        sideView.layer.zPosition = 2
         sideView.backgroundColor = UIColor(hexString: "#424242")
 
         view.addSubview(mainImgView)
@@ -47,11 +48,11 @@ class ViewController: UIViewController {
 
         //initSideView(sideView: sideView)
         initSaveCancel(sideView: sideView)
-        //initToggle(sideView: sideView)
+        initToggle(sideView: sideView)
         
         addSlider(view: sideView)
 
-        //addGridLineUpdate(mainView: mainImgView)
+        addGridLineUpdate(mainView: mainImgView)
         
         addDoggo()
         addTrash()
@@ -111,7 +112,7 @@ class ViewController: UIViewController {
         save.addTarget(self, action: #selector(saveTap), for: .touchUpInside)
 
         let cancel = UIButton()
-        cancel.setTitle("Cancel", for: UIControlState.normal)
+        cancel.setTitle("Delete", for: UIControlState.normal)
         cancel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         cancel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         cancel.backgroundColor = UIColor(hexString: "#f44336")
@@ -131,7 +132,7 @@ class ViewController: UIViewController {
         controlStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
         controlStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
 
-        //controlStack.isHidden = true
+        controlStack.isHidden = true
     }
     
     func initToggle(sideView: UIView){
@@ -218,12 +219,12 @@ class ViewController: UIViewController {
         sizeSlider.minimumValue = 1
         sizeSlider.maximumValue = 4
 
-        let intSlider = UISlider()
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControlEvents.valueChanged)
         intSlider.minimumValue = 1
         intSlider.maximumValue = 10
+        intSlider.setValue(10, animated: false)
 
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
@@ -250,16 +251,19 @@ class ViewController: UIViewController {
         line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 10, height: mainView.frame.height)
         line1.layer.borderWidth = 10
         line1.layer.borderColor = UIColor.red.cgColor
+        line1.layer.zPosition = 5
 
         let line2 = UIButton()
         line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 10, height: mainView.frame.height)
         line2.layer.borderWidth = 10
         line2.layer.borderColor = UIColor.red.cgColor
+        line1.layer.zPosition = 5
 
         let line3 = UIButton()
         line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 10)
         line3.layer.borderWidth = 10
         line3.layer.borderColor = UIColor.red.cgColor
+        line1.layer.zPosition = 5
 
         gridViews.append(line1)
         gridViews.append(line2)
@@ -369,7 +373,18 @@ class ViewController: UIViewController {
     }
     
     func toggleOriginal(mySwitch: UISwitch) {
-        let _ = mySwitch.isOn
+        let value = mySwitch.isOn
+        switch value {
+        case true:
+            for i in customViewList {
+                i.isHidden = true
+            }
+        case false:
+            for i in customViewList {
+                i.isHidden = false
+            }
+        default: break
+        }
     }
     
     func doggoTap(sender: UITapGestureRecognizer!){
@@ -400,8 +415,9 @@ class ViewController: UIViewController {
     func sliderIntensity(slider: UISlider){
         let value = slider.value
         
-        blur.blurRadius = CGFloat(value)
-        tBlurInt = blur.blurRadius
+        if currView.editMode == true {
+            currView.blur.blurRadius = CGFloat(value)
+        }
     }
     
     func addClone(xLoc: CGFloat, yLoc: CGFloat){
@@ -444,29 +460,47 @@ class ViewController: UIViewController {
             currView.selected(isSelected: true)
             currView.editMode = true
             editMode = true
+            intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
         }
+    }
+    
+    func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
+        print("pinched \(gestureRecognizer.scale)")
     }
     
     func saveTap(sender: UIButton!){
         editMode = false
         currView.selected(isSelected: false)
         currView.editMode = false
+        controlStack.isHidden = true
     }
     
     func cancelTap(sender: UIButton!){
         editMode = false
         currView.selected(isSelected: false)
         currView.editMode = false
+        controlStack.isHidden = true
+        
+        var iter = 0
+        for i in customViewList {
+            iter += 1
+            if currView.customViewID == i.customViewID {
+                customViewList = customViewList.filter() { $0 != i }
+            }
+        }
+        currView.removeFromSuperview()
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        let _ = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
+        let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         print("Image Tapped")
         
         if editMode == false{
-        
-            let c = CustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+            
+            controlStack.isHidden = false
+            
+            let c = CustomView(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200))
             c.customViewID = iterVal
             c.selected(isSelected: true)
             c.editMode = true
@@ -476,6 +510,8 @@ class ViewController: UIViewController {
             c.addGestureRecognizer(gestureRecognizer1)
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap))
             c.addGestureRecognizer(gestureTap)
+            let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
+            c.addGestureRecognizer(pinchZoom)
         
             view.addSubview(c)
             
