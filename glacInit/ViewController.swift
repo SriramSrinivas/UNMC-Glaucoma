@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     let doggoImage = UIView()
     let trashImage = UIView()
 
-    let sideStack = UIStackView()
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
     let sliderStack = UIStackView()
@@ -61,45 +60,6 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    func initSideView(sideView: UIView){
-
-        let bButton = UIButton()
-        bButton.setTitle("Blur", for: UIControlState.normal)
-        bButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        bButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        bButton.backgroundColor = UIColor(hexString: "#00BCD4")
-        bButton.addTarget(self, action: #selector(blurTap), for: .touchUpInside)
-
-        let cloneButton = UIButton()
-        cloneButton.setTitle("Clone", for: UIControlState.normal)
-        cloneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        cloneButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        cloneButton.backgroundColor = UIColor(hexString: "#0D47A1")
-        cloneButton.addTarget(self, action: #selector(cloneTap), for: .touchUpInside)
-        
-        let hideButton = UIButton()
-        hideButton.setTitle("Hide Object", for: .normal)
-        hideButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        hideButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        hideButton.backgroundColor = UIColor(hexString: "651FFF")
-        hideButton.addTarget(self, action: #selector(hideTap), for: .touchUpInside)
-
-        sideStack.axis = UILayoutConstraintAxis.vertical
-        sideStack.distribution = UIStackViewDistribution.equalSpacing
-        sideStack.alignment = UIStackViewAlignment.center
-        sideStack.spacing = 20.0
-        sideStack.translatesAutoresizingMaskIntoConstraints = false
-
-        sideStack.addArrangedSubview(bButton)
-        sideStack.addArrangedSubview(cloneButton)
-        sideStack.addArrangedSubview(hideButton)
-
-        sideView.addSubview(sideStack)
-
-        sideStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
-        sideStack.centerYAnchor.constraint(equalTo: sideView.centerYAnchor).isActive = true
     }
 
     func initSaveCancel(sideView: UIView){
@@ -273,38 +233,6 @@ class ViewController: UIViewController {
             mainView.addSubview(i)
         }
     }
-
-    func blurTap(sender: UIButton!){
-        isBlur = true
-        showStack(stack: .controlStack)
-        sliderStack.isHidden = false
-        addBlur(xLoc: 300, yLoc: 300)
-    }
-
-    func cloneTap(sender: UIButton!){
-        
-        sideStack.isHidden = true
-        controlStack.isHidden = false
-        
-        tempFrame.isHidden = false
-
-        tempFrame.frame = CGRect(x: 400, y: 400, width: 100, height: 100)
-        tempFrame.layer.borderWidth = 5
-        tempFrame.layer.borderColor = UIColor(hexString: "F44556").cgColor
-
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        tempFrame.addGestureRecognizer(gestureRecognizer)
-    }
-
-    
-    func hideTap(sender: UIButton!){
-        
-        print("Position : \(trashImage.frame.origin.x) and \(trashImage.frame.origin.y)")
-        
-        sideStack.isHidden = true
-        controlStack.isHidden = false
-        isHideMode = true
-    }
     
     func addDoggo(){
         
@@ -338,23 +266,6 @@ class ViewController: UIViewController {
         trashImage.addGestureRecognizer(gestureRecognizer1)
         
         view.addSubview(trashImage)
-    }
-    
-    func cloneToTap(sender: UIButton!){
-        
-        addClone(xLoc: tempFrame.frame.origin.x, yLoc: tempFrame.frame.origin.y)
-    }
-
-    func showStack(stack: stackType){
-        switch(stack){
-            case .sideStack:
-                sideStack.isHidden = false
-                controlStack.isHidden = true
-                sliderStack.isHidden = true
-            case .controlStack:
-                sideStack.isHidden = true
-                controlStack.isHidden = false
-        }
     }
 
     func toggleGrid(mySwitch: UISwitch) {
@@ -420,17 +331,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func addClone(xLoc: CGFloat, yLoc: CGFloat){
-        
-        let image2 = bckImage.crop(rect: CGRect(x: (xLoc), y: (yLoc), width: 700, height: 700))
-        let image2view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        image2view.backgroundColor = UIColor(patternImage: image2)
-        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        image2view.addGestureRecognizer(gestureRecognizer1)
-        
-        view.addSubview(image2view)
-    }
-    
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
         if editMode == true {
@@ -450,6 +350,7 @@ class ViewController: UIViewController {
     func handleCustomViewTap(_ gestureRecognizer: UITapGestureRecognizer){
         
         if(gestureRecognizer.view is CustomView) {
+            controlStack.isHidden = false
             currView = gestureRecognizer.view as! CustomView
             for i in customViewList {
                 if i.customViewID != currView.customViewID {
@@ -466,6 +367,10 @@ class ViewController: UIViewController {
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         print("pinched \(gestureRecognizer.scale)")
+        if editMode {
+            currView.blur.frame.size.height = 100 + gestureRecognizer.scale
+            currView.blur.frame.size.width = 100 + gestureRecognizer.scale
+        }
     }
     
     func saveTap(sender: UIButton!){
@@ -496,7 +401,7 @@ class ViewController: UIViewController {
         
         print("Image Tapped")
         
-        if editMode == false{
+        if editMode == false {
             
             controlStack.isHidden = false
             
@@ -550,4 +455,3 @@ class ViewController: UIViewController {
     func freeDrawTest(){
     }
 }
-
