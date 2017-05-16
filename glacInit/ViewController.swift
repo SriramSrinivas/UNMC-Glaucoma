@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     var customViewList = [CustomView]()
     var currView = CustomView()
     var iterVal = 0
-    var editMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +44,6 @@ class ViewController: UIViewController {
 
         loadImage(mainImgView: mainImgView)
 
-        //initSideView(sideView: sideView)
-        initSaveCancel(sideView: sideView)
         initToggle(sideView: sideView)
         
         addSlider(view: sideView)
@@ -60,39 +57,6 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    func initSaveCancel(sideView: UIView){
-
-        let save = UIButton()
-        save.setTitle("Save", for: UIControlState.normal)
-        save.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        save.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        save.backgroundColor = UIColor(hexString: "#4CAF50")
-        save.addTarget(self, action: #selector(saveTap), for: .touchUpInside)
-
-        let cancel = UIButton()
-        cancel.setTitle("Delete", for: UIControlState.normal)
-        cancel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        cancel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        cancel.backgroundColor = UIColor(hexString: "#f44336")
-        cancel.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
-
-        controlStack.axis = UILayoutConstraintAxis.horizontal
-        controlStack.distribution = UIStackViewDistribution.equalSpacing
-        controlStack.alignment = UIStackViewAlignment.center
-        controlStack.spacing = 10.0
-        controlStack.translatesAutoresizingMaskIntoConstraints = false
-
-        controlStack.addArrangedSubview(save)
-        controlStack.addArrangedSubview(cancel)
-
-        sideView.addSubview(controlStack)
-
-        controlStack.centerXAnchor.constraint(equalTo: sideView.centerXAnchor).isActive = true
-        controlStack.bottomAnchor.constraint(equalTo: sideView.bottomAnchor).isActive = true
-
-        controlStack.isHidden = true
     }
     
     func initToggle(sideView: UIView){
@@ -178,6 +142,13 @@ class ViewController: UIViewController {
         sizeSlider.addTarget(self, action: #selector(sliderSize), for: UIControlEvents.valueChanged)
         sizeSlider.minimumValue = 1
         sizeSlider.maximumValue = 4
+        
+        let delete = UIButton()
+        delete.setTitle("Delete", for: UIControlState.normal)
+        delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        delete.backgroundColor = UIColor(hexString: "#f44336")
+        delete.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
 
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -196,6 +167,7 @@ class ViewController: UIViewController {
         sliderStack.addArrangedSubview(sizeSlider)
         sliderStack.addArrangedSubview(intText)
         sliderStack.addArrangedSubview(intSlider)
+        sliderStack.addArrangedSubview(delete)
 
         view.addSubview(sliderStack)
 
@@ -208,20 +180,20 @@ class ViewController: UIViewController {
     func addGridLineUpdate(mainView: UIView){
 
         let line1 = UIButton()
-        line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 10, height: mainView.frame.height)
-        line1.layer.borderWidth = 10
+        line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 5, height: mainView.frame.height)
+        line1.layer.borderWidth = 5
         line1.layer.borderColor = UIColor.red.cgColor
         line1.layer.zPosition = 5
 
         let line2 = UIButton()
-        line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 10, height: mainView.frame.height)
-        line2.layer.borderWidth = 10
+        line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 5, height: mainView.frame.height)
+        line2.layer.borderWidth = 5
         line2.layer.borderColor = UIColor.red.cgColor
         line1.layer.zPosition = 5
 
         let line3 = UIButton()
-        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 10)
-        line3.layer.borderWidth = 10
+        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 5)
+        line3.layer.borderWidth = 5
         line3.layer.borderColor = UIColor.red.cgColor
         line1.layer.zPosition = 5
 
@@ -333,15 +305,13 @@ class ViewController: UIViewController {
     
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
-        if editMode == true {
-            if gestureRecognizer.view is CustomView {
-                let temp = gestureRecognizer.view as! CustomView
-                if temp.editMode {
-                    if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-                        let translation = gestureRecognizer.translation(in: self.view)
-                        gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-                        gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
-                    }
+        if gestureRecognizer.view is CustomView {
+            let temp = gestureRecognizer.view as! CustomView
+            if temp.editMode {
+                if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+                    let translation = gestureRecognizer.translation(in: self.view)
+                    gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+                    gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
                 }
             }
         }
@@ -360,28 +330,22 @@ class ViewController: UIViewController {
             }
             currView.selected(isSelected: true)
             currView.editMode = true
-            editMode = true
+            //editMode = true
             intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
         }
     }
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         print("pinched \(gestureRecognizer.scale)")
-        if editMode {
-            currView.blur.frame.size.height = 100 + gestureRecognizer.scale
-            currView.blur.frame.size.width = 100 + gestureRecognizer.scale
+        
+        if((gestureRecognizer.view as! CustomView) == currView) {
+            currView.blur.frame.size.height = currView.blur.frame.height + (gestureRecognizer.scale*2)
+            currView.blur.frame.size.width = currView.blur.frame.width + (gestureRecognizer.scale*2)
         }
     }
     
-    func saveTap(sender: UIButton!){
-        editMode = false
-        currView.selected(isSelected: false)
-        currView.editMode = false
-        controlStack.isHidden = true
-    }
-    
     func cancelTap(sender: UIButton!){
-        editMode = false
+        //editMode = false
         currView.selected(isSelected: false)
         currView.editMode = false
         controlStack.isHidden = true
@@ -399,30 +363,28 @@ class ViewController: UIViewController {
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
-        print("Image Tapped")
+        let c = CustomView(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
+        c.customViewID = iterVal
+        c.selected(isSelected: true)
+        c.editMode = true
+        iterVal += 1
+        customViewList.append(c)
+        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        c.addGestureRecognizer(gestureRecognizer1)
+        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap))
+        c.addGestureRecognizer(gestureTap)
+        let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
+        c.addGestureRecognizer(pinchZoom)
         
-        if editMode == false {
+        view.addSubview(c)
             
-            controlStack.isHidden = false
-            
-            let c = CustomView(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200))
-            c.customViewID = iterVal
-            c.selected(isSelected: true)
-            c.editMode = true
-            iterVal += 1
-            customViewList.append(c)
-            let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-            c.addGestureRecognizer(gestureRecognizer1)
-            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap))
-            c.addGestureRecognizer(gestureTap)
-            let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
-            c.addGestureRecognizer(pinchZoom)
+        currView = c
         
-            view.addSubview(c)
-            
-            currView = c
-            
-            editMode = true
+        for i in customViewList {
+            if i.customViewID != currView.customViewID {
+                i.selected(isSelected: false)
+                i.editMode = false
+            }
         }
     }
     
