@@ -183,19 +183,16 @@ class ViewController: UIViewController {
         line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 5, height: mainView.frame.height)
         line1.layer.borderWidth = 5
         line1.layer.borderColor = UIColor.red.cgColor
-        line1.layer.zPosition = 5
 
         let line2 = UIButton()
         line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 5, height: mainView.frame.height)
         line2.layer.borderWidth = 5
         line2.layer.borderColor = UIColor.red.cgColor
-        line1.layer.zPosition = 5
 
         let line3 = UIButton()
         line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 5)
         line3.layer.borderWidth = 5
         line3.layer.borderColor = UIColor.red.cgColor
-        line1.layer.zPosition = 5
 
         gridViews.append(line1)
         gridViews.append(line2)
@@ -221,6 +218,10 @@ class ViewController: UIViewController {
         doggoImage.addGestureRecognizer(gestureRecognizer1)
         
         view.addSubview(doggoImage)
+        
+        for i in gridViews {
+            doggoImage.sendSubview(toBack: i)
+        }
     }
     
     func addTrash(){
@@ -232,12 +233,20 @@ class ViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         imageView.image = image
         
+        for i in gridViews {
+            imageView.sendSubview(toBack: i)
+        }
+        
         trashImage.frame = CGRect(x: -21, y: 366, width: imageView.frame.size.width, height: imageView.frame.size.height)
         trashImage.backgroundColor = UIColor(patternImage: image!)
         let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(trashTap))
         trashImage.addGestureRecognizer(gestureRecognizer1)
         
         view.addSubview(trashImage)
+        
+        for i in gridViews {
+            trashImage.sendSubview(toBack: i)
+        }
     }
 
     func toggleGrid(mySwitch: UISwitch) {
@@ -339,8 +348,8 @@ class ViewController: UIViewController {
         print("pinched \(gestureRecognizer.scale)")
         
         if((gestureRecognizer.view as! CustomView) == currView) {
-            currView.blur.frame.size.height = currView.blur.frame.height + (gestureRecognizer.scale*2)
-            currView.blur.frame.size.width = currView.blur.frame.width + (gestureRecognizer.scale*2)
+            currView.blur.frame.size.height = 200*(gestureRecognizer.scale)
+            currView.blur.frame.size.width = 200*(gestureRecognizer.scale)
         }
     }
     
