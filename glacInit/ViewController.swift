@@ -226,6 +226,7 @@ class ViewController: UIViewController {
         hideImageButton.frame = CGRect(x: 20, y: sideView.frame.height - 300, width: 100, height: 50)
         hideImageButton.backgroundColor = UIColor(hexString: "#F44556")
         hideImageButton.setTitle("Hide", for: .normal)
+        hideImageButton.addTarget(self, action: #selector(hideButtonTap), for: .touchUpInside)
         sideView.addSubview(hideImageButton)
     }
     
@@ -494,6 +495,10 @@ class ViewController: UIViewController {
     func girlTap(sender: UITapGestureRecognizer!){
         print("Location girl : \(girlImage.frame.origin)")
     }
+    
+    func hideButtonTap(sender: UITapGestureRecognizer!){
+        print("Hide Tap")
+    }
 
     func sliderSize(slider: UISlider){
         let value = slider.value
@@ -581,31 +586,13 @@ class ViewController: UIViewController {
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
-        let c = CustomView(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
-        c.customViewID = iterVal
-        c.selected(isSelected: true)
-        c.editMode = true
-        iterVal += 1
-        customViewList.append(c)
-        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        c.addGestureRecognizer(gestureRecognizer1)
-        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap))
-        c.addGestureRecognizer(gestureTap)
-        let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
-        c.addGestureRecognizer(pinchZoom)
-        
-        view.addSubview(c)
-            
-        currView = c
+        createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200)
         
         for i in customViewList {
             if i.customViewID != currView.customViewID {
                 i.selected(isSelected: false)
                 i.editMode = false
             }
-            controlStack.isHidden = false
-            
-            createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200)
         }
     }
     
@@ -630,7 +617,6 @@ class ViewController: UIViewController {
         
         view.addSubview(c)
         currView = c
-        editMode = true
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
