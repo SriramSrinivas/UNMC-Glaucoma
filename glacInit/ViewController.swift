@@ -7,7 +7,6 @@ class ViewController: UIViewController {
     let blur = VisualEffectView()
     let blurButton = UIButton()
     var isBlur: Bool = false
-    var isHideMode: Bool = false
     let tempFrame = UIView()
     let tempFrameColor = UIView()
     var bckImage = UIImage()
@@ -34,9 +33,12 @@ class ViewController: UIViewController {
     let intText = UILabel()
     var customViewList = [CustomView]()
     var currView = CustomView()
+    var tempImageView = UIView()
     var iterVal = 0
+    let delete = UIButton()
     
-    var hideImageButton = UIButton()
+    var hideImageButton = UISwitch()
+    var isHideMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,21 +150,7 @@ class ViewController: UIViewController {
         intText.widthAnchor.constraint(equalToConstant: 100).isActive = true
         intText.text = "Blur Intensity"
         intText.textColor = UIColor.white
-
-        let sizeText = UILabel()
-        sizeText.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        sizeText.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        sizeText.text = "Blur Size"
-        sizeText.textColor = UIColor.white
-
-        let sizeSlider = UISlider()
-        sizeSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        sizeSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        sizeSlider.addTarget(self, action: #selector(sliderSize), for: UIControlEvents.valueChanged)
-        sizeSlider.minimumValue = 1
-        sizeSlider.maximumValue = 4
         
-        let delete = UIButton()
         delete.setTitle("Delete", for: UIControlState.normal)
         delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
         delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -182,8 +170,6 @@ class ViewController: UIViewController {
         sliderStack.spacing = 10.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
-        sliderStack.addArrangedSubview(sizeText)
-        sliderStack.addArrangedSubview(sizeSlider)
         sliderStack.addArrangedSubview(intText)
         sliderStack.addArrangedSubview(intSlider)
         sliderStack.addArrangedSubview(delete)
@@ -193,7 +179,7 @@ class ViewController: UIViewController {
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        //sliderStack.isHidden = true
+        enableControl(value: false)
     }
 
     func addGridLineUpdate(mainView: UIView){
@@ -225,9 +211,10 @@ class ViewController: UIViewController {
     func addHideImageButton(sideView: UIView){
         hideImageButton.frame = CGRect(x: 20, y: sideView.frame.height - 300, width: 100, height: 50)
         hideImageButton.backgroundColor = UIColor(hexString: "#F44556")
-        hideImageButton.setTitle("Hide", for: .normal)
-        hideImageButton.addTarget(self, action: #selector(hideButtonTap), for: .touchUpInside)
+        hideImageButton.addTarget(self, action: #selector(hideButtonTap), for: .valueChanged)
         sideView.addSubview(hideImageButton)
+        
+        hideImageButton.isHidden = true
     }
     
     func addDoggo(){
@@ -410,7 +397,7 @@ class ViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         imageView.image = image
         
-        girlImage.frame = CGRect(x: 734, y: 248/5, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        girlImage.frame = CGRect(x: 735, y: 237.6, width: imageView.frame.size.width, height: imageView.frame.size.height)
         girlImage.backgroundColor = UIColor(patternImage: image!)
         let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(girlTap))
         girlImage.addGestureRecognizer(gestureRecognizer1)
@@ -454,14 +441,13 @@ class ViewController: UIViewController {
         print("Tap Doggo")
         createCustomView(xTouchPoint: 413, yTouchPoint: 413, width: 90, height: 90)
         
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = doggoImage
     }
     
     func trashTap(sender: UITapGestureRecognizer!){
         print("Tap Trash")
-        
-        if (isHideMode) {
-            trashImage.isHidden = true
-        }
     }
     
     func coneTap(sender: UITapGestureRecognizer!){
@@ -496,8 +482,19 @@ class ViewController: UIViewController {
         print("Location girl : \(girlImage.frame.origin)")
     }
     
-    func hideButtonTap(sender: UITapGestureRecognizer!){
-        print("Hide Tap")
+    func hideButtonTap(mySwitch: UISwitch!){
+        
+        let value = mySwitch.isOn
+        
+        switch value {
+        case true:
+            tempImageView.isHidden = true
+            //customViewList.removeLast()
+            //currView.removeFromSuperview()
+        case false:
+            tempImageView.isHidden = false
+        default: break
+        }
     }
 
     func sliderSize(slider: UISlider){
@@ -586,18 +583,19 @@ class ViewController: UIViewController {
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
-        createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200)
+        if(!isHideMode) {
+            createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200)
         
-        for i in customViewList {
-            if i.customViewID != currView.customViewID {
-                i.selected(isSelected: false)
-                i.editMode = false
+            for i in customViewList {
+                if i.customViewID != currView.customViewID {
+                    i.selected(isSelected: false)
+                    i.editMode = false
+                }
             }
+        } else {
+            hideImageButton.isHidden = true
+            isHideMode = false
         }
-    }
-    
-    func hideImage(image: UIView){
-        image.isHidden = true
     }
     
     func createCustomView(xTouchPoint: CGFloat, yTouchPoint: CGFloat, width: CGFloat, height: CGFloat){
@@ -645,7 +643,28 @@ class ViewController: UIViewController {
         return newImage!
     }
     
-    func greyControl(){
-        intText.textColor = UIColor(hexString: "F44556")
+    func enableControl(value: Bool){
+        switch value {
+        case false:
+            intText.textColor = UIColor(hexString: "9E9E9E")
+            intText.alpha = 0.4
+            intSlider.tintColor = UIColor(hexString: "9E9E9E")
+            intSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
+            intSlider.alpha = 0.4
+            delete.alpha = 0.4
+            delete.isEnabled = false
+            intSlider.isEnabled = false
+        case true:
+            intText.textColor = UIColor(hexString: "EEEEEE")
+            intText.alpha = 1
+            intSlider.tintColor = UIColor(hexString: "EEEEEE")
+            intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            delete.alpha = 1
+            delete.isEnabled =  true
+            intSlider.alpha = 1
+            intSlider.isEnabled = true
+        default:
+            break
+        }
     }
 }
