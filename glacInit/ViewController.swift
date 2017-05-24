@@ -160,9 +160,9 @@ class ViewController: UIViewController {
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControlEvents.valueChanged)
-        intSlider.minimumValue = 1
+        intSlider.minimumValue = 0
         intSlider.maximumValue = 10
-        intSlider.setValue(10, animated: false)
+        intSlider.setValue(0, animated: false)
 
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
@@ -213,7 +213,7 @@ class ViewController: UIViewController {
         hideImageButton.backgroundColor = UIColor(hexString: "#F44556")
         hideImageButton.addTarget(self, action: #selector(hideButtonTap), for: .valueChanged)
         sideView.addSubview(hideImageButton)
-        
+        hideImageButton.setOn(true, animated: false)
         hideImageButton.isHidden = true
     }
     
@@ -439,7 +439,7 @@ class ViewController: UIViewController {
     
     func doggoTap(sender: UITapGestureRecognizer!){
         print("Tap Doggo")
-        createCustomView(xTouchPoint: 413, yTouchPoint: 413, width: 90, height: 90)
+        createCustomView(xTouchPoint: 413, yTouchPoint: 413, width: 90, height: 90, color: "3F51B5")
         
         isHideMode = true
         hideImageButton.isHidden = false
@@ -448,38 +448,87 @@ class ViewController: UIViewController {
     
     func trashTap(sender: UITapGestureRecognizer!){
         print("Tap Trash")
+        createCustomView(xTouchPoint: -21, yTouchPoint: 366, width: 130, height: 130, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = trashImage
     }
     
     func coneTap(sender: UITapGestureRecognizer!){
         print("Location : \(coneImage.frame.origin)")
+
+        createCustomView(xTouchPoint: 122, yTouchPoint: 361, width: 60, height: 60, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = coneImage
     }
     
     func cone2Tap(sender: UITapGestureRecognizer!){
         print("Location : \(coneImage2.frame.origin)")
+
+        createCustomView(xTouchPoint: 185, yTouchPoint: 325.5, width: 60, height: 60, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = coneImage2
     }
     
     func ballTap(sender: UITapGestureRecognizer!){
         print("Location : \(ballImage.frame.origin)")
+
+        createCustomView(xTouchPoint: 575.5, yTouchPoint: 385, width: 50, height: 50, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = ballImage
     }
     
     func kid1Tap(sender: UITapGestureRecognizer!){
         print("Location : \(kid1Image.frame.origin)")
+
+        createCustomView(xTouchPoint: 380, yTouchPoint: 279.5, width: 50, height: 50, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = kid1Image
     }
     
     func kid2Tap(sender: UITapGestureRecognizer!){
         print("Location : \(kid2Image.frame.origin)")
+
+        createCustomView(xTouchPoint: 423.5, yTouchPoint: 271, width: 50, height: 50, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = kid2Image
     }
     
     func peelTap(sender: UITapGestureRecognizer!){
         print("Location peel : \(peelImage.frame.origin)")
+
+        //createCustomView(xTouchPoint: <#T##CGFloat##CoreGraphics.CGFloat#>, yTouchPoint: <#T##CGFloat##CoreGraphics.CGFloat#>, width: <#T##CGFloat##CoreGraphics.CGFloat#>, height: <#T##CGFloat##CoreGraphics.CGFloat#>)
     }
     
     func helmetTap(sender: UITapGestureRecognizer!){
         print("Location helmet : \(helmetImage.frame.origin)")
+
+        createCustomView(xTouchPoint: 176.5, yTouchPoint: 387, width: 50, height: 50, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = helmetImage
     }
     
     func girlTap(sender: UITapGestureRecognizer!){
         print("Location girl : \(girlImage.frame.origin)")
+
+        createCustomView(xTouchPoint: 735, yTouchPoint: 237.6, width: 230, height: 230, color: "3F51B5")
+
+        isHideMode = true
+        hideImageButton.isHidden = false
+        tempImageView = girlImage
     }
     
     func hideButtonTap(mySwitch: UISwitch!){
@@ -487,11 +536,11 @@ class ViewController: UIViewController {
         let value = mySwitch.isOn
         
         switch value {
-        case true:
+        case false:
             tempImageView.isHidden = true
             //customViewList.removeLast()
             //currView.removeFromSuperview()
-        case false:
+        case true:
             tempImageView.isHidden = false
         default: break
         }
@@ -546,6 +595,8 @@ class ViewController: UIViewController {
                 if i.customViewID != currView.customViewID {
                     i.selected(isSelected: false)
                     i.editMode = false
+                    enableControl(value: true)
+                    isHideMode = true
                 }
             }
             currView.selected(isSelected: true)
@@ -578,13 +629,15 @@ class ViewController: UIViewController {
             }
         }
         currView.removeFromSuperview()
+        enableControl(value: false)
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         if(!isHideMode) {
-            createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200)
+            createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
+            isHideMode = true
         
             for i in customViewList {
                 if i.customViewID != currView.customViewID {
@@ -593,17 +646,30 @@ class ViewController: UIViewController {
                 }
             }
         } else {
+            
+            for i in customViewList {
+                if i.customViewID == currView.customViewID {
+                    i.selected(isSelected: false)
+                    i.editMode = false
+                }
+            }
+            
             hideImageButton.isHidden = true
             isHideMode = false
         }
     }
     
-    func createCustomView(xTouchPoint: CGFloat, yTouchPoint: CGFloat, width: CGFloat, height: CGFloat){
+    func createCustomView(xTouchPoint: CGFloat, yTouchPoint: CGFloat, width: CGFloat, height: CGFloat, color: String){
+        
+        enableControl(value: true)
+        
+        intSlider.setValue(0, animated: false)
     
         let c = CustomView(frame: CGRect(x: xTouchPoint, y: yTouchPoint, width: width, height: width))
         c.customViewID = iterVal
         c.selected(isSelected: true)
         c.editMode = true
+        c.setBlurColor(color: color)
         iterVal += 1
         customViewList.append(c)
         let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))

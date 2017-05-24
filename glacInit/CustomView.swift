@@ -28,6 +28,10 @@ class CustomView: UIView {
         }
     }
     
+    func setBlurColor(color: String){
+        blur.layer.borderColor = UIColor(hexString: color).cgColor
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
