@@ -19,8 +19,12 @@ class ViewController: UIViewController {
     let kid1Image = UIView()
     let kid2Image = UIView()
     let peelImage = UIView()
+    let hydrantImage = UIView()
     let helmetImage = UIView()
     let girlImage = UIView()
+    
+    var blurOn = UIView()
+    var blurOff = UIView()
 
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
@@ -37,6 +41,7 @@ class ViewController: UIViewController {
     var iterVal = 0
     let delete = UIButton()
     
+    var hideImageText = UILabel()
     var hideImageButton = UISwitch()
     var isHideMode: Bool = false
     
@@ -59,6 +64,7 @@ class ViewController: UIViewController {
 
         initToggle(sideView: sideView)
         addHideImageButton(sideView: sideView)
+        //initBlurIcon()
         
         addSlider(view: sideView)
 
@@ -74,6 +80,7 @@ class ViewController: UIViewController {
         addPeel()
         addGirl()
         addHelmet()
+        addHydrant()
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,6 +152,9 @@ class ViewController: UIViewController {
     }
 
     func addSlider(view: UIView){
+        
+        blurOn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOn.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intText.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -170,6 +180,7 @@ class ViewController: UIViewController {
         sliderStack.spacing = 10.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
+        sliderStack.addArrangedSubview(blurOn)
         sliderStack.addArrangedSubview(intText)
         sliderStack.addArrangedSubview(intSlider)
         sliderStack.addArrangedSubview(delete)
@@ -187,17 +198,17 @@ class ViewController: UIViewController {
         let line1 = UIButton()
         line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 5, height: mainView.frame.height)
         line1.layer.borderWidth = 5
-        line1.layer.borderColor = UIColor.red.cgColor
+        line1.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line2 = UIButton()
         line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 5, height: mainView.frame.height)
         line2.layer.borderWidth = 5
-        line2.layer.borderColor = UIColor.red.cgColor
+        line2.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line3 = UIButton()
         line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 5)
         line3.layer.borderWidth = 5
-        line3.layer.borderColor = UIColor.red.cgColor
+        line3.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         gridViews.append(line1)
         gridViews.append(line2)
@@ -210,11 +221,16 @@ class ViewController: UIViewController {
     
     func addHideImageButton(sideView: UIView){
         hideImageButton.frame = CGRect(x: 20, y: sideView.frame.height - 300, width: 100, height: 50)
-        hideImageButton.backgroundColor = UIColor(hexString: "#F44556")
         hideImageButton.addTarget(self, action: #selector(hideButtonTap), for: .valueChanged)
         sideView.addSubview(hideImageButton)
         hideImageButton.setOn(true, animated: false)
         hideImageButton.isHidden = true
+        
+        hideImageText.frame = CGRect(x: 90, y: sideView.frame.height - 300, width: 100, height: 50)
+        hideImageText.text = "Hide"
+        hideImageText.textColor = UIColor(hexString: "EEEEEE")
+        sideView.addSubview(hideImageText)
+        hideImageText.isHidden = true
     }
     
     func addDoggo(){
@@ -356,17 +372,15 @@ class ViewController: UIViewController {
     func addPeel(){
         var image = UIImage(named: "peel")
         
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
+        image! = resizeImage(image: image!, targetSize: CGSize(width: 65, height: 65))
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         imageView.image = image
         
-        peelImage.frame = CGRect(x: 0, y: 0, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        peelImage.frame = CGRect(x: 55.5, y: 460.5, width: imageView.frame.size.width, height: imageView.frame.size.height)
         peelImage.backgroundColor = UIColor(patternImage: image!)
         let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(peelTap))
         peelImage.addGestureRecognizer(gestureRecognizer1)
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        peelImage.addGestureRecognizer(gestureRecognizer)
         
         view.addSubview(peelImage)
     }
@@ -406,6 +420,41 @@ class ViewController: UIViewController {
         
         view.addSubview(girlImage)
     }
+    
+    func addHydrant(){
+        var image = UIImage(named: "hydrant")
+        
+        image! = resizeImage(image: image!, targetSize: CGSize(width: 70, height: 70))
+        
+        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
+        imageView.image = image
+        
+        hydrantImage.frame = CGRect(x: 606, y: 300, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        hydrantImage.backgroundColor = UIColor(patternImage: image!)
+        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(hydrantTap))
+        hydrantImage.addGestureRecognizer(gestureRecognizer1)
+        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
+        //hydrantImage.addGestureRecognizer(gestureRecognizer)
+        
+        view.addSubview(hydrantImage)
+    }
+    
+    func initBlurIcon(){
+        
+        var image = UIImage(named: "blurOn")
+        var image2 = UIImage(named: "blurOff")
+        
+        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
+        image2! = resizeImage(image: image2!, targetSize: CGSize(width: 50, height: 50))
+        
+        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
+        imageView.image = image
+        let imageView2 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image2?.size.width)!, height: (image2?.size.height)!))
+        imageView2.image = image2
+        
+        blurOn.backgroundColor = UIColor(patternImage: image!)
+        blurOff.backgroundColor = UIColor(patternImage: image2!)
+    }
 
     func toggleGrid(mySwitch: UISwitch) {
         let value = mySwitch.isOn
@@ -443,6 +492,8 @@ class ViewController: UIViewController {
         
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = doggoImage
     }
     
@@ -452,6 +503,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = trashImage
     }
     
@@ -462,6 +515,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = coneImage
     }
     
@@ -472,6 +527,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = coneImage2
     }
     
@@ -482,6 +539,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = ballImage
     }
     
@@ -492,6 +551,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = kid1Image
     }
     
@@ -502,6 +563,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = kid2Image
     }
     
@@ -518,6 +581,8 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = helmetImage
     }
     
@@ -528,7 +593,13 @@ class ViewController: UIViewController {
 
         isHideMode = true
         hideImageButton.isHidden = false
+        hideImageText.isHidden = false
+        hideImageButton.setOn(true, animated: false)
         tempImageView = girlImage
+    }
+    
+    func hydrantTap(sender: UITapGestureRecognizer!){
+        print("Location hydrant : \(hydrantImage.frame.origin)")
     }
     
     func hideButtonTap(mySwitch: UISwitch!){
@@ -591,11 +662,11 @@ class ViewController: UIViewController {
         if(gestureRecognizer.view is CustomView) {
             controlStack.isHidden = false
             currView = gestureRecognizer.view as! CustomView
+            enableControl(value: true)
             for i in customViewList {
                 if i.customViewID != currView.customViewID {
                     i.selected(isSelected: false)
                     i.editMode = false
-                    enableControl(value: true)
                     isHideMode = true
                 }
             }
@@ -630,6 +701,7 @@ class ViewController: UIViewController {
         }
         currView.removeFromSuperview()
         enableControl(value: false)
+        isHideMode = false
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -655,7 +727,9 @@ class ViewController: UIViewController {
             }
             
             hideImageButton.isHidden = true
+            hideImageText.isHidden = true
             isHideMode = false
+            enableControl(value: false)
         }
     }
     
