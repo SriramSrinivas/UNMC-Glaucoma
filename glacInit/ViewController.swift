@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     let intSlider = UISlider()
     let intText = UILabel()
     var customViewList = [CustomView]()
+    var customObjectList = [CustomObject]()
     var currView = CustomView()
     var tempImageView = UIView()
     var iterVal = 0
