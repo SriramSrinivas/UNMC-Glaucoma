@@ -64,6 +64,7 @@ class ViewController: UIViewController {
 
         initToggle(sideView: sideView)
         addHideImageButton(sideView: sideView)
+        addBlurButton()
         //initBlurIcon()
         
         addSlider(view: sideView)
@@ -118,26 +119,6 @@ class ViewController: UIViewController {
         sideView.addSubview(origText)
     }
     
-    func addBlur(xLoc: CGFloat, yLoc: CGFloat){
-        
-        tempFrameColor.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-    
-
-        blur.frame = CGRect(x: (xLoc - 75), y: (yLoc - 75), width: 100, height: 100)
-        blur.layer.borderWidth = 5
-        blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
-        blur.layer.cornerRadius = 50
-        blur.blurRadius = 10
-        tBlurInt = blur.blurRadius
-
-        blur.isHidden = false
-
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        blur.addGestureRecognizer(gestureRecognizer)
-
-        self.view.addSubview(blur)
-    }
-
     func loadImage(mainImgView: UIView){
 
         let image = UIImage(named: "mainTes")
@@ -155,10 +136,13 @@ class ViewController: UIViewController {
         
         blurOn.heightAnchor.constraint(equalToConstant: 50).isActive = true
         blurOn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        blurOff.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOff.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intText.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        intText.text = "Blur Intensity"
+        intText.text = "Blur"
         intText.textColor = UIColor.white
         
         delete.setTitle("Delete", for: UIControlState.normal)
@@ -181,8 +165,9 @@ class ViewController: UIViewController {
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
         sliderStack.addArrangedSubview(blurOn)
-        sliderStack.addArrangedSubview(intText)
+        sliderStack.addArrangedSubview(blurOff)
         sliderStack.addArrangedSubview(intSlider)
+        sliderStack.addArrangedSubview(intText)
         sliderStack.addArrangedSubview(delete)
 
         view.addSubview(sliderStack)
@@ -439,10 +424,10 @@ class ViewController: UIViewController {
         view.addSubview(hydrantImage)
     }
     
-    func initBlurIcon(){
+    func addBlurButton(){
         
-        var image = UIImage(named: "blurOn")
-        var image2 = UIImage(named: "blurOff")
+        var image = UIImage(named: "BlurOn")
+        var image2 = UIImage(named: "BlurOff")
         
         image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
         image2! = resizeImage(image: image2!, targetSize: CGSize(width: 50, height: 50))
@@ -455,6 +440,8 @@ class ViewController: UIViewController {
         blurOn.backgroundColor = UIColor(patternImage: image!)
         blurOff.backgroundColor = UIColor(patternImage: image2!)
     }
+    
+    
 
     func toggleGrid(mySwitch: UISwitch) {
         let value = mySwitch.isOn
@@ -794,6 +781,10 @@ class ViewController: UIViewController {
             delete.alpha = 0.4
             delete.isEnabled = false
             intSlider.isEnabled = false
+            
+            blurOn.isHidden = true
+            blurOff.isHidden = false
+            
         case true:
             intText.textColor = UIColor(hexString: "EEEEEE")
             intText.alpha = 1
@@ -803,6 +794,9 @@ class ViewController: UIViewController {
             delete.isEnabled =  true
             intSlider.alpha = 1
             intSlider.isEnabled = true
+            
+            blurOn.isHidden = false
+            blurOff.isHidden = true
         default:
             break
         }
