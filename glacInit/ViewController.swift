@@ -36,6 +36,7 @@ class ViewController: UIViewController {
     let intSlider = UISlider()
     let intText = UILabel()
     var customViewList = [CustomView]()
+    var customObjectList = [CustomObject]()
     var currView = CustomView()
     var tempImageView = UIView()
     var iterVal = 0
@@ -65,13 +66,12 @@ class ViewController: UIViewController {
         initToggle(sideView: sideView)
         addHideImageButton(sideView: sideView)
         addBlurButton()
-        //initBlurIcon()
         
         addSlider(view: sideView)
 
         addGridLineUpdate(mainView: mainImgView)
         
-        addDoggo()
+        //addDoggo()
         addTrash()
         addCone()
         addCone2()
@@ -82,6 +82,8 @@ class ViewController: UIViewController {
         addGirl()
         addHelmet()
         addHydrant()
+        
+        initCustomObjects()
     }
 
     override func didReceiveMemoryWarning() {
@@ -441,6 +443,10 @@ class ViewController: UIViewController {
         blurOff.backgroundColor = UIColor(patternImage: image2!)
     }
     
+    func initCustomObjects(){
+        let c = CustomObject(title: "", alpha: 1)
+        view.addSubview(c)
+    }
     
 
     func toggleGrid(mySwitch: UISwitch) {
