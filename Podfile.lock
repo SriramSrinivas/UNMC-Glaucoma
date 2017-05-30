@@ -1,12 +1,15 @@
 PODS:
-  - DynamicBlurView (1.3.0)
+  - SwiftHSVColorPicker (1.1.1)
+  - VisualEffectView (2.0.4)
 
 DEPENDENCIES:
-  - DynamicBlurView
+  - SwiftHSVColorPicker
+  - VisualEffectView
 
 SPEC CHECKSUMS:
-  DynamicBlurView: ca9f6836d4123e20ac1636814077b278b34dd2a2
+  SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
+  VisualEffectView: 38e6dd10e7cef1155c53b099b458b78bcab52cef
 
-PODFILE CHECKSUM: 8ea5bb847f7354cbf5a3fb9ced8ce2c5f12be8c5
+PODFILE CHECKSUM: bd162c1aa6f9502c84420fa7b0fc91caa6bae727
 
 COCOAPODS: 1.2.0
