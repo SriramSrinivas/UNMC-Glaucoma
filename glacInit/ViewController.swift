@@ -4,24 +4,7 @@ import VisualEffectView
 class ViewController: UIViewController {
         
     let screenSize: CGRect = UIScreen.main.bounds
-    let blur = VisualEffectView()
-    let blurButton = UIButton()
-    var isBlur: Bool = false
-    let tempFrame = UIView()
-    let tempFrameColor = UIView()
     var bckImage = UIImage()
-    
-    let doggoImage = UIView()
-    let trashImage = UIView()
-    let coneImage = UIView()
-    let coneImage2 = UIView()
-    let ballImage = UIView()
-    let kid1Image = UIView()
-    let kid2Image = UIView()
-    let peelImage = UIView()
-    let hydrantImage = UIView()
-    let helmetImage = UIView()
-    let girlImage = UIView()
     
     var blurOn = UIView()
     var blurOff = UIView()
@@ -39,13 +22,14 @@ class ViewController: UIViewController {
     var currView = CustomView()
     var tempImageView = UIView()
     var iterVal = 0
-    let delete = UIButton()
     
+    let delete = UIButton()
     var hideImageText = UILabel()
     var hideImageButton = UISwitch()
     var isHideMode: Bool = false
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
@@ -65,23 +49,12 @@ class ViewController: UIViewController {
         initToggle(sideView: sideView)
         addHideImageButton(sideView: sideView)
         addBlurButton()
-        //initBlurIcon()
         
         addSlider(view: sideView)
 
         addGridLineUpdate(mainView: mainImgView)
         
-        addDoggo()
-        addTrash()
-        addCone()
-        addCone2()
-        addBall()
-        addKid1()
-        addKid2()
-        addPeel()
-        addGirl()
-        addHelmet()
-        addHydrant()
+        initCustomObjects()
     }
 
     override func didReceiveMemoryWarning() {
@@ -127,9 +100,6 @@ class ViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         imageView.image = image
         mainImgView.addSubview(imageView)
-
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        blur.addGestureRecognizer(gestureRecognizer)
     }
 
     func addSlider(view: UIView){
@@ -218,211 +188,6 @@ class ViewController: UIViewController {
         hideImageText.isHidden = true
     }
     
-    func addDoggo(){
-        
-        var image = UIImage(named: "doggo")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 90, height: 90))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        doggoImage.frame = CGRect(x: 413, y: 413, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        doggoImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(doggoTap))
-        doggoImage.addGestureRecognizer(gestureRecognizer1)
-        
-        view.addSubview(doggoImage)
-        
-        for i in gridViews {
-            doggoImage.sendSubview(toBack: i)
-        }
-    }
-    
-    func addTrash(){
-        
-        var image = UIImage(named: "trashcan")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 130, height: 130))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        for i in gridViews {
-            imageView.sendSubview(toBack: i)
-        }
-        
-        trashImage.frame = CGRect(x: -21, y: 366, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        trashImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(trashTap))
-        trashImage.addGestureRecognizer(gestureRecognizer1)
-        
-        view.addSubview(trashImage)
-        
-        for i in gridViews {
-            trashImage.sendSubview(toBack: i)
-        }
-    }
-    
-    func addCone(){
-        var image = UIImage(named: "cone")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 60, height: 60))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        coneImage.frame = CGRect(x: 122, y: 361, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        coneImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(coneTap))
-        coneImage.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //coneImage.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(coneImage)
-    }
-    
-    func addCone2(){
-        var image = UIImage(named: "cone")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 60, height: 60))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        coneImage2.frame = CGRect(x: 185, y: 325.5, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        coneImage2.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(cone2Tap))
-        coneImage2.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //coneImage2.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(coneImage2)
-    }
-    
-    func addBall(){
-        var image = UIImage(named: "ball")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        ballImage.frame = CGRect(x: 575.5, y: 385, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        ballImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(ballTap))
-        ballImage.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //ballImage.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(ballImage)
-    }
-    
-    func addKid1(){
-        var image = UIImage(named: "kid1")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        kid1Image.frame = CGRect(x: 380, y: 279.5, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        kid1Image.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(kid1Tap))
-        kid1Image.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //kid1Image.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(kid1Image)
-    }
-    
-    func addKid2(){
-        var image = UIImage(named: "kid1")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        kid2Image.frame = CGRect(x: 423.5, y: 271, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        kid2Image.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(kid2Tap))
-        kid2Image.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //kid2Image.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(kid2Image)
-    }
-    
-    func addPeel(){
-        var image = UIImage(named: "peel")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 65, height: 65))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        peelImage.frame = CGRect(x: 55.5, y: 460.5, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        peelImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(peelTap))
-        peelImage.addGestureRecognizer(gestureRecognizer1)
-        
-        view.addSubview(peelImage)
-    }
-    
-    func addHelmet(){
-        var image = UIImage(named: "helmet")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        helmetImage.frame = CGRect(x: 176.5, y: 387, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        helmetImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(helmetTap))
-        helmetImage.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //helmetImage.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(helmetImage)
-    }
-    
-    func addGirl(){
-        var image = UIImage(named: "girl")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 230, height: 230))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        girlImage.frame = CGRect(x: 735, y: 237.6, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        girlImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(girlTap))
-        girlImage.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //girlImage.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(girlImage)
-    }
-    
-    func addHydrant(){
-        var image = UIImage(named: "hydrant")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 70, height: 70))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        
-        hydrantImage.frame = CGRect(x: 606, y: 300, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        hydrantImage.backgroundColor = UIColor(patternImage: image!)
-        let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(hydrantTap))
-        hydrantImage.addGestureRecognizer(gestureRecognizer1)
-        //let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(imgPanHandler))
-        //hydrantImage.addGestureRecognizer(gestureRecognizer)
-        
-        view.addSubview(hydrantImage)
-    }
     
     func addBlurButton(){
         
@@ -441,6 +206,26 @@ class ViewController: UIViewController {
         blurOff.backgroundColor = UIColor(patternImage: image2!)
     }
     
+    func initCustomObjects(){
+        
+        let arrayOfCustom: [CustomObject] = [CustomObject(imageName: "doggo", xPos: 413, yPos: 413, sideSize: 90),
+                                             CustomObject(imageName: "trashcan", xPos: -21, yPos: 366, sideSize: 130),
+                                             CustomObject(imageName: "cone", xPos: 122, yPos: 361, sideSize: 60),
+                                             CustomObject(imageName: "cone", xPos: 185, yPos: 325.5, sideSize: 60),
+                                             CustomObject(imageName: "ball", xPos: 575.5, yPos: 385, sideSize: 50),
+                                             CustomObject(imageName: "kid1", xPos: 380, yPos: 279.5, sideSize: 50),
+                                             CustomObject(imageName: "kid1", xPos: 423.5, yPos: 271, sideSize: 50),
+                                             CustomObject(imageName: "peel", xPos: 55.5, yPos: 460.5, sideSize: 65),
+                                             CustomObject(imageName: "helmet", xPos: 176.5, yPos: 387, sideSize: 50),
+                                             CustomObject(imageName: "girl", xPos: 735, yPos: 237.6, sideSize: 230),
+                                             CustomObject(imageName: "hydrant", xPos: 606, yPos: 300, sideSize: 70)]
+        
+        for i in arrayOfCustom {
+            view.addSubview(i)
+        }
+        //let c = CustomObject(imageName: "doggo", alpha: 1, xPos: 413, yPos: 413)
+        //view.addSubview(c)
+    }
     
 
     func toggleGrid(mySwitch: UISwitch) {
@@ -473,107 +258,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func doggoTap(sender: UITapGestureRecognizer!){
-        print("Tap Doggo")
-        createCustomView(xTouchPoint: 413, yTouchPoint: 413, width: 90, height: 90, color: "3F51B5")
-        
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = doggoImage
-    }
-    
-    func trashTap(sender: UITapGestureRecognizer!){
-        print("Tap Trash")
-        createCustomView(xTouchPoint: -21, yTouchPoint: 366, width: 130, height: 130, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = trashImage
-    }
-    
-    func coneTap(sender: UITapGestureRecognizer!){
-        print("Location : \(coneImage.frame.origin)")
-
-        createCustomView(xTouchPoint: 122, yTouchPoint: 361, width: 60, height: 60, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = coneImage
-    }
-    
-    func cone2Tap(sender: UITapGestureRecognizer!){
-        print("Location : \(coneImage2.frame.origin)")
-
-        createCustomView(xTouchPoint: 185, yTouchPoint: 325.5, width: 60, height: 60, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = coneImage2
-    }
-    
-    func ballTap(sender: UITapGestureRecognizer!){
-        print("Location : \(ballImage.frame.origin)")
-
-        createCustomView(xTouchPoint: 575.5, yTouchPoint: 385, width: 50, height: 50, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = ballImage
-    }
-    
-    func kid1Tap(sender: UITapGestureRecognizer!){
-        print("Location : \(kid1Image.frame.origin)")
-
-        createCustomView(xTouchPoint: 380, yTouchPoint: 279.5, width: 50, height: 50, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = kid1Image
-    }
-    
-    func kid2Tap(sender: UITapGestureRecognizer!){
-        print("Location : \(kid2Image.frame.origin)")
-
-        createCustomView(xTouchPoint: 423.5, yTouchPoint: 271, width: 50, height: 50, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = kid2Image
-    }
-    
-    func peelTap(sender: UITapGestureRecognizer!){
-        print("Location peel : \(peelImage.frame.origin)")
-
-        //createCustomView(xTouchPoint: <#T##CGFloat##CoreGraphics.CGFloat#>, yTouchPoint: <#T##CGFloat##CoreGraphics.CGFloat#>, width: <#T##CGFloat##CoreGraphics.CGFloat#>, height: <#T##CGFloat##CoreGraphics.CGFloat#>)
-    }
-    
-    func helmetTap(sender: UITapGestureRecognizer!){
-        print("Location helmet : \(helmetImage.frame.origin)")
-
-        createCustomView(xTouchPoint: 176.5, yTouchPoint: 387, width: 50, height: 50, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = helmetImage
-    }
-    
-    func girlTap(sender: UITapGestureRecognizer!){
+    /*func girlTap(sender: UITapGestureRecognizer!){
         print("Location girl : \(girlImage.frame.origin)")
 
         createCustomView(xTouchPoint: 735, yTouchPoint: 237.6, width: 230, height: 230, color: "3F51B5")
@@ -583,11 +268,7 @@ class ViewController: UIViewController {
         hideImageText.isHidden = false
         hideImageButton.setOn(true, animated: false)
         tempImageView = girlImage
-    }
-    
-    func hydrantTap(sender: UITapGestureRecognizer!){
-        print("Location hydrant : \(hydrantImage.frame.origin)")
-    }
+    }*/
     
     func hideButtonTap(mySwitch: UISwitch!){
         
@@ -602,15 +283,6 @@ class ViewController: UIViewController {
             tempImageView.isHidden = false
         default: break
         }
-    }
-
-    func sliderSize(slider: UISlider){
-        let value = slider.value
-
-        print("Value : \(value)")
-        
-        blur.frame.size.height = 100*CGFloat(value)
-        blur.frame.size.width = 100*CGFloat(value)
     }
     
     func sliderIntensity(slider: UISlider){
