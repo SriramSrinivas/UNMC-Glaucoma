@@ -17,7 +17,13 @@ class CustomObject : UIView {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
         imageView = addImage(imageName: imageName, view: imageView, xPos: xPos, yPos: yPos, sideSize: sideSize)
+        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
+        imageView.addGestureRecognizer(gestureTap)
         addSubview(imageView)
+    }
+    
+    func handleCustomObjectTap(sender: UITapGestureRecognizer!){
+        print("Item tapped")
     }
     
     required init?(coder aDecoder: NSCoder) {

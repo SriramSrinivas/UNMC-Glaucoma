@@ -8,6 +8,8 @@ class ViewController: UIViewController {
     
     var blurOn = UIView()
     var blurOff = UIView()
+    var sightOn = UIView()
+    var sightOff = UIView()
 
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
@@ -18,6 +20,7 @@ class ViewController: UIViewController {
     
     let intSlider = UISlider()
     let intText = UILabel()
+    let alphSlider = UISlider()
     var customViewList = [CustomView]()
     var customObjectList = [CustomObject]()
     var currView = CustomView()
@@ -110,9 +113,15 @@ class ViewController: UIViewController {
         
         blurOff.heightAnchor.constraint(equalToConstant: 50).isActive = true
         blurOff.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        sightOn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        sightOff.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOff.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        intText.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        intText.widthAnchor.constraint(equalToConstant: 20).isActive = true
         intText.text = "Blur"
         intText.textColor = UIColor.white
         
@@ -121,6 +130,16 @@ class ViewController: UIViewController {
         delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
+        
+        let tempView = UIButton()
+        tempView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView.backgroundColor = UIColor(hexString: "#424242")
+        
+        let tempView1 = UIButton()
+        tempView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tempView1.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView1.backgroundColor = UIColor(hexString: "#424242")
 
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -128,6 +147,12 @@ class ViewController: UIViewController {
         intSlider.minimumValue = 0
         intSlider.maximumValue = 10
         intSlider.setValue(0, animated: false)
+        
+        alphSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        alphSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        alphSlider.minimumValue = 0
+        alphSlider.maximumValue = 10
+        alphSlider.setValue(10, animated: false)
 
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
@@ -138,7 +163,11 @@ class ViewController: UIViewController {
         sliderStack.addArrangedSubview(blurOn)
         sliderStack.addArrangedSubview(blurOff)
         sliderStack.addArrangedSubview(intSlider)
-        sliderStack.addArrangedSubview(intText)
+        sliderStack.addArrangedSubview(tempView)
+        sliderStack.addArrangedSubview(sightOn)
+        sliderStack.addArrangedSubview(sightOff)
+        sliderStack.addArrangedSubview(alphSlider)
+        sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(delete)
 
         view.addSubview(sliderStack)
@@ -194,17 +223,27 @@ class ViewController: UIViewController {
         
         var image = UIImage(named: "BlurOn")
         var image2 = UIImage(named: "BlurOff")
+        var image3 = UIImage(named: "SightOn")
+        var image4 = UIImage(named: "SightOff")
         
         image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
         image2! = resizeImage(image: image2!, targetSize: CGSize(width: 50, height: 50))
+        image3! = resizeImage(image: image3!, targetSize: CGSize(width: 50, height: 50))
+        image4! = resizeImage(image: image4!, targetSize: CGSize(width: 50, height: 50))
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         imageView.image = image
         let imageView2 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image2?.size.width)!, height: (image2?.size.height)!))
         imageView2.image = image2
+        let imageView3 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image3?.size.width)!, height: (image3?.size.height)!))
+        imageView3.image = image3
+        let imageView4 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image4?.size.width)!, height: (image4?.size.height)!))
+        imageView4.image = image3
         
         blurOn.backgroundColor = UIColor(patternImage: image!)
         blurOff.backgroundColor = UIColor(patternImage: image2!)
+        sightOn.backgroundColor = UIColor(patternImage: image3!)
+        sightOff.backgroundColor = UIColor(patternImage: image4!)
     }
     
     func initCustomObjects(){
@@ -220,12 +259,13 @@ class ViewController: UIViewController {
                                              CustomObject(imageName: "helmet", xPos: 176.5, yPos: 387, sideSize: 50),
                                              CustomObject(imageName: "girl", xPos: 735, yPos: 237.6, sideSize: 230),
                                              CustomObject(imageName: "hydrant", xPos: 606, yPos: 300, sideSize: 70)]
+
         
         for i in arrayOfCustom {
+            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
+            i.addGestureRecognizer(gestureTap)
             view.addSubview(i)
         }
-        //let c = CustomObject(imageName: "doggo", alpha: 1, xPos: 413, yPos: 413)
-        //view.addSubview(c)
     }
     
 
@@ -294,6 +334,11 @@ class ViewController: UIViewController {
         }
     }
     
+    func sliderAlpha(slider: UISlider){
+        var value = slider.value
+        value = value/10
+    }
+    
     func imgPanHandler(_ gestureRecognizer: UIPanGestureRecognizer) {
         
                     if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
@@ -335,6 +380,10 @@ class ViewController: UIViewController {
             //editMode = true
             intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
         }
+    }
+    
+    func handleCustomObjectTap(_ gestureRecognizer: UITapGestureRecognizer!){
+        print("Custom Object Tap")
     }
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
@@ -451,25 +500,41 @@ class ViewController: UIViewController {
             intSlider.tintColor = UIColor(hexString: "9E9E9E")
             intSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
             intSlider.alpha = 0.4
+            
+            alphSlider.tintColor = UIColor(hexString: "9E9E9E")
+            alphSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
+            alphSlider.alpha = 0.4
+            
             delete.alpha = 0.4
             delete.isEnabled = false
             intSlider.isEnabled = false
+            alphSlider.isEnabled = false
             
             blurOn.isHidden = true
             blurOff.isHidden = false
+            sightOn.isHidden = true
+            sightOff.isHidden = false
             
         case true:
             intText.textColor = UIColor(hexString: "EEEEEE")
             intText.alpha = 1
             intSlider.tintColor = UIColor(hexString: "EEEEEE")
             intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            alphSlider.tintColor = UIColor(hexString: "EEEEEE")
+            alphSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
             delete.alpha = 1
             delete.isEnabled =  true
+            
             intSlider.alpha = 1
             intSlider.isEnabled = true
+            alphSlider.alpha = 1
+            alphSlider.isEnabled = true
             
             blurOn.isHidden = false
             blurOff.isHidden = true
+            sightOn.isHidden = false
+            sightOff.isHidden = true
+            
         default:
             break
         }
