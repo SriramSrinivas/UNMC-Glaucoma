@@ -13,25 +13,23 @@ class CustomObject : UIView {
     var imageView = UIView()
     
     init(imageName: String, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat) {
-        
+
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        imageView = addImage(imageName: imageName, view: imageView, xPos: xPos, yPos: yPos, sideSize: sideSize)
-        //imageView.isUserInteractionEnabled = true
-        //let gestureTap = UITapGestureRecognizer(target: imageView, action: #selector(handleCustomObjectTap))
-        //addGestureRecognizer(gestureTap)
+        addImage(imageName: imageName, xPos: xPos, yPos: yPos, sideSize: sideSize)
         addSubview(imageView)
+        super.frame = self.frame
     }
     
-    func handleCustomObjectTap(sender: UITapGestureRecognizer!){
+    /*func handleCustomObjectTap(sender: UITapGestureRecognizer!){
         print("Item tapped")
-    }
+    }*/
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addImage(imageName: String, view: UIView, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat) -> UIView{
+    func addImage(imageName: String, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat){
         
         var image = UIImage(named: imageName)
         
@@ -40,12 +38,8 @@ class CustomObject : UIView {
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         imageView.image = image
         
-        view.frame = CGRect(x: xPos, y: yPos, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        view.backgroundColor = UIColor(patternImage: image!)
-        //let gestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(doggoTap))
-        //view.addGestureRecognizer(gestureRecognizer1)
-        
-        return view
+        self.frame = CGRect(x: xPos, y: yPos, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        self.backgroundColor = UIColor(patternImage: image!)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
