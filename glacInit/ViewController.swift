@@ -248,7 +248,7 @@ class ViewController: UIViewController {
     
     func initCustomObjects(){
         
-        let arrayOfCustom: [CustomObject] = [CustomObject(imageName: "doggo", xPos: 413, yPos: 413, sideSize: 90),
+        customObjectList = [CustomObject(imageName: "doggo", xPos: 413, yPos: 413, sideSize: 90),
                                              CustomObject(imageName: "trashcan", xPos: -21, yPos: 366, sideSize: 130),
                                              CustomObject(imageName: "cone", xPos: 122, yPos: 361, sideSize: 60),
                                              CustomObject(imageName: "cone", xPos: 185, yPos: 325.5, sideSize: 60),
@@ -261,11 +261,14 @@ class ViewController: UIViewController {
                                              CustomObject(imageName: "hydrant", xPos: 606, yPos: 300, sideSize: 70)]
 
         
-        for i in arrayOfCustom {
+        for i in customObjectList {
             i.isUserInteractionEnabled = true
-            let gestureTap = UITapGestureRecognizer(target: i, action: #selector(handleCustomObjectTap))
+            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
             i.addGestureRecognizer(gestureTap)
+
             view.addSubview(i)
+            
+            print("Bounds are \(i.frame)")
         }
     }
     
@@ -362,6 +365,16 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func handleCustomObjectTap(sender: UITapGestureRecognizer){
+        print("Object tapped")
+        
+        for i in customObjectList {
+            if (sender.view == i) {
+                print("Custom Object match found")
+            }
+        }
+    }
 
     func handleCustomViewTap(_ gestureRecognizer: UITapGestureRecognizer){
         
@@ -383,12 +396,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func handleCustomObjectTap(sender: UITapGestureRecognizer!){
-        print("Custom Object Tap")
-    }
-    
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
-        print("pinched \(gestureRecognizer.scale)")
         
         if((gestureRecognizer.view as! CustomView) == currView) {
             currView.frame.size.height = 200*(gestureRecognizer.scale)
