@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         loadImage(mainImgView: mainImgView)
 
         initToggle(sideView: sideView)
-        addHideImageButton(sideView: sideView)
+        //addHideImageButton(sideView: sideView)
         addBlurButton()
         
         addSlider(view: sideView)
@@ -262,7 +262,8 @@ class ViewController: UIViewController {
 
         
         for i in arrayOfCustom {
-            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
+            i.isUserInteractionEnabled = true
+            let gestureTap = UITapGestureRecognizer(target: i, action: #selector(handleCustomObjectTap))
             i.addGestureRecognizer(gestureTap)
             view.addSubview(i)
         }
@@ -382,7 +383,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func handleCustomObjectTap(_ gestureRecognizer: UITapGestureRecognizer!){
+    func handleCustomObjectTap(sender: UITapGestureRecognizer!){
         print("Custom Object Tap")
     }
     
@@ -390,6 +391,8 @@ class ViewController: UIViewController {
         print("pinched \(gestureRecognizer.scale)")
         
         if((gestureRecognizer.view as! CustomView) == currView) {
+            currView.frame.size.height = 200*(gestureRecognizer.scale)
+            currView.frame.size.width = 200*(gestureRecognizer.scale)
             currView.blur.frame.size.height = 200*(gestureRecognizer.scale)
             currView.blur.frame.size.width = 200*(gestureRecognizer.scale)
         }
@@ -415,6 +418,10 @@ class ViewController: UIViewController {
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
+        
+        if(tapGestureRecognizer.view is CustomObject) {
+            print("Custom object tapped")
+        }
         
         if(!isHideMode) {
             createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
@@ -453,6 +460,7 @@ class ViewController: UIViewController {
         c.selected(isSelected: true)
         c.editMode = true
         c.setBlurColor(color: color)
+
         iterVal += 1
         customViewList.append(c)
         let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
