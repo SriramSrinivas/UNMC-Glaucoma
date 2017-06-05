@@ -6,10 +6,10 @@ class ViewController: UIViewController {
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
     
-    var blurOn = UIView()
-    var blurOff = UIView()
-    var sightOn = UIView()
-    var sightOff = UIView()
+    var blurOnIcon = UIImageView()
+    var blurOffIcon = UIImageView()
+    var sightOnIcon = UIImageView()
+    var sightOffIcon = UIImageView()
 
     let controlStack = UIStackView()
     let toggleStack = UIStackView()
@@ -108,17 +108,17 @@ class ViewController: UIViewController {
 
     func addSlider(view: UIView){
         
-        blurOn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        blurOn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOnIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOnIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        blurOff.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        blurOff.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        sightOn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        sightOn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOnIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOnIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        sightOff.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        sightOff.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intText.widthAnchor.constraint(equalToConstant: 20).isActive = true
@@ -160,12 +160,12 @@ class ViewController: UIViewController {
         sliderStack.spacing = 10.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
-        sliderStack.addArrangedSubview(blurOn)
-        sliderStack.addArrangedSubview(blurOff)
+        sliderStack.addArrangedSubview(blurOnIcon)
+        sliderStack.addArrangedSubview(blurOffIcon)
         sliderStack.addArrangedSubview(intSlider)
         sliderStack.addArrangedSubview(tempView)
-        sliderStack.addArrangedSubview(sightOn)
-        sliderStack.addArrangedSubview(sightOff)
+        sliderStack.addArrangedSubview(sightOnIcon)
+        sliderStack.addArrangedSubview(sightOffIcon)
         sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(delete)
@@ -221,29 +221,19 @@ class ViewController: UIViewController {
     
     func addBlurButton(){
         
-        var image = UIImage(named: "BlurOn")
-        var image2 = UIImage(named: "BlurOff")
-        var image3 = UIImage(named: "SightOn")
-        var image4 = UIImage(named: "SightOff")
-        
-        image! = resizeImage(image: image!, targetSize: CGSize(width: 50, height: 50))
-        image2! = resizeImage(image: image2!, targetSize: CGSize(width: 50, height: 50))
-        image3! = resizeImage(image: image3!, targetSize: CGSize(width: 50, height: 50))
-        image4! = resizeImage(image: image4!, targetSize: CGSize(width: 50, height: 50))
-        
-        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        imageView.image = image
-        let imageView2 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image2?.size.width)!, height: (image2?.size.height)!))
-        imageView2.image = image2
-        let imageView3 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image3?.size.width)!, height: (image3?.size.height)!))
-        imageView3.image = image3
-        let imageView4 = UIImageView(frame: CGRect(x: 0, y: 0, width: (image4?.size.width)!, height: (image4?.size.height)!))
-        imageView4.image = image3
-        
-        blurOn.backgroundColor = UIColor(patternImage: image!)
-        blurOff.backgroundColor = UIColor(patternImage: image2!)
-        sightOn.backgroundColor = UIColor(patternImage: image3!)
-        sightOff.backgroundColor = UIColor(patternImage: image4!)
+        let image = UIImage(named: "BlurOn")
+        let image2 = UIImage(named: "BlurOff")
+        let image3 = UIImage(named: "SightOn")
+        let image4 = UIImage(named: "SightOff")
+
+        blurOnIcon = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
+        blurOnIcon.image = image
+        blurOffIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: (image2?.size.width)!, height: (image2?.size.height)!))
+        blurOffIcon.image = image2
+        sightOnIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: (image3?.size.width)!, height: (image3?.size.height)!))
+        sightOnIcon.image = image3
+        sightOffIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: (image4?.size.width)!, height: (image4?.size.height)!))
+        sightOffIcon.image = image4
     }
     
     func initCustomObjects(){
@@ -526,10 +516,12 @@ class ViewController: UIViewController {
             intSlider.isEnabled = false
             alphSlider.isEnabled = false
             
-            blurOn.isHidden = true
-            blurOff.isHidden = false
-            sightOn.isHidden = true
-            sightOff.isHidden = false
+            blurOnIcon.isHidden = true
+            blurOffIcon.isHidden = false
+            blurOffIcon.alpha = 0.4
+            sightOnIcon.isHidden = true
+            sightOffIcon.isHidden = false
+            sightOffIcon.alpha = 0.4
             
         case true:
             intText.textColor = UIColor(hexString: "EEEEEE")
@@ -546,10 +538,10 @@ class ViewController: UIViewController {
             alphSlider.alpha = 1
             alphSlider.isEnabled = true
             
-            blurOn.isHidden = false
-            blurOff.isHidden = true
-            sightOn.isHidden = false
-            sightOff.isHidden = true
+            blurOnIcon.isHidden = false
+            blurOffIcon.isHidden = true
+            sightOnIcon.isHidden = false
+            sightOffIcon.isHidden = true
             
         default:
             break
