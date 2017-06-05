@@ -10,10 +10,11 @@ class CustomView: UIView {
     
     override init(frame: CGRect) {
         blur.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
+        blur.autoresizesSubviews = true
+        
         super.init(frame: frame)
         
         blur.blurRadius = 0
-        
         addSubview(blur)
     }
     
