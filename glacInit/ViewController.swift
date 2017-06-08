@@ -1,5 +1,4 @@
 import UIKit
-import VisualEffectView
 
 class ViewController: UIViewController {
         
@@ -150,6 +149,7 @@ class ViewController: UIViewController {
         
         alphSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         alphSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        alphSlider.addTarget(self, action: #selector(sliderAlpha), for: UIControlEvents.valueChanged)
         alphSlider.minimumValue = 0
         alphSlider.maximumValue = 10
         alphSlider.setValue(10, animated: false)
@@ -238,17 +238,17 @@ class ViewController: UIViewController {
     
     func initCustomObjects(){
         
-        customObjectList = [CustomObject(imageName: "doggo", xPos: 413, yPos: 413, sideSize: 90),
-                                             CustomObject(imageName: "trashcan", xPos: -21, yPos: 366, sideSize: 130),
-                                             CustomObject(imageName: "cone", xPos: 122, yPos: 361, sideSize: 60),
-                                             CustomObject(imageName: "cone", xPos: 185, yPos: 325.5, sideSize: 60),
-                                             CustomObject(imageName: "ball", xPos: 575.5, yPos: 385, sideSize: 50),
-                                             CustomObject(imageName: "kid1", xPos: 380, yPos: 279.5, sideSize: 50),
-                                             CustomObject(imageName: "kid1", xPos: 423.5, yPos: 271, sideSize: 50),
-                                             CustomObject(imageName: "peel", xPos: 55.5, yPos: 460.5, sideSize: 65),
-                                             CustomObject(imageName: "helmet", xPos: 176.5, yPos: 387, sideSize: 50),
-                                             CustomObject(imageName: "girl", xPos: 735, yPos: 237.6, sideSize: 230),
-                                             CustomObject(imageName: "hydrant", xPos: 606, yPos: 300, sideSize: 70)]
+        customObjectList = [CustomObject(imageName: "doggo", xPos: 413, yPos: 413, sideSize: 90, alphaValue: 1),
+                                             CustomObject(imageName: "trashcan", xPos: -21, yPos: 366, sideSize: 130, alphaValue: 1),
+                                             CustomObject(imageName: "cone", xPos: 122, yPos: 361, sideSize: 60, alphaValue: 1),
+                                             CustomObject(imageName: "cone", xPos: 185, yPos: 325.5, sideSize: 60, alphaValue: 1),
+                                             CustomObject(imageName: "ball", xPos: 575.5, yPos: 385, sideSize: 50, alphaValue: 1),
+                                             CustomObject(imageName: "kid1", xPos: 380, yPos: 279.5, sideSize: 50, alphaValue: 1),
+                                             CustomObject(imageName: "kid1", xPos: 423.5, yPos: 271, sideSize: 50, alphaValue: 1),
+                                             CustomObject(imageName: "peel", xPos: 55.5, yPos: 460.5, sideSize: 65, alphaValue: 1),
+                                             CustomObject(imageName: "helmet", xPos: 176.5, yPos: 387, sideSize: 50, alphaValue: 1),
+                                             CustomObject(imageName: "girl", xPos: 735, yPos: 237.6, sideSize: 230, alphaValue: 1),
+                                             CustomObject(imageName: "hydrant", xPos: 606, yPos: 300, sideSize: 70, alphaValue: 1)]
 
         
         for i in customObjectList {
@@ -257,8 +257,6 @@ class ViewController: UIViewController {
             i.addGestureRecognizer(gestureTap)
 
             view.addSubview(i)
-            
-            print("Bounds are \(i.frame)")
         }
     }
     
@@ -293,18 +291,6 @@ class ViewController: UIViewController {
         }
     }
     
-    /*func girlTap(sender: UITapGestureRecognizer!){
-        print("Location girl : \(girlImage.frame.origin)")
-
-        createCustomView(xTouchPoint: 735, yTouchPoint: 237.6, width: 230, height: 230, color: "3F51B5")
-
-        isHideMode = true
-        hideImageButton.isHidden = false
-        hideImageText.isHidden = false
-        hideImageButton.setOn(true, animated: false)
-        tempImageView = girlImage
-    }*/
-    
     func hideButtonTap(mySwitch: UISwitch!){
         
         let value = mySwitch.isOn
@@ -331,6 +317,8 @@ class ViewController: UIViewController {
     func sliderAlpha(slider: UISlider){
         var value = slider.value
         value = value/10
+        
+        tempImageView.alpha = CGFloat(value)
     }
     
     func imgPanHandler(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -359,31 +347,38 @@ class ViewController: UIViewController {
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
         print("Object tapped")
         
+        isHideMode = true
+        
+        for i in customViewList {
+            if i.customViewID == currView.customViewID {
+                i.selected(isSelected: false)
+                i.editMode = false
+            }
+        }
+        
         for i in customObjectList {
             if (sender.view == i) {
                 print("Custom Object match found")
+                createCustomView(xTouchPoint: i.frame.origin.x, yTouchPoint: i.frame.origin.y, width: 200, height: 200, color: "3F51B5")
+                tempImageView = i
             }
         }
     }
 
     func handleCustomViewTap(_ gestureRecognizer: UITapGestureRecognizer){
         
-        if(gestureRecognizer.view is CustomView) {
-            controlStack.isHidden = false
-            currView = gestureRecognizer.view as! CustomView
-            enableControl(value: true)
-            for i in customViewList {
-                if i.customViewID != currView.customViewID {
-                    i.selected(isSelected: false)
-                    i.editMode = false
-                    isHideMode = true
-                }
+        //controlStack.isHidden = false
+        enableControl(value: true)
+        for i in customViewList {
+            if i.customViewID != currView.customViewID {
+                i.selected(isSelected: false)
+                i.editMode = false
+                isHideMode = true
             }
-            currView.selected(isSelected: true)
-            currView.editMode = true
-            //editMode = true
-            intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
         }
+        currView.selected(isSelected: true)
+        currView.editMode = true
+        intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
     }
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
@@ -417,9 +412,8 @@ class ViewController: UIViewController {
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
-        if(tapGestureRecognizer.view is CustomObject) {
-            print("Custom object tapped")
-        }
+        tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+
         
         if(!isHideMode) {
             createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
