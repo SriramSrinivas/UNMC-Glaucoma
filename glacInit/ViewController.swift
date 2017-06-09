@@ -4,6 +4,7 @@ class ViewController: UIViewController {
         
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
+    var mainImgView = UIView()
     
     var blurOnIcon = UIImageView()
     var blurOffIcon = UIImageView()
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
 
-        let mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
+        mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
         mainImgView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         mainImgView.addGestureRecognizer(tap)
@@ -365,10 +366,18 @@ class ViewController: UIViewController {
         }
     }
 
-    func handleCustomViewTap(_ gestureRecognizer: UITapGestureRecognizer){
+    func handleCustomViewTap(sender: UITapGestureRecognizer){
         
         //controlStack.isHidden = false
         enableControl(value: true)
+        
+        //for i in customViewList {
+            if (sender.view is CustomView){
+                let temp = sender.view as! CustomView
+                currView = temp
+            }
+        //}
+        
         for i in customViewList {
             if i.customViewID != currView.customViewID {
                 i.selected(isSelected: false)
