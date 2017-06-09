@@ -283,10 +283,12 @@ class ViewController: UIViewController {
         case true:
             for i in customViewList {
                 i.isHidden = true
+                mainImgView.isUserInteractionEnabled = false
             }
         case false:
             for i in customViewList {
                 i.isHidden = false
+                mainImgView.isUserInteractionEnabled = true
             }
         default: break
         }
