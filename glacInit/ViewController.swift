@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     var iterVal = 0
     
     let delete = UIButton()
+    let export = UIButton()
     var hideImageText = UILabel()
     var hideImageButton = UISwitch()
     var isHideMode: Bool = false
@@ -131,6 +132,12 @@ class ViewController: UIViewController {
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
         
+        export.setTitle("Export", for: UIControlState.normal)
+        export.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        export.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        export.backgroundColor = UIColor(hexString: "#0D47A1")
+        export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
+        
         let tempView = UIButton()
         tempView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -170,6 +177,7 @@ class ViewController: UIViewController {
         sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(delete)
+        sliderStack.addArrangedSubview(export)
 
         view.addSubview(sliderStack)
 
@@ -419,6 +427,10 @@ class ViewController: UIViewController {
         enableControl(value: false)
         isHideMode = false
     }
+    
+    func exportTap(sender: UIButton!){
+        takeScreenShot()
+    }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
@@ -501,6 +513,17 @@ class ViewController: UIViewController {
         UIGraphicsEndImageContext()
         
         return newImage!
+    }
+    
+    func takeScreenShot() {
+        //Create the UIImage
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //Save it to the camera roll
+        UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
     }
     
     func enableControl(value: Bool){
