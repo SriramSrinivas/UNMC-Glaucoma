@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     var tempImageView = UIView()
     var iterVal = 0
     
+    var customViewUpdateList = [CustomViewUpdate]()
+    
     let delete = UIButton()
     let export = UIButton()
     var hideImageText = UILabel()
@@ -184,7 +186,7 @@ class ViewController: UIViewController {
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        enableControl(value: false)
+        enableControl(value: true)
     }
 
     func addGridLineUpdate(mainView: UIView){
@@ -323,6 +325,12 @@ class ViewController: UIViewController {
         if currView.editMode == true {
             currView.blur.blurRadius = CGFloat(value)
         }
+        
+        for i in customViewUpdateList {
+            if i.isActive {
+                i.blur.blurRadius = CGFloat(value)
+            }
+        }
     }
     
     func sliderAlpha(slider: UISlider){
@@ -400,6 +408,26 @@ class ViewController: UIViewController {
         intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
     }
     
+    func handleTapUpdate(sender: UITapGestureRecognizer){
+        
+        let temp = sender.view as! CustomViewUpdate
+        temp.handleTap(sender: sender)
+        
+        //guard let temp = sender.view as! CustomViewUpdate?, temp.handleTap(sender: sender) else { return }
+        
+        print("Tap Update")
+        
+        for i in customViewUpdateList {
+            if i != temp {
+                i.isActive(value: false)
+            }
+            else {
+                i.isActive(value: true)
+                intSlider.setValue(Float(i.blur.blurRadius), animated: false)
+            }
+        }
+    }
+    
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         
         if((gestureRecognizer.view as! CustomView) == currView) {
@@ -437,7 +465,8 @@ class ViewController: UIViewController {
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        createCustomViewUpdate(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200), color: "F44556")
+        createCustomViewUpdate(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200))
+        
         /*if(!isHideMode) {
             //createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
             //isHideMode = true
@@ -492,13 +521,23 @@ class ViewController: UIViewController {
         currView = c
     }
     
-    func createCustomViewUpdate(frame: CGRect, color: String){
-        enableControl(value: true)
+    func createCustomViewUpdate(frame: CGRect){
+        
+        //enableControl(value: true)
         intSlider.setValue(0, animated: false)
         
-        let c = CustomViewUpdate(frame: frame, color: color)
+        for i in customViewUpdateList{
+            if i.isActive {
+                i.isActive(value: false)
+            }
+        }
         
+        let c = CustomViewUpdate(frame: frame)
+        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
+        c.addGestureRecognizer(gestureTap)
         view.addSubview(c)
+        
+        customViewUpdateList.append(c)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

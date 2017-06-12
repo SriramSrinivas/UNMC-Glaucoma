@@ -14,17 +14,21 @@ class CustomViewUpdate : UIView{
     let blur = VisualEffectView()
     var isActive: Bool = false
     
-    init(frame: CGRect, color: String) {
+    override init(frame: CGRect) {
 
         super.init(frame: frame)
         
         blur.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         blur.blurRadius = 0
         blur.layer.borderWidth = 5
-        blur.layer.borderColor = UIColor(hexString: color).cgColor
+        isActive(value: true)
         
-        let gr = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        addGestureRecognizer(gr)
+        let panRecog = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
+        let tapRecog = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapRecog)
+        addGestureRecognizer(pinchZoom)
+        addGestureRecognizer(panRecog)
         
         addSubview(blur)
     }
@@ -47,6 +51,22 @@ class CustomViewUpdate : UIView{
             let translation = gestureRecognizer.translation(in: self)
             gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
             gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+        }
+    }
+    
+    func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
+        
+            frame.size.height = 200*(gestureRecognizer.scale)
+            frame.size.width = 200*(gestureRecognizer.scale)
+            blur.frame.size.height = 200*(gestureRecognizer.scale)
+            blur.frame.size.width = 200*(gestureRecognizer.scale)
+    }
+    
+    func handleTap(sender: UITapGestureRecognizer){
+        print("tapped")
+        
+        if(!isActive) {
+            isActive(value: true)
         }
     }
     
