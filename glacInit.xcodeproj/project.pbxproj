@@ -12,6 +12,8 @@
 		74753AFD1EC110850071C4C0 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74753AFC1EC110840071C4C0 /* CustomView.swift */; };
 		74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907C1EDDDC2500628B38 /* CustomObject.swift */; };
 		74BB907F1EDDDDAC00628B38 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907E1EDDDDAC00628B38 /* Circle.swift */; };
+		74D4067B1EEB5042004F5901 /* CustomViewObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D4067A1EEB5042004F5901 /* CustomViewObject.swift */; };
+		74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */; };
 		753A2D7141F89F7141A3E06B /* Pods_glacInitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5954356F73D8C979F42E4B76 /* Pods_glacInitTests.framework */; };
 		7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65A1E50020A003ACC5F /* AppDelegate.swift */; };
 		7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65C1E50020A003ACC5F /* ViewController.swift */; };
@@ -52,6 +54,8 @@
 		74753AFC1EC110840071C4C0 /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		74BB907C1EDDDC2500628B38 /* CustomObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomObject.swift; sourceTree = "<group>"; };
 		74BB907E1EDDDDAC00628B38 /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		74D4067A1EEB5042004F5901 /* CustomViewObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewObject.swift; sourceTree = "<group>"; };
+		74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewUpdate.swift; sourceTree = "<group>"; };
 		7752F6571E50020A003ACC5F /* glacInit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glacInit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F65A1E50020A003ACC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7752F65C1E50020A003ACC5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -141,9 +145,11 @@
 				7752F65C1E50020A003ACC5F /* ViewController.swift */,
 				742158631EE5A4D2003FF0CE /* TestClass.swift */,
 				74BB907C1EDDDC2500628B38 /* CustomObject.swift */,
+				74D4067A1EEB5042004F5901 /* CustomViewObject.swift */,
 				74BB907E1EDDDDAC00628B38 /* Circle.swift */,
 				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
 				74753AFC1EC110840071C4C0 /* CustomView.swift */,
+				74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */,
 				7752F65E1E50020A003ACC5F /* Main.storyboard */,
 				7752F6611E50020A003ACC5F /* Assets.xcassets */,
 				7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */,
@@ -468,6 +474,8 @@
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */,
 				742158641EE5A4D2003FF0CE /* TestClass.swift in Sources */,
+				74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */,
+				74D4067B1EEB5042004F5901 /* CustomViewObject.swift in Sources */,
 				74BB907F1EDDDDAC00628B38 /* Circle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -436,32 +436,35 @@ class ViewController: UIViewController {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
+        createCustomViewUpdate(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200), color: "F44556")
+        /*if(!isHideMode) {
+            //createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
+            //isHideMode = true
 
         
-        if(!isHideMode) {
-            createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
-            isHideMode = true
-        
-            for i in customViewList {
+            /*for i in customViewList {
                 if i.customViewID != currView.customViewID {
                     i.selected(isSelected: false)
                     i.editMode = false
                 }
-            }
+            }*/
         } else {
             
-            for i in customViewList {
+            /*for i in customViewList {
                 if i.customViewID == currView.customViewID {
                     i.selected(isSelected: false)
                     i.editMode = false
                 }
-            }
+            }*/
             
+            /*
             hideImageButton.isHidden = true
             hideImageText.isHidden = true
             isHideMode = false
             enableControl(value: false)
-        }
+            */
+        }*/
     }
     
     func createCustomView(xTouchPoint: CGFloat, yTouchPoint: CGFloat, width: CGFloat, height: CGFloat, color: String){
@@ -487,6 +490,15 @@ class ViewController: UIViewController {
         
         view.addSubview(c)
         currView = c
+    }
+    
+    func createCustomViewUpdate(frame: CGRect, color: String){
+        enableControl(value: true)
+        intSlider.setValue(0, animated: false)
+        
+        let c = CustomViewUpdate(frame: frame, color: color)
+        
+        view.addSubview(c)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
