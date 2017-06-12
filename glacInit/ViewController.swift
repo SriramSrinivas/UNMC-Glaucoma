@@ -186,7 +186,7 @@ class ViewController: UIViewController {
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        enableControl(value: true)
+        enableControl(value: false)
     }
 
     func addGridLineUpdate(mainView: UIView){
@@ -410,10 +410,10 @@ class ViewController: UIViewController {
     
     func handleTapUpdate(sender: UITapGestureRecognizer){
         
+        enableControl(value: true)
+        
         let temp = sender.view as! CustomViewUpdate
         temp.handleTap(sender: sender)
-        
-        //guard let temp = sender.view as! CustomViewUpdate?, temp.handleTap(sender: sender) else { return }
         
         print("Tap Update")
         
@@ -523,21 +523,29 @@ class ViewController: UIViewController {
     
     func createCustomViewUpdate(frame: CGRect){
         
-        //enableControl(value: true)
+        var activatedViews: Bool = false
+        
         intSlider.setValue(0, animated: false)
         
         for i in customViewUpdateList{
             if i.isActive {
                 i.isActive(value: false)
+                activatedViews = true
             }
         }
         
-        let c = CustomViewUpdate(frame: frame)
-        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
-        c.addGestureRecognizer(gestureTap)
-        view.addSubview(c)
-        
-        customViewUpdateList.append(c)
+        if !activatedViews{
+            
+            enableControl(value: true)
+            
+            let c = CustomViewUpdate(frame: frame)
+            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
+            c.addGestureRecognizer(gestureTap)
+            view.addSubview(c)
+            customViewUpdateList.append(c)
+        } else {
+            enableControl(value: false)
+        }
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
