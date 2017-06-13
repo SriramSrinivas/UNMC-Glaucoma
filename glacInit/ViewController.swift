@@ -49,11 +49,11 @@ class ViewController: UIViewController {
         loadImage(mainImgView: mainImgView)
 
         initToggle(sideView: sideView)
+        addExportButton(view: sideView)
         addControlIcons()
         addSlider(view: sideView)
-        addGridLineUpdate(mainView: mainImgView)
-        
         initCustomObjects()
+        addGridLineUpdate(mainView: mainImgView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -126,12 +126,6 @@ class ViewController: UIViewController {
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
         
-        export.setTitle("Export", for: UIControlState.normal)
-        export.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        export.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        export.backgroundColor = UIColor(hexString: "#0D47A1")
-        export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
-        
         let tempView = UIButton()
         tempView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -171,7 +165,6 @@ class ViewController: UIViewController {
         sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(delete)
-        sliderStack.addArrangedSubview(export)
 
         view.addSubview(sliderStack)
 
@@ -180,21 +173,43 @@ class ViewController: UIViewController {
         
         enableControl(value: false)
     }
+    
+    func addExportButton(view: UIView){
+        let stack = UIStackView()
+        
+        export.setTitle("Export", for: UIControlState.normal)
+        export.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        export.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        export.backgroundColor = UIColor(hexString: "#0D47A1")
+        export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
+        
+        stack.axis = UILayoutConstraintAxis.vertical
+        stack.distribution = UIStackViewDistribution.equalSpacing
+        stack.alignment = UIStackViewAlignment.center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        stack.addArrangedSubview(export)
+        
+        view.addSubview(stack)
+        
+        stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stack.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
 
     func addGridLineUpdate(mainView: UIView){
 
         let line1 = UIButton()
-        line1.frame = CGRect(x: mainView.frame.width*0.3, y: 0, width: 5, height: mainView.frame.height)
+        line1.frame = CGRect(x: view.frame.width*0.3, y: 0, width: 5, height: view.frame.height)
         line1.layer.borderWidth = 5
         line1.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line2 = UIButton()
-        line2.frame = CGRect(x: mainView.frame.width*0.66, y: 0, width: 5, height: mainView.frame.height)
+        line2.frame = CGRect(x: view.frame.width*0.66, y: 0, width: 5, height: view.frame.height)
         line2.layer.borderWidth = 5
         line2.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line3 = UIButton()
-        line3.frame = CGRect(x: 0, y: mainView.frame.height*0.5, width: mainView.frame.width, height: 5)
+        line3.frame = CGRect(x: 0, y: view.frame.height*0.5, width: view.frame.width, height: 5)
         line3.layer.borderWidth = 5
         line3.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
@@ -203,7 +218,12 @@ class ViewController: UIViewController {
         gridViews.append(line3)
 
         for i in gridViews {
-            mainView.addSubview(i)
+            
+            i.layer.zPosition = 1
+            
+            view.addSubview(i)
+            
+            print("Curr z axis : \(i.layer.zPosition)")
         }
     }
     
@@ -361,6 +381,9 @@ class ViewController: UIViewController {
     func cancelTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
+        if temp.isLinkedToImage {
+            temp.linkedImage.alpha = 1
+        }
         customViewUpdateList = customViewUpdateList.filter() { $0 != temp }
         temp.removeFromSuperview()
         enableControl(value: false)
@@ -397,8 +420,10 @@ class ViewController: UIViewController {
             let c = CustomViewUpdate(frame: frame)
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
             c.addGestureRecognizer(gestureTap)
-            view.addSubview(c)
+            mainImgView.addSubview(c)
             customViewUpdateList.append(c)
+            
+            print("c z axis : \(c.layer.zPosition)")
         } else {
             enableControl(value: false)
         }
@@ -432,13 +457,14 @@ class ViewController: UIViewController {
     
     func takeScreenShot() {
         //Create the UIImage
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        UIGraphicsBeginImageContext(mainImgView.frame.size)
+        mainImgView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         //Save it to the camera roll
         UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+        
     }
     
     func getCurrentActiveView() -> CustomViewUpdate{
