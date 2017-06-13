@@ -11,7 +11,7 @@ import UIKit
 class CustomObject : UIView {
     
     var imageView = UIView()
-    var alphaValue = 1
+    //var alphaValue = 1
     
     init(imageName: String, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat, alphaValue: Int) {
 

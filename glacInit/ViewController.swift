@@ -268,14 +268,21 @@ class ViewController: UIViewController {
         let value = mySwitch.isOn
         switch value {
         case true:
+            mainImgView.isUserInteractionEnabled = false
             for i in customViewUpdateList {
                 i.isHidden = true
-                mainImgView.isUserInteractionEnabled = false
+                if i.isLinkedToImage {
+                    i.linkedImage.alpha = 1
+                }
             }
         case false:
+            mainImgView.isUserInteractionEnabled = true
             for i in customViewUpdateList {
                 i.isHidden = false
-                mainImgView.isUserInteractionEnabled = true
+                if i.isLinkedToImage {
+                    i.linkedImage.alpha = i.alphaValue/10
+                }
+                
             }
         default: break
         }
@@ -309,19 +316,23 @@ class ViewController: UIViewController {
     func sliderAlpha(slider: UISlider){
         var value = slider.value
         value = value/10
-        
-        tempImageView.alpha = CGFloat(value)
+        let temp = getCurrentActiveView()
+        temp.linkedImage.alpha = CGFloat(value)
+        temp.alphaValue = CGFloat(value*10)
     }
 
-    
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
-        print("Object tapped")
+        
+        alphSlider.setValue(10, animated: false)
         
         for i in customObjectList {
             if (sender.view == i) {
                 print("Custom Object match found")
-                //createCustomView(xTouchPoint: i.frame.origin.x, yTouchPoint: i.frame.origin.y, width: 200, height: 200, color: "3F51B5")
-                tempImageView = i
+                createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: 200, height: 200))
+                let temp = customViewUpdateList.last
+                temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+                temp?.isLinkedToImage = true
+                temp?.linkedImage = i
             }
         }
     }
@@ -331,9 +342,6 @@ class ViewController: UIViewController {
         enableControl(value: true)
         
         let temp = sender.view as! CustomViewUpdate
-        temp.handleTap(sender: sender)
-        
-        print("Tap Update")
         
         for i in customViewUpdateList {
             if i != temp {
@@ -342,19 +350,19 @@ class ViewController: UIViewController {
             else {
                 i.isActive(value: true)
                 intSlider.setValue(Float(i.blur.blurRadius), animated: false)
+                
+                if i.isLinkedToImage{
+                    alphSlider.setValue(Float(i.alphaValue), animated: false)
+                }
             }
         }
     }
     
     func cancelTap(sender: UIButton!){
         
-        for i in customViewUpdateList {
-            if i.isActive{
-                customViewUpdateList = customViewUpdateList.filter() { $0 != i }
-                i.removeFromSuperview()
-            }
-        }
-        
+        let temp = getCurrentActiveView()
+        customViewUpdateList = customViewUpdateList.filter() { $0 != temp }
+        temp.removeFromSuperview()
         enableControl(value: false)
     }
     
@@ -431,6 +439,17 @@ class ViewController: UIViewController {
         
         //Save it to the camera roll
         UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+    }
+    
+    func getCurrentActiveView() -> CustomViewUpdate{
+        
+        var temp = CustomViewUpdate()
+        for i in customViewUpdateList{
+            if i.isActive {
+                temp = i
+            }
+        }
+        return temp
     }
     
     func enableControl(value: Bool){

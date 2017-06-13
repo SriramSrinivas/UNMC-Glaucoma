@@ -13,6 +13,9 @@ class CustomViewUpdate : UIView{
     
     let blur = VisualEffectView()
     var isActive: Bool = false
+    var isLinkedToImage: Bool = false
+    var linkedImage = UIView()
+    var alphaValue = CGFloat(1)
     
     override init(frame: CGRect) {
 
@@ -25,8 +28,7 @@ class CustomViewUpdate : UIView{
         
         let panRecog = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
-        let tapRecog = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        addGestureRecognizer(tapRecog)
+
         addGestureRecognizer(pinchZoom)
         addGestureRecognizer(panRecog)
         
@@ -37,7 +39,11 @@ class CustomViewUpdate : UIView{
         switch value {
         case true:
             blur.layer.borderWidth = 5
-            blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
+            if isLinkedToImage{
+                blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+            } else {
+                blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
+            }
             isActive = true
         case false:
             blur.layer.borderWidth = 0
@@ -60,14 +66,6 @@ class CustomViewUpdate : UIView{
             frame.size.width = 200*(gestureRecognizer.scale)
             blur.frame.size.height = 200*(gestureRecognizer.scale)
             blur.frame.size.width = 200*(gestureRecognizer.scale)
-    }
-    
-    func handleTap(sender: UITapGestureRecognizer){
-        print("tapped")
-        
-        if(!isActive) {
-            isActive(value: true)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
