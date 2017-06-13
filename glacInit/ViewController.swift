@@ -21,17 +21,14 @@ class ViewController: UIViewController {
     let intSlider = UISlider()
     let intText = UILabel()
     let alphSlider = UISlider()
-    var customViewList = [CustomView]()
     var customObjectList = [CustomObject]()
-    var currView = CustomView()
     var tempImageView = UIView()
     var iterVal = 0
     
+    var customViewUpdateList = [CustomViewUpdate]()
+    
     let delete = UIButton()
     let export = UIButton()
-    var hideImageText = UILabel()
-    var hideImageButton = UISwitch()
-    var isHideMode: Bool = false
     
     override func viewDidLoad() {
         
@@ -52,11 +49,8 @@ class ViewController: UIViewController {
         loadImage(mainImgView: mainImgView)
 
         initToggle(sideView: sideView)
-        //addHideImageButton(sideView: sideView)
-        addBlurButton()
-        
+        addControlIcons()
         addSlider(view: sideView)
-
         addGridLineUpdate(mainView: mainImgView)
         
         initCustomObjects()
@@ -213,22 +207,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func addHideImageButton(sideView: UIView){
-        hideImageButton.frame = CGRect(x: 20, y: sideView.frame.height - 300, width: 100, height: 50)
-        hideImageButton.addTarget(self, action: #selector(hideButtonTap), for: .valueChanged)
-        sideView.addSubview(hideImageButton)
-        hideImageButton.setOn(true, animated: false)
-        hideImageButton.isHidden = true
-        
-        hideImageText.frame = CGRect(x: 90, y: sideView.frame.height - 300, width: 100, height: 50)
-        hideImageText.text = "Hide"
-        hideImageText.textColor = UIColor(hexString: "EEEEEE")
-        sideView.addSubview(hideImageText)
-        hideImageText.isHidden = true
-    }
-    
-    
-    func addBlurButton(){
+    func addControlIcons(){
         
         let image = UIImage(named: "BlurOn")
         let image2 = UIImage(named: "BlurOff")
@@ -289,14 +268,21 @@ class ViewController: UIViewController {
         let value = mySwitch.isOn
         switch value {
         case true:
-            for i in customViewList {
+            mainImgView.isUserInteractionEnabled = false
+            for i in customViewUpdateList {
                 i.isHidden = true
-                mainImgView.isUserInteractionEnabled = false
+                if i.isLinkedToImage {
+                    i.linkedImage.alpha = 1
+                }
             }
         case false:
-            for i in customViewList {
+            mainImgView.isUserInteractionEnabled = true
+            for i in customViewUpdateList {
                 i.isHidden = false
-                mainImgView.isUserInteractionEnabled = true
+                if i.isLinkedToImage {
+                    i.linkedImage.alpha = i.alphaValue/10
+                }
+                
             }
         default: break
         }
@@ -320,112 +306,64 @@ class ViewController: UIViewController {
     func sliderIntensity(slider: UISlider){
         let value = slider.value
         
-        if currView.editMode == true {
-            currView.blur.blurRadius = CGFloat(value)
+        for i in customViewUpdateList {
+            if i.isActive {
+                i.blur.blurRadius = CGFloat(value)
+            }
         }
     }
     
     func sliderAlpha(slider: UISlider){
         var value = slider.value
         value = value/10
+        let temp = getCurrentActiveView()
+        temp.linkedImage.alpha = CGFloat(value)
+        temp.alphaValue = CGFloat(value*10)
+    }
+
+    func handleCustomObjectTap(sender: UITapGestureRecognizer){
         
-        tempImageView.alpha = CGFloat(value)
+        alphSlider.setValue(10, animated: false)
+        
+        for i in customObjectList {
+            if (sender.view == i) {
+                print("Custom Object match found")
+                createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: 200, height: 200))
+                let temp = customViewUpdateList.last
+                temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+                temp?.isLinkedToImage = true
+                temp?.linkedImage = i
+            }
+        }
     }
     
-    func imgPanHandler(_ gestureRecognizer: UIPanGestureRecognizer) {
+    func handleTapUpdate(sender: UITapGestureRecognizer){
         
-                    if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-                        let translation = gestureRecognizer.translation(in: self.view)
-                        gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-                        gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
-                    }
-    }
-    
-    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        enableControl(value: true)
         
-        if gestureRecognizer.view is CustomView {
-            let temp = gestureRecognizer.view as! CustomView
-            if temp.editMode {
-                if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-                    let translation = gestureRecognizer.translation(in: self.view)
-                    gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-                    gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
+        let temp = sender.view as! CustomViewUpdate
+        
+        for i in customViewUpdateList {
+            if i != temp {
+                i.isActive(value: false)
+            }
+            else {
+                i.isActive(value: true)
+                intSlider.setValue(Float(i.blur.blurRadius), animated: false)
+                
+                if i.isLinkedToImage{
+                    alphSlider.setValue(Float(i.alphaValue), animated: false)
                 }
             }
         }
     }
     
-    func handleCustomObjectTap(sender: UITapGestureRecognizer){
-        print("Object tapped")
-        
-        isHideMode = true
-        
-        for i in customViewList {
-            if i.customViewID == currView.customViewID {
-                i.selected(isSelected: false)
-                i.editMode = false
-            }
-        }
-        
-        for i in customObjectList {
-            if (sender.view == i) {
-                print("Custom Object match found")
-                createCustomView(xTouchPoint: i.frame.origin.x, yTouchPoint: i.frame.origin.y, width: 200, height: 200, color: "3F51B5")
-                tempImageView = i
-            }
-        }
-    }
-
-    func handleCustomViewTap(sender: UITapGestureRecognizer){
-        
-        //controlStack.isHidden = false
-        enableControl(value: true)
-        
-        //for i in customViewList {
-            if (sender.view is CustomView){
-                let temp = sender.view as! CustomView
-                currView = temp
-            }
-        //}
-        
-        for i in customViewList {
-            if i.customViewID != currView.customViewID {
-                i.selected(isSelected: false)
-                i.editMode = false
-                isHideMode = true
-            }
-        }
-        currView.selected(isSelected: true)
-        currView.editMode = true
-        intSlider.setValue(Float(currView.blur.blurRadius), animated: true)
-    }
-    
-    func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
-        
-        if((gestureRecognizer.view as! CustomView) == currView) {
-            currView.frame.size.height = 200*(gestureRecognizer.scale)
-            currView.frame.size.width = 200*(gestureRecognizer.scale)
-            currView.blur.frame.size.height = 200*(gestureRecognizer.scale)
-            currView.blur.frame.size.width = 200*(gestureRecognizer.scale)
-        }
-    }
-    
     func cancelTap(sender: UIButton!){
-        //editMode = false
-        currView.selected(isSelected: false)
-        currView.editMode = false
-        controlStack.isHidden = true
         
-        var iter = 0
-        for i in customViewList {
-            iter += 1
-            if currView.customViewID == i.customViewID {
-                customViewList = customViewList.filter() { $0 != i }
-            }
-        }
-        currView.removeFromSuperview()
+        let temp = getCurrentActiveView()
+        customViewUpdateList = customViewUpdateList.filter() { $0 != temp }
+        temp.removeFromSuperview()
         enableControl(value: false)
-        isHideMode = false
     }
     
     func exportTap(sender: UIButton!){
@@ -436,57 +374,34 @@ class ViewController: UIViewController {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-
-        
-        if(!isHideMode) {
-            createCustomView(xTouchPoint: touchPoint.x, yTouchPoint: touchPoint.y, width: 200, height: 200, color: "F44556")
-            isHideMode = true
-        
-            for i in customViewList {
-                if i.customViewID != currView.customViewID {
-                    i.selected(isSelected: false)
-                    i.editMode = false
-                }
-            }
-        } else {
-            
-            for i in customViewList {
-                if i.customViewID == currView.customViewID {
-                    i.selected(isSelected: false)
-                    i.editMode = false
-                }
-            }
-            
-            hideImageButton.isHidden = true
-            hideImageText.isHidden = true
-            isHideMode = false
-            enableControl(value: false)
-        }
+        createCustomViewUpdate(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200))
     }
     
-    func createCustomView(xTouchPoint: CGFloat, yTouchPoint: CGFloat, width: CGFloat, height: CGFloat, color: String){
+    func createCustomViewUpdate(frame: CGRect){
         
-        enableControl(value: true)
+        var activatedViews: Bool = false
         
         intSlider.setValue(0, animated: false)
-    
-        let c = CustomView(frame: CGRect(x: xTouchPoint, y: yTouchPoint, width: width, height: width))
-        c.customViewID = iterVal
-        c.selected(isSelected: true)
-        c.editMode = true
-        c.setBlurColor(color: color)
-
-        iterVal += 1
-        customViewList.append(c)
-        let gestureRecognizer1 = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        c.addGestureRecognizer(gestureRecognizer1)
-        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap))
-        c.addGestureRecognizer(gestureTap)
-        let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
-        c.addGestureRecognizer(pinchZoom)
         
-        view.addSubview(c)
-        currView = c
+        for i in customViewUpdateList{
+            if i.isActive {
+                i.isActive(value: false)
+                activatedViews = true
+            }
+        }
+        
+        if !activatedViews{
+            
+            enableControl(value: true)
+            
+            let c = CustomViewUpdate(frame: frame)
+            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
+            c.addGestureRecognizer(gestureTap)
+            view.addSubview(c)
+            customViewUpdateList.append(c)
+        } else {
+            enableControl(value: false)
+        }
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
@@ -524,6 +439,17 @@ class ViewController: UIViewController {
         
         //Save it to the camera roll
         UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+    }
+    
+    func getCurrentActiveView() -> CustomViewUpdate{
+        
+        var temp = CustomViewUpdate()
+        for i in customViewUpdateList{
+            if i.isActive {
+                temp = i
+            }
+        }
+        return temp
     }
     
     func enableControl(value: Bool){
