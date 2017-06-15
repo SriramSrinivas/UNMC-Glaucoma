@@ -1,6 +1,8 @@
 import UIKit
+import VisualEffectView
+import PopupDialog
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
         
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
@@ -30,6 +32,8 @@ class ViewController: UIViewController {
     let delete = UIButton()
     let export = UIButton()
     
+    let tempBlur = VisualEffectView()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -48,7 +52,8 @@ class ViewController: UIViewController {
 
         loadImage(mainImgView: mainImgView)
 
-        initToggle(sideView: sideView)
+        //initToggle(sideView: sideView)
+        initToggleUdpdate(sideView: sideView)
         addExportButton(view: sideView)
         addControlIcons()
         addSlider(view: sideView)
@@ -89,6 +94,12 @@ class ViewController: UIViewController {
         sideView.addSubview(origSwitch)
         sideView.addSubview(gridText)
         sideView.addSubview(origText)
+    }
+    
+    func initToggleUdpdate(sideView: UIView){
+        
+        let t = CustomToggle(frame: CGRect(x: 0, y: sideView.frame.height*0.40, width: sideView.frame.width, height: 100))
+        sideView.addSubview(t)
     }
     
     func loadImage(mainImgView: UIView){
@@ -219,11 +230,7 @@ class ViewController: UIViewController {
 
         for i in gridViews {
             
-            i.layer.zPosition = 1
-            
             view.addSubview(i)
-            
-            print("Curr z axis : \(i.layer.zPosition)")
         }
     }
     
@@ -264,7 +271,7 @@ class ViewController: UIViewController {
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
             i.addGestureRecognizer(gestureTap)
 
-            view.addSubview(i)
+            mainImgView.addSubview(i)
         }
     }
     
@@ -390,7 +397,21 @@ class ViewController: UIViewController {
     }
     
     func exportTap(sender: UIButton!){
-        takeScreenShot()
+        //takeScreenShot()
+        
+        let alert = UIAlertController(title: "title", message: "dis da message", preferredStyle: .alert)
+        
+        var inputTextField: UITextField?
+        
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Enter First Name"
+            inputTextField = textField
+        }
+        let action = UIAlertAction(title: "ok", style: .default){ _ in
+            print("ok tap : \(inputTextField?.text)")
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true){}
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -420,6 +441,7 @@ class ViewController: UIViewController {
             let c = CustomViewUpdate(frame: frame)
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
             c.addGestureRecognizer(gestureTap)
+            c.layer.zPosition = 2
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
             
@@ -457,8 +479,8 @@ class ViewController: UIViewController {
     
     func takeScreenShot() {
         //Create the UIImage
-        UIGraphicsBeginImageContext(mainImgView.frame.size)
-        mainImgView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
