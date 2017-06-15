@@ -20,7 +20,7 @@ class CustomToggle : UIView{
         customSwitch = UISwitch(frame: CGRect(x: frame.origin.x + frame.size.width/6, y: frame.origin.y, width: frame.size.width*0.5, height: frame.size.height))
         
         textLabel = UILabel(frame: CGRect(x: frame.origin.x + frame.size.width*0.5, y: frame.origin.y - 30, width: frame.size.width*0.5, height: frame.size.height))
-        textLabel.text = "Grid"
+        textLabel.text = "Test"
         textLabel.textColor = UIColor.white
         
         addSubview(customSwitch)
