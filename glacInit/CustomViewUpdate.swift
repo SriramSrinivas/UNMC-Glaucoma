@@ -53,19 +53,23 @@ class CustomViewUpdate : UIView{
     
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
-        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-            let translation = gestureRecognizer.translation(in: self)
-            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-            gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+        if isActive{
+            if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+                let translation = gestureRecognizer.translation(in: self)
+                gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+                gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+            }
         }
     }
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         
-            frame.size.height = 200*(gestureRecognizer.scale)
-            frame.size.width = 200*(gestureRecognizer.scale)
-            blur.frame.size.height = 200*(gestureRecognizer.scale)
-            blur.frame.size.width = 200*(gestureRecognizer.scale)
+        if isActive {
+                frame.size.height = 200*(gestureRecognizer.scale)
+                frame.size.width = 200*(gestureRecognizer.scale)
+                blur.frame.size.height = 200*(gestureRecognizer.scale)
+                blur.frame.size.width = 200*(gestureRecognizer.scale)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

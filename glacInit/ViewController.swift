@@ -1,6 +1,7 @@
 import UIKit
+import VisualEffectView
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
         
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
@@ -30,6 +31,8 @@ class ViewController: UIViewController {
     let delete = UIButton()
     let export = UIButton()
     
+    let tempBlur = VisualEffectView()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -49,6 +52,7 @@ class ViewController: UIViewController {
         loadImage(mainImgView: mainImgView)
 
         initToggle(sideView: sideView)
+        //initToggleUdpdate(sideView: sideView)
         addExportButton(view: sideView)
         addControlIcons()
         addSlider(view: sideView)
@@ -89,6 +93,12 @@ class ViewController: UIViewController {
         sideView.addSubview(origSwitch)
         sideView.addSubview(gridText)
         sideView.addSubview(origText)
+    }
+    
+    func initToggleUdpdate(sideView: UIView){
+        
+        let t1 = CustomToggle(frame: CGRect(x: 0, y: sideView.frame.height*0.40, width: sideView.frame.width, height: 100))
+        sideView.addSubview(t1)
     }
     
     func loadImage(mainImgView: UIView){
@@ -199,17 +209,17 @@ class ViewController: UIViewController {
     func addGridLineUpdate(mainView: UIView){
 
         let line1 = UIButton()
-        line1.frame = CGRect(x: view.frame.width*0.3, y: 0, width: 5, height: view.frame.height)
+        line1.frame = CGRect(x: mainImgView.frame.width*0.3, y: 0, width: 5, height: mainImgView.frame.height)
         line1.layer.borderWidth = 5
         line1.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line2 = UIButton()
-        line2.frame = CGRect(x: view.frame.width*0.66, y: 0, width: 5, height: view.frame.height)
+        line2.frame = CGRect(x: mainImgView.frame.width*0.66, y: 0, width: 5, height: mainImgView.frame.height)
         line2.layer.borderWidth = 5
         line2.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line3 = UIButton()
-        line3.frame = CGRect(x: 0, y: view.frame.height*0.5, width: view.frame.width, height: 5)
+        line3.frame = CGRect(x: 0, y: mainImgView.frame.height*0.5, width: mainImgView.frame.width, height: 5)
         line3.layer.borderWidth = 5
         line3.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
@@ -219,11 +229,7 @@ class ViewController: UIViewController {
 
         for i in gridViews {
             
-            i.layer.zPosition = 1
-            
-            view.addSubview(i)
-            
-            print("Curr z axis : \(i.layer.zPosition)")
+            mainImgView.addSubview(i)
         }
     }
     
@@ -264,7 +270,7 @@ class ViewController: UIViewController {
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
             i.addGestureRecognizer(gestureTap)
 
-            view.addSubview(i)
+            mainImgView.addSubview(i)
         }
     }
     
@@ -390,7 +396,45 @@ class ViewController: UIViewController {
     }
     
     func exportTap(sender: UIButton!){
-        takeScreenShot()
+        
+        let alert = UIAlertController(title: "Save Image", message: "Enter Patient Identifier", preferredStyle: .alert)
+        let okAlert = UIAlertController(title: "Image was saved", message: "Image was stored in the Photo Gallery", preferredStyle: .alert)
+        
+        var inputTextField: UITextField?
+        
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Patient ID"
+            inputTextField = textField
+        }
+        
+        let action = UIAlertAction(title: "Ok", style: .default){ _ in
+
+            self.addWaterMark(name: (inputTextField?.text)!)
+            self.takeScreenShot()
+            
+            self.present(okAlert, animated: true){}
+        }
+        
+        let action2 = UIAlertAction(title: "Close", style: .default) { _ in
+            
+        }
+        
+        alert.addAction(action)
+        alert.addAction(action2)
+        okAlert.addAction(action2)
+        self.present(alert, animated: true){}
+    }
+    
+    func addWaterMark(name: String){
+        let nameLabel = UILabel(frame: CGRect(x: mainImgView.frame.width/2, y: mainImgView.frame.height - 15, width: 200, height: 15))
+
+        nameLabel.text = name
+        nameLabel.textColor = UIColor.white
+        let v = UIView()
+        v.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
+        v.backgroundColor = UIColor(hexString: "000000")
+        mainImgView.addSubview(v)
+        mainImgView.addSubview(nameLabel)
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -420,6 +464,7 @@ class ViewController: UIViewController {
             let c = CustomViewUpdate(frame: frame)
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
             c.addGestureRecognizer(gestureTap)
+            c.layer.zPosition = 2
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
             
@@ -458,7 +503,9 @@ class ViewController: UIViewController {
     func takeScreenShot() {
         //Create the UIImage
         UIGraphicsBeginImageContext(mainImgView.frame.size)
-        mainImgView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        //mainImgView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        mainImgView.drawHierarchy(in: mainImgView.bounds, afterScreenUpdates: true)
+        
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
