@@ -1,6 +1,5 @@
 import UIKit
 import VisualEffectView
-import PopupDialog
 
 class ViewController: UIViewController{
         
@@ -398,15 +397,15 @@ class ViewController: UIViewController{
     
     func exportTap(sender: UIButton!){
         
-        let alert = UIAlertController(title: "title", message: "dis da message", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Save Image", message: "Enter Patient Identifier", preferredStyle: .alert)
         
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Enter First Name"
+            textField.placeholder = "Patient ID"
             inputTextField = textField
         }
-        let action = UIAlertAction(title: "ok", style: .default){ _ in
+        let action = UIAlertAction(title: "Ok", style: .default){ _ in
             print("ok tap : \(inputTextField?.text)")
             self.addWaterMark(name: (inputTextField?.text)!)
             self.takeScreenShot()

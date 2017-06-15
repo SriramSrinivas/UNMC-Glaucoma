@@ -7,74 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04132E48DC9D20E94F4B5E1477CD7459 /* PopupDialogDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571A682590F82E9D71DC44832052806 /* PopupDialogDefaultView.swift */; };
-		06A6B30A74DE1223B98FC8FA8FE027A7 /* PopupDialog-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 128F7164F69D680DEA772527CF327C64 /* PopupDialog-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		06DD6115A6E9C89D10F6BFA01443C821 /* InteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDD1BFAC8642B405BF93BF62647971B /* InteractiveTransition.swift */; };
-		09D3F111F8B2DE35BD271005AA5AA5A9 /* BrightnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170D82F05755311E63AD5B2BBA65A6E /* BrightnessView.swift */; };
-		1928B00A38080507B57F897253138204 /* SwiftHSVColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F33CA585D559E3F89B822E108AE126 /* SwiftHSVColorPicker.swift */; };
-		19C0DC3A4E8EF803A87441EA281641EE /* Pods-glacInit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0FA006810FE6F4B82507BABA0C277 /* Pods-glacInit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26B4037B0701309B16B7EDBB928E5AD6 /* VisualEffectView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D2F7E1F575EFB05350AF26A8811184 /* VisualEffectView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2864DA8169CF8AAD6DB7B9BC8C9592B4 /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B6B442F2C35612852F81BABC35F3E /* PresentationManager.swift */; };
-		28E735D5A7578ABC37723B96AFFCD900 /* PopupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3951EB1ACBAF0C5A4B40ECD6CD256FC6 /* PopupDialog.swift */; };
-		29FBE882834A09BDF54592F5EDE31147 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B912C6C0EF042172A5D6C3C13B5B94 /* TransitionAnimator.swift */; };
-		2B78D52519233990E575A1F616571BEB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		2CB85F9724DA0214130AC9D91B21D04F /* SelectedColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FE6AABBEF9F722AE786ED3FEC006F4 /* SelectedColorView.swift */; };
+		1AEE79392E032CB1EBCB6157A4113F6E /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1DE7506D4618A229A321430F8B6D9A /* ColorWheel.swift */; };
+		1C3BCE5EACC2C341E85C0A89E3BACDF8 /* SwiftHSVColorPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4340D7E1D8739AF505F44A5DA998D56B /* SwiftHSVColorPicker-dummy.m */; };
 		2D4B28F3C4A135568AB94C6E67C3DB2D /* Pods-glacInitUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FF07D0C1FCD91AD726A3E66A1E3DA2C5 /* Pods-glacInitUITests-dummy.m */; };
-		30F3FEF101F20F8A7544FBE6FE383CDF /* SwiftHSVColorPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F94FC1BC068E76512FE4A8A5BC89DF2 /* SwiftHSVColorPicker-dummy.m */; };
-		3723CD2CF082D29AE81D7DAE95D0275E /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D1716419734AA5AD21ECA6757A6015 /* VisualEffectView.swift */; };
-		4011FAC5A029ECB210E7E9A2087CB91F /* TZStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE67B07C30C9F36843DA3036CA918CB /* TZStackView.swift */; };
-		41EFC4C78AB49BCD606CF66110F448A5 /* PopupDialog-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E587E309FAAC31608824A4431E2A61 /* PopupDialog-dummy.m */; };
+		47DC995396C9CD9E81A31B184E1DDF2C /* BrightnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25A2EA6A129190F9E5C23D1DF2B0744 /* BrightnessView.swift */; };
+		4C3CCEE21C43428636E6D18780290B43 /* Pods-glacInit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0FA006810FE6F4B82507BABA0C277 /* Pods-glacInit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		511104D69405E3269B513A721D18D207 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		5358FC9F6E2B87906175CA9EC94B8615 /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA6F914DB2A9CB5A7CF06BB5DEC4D9 /* ColorWheel.swift */; };
-		577340B2FDAC99946029E35E8F2010FB /* TZSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B338716CE811FAFC966CE650DC76C49 /* TZSpacerView.swift */; };
-		5EF58D71498B2376CC334B4F77B3F929 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		695AC6450C799AECF77E38B2797EE902 /* UIViewController+Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9112AED5B63070A32093E537C914C88 /* UIViewController+Visibility.swift */; };
-		6979B6073566864445EC58292BD2B8D4 /* TZStackViewAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D75D44FA15F793D24FBE14B6FEC99F /* TZStackViewAlignment.swift */; };
-		79D27B3336FD27CB01CD2D5CEAE0C31B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		65011D0D09B5E1D7A8ABA0DD091DD628 /* SelectedColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16645CB4898655323102295AF2D70DA8 /* SelectedColorView.swift */; };
+		676F86065C1996BAD939E0E96D6C2D47 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3398C39557044F02B920C65A24E8882 /* VisualEffectView.swift */; };
+		70CEC346FB268326624769F07C98AE74 /* VisualEffectView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C17D8F1CA18968B256A607D22B2B106B /* VisualEffectView-dummy.m */; };
 		86CA45C679551ED0DF93BA8DC7683181 /* Pods-glacInitUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DE2C5ADD3DE0E0CAEED6D8CDF003079A /* Pods-glacInitUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		87B4766BD7202C5C08E97195D5A88861 /* PopupDialogContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0AD9E0E6F0C76C220DFEB829D51F46 /* PopupDialogContainerView.swift */; };
+		873628B5CF7E13C46FD50D6EB1C495FA /* Pods-glacInit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6ABBC64A927312956F489C71E6A73A /* Pods-glacInit-dummy.m */; };
+		8942AFC520FA2B23041B2E8C63297BD6 /* VisualEffectView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C5472717F5A23A951C76A546FD872BA1 /* VisualEffectView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		89E53765A97E81E2C07B2DA89DB29C32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		971F44AC70904E5D8C13277E79F2060A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		9BA1AE033EF11011324B9099648E3D38 /* TransitionAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAE8E090E3F800BE5D896E07C9F9364 /* TransitionAnimations.swift */; };
-		A7FBA61A65EB1DD42E92D99A8E774088 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665F8AAB04A8A75065FD0348392076A /* ColorUtils.swift */; };
-		A94669FDF932860CCCFC61B4C11C245F /* FXBlurView.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A81B3B3E8BCD5BD899D78E2CE31DD0 /* FXBlurView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B09B765E13554E51A0C817F7502EE69 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		AE055719385B0A32E3051DC2AB1D8E4C /* Pods-glacInitTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 643CA655A9787E8DD4F787DF2351BD6F /* Pods-glacInitTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B0A5CF09414E15983E7C221F4DA68136 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BF3337579030B816EBB1927431F8ED /* FXBlurView.m */; };
-		B1B28C189AD52FBB17EE836B48B0F2CB /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2CAD194CD70509410F627C01C961E1 /* UIView+Animations.swift */; };
-		B6B3DD3E612A21EB13E8498F90D532B7 /* PopupDialogDefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DD2E52E4D3FE338671C8C8D04973C4 /* PopupDialogDefaultViewController.swift */; };
 		BA2CEF86E76DF4C86CA43A7C591C2C12 /* Pods-glacInitTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D14E8565719959D521BD1AB957700CD /* Pods-glacInitTests-dummy.m */; };
-		CC9C6394578A6BC41FCA5C57C234021D /* TZStackViewDistribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE323DAFF2C26A7E8287D8C849A7A68B /* TZStackViewDistribution.swift */; };
-		D0450211AE8D7E5C8924D9A49BD5679D /* PopupDialogDefaultButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A665BF2199284F67F257168577C7DE2 /* PopupDialogDefaultButtons.swift */; };
-		D161C788C60C3E0A4C4A1B74FE6CE742 /* PopupDialog+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391F769AB9BBBFBA3E45DE60488E6831 /* PopupDialog+Keyboard.swift */; };
-		D80CF3AB0A79B6314E552D9B4A13865D /* VisualEffectView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9676A2733BB31FF50C3EB9712B20D22D /* VisualEffectView-dummy.m */; };
-		D8706B1BD6C4CF054EAA66383965BADF /* PopupDialogButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E71B1C5864C68E4D9126DB654104ECB /* PopupDialogButton.swift */; };
-		DC42C83DB994BEBC84648931B2D96403 /* SwiftHSVColorPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BE562B75ACE83E65DA5D52BB1B2B7A55 /* SwiftHSVColorPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E04510E841EAE0AAD414EA9D35529329 /* Pods-glacInit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6ABBC64A927312956F489C71E6A73A /* Pods-glacInit-dummy.m */; };
-		F0E99BDF1680105440B4B90FBDE89F68 /* PopupDialogOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F97CD22E93430F07D4735ABD03A83E /* PopupDialogOverlayView.swift */; };
-		F807967C31710577E9283D5F3A454F2E /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5E4DC0C14E3FE6DE166EB2E178767F /* PresentationController.swift */; };
-		FD4F417B4820EB663787C73B85B5E22C /* UIImageView+Calculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AFE236B853086AF7F7757701C6895 /* UIImageView+Calculations.swift */; };
+		D9A80C8297F861C1DA712945F1FAC7E6 /* SwiftHSVColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583793D9340D2C7CCC12D82848D6EF14 /* SwiftHSVColorPicker.swift */; };
+		DE90578E51D1766CB1C9512C4806ECBD /* SwiftHSVColorPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1ED7C0830EA25E40A1414164CA15FF /* SwiftHSVColorPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E5BB3E2DE1283E62A6D908655A7A27E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		ECE06D5859C5375E1235B2F49B8D9A37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		F75E15B653894595B92D1854133E739A /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4FDD1AE651A85219FAADAA78E30917 /* ColorUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		33E2808E544880E4E1B400AC547091B4 /* PBXContainerItemProxy */ = {
+		685764A506B7F8D610D55B2A7BC6D43D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 1A4F1B5263501DBDD8D1E43E57482925;
+			remoteGlobalIDString = 6EFC1A5F5FE349E5C7050CD650351694;
 			remoteInfo = VisualEffectView;
 		};
-		5C071C595C5B769EDF30B594F45A0F86 /* PBXContainerItemProxy */ = {
+		8FE377E919F7C3E1C70FEFB3B547CFEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4E24589B5341A5474FE51798A770DD94;
-			remoteInfo = PopupDialog;
-		};
-		A5023ADBF0D3C3305C4E004525AA703B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DBBB07CF49625B92E89490A8222A8F0E;
+			remoteGlobalIDString = 848F525002A019E33F0C925B2B119F43;
 			remoteInfo = SwiftHSVColorPicker;
 		};
 /* End PBXContainerItemProxy section */
@@ -82,104 +50,75 @@
 /* Begin PBXFileReference section */
 		05404A7F777499130E710C06B55B520E /* Pods-glacInitTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-glacInitTests.modulemap"; sourceTree = "<group>"; };
 		061C419F26F8422395D0057153EB971E /* Pods-glacInitUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		0665F8AAB04A8A75065FD0348392076A /* ColorUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorUtils.swift; path = Source/ColorUtils.swift; sourceTree = "<group>"; };
 		068A43C0FBE6F1999F58AC15CF459532 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C0E054F57C67B81D8895A68F5F0D753 /* VisualEffectView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VisualEffectView.framework; path = VisualEffectView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E2DD6052978ADE13BA3C4EB381C4F84 /* Pods-glacInitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		128F7164F69D680DEA772527CF327C64 /* PopupDialog-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PopupDialog-umbrella.h"; sourceTree = "<group>"; };
+		13D657E08DE48C9CC666B7B78F995EA1 /* VisualEffectView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VisualEffectView.modulemap; sourceTree = "<group>"; };
+		16645CB4898655323102295AF2D70DA8 /* SelectedColorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SelectedColorView.swift; path = Source/SelectedColorView.swift; sourceTree = "<group>"; };
 		1C6EEC474AB6EC6BB305CBE69C8F83F3 /* Pods-glacInitTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-glacInitTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1F94FC1BC068E76512FE4A8A5BC89DF2 /* SwiftHSVColorPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftHSVColorPicker-dummy.m"; sourceTree = "<group>"; };
-		20D75D44FA15F793D24FBE14B6FEC99F /* TZStackViewAlignment.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TZStackViewAlignment.swift; path = PopupDialog/Classes/TZStackView/TZStackViewAlignment.swift; sourceTree = "<group>"; };
-		211CE2C446E23442622736172CA9EEC3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		212D3F21A2B9D9D402F95065CA3E12E4 /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
-		21DD2E52E4D3FE338671C8C8D04973C4 /* PopupDialogDefaultViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialogDefaultViewController.swift; path = PopupDialog/Classes/PopupDialogDefaultViewController.swift; sourceTree = "<group>"; };
-		23F33CA585D559E3F89B822E108AE126 /* SwiftHSVColorPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftHSVColorPicker.swift; path = Source/SwiftHSVColorPicker.swift; sourceTree = "<group>"; };
-		2556106A8554B338BB5FF89E1CBD1CAA /* SwiftHSVColorPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftHSVColorPicker.modulemap; sourceTree = "<group>"; };
-		2571A682590F82E9D71DC44832052806 /* PopupDialogDefaultView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialogDefaultView.swift; path = PopupDialog/Classes/PopupDialogDefaultView.swift; sourceTree = "<group>"; };
+		27F64302EFFDDA70C02F347EC4B8DBE4 /* VisualEffectView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VisualEffectView.xcconfig; sourceTree = "<group>"; };
 		2AB957E20F45DEF0291B7A55557C3F29 /* Pods-glacInitTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitTests-frameworks.sh"; sourceTree = "<group>"; };
-		31BF3337579030B816EBB1927431F8ED /* FXBlurView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FXBlurView.m; path = PopupDialog/Classes/FXBlurView.m; sourceTree = "<group>"; };
-		335BBE457500F8D6F1E27DC6D0D19349 /* PopupDialog.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PopupDialog.xcconfig; sourceTree = "<group>"; };
-		391F769AB9BBBFBA3E45DE60488E6831 /* PopupDialog+Keyboard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PopupDialog+Keyboard.swift"; path = "PopupDialog/Classes/PopupDialog+Keyboard.swift"; sourceTree = "<group>"; };
-		3951EB1ACBAF0C5A4B40ECD6CD256FC6 /* PopupDialog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialog.swift; path = PopupDialog/Classes/PopupDialog.swift; sourceTree = "<group>"; };
-		3B0AD9E0E6F0C76C220DFEB829D51F46 /* PopupDialogContainerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialogContainerView.swift; path = PopupDialog/Classes/PopupDialogContainerView.swift; sourceTree = "<group>"; };
 		3BC0B532264D4139F03C5754A5DF5A68 /* Pods-glacInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInit.debug.xcconfig"; sourceTree = "<group>"; };
-		3C9E21426AD6AB09BCA8573AD45A56C0 /* SwiftHSVColorPicker.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftHSVColorPicker.xcconfig; sourceTree = "<group>"; };
-		40009EA08529642081DA20E5D33A054C /* PopupDialog.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PopupDialog.modulemap; sourceTree = "<group>"; };
-		41C8A0A0244CDA118D34E2C907042C3D /* VisualEffectView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VisualEffectView.xcconfig; sourceTree = "<group>"; };
-		45D1716419734AA5AD21ECA6757A6015 /* VisualEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VisualEffectView.swift; path = Sources/VisualEffectView.swift; sourceTree = "<group>"; };
-		4AF37477892625B286E15393A8ED41A9 /* Pods_glacInitUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitUITests.framework; path = "Pods-glacInitUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D4FDD1AE651A85219FAADAA78E30917 /* ColorUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorUtils.swift; path = Source/ColorUtils.swift; sourceTree = "<group>"; };
+		4340D7E1D8739AF505F44A5DA998D56B /* SwiftHSVColorPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftHSVColorPicker-dummy.m"; sourceTree = "<group>"; };
 		4D14E8565719959D521BD1AB957700CD /* Pods-glacInitTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-glacInitTests-dummy.m"; sourceTree = "<group>"; };
-		503F72C291F334D64D4044AE6B6F325F /* PopupDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PopupDialog.framework; path = PopupDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		508AFE236B853086AF7F7757701C6895 /* UIImageView+Calculations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImageView+Calculations.swift"; path = "PopupDialog/Classes/UIImageView+Calculations.swift"; sourceTree = "<group>"; };
+		4FBE9B15813A7FA557FDD3EFA6952036 /* SwiftHSVColorPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftHSVColorPicker-prefix.pch"; sourceTree = "<group>"; };
 		50D6E27599C182AE2EC4FEE17B42D2D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		561FCB77EDA8B7411A67FD7C5E524641 /* Pods_glacInit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInit.framework; path = "Pods-glacInit.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		583793D9340D2C7CCC12D82848D6EF14 /* SwiftHSVColorPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftHSVColorPicker.swift; path = Source/SwiftHSVColorPicker.swift; sourceTree = "<group>"; };
 		643CA655A9787E8DD4F787DF2351BD6F /* Pods-glacInitTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-glacInitTests-umbrella.h"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		679E55A86BD2B5FD79AAD69729ECAFD2 /* VisualEffectView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VisualEffectView.framework; path = VisualEffectView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		69FE6AABBEF9F722AE786ED3FEC006F4 /* SelectedColorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SelectedColorView.swift; path = Source/SelectedColorView.swift; sourceTree = "<group>"; };
-		6D8F6D8FC671D1F093880541A1BC9252 /* SwiftHSVColorPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftHSVColorPicker-prefix.pch"; sourceTree = "<group>"; };
-		7170D82F05755311E63AD5B2BBA65A6E /* BrightnessView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BrightnessView.swift; path = Source/BrightnessView.swift; sourceTree = "<group>"; };
+		68FF9CBA88F0962EE521F96410114C04 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C4F4EE3288BB3D61D9D912C423B89EE /* Pods-glacInitUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitUITests-frameworks.sh"; sourceTree = "<group>"; };
-		7E71B1C5864C68E4D9126DB654104ECB /* PopupDialogButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialogButton.swift; path = PopupDialog/Classes/PopupDialogButton.swift; sourceTree = "<group>"; };
-		7F09F223D86ED4817DB8BA9E7DFE969A /* VisualEffectView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VisualEffectView.modulemap; sourceTree = "<group>"; };
 		803D6D90A43DD31BA628D315FFFB24B6 /* Pods-glacInit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-glacInit.modulemap"; sourceTree = "<group>"; };
 		846A7F2577AA9E7034F66EBB9A038267 /* Pods-glacInitTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-glacInitTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		85FF16D6395ED3482F0EB81B3A238197 /* Pods-glacInitUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-glacInitUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		8B338716CE811FAFC966CE650DC76C49 /* TZSpacerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TZSpacerView.swift; path = PopupDialog/Classes/TZStackView/TZSpacerView.swift; sourceTree = "<group>"; };
 		92543E6E49438B11EDD6615D5D3BFA4A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92E0FA006810FE6F4B82507BABA0C277 /* Pods-glacInit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-glacInit-umbrella.h"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9676A2733BB31FF50C3EB9712B20D22D /* VisualEffectView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VisualEffectView-dummy.m"; sourceTree = "<group>"; };
-		96A81B3B3E8BCD5BD899D78E2CE31DD0 /* FXBlurView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FXBlurView.h; path = PopupDialog/Classes/FXBlurView.h; sourceTree = "<group>"; };
+		981E05E7E6F64213B27E5AB21B431D2D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99131ABE3BA1C73264E55E3FE7F71BB8 /* Pods-glacInit-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInit-frameworks.sh"; sourceTree = "<group>"; };
-		9A665BF2199284F67F257168577C7DE2 /* PopupDialogDefaultButtons.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialogDefaultButtons.swift; path = PopupDialog/Classes/PopupDialogDefaultButtons.swift; sourceTree = "<group>"; };
-		9BE67B07C30C9F36843DA3036CA918CB /* TZStackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TZStackView.swift; path = PopupDialog/Classes/TZStackView/TZStackView.swift; sourceTree = "<group>"; };
+		9C1DE7506D4618A229A321430F8B6D9A /* ColorWheel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorWheel.swift; path = Source/ColorWheel.swift; sourceTree = "<group>"; };
 		A092E0DBD363319D1E7DB2B54CAB7201 /* Pods-glacInitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInitUITests.release.xcconfig"; sourceTree = "<group>"; };
-		A0EA6F914DB2A9CB5A7CF06BB5DEC4D9 /* ColorWheel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorWheel.swift; path = Source/ColorWheel.swift; sourceTree = "<group>"; };
+		A25A2EA6A129190F9E5C23D1DF2B0744 /* BrightnessView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BrightnessView.swift; path = Source/BrightnessView.swift; sourceTree = "<group>"; };
 		A27B8AAA612855EC35271DEBDB1571CA /* Pods-glacInitUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-glacInitUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		A6D2F7E1F575EFB05350AF26A8811184 /* VisualEffectView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VisualEffectView-umbrella.h"; sourceTree = "<group>"; };
-		AB9FA2075523621B9DE375ABB44D7699 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B08BA903B6B30C17EBA25CA7295543C9 /* VisualEffectView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VisualEffectView-prefix.pch"; sourceTree = "<group>"; };
+		A3398C39557044F02B920C65A24E8882 /* VisualEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VisualEffectView.swift; path = Sources/VisualEffectView.swift; sourceTree = "<group>"; };
+		B31A4D588B8EBD0BB356503A3AF661AD /* Pods_glacInitUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitUITests.framework; path = "Pods-glacInitUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3346E487C1C3E59016188DDA40E4179 /* VisualEffectView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VisualEffectView-prefix.pch"; sourceTree = "<group>"; };
 		B3460C355358646016198F736DF6909F /* Pods-glacInitUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitUITests-resources.sh"; sourceTree = "<group>"; };
-		B9112AED5B63070A32093E537C914C88 /* UIViewController+Visibility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+Visibility.swift"; path = "PopupDialog/Classes/UIViewController+Visibility.swift"; sourceTree = "<group>"; };
-		BE562B75ACE83E65DA5D52BB1B2B7A55 /* SwiftHSVColorPicker-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftHSVColorPicker-umbrella.h"; sourceTree = "<group>"; };
-		BE5E4DC0C14E3FE6DE166EB2E178767F /* PresentationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationController.swift; path = PopupDialog/Classes/PresentationController.swift; sourceTree = "<group>"; };
+		B7AF5D36424EC9665C88E065A0C2D1CD /* SwiftHSVColorPicker.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftHSVColorPicker.xcconfig; sourceTree = "<group>"; };
+		BDE513BD8916920AD1046AB9D434C5A5 /* Pods_glacInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitTests.framework; path = "Pods-glacInitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF6ABBC64A927312956F489C71E6A73A /* Pods-glacInit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-glacInit-dummy.m"; sourceTree = "<group>"; };
+		C019A9B9A0071A74AF7FB4E360243496 /* SwiftHSVColorPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftHSVColorPicker.modulemap; sourceTree = "<group>"; };
 		C086591404C40E9428BBC0A69B25148A /* Pods-glacInitUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-glacInitUITests.modulemap"; sourceTree = "<group>"; };
-		C7ED302360743C2FA7A4BDC9C6027B29 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CB1B6B442F2C35612852F81BABC35F3E /* PresentationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationManager.swift; path = PopupDialog/Classes/PresentationManager.swift; sourceTree = "<group>"; };
+		C17D8F1CA18968B256A607D22B2B106B /* VisualEffectView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VisualEffectView-dummy.m"; sourceTree = "<group>"; };
+		C5472717F5A23A951C76A546FD872BA1 /* VisualEffectView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VisualEffectView-umbrella.h"; sourceTree = "<group>"; };
 		CCD254673B37ABF7F5E7C7F3D114480C /* Pods-glacInit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-glacInit-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CD1AC3CF412CD946DCCDE1057A3D8045 /* Pods-glacInit-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInit-resources.sh"; sourceTree = "<group>"; };
 		CD38F822C7888B30168FEAF057C02950 /* Pods-glacInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-glacInit.release.xcconfig"; sourceTree = "<group>"; };
-		CDDD1BFAC8642B405BF93BF62647971B /* InteractiveTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InteractiveTransition.swift; path = PopupDialog/Classes/InteractiveTransition.swift; sourceTree = "<group>"; };
 		D58BB2ACDDA91C3BAA526FA56C9174E0 /* Pods-glacInit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-glacInit-acknowledgements.plist"; sourceTree = "<group>"; };
-		D8889D85E21875A0BDB4D9B11B1FE0EA /* PopupDialog-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PopupDialog-prefix.pch"; sourceTree = "<group>"; };
-		DB1516B4FF6CCAD586AC1F2DBEF0E12A /* SwiftHSVColorPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftHSVColorPicker.framework; path = SwiftHSVColorPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD351166FE69B38EBEB50A5964FC005E /* Pods_glacInit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInit.framework; path = "Pods-glacInit.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2C5ADD3DE0E0CAEED6D8CDF003079A /* Pods-glacInitUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-glacInitUITests-umbrella.h"; sourceTree = "<group>"; };
-		DE323DAFF2C26A7E8287D8C849A7A68B /* TZStackViewDistribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TZStackViewDistribution.swift; path = PopupDialog/Classes/TZStackView/TZStackViewDistribution.swift; sourceTree = "<group>"; };
-		DF2CAD194CD70509410F627C01C961E1 /* UIView+Animations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+Animations.swift"; path = "PopupDialog/Classes/UIView+Animations.swift"; sourceTree = "<group>"; };
-		E02C967AFF016E75C9863B47A6DBA804 /* Pods_glacInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_glacInitTests.framework; path = "Pods-glacInitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2F97CD22E93430F07D4735ABD03A83E /* PopupDialogOverlayView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupDialogOverlayView.swift; path = PopupDialog/Classes/PopupDialogOverlayView.swift; sourceTree = "<group>"; };
-		E4B912C6C0EF042172A5D6C3C13B5B94 /* TransitionAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransitionAnimator.swift; path = PopupDialog/Classes/TransitionAnimator.swift; sourceTree = "<group>"; };
-		EFAE8E090E3F800BE5D896E07C9F9364 /* TransitionAnimations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransitionAnimations.swift; path = PopupDialog/Classes/TransitionAnimations.swift; sourceTree = "<group>"; };
-		F2E587E309FAAC31608824A4431E2A61 /* PopupDialog-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PopupDialog-dummy.m"; sourceTree = "<group>"; };
 		F5C2EE94D498D292EEC949B17FD678B5 /* Pods-glacInitTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-glacInitTests-resources.sh"; sourceTree = "<group>"; };
+		FB2399559A16C8A35ADA7074371C9FEB /* SwiftHSVColorPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftHSVColorPicker.framework; path = SwiftHSVColorPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF07D0C1FCD91AD726A3E66A1E3DA2C5 /* Pods-glacInitUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-glacInitUITests-dummy.m"; sourceTree = "<group>"; };
+		FF1ED7C0830EA25E40A1414164CA15FF /* SwiftHSVColorPicker-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftHSVColorPicker-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9EC3E3CD47842A714BED39F020A4C5E7 /* Frameworks */ = {
+		6650ABDD7E738F924570003340989BB9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B78D52519233990E575A1F616571BEB /* Foundation.framework in Frameworks */,
+				8B09B765E13554E51A0C817F7502EE69 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D07D2BE8D4D719C5E22868634A98AA0E /* Frameworks */ = {
+		A0F0ECD2D1A555440C56EAB4A81ACDEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EF58D71498B2376CC334B4F77B3F929 /* Foundation.framework in Frameworks */,
+				ECE06D5859C5375E1235B2F49B8D9A37 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,19 +130,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F1F2B6646736272C0B6257B399F148BF /* Frameworks */ = {
+		EDD2C44A8F73371702BD3EA110C7E4CF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79D27B3336FD27CB01CD2D5CEAE0C31B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F2EDE915DCB8F6136F005D4BD6C557C0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				971F44AC70904E5D8C13277E79F2060A /* Foundation.framework in Frameworks */,
+				E5BB3E2DE1283E62A6D908655A7A27E7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,87 +149,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0880CC86CFB8F42F90A96FDE0745BD6C /* Pods */ = {
+		0D699307096E7736F275852790DA5C33 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				47BE776CA2872B80BD5A683C96158935 /* PopupDialog */,
-				357CA8EB85EBC19FACBE248C5820B353 /* SwiftHSVColorPicker */,
-				8B97A73A3AA2E9D4F77FD79F5F36CC2C /* VisualEffectView */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		0B506FDE996A07927EA4B3703DE01F43 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				C7ED302360743C2FA7A4BDC9C6027B29 /* Info.plist */,
-				40009EA08529642081DA20E5D33A054C /* PopupDialog.modulemap */,
-				335BBE457500F8D6F1E27DC6D0D19349 /* PopupDialog.xcconfig */,
-				F2E587E309FAAC31608824A4431E2A61 /* PopupDialog-dummy.m */,
-				D8889D85E21875A0BDB4D9B11B1FE0EA /* PopupDialog-prefix.pch */,
-				128F7164F69D680DEA772527CF327C64 /* PopupDialog-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/PopupDialog";
-			sourceTree = "<group>";
-		};
-		357CA8EB85EBC19FACBE248C5820B353 /* SwiftHSVColorPicker */ = {
-			isa = PBXGroup;
-			children = (
-				7170D82F05755311E63AD5B2BBA65A6E /* BrightnessView.swift */,
-				0665F8AAB04A8A75065FD0348392076A /* ColorUtils.swift */,
-				A0EA6F914DB2A9CB5A7CF06BB5DEC4D9 /* ColorWheel.swift */,
-				69FE6AABBEF9F722AE786ED3FEC006F4 /* SelectedColorView.swift */,
-				23F33CA585D559E3F89B822E108AE126 /* SwiftHSVColorPicker.swift */,
-				3DDB349487D24512F640432A2B66B0E7 /* Support Files */,
-			);
-			name = SwiftHSVColorPicker;
-			path = SwiftHSVColorPicker;
-			sourceTree = "<group>";
-		};
-		3DDB349487D24512F640432A2B66B0E7 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				211CE2C446E23442622736172CA9EEC3 /* Info.plist */,
-				2556106A8554B338BB5FF89E1CBD1CAA /* SwiftHSVColorPicker.modulemap */,
-				3C9E21426AD6AB09BCA8573AD45A56C0 /* SwiftHSVColorPicker.xcconfig */,
-				1F94FC1BC068E76512FE4A8A5BC89DF2 /* SwiftHSVColorPicker-dummy.m */,
-				6D8F6D8FC671D1F093880541A1BC9252 /* SwiftHSVColorPicker-prefix.pch */,
-				BE562B75ACE83E65DA5D52BB1B2B7A55 /* SwiftHSVColorPicker-umbrella.h */,
+				981E05E7E6F64213B27E5AB21B431D2D /* Info.plist */,
+				C019A9B9A0071A74AF7FB4E360243496 /* SwiftHSVColorPicker.modulemap */,
+				B7AF5D36424EC9665C88E065A0C2D1CD /* SwiftHSVColorPicker.xcconfig */,
+				4340D7E1D8739AF505F44A5DA998D56B /* SwiftHSVColorPicker-dummy.m */,
+				4FBE9B15813A7FA557FDD3EFA6952036 /* SwiftHSVColorPicker-prefix.pch */,
+				FF1ED7C0830EA25E40A1414164CA15FF /* SwiftHSVColorPicker-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SwiftHSVColorPicker";
-			sourceTree = "<group>";
-		};
-		47BE776CA2872B80BD5A683C96158935 /* PopupDialog */ = {
-			isa = PBXGroup;
-			children = (
-				96A81B3B3E8BCD5BD899D78E2CE31DD0 /* FXBlurView.h */,
-				31BF3337579030B816EBB1927431F8ED /* FXBlurView.m */,
-				CDDD1BFAC8642B405BF93BF62647971B /* InteractiveTransition.swift */,
-				3951EB1ACBAF0C5A4B40ECD6CD256FC6 /* PopupDialog.swift */,
-				391F769AB9BBBFBA3E45DE60488E6831 /* PopupDialog+Keyboard.swift */,
-				7E71B1C5864C68E4D9126DB654104ECB /* PopupDialogButton.swift */,
-				3B0AD9E0E6F0C76C220DFEB829D51F46 /* PopupDialogContainerView.swift */,
-				9A665BF2199284F67F257168577C7DE2 /* PopupDialogDefaultButtons.swift */,
-				2571A682590F82E9D71DC44832052806 /* PopupDialogDefaultView.swift */,
-				21DD2E52E4D3FE338671C8C8D04973C4 /* PopupDialogDefaultViewController.swift */,
-				E2F97CD22E93430F07D4735ABD03A83E /* PopupDialogOverlayView.swift */,
-				BE5E4DC0C14E3FE6DE166EB2E178767F /* PresentationController.swift */,
-				CB1B6B442F2C35612852F81BABC35F3E /* PresentationManager.swift */,
-				EFAE8E090E3F800BE5D896E07C9F9364 /* TransitionAnimations.swift */,
-				E4B912C6C0EF042172A5D6C3C13B5B94 /* TransitionAnimator.swift */,
-				8B338716CE811FAFC966CE650DC76C49 /* TZSpacerView.swift */,
-				9BE67B07C30C9F36843DA3036CA918CB /* TZStackView.swift */,
-				20D75D44FA15F793D24FBE14B6FEC99F /* TZStackViewAlignment.swift */,
-				DE323DAFF2C26A7E8287D8C849A7A68B /* TZStackViewDistribution.swift */,
-				508AFE236B853086AF7F7757701C6895 /* UIImageView+Calculations.swift */,
-				DF2CAD194CD70509410F627C01C961E1 /* UIView+Animations.swift */,
-				B9112AED5B63070A32093E537C914C88 /* UIViewController+Visibility.swift */,
-				0B506FDE996A07927EA4B3703DE01F43 /* Support Files */,
-			);
-			name = PopupDialog;
-			path = PopupDialog;
 			sourceTree = "<group>";
 		};
 		499CDA5AF5B016457BEC1430AE813113 /* Pods-glacInitTests */ = {
@@ -319,28 +181,24 @@
 			path = "Target Support Files/Pods-glacInitTests";
 			sourceTree = "<group>";
 		};
-		4C3BB5055026BCF9A475B9871EDD1774 /* Products */ = {
+		5BBE8C225629D39F6C1F4A03FC2A5067 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				561FCB77EDA8B7411A67FD7C5E524641 /* Pods_glacInit.framework */,
-				E02C967AFF016E75C9863B47A6DBA804 /* Pods_glacInitTests.framework */,
-				4AF37477892625B286E15393A8ED41A9 /* Pods_glacInitUITests.framework */,
-				503F72C291F334D64D4044AE6B6F325F /* PopupDialog.framework */,
-				DB1516B4FF6CCAD586AC1F2DBEF0E12A /* SwiftHSVColorPicker.framework */,
-				679E55A86BD2B5FD79AAD69729ECAFD2 /* VisualEffectView.framework */,
+				EED6F530562CD8E09D2343221589A0C7 /* SwiftHSVColorPicker */,
+				C70C1220E6B1D55B2565A0215C908F39 /* VisualEffectView */,
 			);
-			name = Products;
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		5FBBAEE19E14C1C1D76C204D881CCE4C /* Support Files */ = {
+		7080717EBE1F4957602CD93E1221D0D4 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				AB9FA2075523621B9DE375ABB44D7699 /* Info.plist */,
-				7F09F223D86ED4817DB8BA9E7DFE969A /* VisualEffectView.modulemap */,
-				41C8A0A0244CDA118D34E2C907042C3D /* VisualEffectView.xcconfig */,
-				9676A2733BB31FF50C3EB9712B20D22D /* VisualEffectView-dummy.m */,
-				B08BA903B6B30C17EBA25CA7295543C9 /* VisualEffectView-prefix.pch */,
-				A6D2F7E1F575EFB05350AF26A8811184 /* VisualEffectView-umbrella.h */,
+				68FF9CBA88F0962EE521F96410114C04 /* Info.plist */,
+				13D657E08DE48C9CC666B7B78F995EA1 /* VisualEffectView.modulemap */,
+				27F64302EFFDDA70C02F347EC4B8DBE4 /* VisualEffectView.xcconfig */,
+				C17D8F1CA18968B256A607D22B2B106B /* VisualEffectView-dummy.m */,
+				B3346E487C1C3E59016188DDA40E4179 /* VisualEffectView-prefix.pch */,
+				C5472717F5A23A951C76A546FD872BA1 /* VisualEffectView-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/VisualEffectView";
@@ -361,20 +219,10 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				0880CC86CFB8F42F90A96FDE0745BD6C /* Pods */,
-				4C3BB5055026BCF9A475B9871EDD1774 /* Products */,
+				5BBE8C225629D39F6C1F4A03FC2A5067 /* Pods */,
+				EE9AC885A6520780A7226EA24201F487 /* Products */,
 				741D89AEE4676859181793AB87231ABB /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		8B97A73A3AA2E9D4F77FD79F5F36CC2C /* VisualEffectView */ = {
-			isa = PBXGroup;
-			children = (
-				45D1716419734AA5AD21ECA6757A6015 /* VisualEffectView.swift */,
-				5FBBAEE19E14C1C1D76C204D881CCE4C /* Support Files */,
-			);
-			name = VisualEffectView;
-			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
 		970A39C46347ED0870BAF91A6718C345 /* Pods-glacInitUITests */ = {
@@ -421,12 +269,48 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C70C1220E6B1D55B2565A0215C908F39 /* VisualEffectView */ = {
+			isa = PBXGroup;
+			children = (
+				A3398C39557044F02B920C65A24E8882 /* VisualEffectView.swift */,
+				7080717EBE1F4957602CD93E1221D0D4 /* Support Files */,
+			);
+			name = VisualEffectView;
+			path = VisualEffectView;
+			sourceTree = "<group>";
+		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		EE9AC885A6520780A7226EA24201F487 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD351166FE69B38EBEB50A5964FC005E /* Pods_glacInit.framework */,
+				BDE513BD8916920AD1046AB9D434C5A5 /* Pods_glacInitTests.framework */,
+				B31A4D588B8EBD0BB356503A3AF661AD /* Pods_glacInitUITests.framework */,
+				FB2399559A16C8A35ADA7074371C9FEB /* SwiftHSVColorPicker.framework */,
+				0C0E054F57C67B81D8895A68F5F0D753 /* VisualEffectView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EED6F530562CD8E09D2343221589A0C7 /* SwiftHSVColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				A25A2EA6A129190F9E5C23D1DF2B0744 /* BrightnessView.swift */,
+				3D4FDD1AE651A85219FAADAA78E30917 /* ColorUtils.swift */,
+				9C1DE7506D4618A229A321430F8B6D9A /* ColorWheel.swift */,
+				16645CB4898655323102295AF2D70DA8 /* SelectedColorView.swift */,
+				583793D9340D2C7CCC12D82848D6EF14 /* SwiftHSVColorPicker.swift */,
+				0D699307096E7736F275852790DA5C33 /* Support Files */,
+			);
+			name = SwiftHSVColorPicker;
+			path = SwiftHSVColorPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,11 +324,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		44D5EC7C0AF1BF7078BD90B75C455757 /* Headers */ = {
+		502D709FFFDD6A8E4F0453A76789FF64 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26B4037B0701309B16B7EDBB928E5AD6 /* VisualEffectView-umbrella.h in Headers */,
+				DE90578E51D1766CB1C9512C4806ECBD /* SwiftHSVColorPicker-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51B39983F507DD7295AABA793B534099 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8942AFC520FA2B23041B2E8C63297BD6 /* VisualEffectView-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,28 +348,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83A99C1B50817FC4838FDFBA6E2CFB23 /* Headers */ = {
+		B93D27D6F8316BDFCFD9C0371969AB4E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A94669FDF932860CCCFC61B4C11C245F /* FXBlurView.h in Headers */,
-				06A6B30A74DE1223B98FC8FA8FE027A7 /* PopupDialog-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		878F54620BB94FFD5F5CCA435BFFAD20 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				19C0DC3A4E8EF803A87441EA281641EE /* Pods-glacInit-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A2302C6B1AA529760C53A2CF58EEE091 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DC42C83DB994BEBC84648931B2D96403 /* SwiftHSVColorPicker-umbrella.h in Headers */,
+				4C3CCEE21C43428636E6D18780290B43 /* Pods-glacInit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,16 +373,16 @@
 			);
 			name = "Pods-glacInitUITests";
 			productName = "Pods-glacInitUITests";
-			productReference = 4AF37477892625B286E15393A8ED41A9 /* Pods_glacInitUITests.framework */;
+			productReference = B31A4D588B8EBD0BB356503A3AF661AD /* Pods_glacInitUITests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		1A4F1B5263501DBDD8D1E43E57482925 /* VisualEffectView */ = {
+		6EFC1A5F5FE349E5C7050CD650351694 /* VisualEffectView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2F2765B719366FBCDF468F69B812685 /* Build configuration list for PBXNativeTarget "VisualEffectView" */;
+			buildConfigurationList = B23BE51F384D186D704D1487975F8F46 /* Build configuration list for PBXNativeTarget "VisualEffectView" */;
 			buildPhases = (
-				39C26784D6361F3456D7F616592D002E /* Sources */,
-				F1F2B6646736272C0B6257B399F148BF /* Frameworks */,
-				44D5EC7C0AF1BF7078BD90B75C455757 /* Headers */,
+				E2F48DEA9DA2D9BE6DE61EAED212A158 /* Sources */,
+				EDD2C44A8F73371702BD3EA110C7E4CF /* Frameworks */,
+				51B39983F507DD7295AABA793B534099 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -515,24 +390,24 @@
 			);
 			name = VisualEffectView;
 			productName = VisualEffectView;
-			productReference = 679E55A86BD2B5FD79AAD69729ECAFD2 /* VisualEffectView.framework */;
+			productReference = 0C0E054F57C67B81D8895A68F5F0D753 /* VisualEffectView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		4E24589B5341A5474FE51798A770DD94 /* PopupDialog */ = {
+		848F525002A019E33F0C925B2B119F43 /* SwiftHSVColorPicker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3C8F1BEE4794AAEB4238F5B4017B4F2F /* Build configuration list for PBXNativeTarget "PopupDialog" */;
+			buildConfigurationList = 332781F527933D481AF75551FE9F4544 /* Build configuration list for PBXNativeTarget "SwiftHSVColorPicker" */;
 			buildPhases = (
-				C9FF0E1D5941270ACE3D43B14E52BDCE /* Sources */,
-				D07D2BE8D4D719C5E22868634A98AA0E /* Frameworks */,
-				83A99C1B50817FC4838FDFBA6E2CFB23 /* Headers */,
+				F9A7DDC32052AAA5B9C3046A3453CF5C /* Sources */,
+				A0F0ECD2D1A555440C56EAB4A81ACDEE /* Frameworks */,
+				502D709FFFDD6A8E4F0453A76789FF64 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = PopupDialog;
-			productName = PopupDialog;
-			productReference = 503F72C291F334D64D4044AE6B6F325F /* PopupDialog.framework */;
+			name = SwiftHSVColorPicker;
+			productName = SwiftHSVColorPicker;
+			productReference = FB2399559A16C8A35ADA7074371C9FEB /* SwiftHSVColorPicker.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		A668EB4804CD11BD74E5477B801C9A1C /* Pods-glacInitTests */ = {
@@ -549,44 +424,26 @@
 			);
 			name = "Pods-glacInitTests";
 			productName = "Pods-glacInitTests";
-			productReference = E02C967AFF016E75C9863B47A6DBA804 /* Pods_glacInitTests.framework */;
+			productReference = BDE513BD8916920AD1046AB9D434C5A5 /* Pods_glacInitTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C512DE86C4532F0CFFA0E035C51AA758 /* Pods-glacInit */ = {
+		CB04EA5CDC37A4985957C1EB3BEAAA5D /* Pods-glacInit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 600053B178ABAB6D56A393FB7DB70E3D /* Build configuration list for PBXNativeTarget "Pods-glacInit" */;
+			buildConfigurationList = 9086B692CCD9573FA52127B4741F751D /* Build configuration list for PBXNativeTarget "Pods-glacInit" */;
 			buildPhases = (
-				6B27BCDC224E9C000D5161DBE873CE30 /* Sources */,
-				9EC3E3CD47842A714BED39F020A4C5E7 /* Frameworks */,
-				878F54620BB94FFD5F5CCA435BFFAD20 /* Headers */,
+				5B8D613138346383D95A704C3F23C2E9 /* Sources */,
+				6650ABDD7E738F924570003340989BB9 /* Frameworks */,
+				B93D27D6F8316BDFCFD9C0371969AB4E /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3EE8F4A03DFCB3495DC2866B25577E17 /* PBXTargetDependency */,
-				A0806AB75BA1FC43A9356DCD39BF6350 /* PBXTargetDependency */,
-				E704C8132BA84DFC1F5837E7A4C168EA /* PBXTargetDependency */,
+				D2A77844F3BC3AE4B0EF9EC76056DC7D /* PBXTargetDependency */,
+				8B72261C2901EB0287ABA8453FA9E4DD /* PBXTargetDependency */,
 			);
 			name = "Pods-glacInit";
 			productName = "Pods-glacInit";
-			productReference = 561FCB77EDA8B7411A67FD7C5E524641 /* Pods_glacInit.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		DBBB07CF49625B92E89490A8222A8F0E /* SwiftHSVColorPicker */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 68455E1A8F4C3846C67A27E6764A3A65 /* Build configuration list for PBXNativeTarget "SwiftHSVColorPicker" */;
-			buildPhases = (
-				EF508B0DB37EE6567F2CE9F714B5377B /* Sources */,
-				F2EDE915DCB8F6136F005D4BD6C557C0 /* Frameworks */,
-				A2302C6B1AA529760C53A2CF58EEE091 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SwiftHSVColorPicker;
-			productName = SwiftHSVColorPicker;
-			productReference = DB1516B4FF6CCAD586AC1F2DBEF0E12A /* SwiftHSVColorPicker.framework */;
+			productReference = DD351166FE69B38EBEB50A5964FC005E /* Pods_glacInit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -606,35 +463,25 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 4C3BB5055026BCF9A475B9871EDD1774 /* Products */;
+			productRefGroup = EE9AC885A6520780A7226EA24201F487 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C512DE86C4532F0CFFA0E035C51AA758 /* Pods-glacInit */,
+				CB04EA5CDC37A4985957C1EB3BEAAA5D /* Pods-glacInit */,
 				A668EB4804CD11BD74E5477B801C9A1C /* Pods-glacInitTests */,
 				138B4DB3CE4240F203F38E5C8A0EF7E4 /* Pods-glacInitUITests */,
-				4E24589B5341A5474FE51798A770DD94 /* PopupDialog */,
-				DBBB07CF49625B92E89490A8222A8F0E /* SwiftHSVColorPicker */,
-				1A4F1B5263501DBDD8D1E43E57482925 /* VisualEffectView */,
+				848F525002A019E33F0C925B2B119F43 /* SwiftHSVColorPicker */,
+				6EFC1A5F5FE349E5C7050CD650351694 /* VisualEffectView */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		39C26784D6361F3456D7F616592D002E /* Sources */ = {
+		5B8D613138346383D95A704C3F23C2E9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D80CF3AB0A79B6314E552D9B4A13865D /* VisualEffectView-dummy.m in Sources */,
-				3723CD2CF082D29AE81D7DAE95D0275E /* VisualEffectView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6B27BCDC224E9C000D5161DBE873CE30 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E04510E841EAE0AAD414EA9D35529329 /* Pods-glacInit-dummy.m in Sources */,
+				873628B5CF7E13C46FD50D6EB1C495FA /* Pods-glacInit-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,35 +493,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9FF0E1D5941270ACE3D43B14E52BDCE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B0A5CF09414E15983E7C221F4DA68136 /* FXBlurView.m in Sources */,
-				06DD6115A6E9C89D10F6BFA01443C821 /* InteractiveTransition.swift in Sources */,
-				D161C788C60C3E0A4C4A1B74FE6CE742 /* PopupDialog+Keyboard.swift in Sources */,
-				41EFC4C78AB49BCD606CF66110F448A5 /* PopupDialog-dummy.m in Sources */,
-				28E735D5A7578ABC37723B96AFFCD900 /* PopupDialog.swift in Sources */,
-				D8706B1BD6C4CF054EAA66383965BADF /* PopupDialogButton.swift in Sources */,
-				87B4766BD7202C5C08E97195D5A88861 /* PopupDialogContainerView.swift in Sources */,
-				D0450211AE8D7E5C8924D9A49BD5679D /* PopupDialogDefaultButtons.swift in Sources */,
-				04132E48DC9D20E94F4B5E1477CD7459 /* PopupDialogDefaultView.swift in Sources */,
-				B6B3DD3E612A21EB13E8498F90D532B7 /* PopupDialogDefaultViewController.swift in Sources */,
-				F0E99BDF1680105440B4B90FBDE89F68 /* PopupDialogOverlayView.swift in Sources */,
-				F807967C31710577E9283D5F3A454F2E /* PresentationController.swift in Sources */,
-				2864DA8169CF8AAD6DB7B9BC8C9592B4 /* PresentationManager.swift in Sources */,
-				9BA1AE033EF11011324B9099648E3D38 /* TransitionAnimations.swift in Sources */,
-				29FBE882834A09BDF54592F5EDE31147 /* TransitionAnimator.swift in Sources */,
-				577340B2FDAC99946029E35E8F2010FB /* TZSpacerView.swift in Sources */,
-				4011FAC5A029ECB210E7E9A2087CB91F /* TZStackView.swift in Sources */,
-				6979B6073566864445EC58292BD2B8D4 /* TZStackViewAlignment.swift in Sources */,
-				CC9C6394578A6BC41FCA5C57C234021D /* TZStackViewDistribution.swift in Sources */,
-				FD4F417B4820EB663787C73B85B5E22C /* UIImageView+Calculations.swift in Sources */,
-				B1B28C189AD52FBB17EE836B48B0F2CB /* UIView+Animations.swift in Sources */,
-				695AC6450C799AECF77E38B2797EE902 /* UIViewController+Visibility.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CAA0B7897643E04393F6C9F4ED77D212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -683,39 +501,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EF508B0DB37EE6567F2CE9F714B5377B /* Sources */ = {
+		E2F48DEA9DA2D9BE6DE61EAED212A158 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09D3F111F8B2DE35BD271005AA5AA5A9 /* BrightnessView.swift in Sources */,
-				A7FBA61A65EB1DD42E92D99A8E774088 /* ColorUtils.swift in Sources */,
-				5358FC9F6E2B87906175CA9EC94B8615 /* ColorWheel.swift in Sources */,
-				2CB85F9724DA0214130AC9D91B21D04F /* SelectedColorView.swift in Sources */,
-				30F3FEF101F20F8A7544FBE6FE383CDF /* SwiftHSVColorPicker-dummy.m in Sources */,
-				1928B00A38080507B57F897253138204 /* SwiftHSVColorPicker.swift in Sources */,
+				70CEC346FB268326624769F07C98AE74 /* VisualEffectView-dummy.m in Sources */,
+				676F86065C1996BAD939E0E96D6C2D47 /* VisualEffectView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9A7DDC32052AAA5B9C3046A3453CF5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47DC995396C9CD9E81A31B184E1DDF2C /* BrightnessView.swift in Sources */,
+				F75E15B653894595B92D1854133E739A /* ColorUtils.swift in Sources */,
+				1AEE79392E032CB1EBCB6157A4113F6E /* ColorWheel.swift in Sources */,
+				65011D0D09B5E1D7A8ABA0DD091DD628 /* SelectedColorView.swift in Sources */,
+				1C3BCE5EACC2C341E85C0A89E3BACDF8 /* SwiftHSVColorPicker-dummy.m in Sources */,
+				D9A80C8297F861C1DA712945F1FAC7E6 /* SwiftHSVColorPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3EE8F4A03DFCB3495DC2866B25577E17 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PopupDialog;
-			target = 4E24589B5341A5474FE51798A770DD94 /* PopupDialog */;
-			targetProxy = 5C071C595C5B769EDF30B594F45A0F86 /* PBXContainerItemProxy */;
-		};
-		A0806AB75BA1FC43A9356DCD39BF6350 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftHSVColorPicker;
-			target = DBBB07CF49625B92E89490A8222A8F0E /* SwiftHSVColorPicker */;
-			targetProxy = A5023ADBF0D3C3305C4E004525AA703B /* PBXContainerItemProxy */;
-		};
-		E704C8132BA84DFC1F5837E7A4C168EA /* PBXTargetDependency */ = {
+		8B72261C2901EB0287ABA8453FA9E4DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VisualEffectView;
-			target = 1A4F1B5263501DBDD8D1E43E57482925 /* VisualEffectView */;
-			targetProxy = 33E2808E544880E4E1B400AC547091B4 /* PBXContainerItemProxy */;
+			target = 6EFC1A5F5FE349E5C7050CD650351694 /* VisualEffectView */;
+			targetProxy = 685764A506B7F8D610D55B2A7BC6D43D /* PBXContainerItemProxy */;
+		};
+		D2A77844F3BC3AE4B0EF9EC76056DC7D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftHSVColorPicker;
+			target = 848F525002A019E33F0C925B2B119F43 /* SwiftHSVColorPicker */;
+			targetProxy = 8FE377E919F7C3E1C70FEFB3B547CFEB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -750,118 +571,6 @@
 				PRODUCT_NAME = Pods_glacInitUITests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		275A5A92994F657FD4C4920A120E1DFC /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C9E21426AD6AB09BCA8573AD45A56C0 /* SwiftHSVColorPicker.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SwiftHSVColorPicker/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = SwiftHSVColorPicker;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		3B5C7033FAB5D8854B76723720FEFE62 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD38F822C7888B30168FEAF057C02950 /* Pods-glacInit.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-glacInit/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-glacInit/Pods-glacInit.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_glacInit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		40E760399B0D3416592D3F0CB98A6F92 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3BC0B532264D4139F03C5754A5DF5A68 /* Pods-glacInit.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-glacInit/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-glacInit/Pods-glacInit.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_glacInit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -904,44 +613,9 @@
 			};
 			name = Release;
 		};
-		5B3EC1AE567FBB1A6944753A7D91AB18 /* Release */ = {
+		732D0A5551632667049E8009A0534784 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 335BBE457500F8D6F1E27DC6D0D19349 /* PopupDialog.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/PopupDialog/PopupDialog-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PopupDialog/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/PopupDialog/PopupDialog.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = PopupDialog;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		70B4E89B3CF1052571EA8E8940745917 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41C8A0A0244CDA118D34E2C907042C3D /* VisualEffectView.xcconfig */;
+			baseConfigurationReference = 27F64302EFFDDA70C02F347EC4B8DBE4 /* VisualEffectView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -973,6 +647,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		8C6AB6B79C5FC4E51853B480F032CABB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7AF5D36424EC9665C88E065A0C2D1CD /* SwiftHSVColorPicker.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftHSVColorPicker/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SwiftHSVColorPicker;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		97803B46811A9BDB5E70FA1303AFBFFE /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1023,9 +732,44 @@
 			};
 			name = Debug;
 		};
-		9A4DA0A00D4764756778B0738B37E8B7 /* Release */ = {
+		AEBFA41564BD3B33D3C4A48D54434B0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41C8A0A0244CDA118D34E2C907042C3D /* VisualEffectView.xcconfig */;
+			baseConfigurationReference = B7AF5D36424EC9665C88E065A0C2D1CD /* SwiftHSVColorPicker.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftHSVColorPicker/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SwiftHSVColorPicker;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AFF4A7BD01ADBD072C79F97E2AF57A72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27F64302EFFDDA70C02F347EC4B8DBE4 /* VisualEffectView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1057,41 +801,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		A835ED266273DE7679E8DE01A5CE7EFB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 335BBE457500F8D6F1E27DC6D0D19349 /* PopupDialog.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/PopupDialog/PopupDialog-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PopupDialog/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/PopupDialog/PopupDialog.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = PopupDialog;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		B4FEBBD297195EC71D396E6F49E27BE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1209,9 +918,9 @@
 			};
 			name = Release;
 		};
-		F985FB6E7DADEB13214AC61BCFA554E2 /* Debug */ = {
+		D610AC108B8A7552FC70FA6C1F996F93 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C9E21426AD6AB09BCA8573AD45A56C0 /* SwiftHSVColorPicker.xcconfig */;
+			baseConfigurationReference = 3BC0B532264D4139F03C5754A5DF5A68 /* Pods-glacInit.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1225,17 +934,21 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SwiftHSVColorPicker/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-glacInit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SwiftHSVColorPicker/SwiftHSVColorPicker.modulemap";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-glacInit/Pods-glacInit.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = SwiftHSVColorPicker;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_glacInit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1243,6 +956,44 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		E0A1E15764E72848CEF437B2954782AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD38F822C7888B30168FEAF057C02950 /* Pods-glacInit.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-glacInit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-glacInit/Pods-glacInit.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_glacInit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1256,29 +1007,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3C8F1BEE4794AAEB4238F5B4017B4F2F /* Build configuration list for PBXNativeTarget "PopupDialog" */ = {
+		332781F527933D481AF75551FE9F4544 /* Build configuration list for PBXNativeTarget "SwiftHSVColorPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A835ED266273DE7679E8DE01A5CE7EFB /* Debug */,
-				5B3EC1AE567FBB1A6944753A7D91AB18 /* Release */,
+				AEBFA41564BD3B33D3C4A48D54434B0D /* Debug */,
+				8C6AB6B79C5FC4E51853B480F032CABB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		600053B178ABAB6D56A393FB7DB70E3D /* Build configuration list for PBXNativeTarget "Pods-glacInit" */ = {
+		9086B692CCD9573FA52127B4741F751D /* Build configuration list for PBXNativeTarget "Pods-glacInit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				40E760399B0D3416592D3F0CB98A6F92 /* Debug */,
-				3B5C7033FAB5D8854B76723720FEFE62 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		68455E1A8F4C3846C67A27E6764A3A65 /* Build configuration list for PBXNativeTarget "SwiftHSVColorPicker" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F985FB6E7DADEB13214AC61BCFA554E2 /* Debug */,
-				275A5A92994F657FD4C4920A120E1DFC /* Release */,
+				D610AC108B8A7552FC70FA6C1F996F93 /* Debug */,
+				E0A1E15764E72848CEF437B2954782AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1301,11 +1043,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2F2765B719366FBCDF468F69B812685 /* Build configuration list for PBXNativeTarget "VisualEffectView" */ = {
+		B23BE51F384D186D704D1487975F8F46 /* Build configuration list for PBXNativeTarget "VisualEffectView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				70B4E89B3CF1052571EA8E8940745917 /* Debug */,
-				9A4DA0A00D4764756778B0738B37E8B7 /* Release */,
+				732D0A5551632667049E8009A0534784 /* Debug */,
+				AFF4A7BD01ADBD072C79F97E2AF57A72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
