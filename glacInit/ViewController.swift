@@ -51,8 +51,8 @@ class ViewController: UIViewController{
 
         loadImage(mainImgView: mainImgView)
 
-        //initToggle(sideView: sideView)
-        initToggleUdpdate(sideView: sideView)
+        initToggle(sideView: sideView)
+        //initToggleUdpdate(sideView: sideView)
         addExportButton(view: sideView)
         addControlIcons()
         addSlider(view: sideView)
@@ -97,8 +97,8 @@ class ViewController: UIViewController{
     
     func initToggleUdpdate(sideView: UIView){
         
-        let t = CustomToggle(frame: CGRect(x: 0, y: sideView.frame.height*0.40, width: sideView.frame.width, height: 100))
-        sideView.addSubview(t)
+        let t1 = CustomToggle(frame: CGRect(x: 0, y: sideView.frame.height*0.40, width: sideView.frame.width, height: 100))
+        sideView.addSubview(t1)
     }
     
     func loadImage(mainImgView: UIView){
