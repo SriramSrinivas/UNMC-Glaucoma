@@ -29,7 +29,6 @@ class ViewController: UIViewController{
     var customViewUpdateList = [CustomViewUpdate]()
     
     let delete = UIButton()
-    let export = UIButton()
     
     let tempBlur = VisualEffectView()
     
@@ -67,8 +66,8 @@ class ViewController: UIViewController{
     
     func initToggle(sideView: UIView){
         
-        let gridHeight = sideView.frame.size.height*0.75
-        let origHeight = sideView.frame.size.height*0.85
+        let gridHeight = sideView.frame.size.height*0.65
+        let origHeight = sideView.frame.size.height*0.75
     
         let gridSwitch = UISwitch()
         gridSwitch.frame = CGRect(x: 30, y: gridHeight, width: 50, height: 100)
@@ -187,17 +186,28 @@ class ViewController: UIViewController{
     func addExportButton(view: UIView){
         let stack = UIStackView()
         
+        let export = UIButton()
+        let clear = UIButton()
+
         export.setTitle("Export", for: UIControlState.normal)
         export.heightAnchor.constraint(equalToConstant: 50).isActive = true
         export.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         export.backgroundColor = UIColor(hexString: "#0D47A1")
         export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
         
+        clear.setTitle("Clear", for: UIControlState.normal)
+        clear.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        clear.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        clear.backgroundColor = UIColor(hexString: "#1B5E20")
+        clear.addTarget(self, action: #selector(clearTap), for: .touchUpInside)
+        
         stack.axis = UILayoutConstraintAxis.vertical
         stack.distribution = UIStackViewDistribution.equalSpacing
         stack.alignment = UIStackViewAlignment.center
+        stack.spacing = 10.0
         stack.translatesAutoresizingMaskIntoConstraints = false
         
+        stack.addArrangedSubview(clear)
         stack.addArrangedSubview(export)
         
         view.addSubview(stack)
@@ -393,6 +403,17 @@ class ViewController: UIViewController{
         customViewUpdateList = customViewUpdateList.filter() { $0 != temp }
         temp.removeFromSuperview()
         enableControl(value: false)
+    }
+    
+    func clearTap(sender: UIButton!){
+        
+        for i in customViewUpdateList{
+            if i.isLinkedToImage{
+                i.linkedImage.alpha = 1
+            }
+            i.removeFromSuperview()
+        }
+        customViewUpdateList.removeAll()
     }
     
     func exportTap(sender: UIButton!){
