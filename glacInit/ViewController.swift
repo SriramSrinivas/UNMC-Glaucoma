@@ -210,17 +210,17 @@ class ViewController: UIViewController{
     func addGridLineUpdate(mainView: UIView){
 
         let line1 = UIButton()
-        line1.frame = CGRect(x: view.frame.width*0.3, y: 0, width: 5, height: view.frame.height)
+        line1.frame = CGRect(x: mainImgView.frame.width*0.3, y: 0, width: 5, height: mainImgView.frame.height)
         line1.layer.borderWidth = 5
         line1.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line2 = UIButton()
-        line2.frame = CGRect(x: view.frame.width*0.66, y: 0, width: 5, height: view.frame.height)
+        line2.frame = CGRect(x: mainImgView.frame.width*0.66, y: 0, width: 5, height: mainImgView.frame.height)
         line2.layer.borderWidth = 5
         line2.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
         let line3 = UIButton()
-        line3.frame = CGRect(x: 0, y: view.frame.height*0.5, width: view.frame.width, height: 5)
+        line3.frame = CGRect(x: 0, y: mainImgView.frame.height*0.5, width: mainImgView.frame.width, height: 5)
         line3.layer.borderWidth = 5
         line3.layer.borderColor = UIColor(hexString: "FF9800").cgColor
 
@@ -230,7 +230,7 @@ class ViewController: UIViewController{
 
         for i in gridViews {
             
-            view.addSubview(i)
+            mainImgView.addSubview(i)
         }
     }
     
@@ -397,7 +397,6 @@ class ViewController: UIViewController{
     }
     
     func exportTap(sender: UIButton!){
-        //takeScreenShot()
         
         let alert = UIAlertController(title: "title", message: "dis da message", preferredStyle: .alert)
         
@@ -409,9 +408,22 @@ class ViewController: UIViewController{
         }
         let action = UIAlertAction(title: "ok", style: .default){ _ in
             print("ok tap : \(inputTextField?.text)")
+            self.addWaterMark(name: (inputTextField?.text)!)
+            self.takeScreenShot()
         }
         alert.addAction(action)
         self.present(alert, animated: true){}
+    }
+    
+    func addWaterMark(name: String){
+        let nameLabel = UILabel(frame: CGRect(x: mainImgView.frame.width/2, y: mainImgView.frame.height - 15, width: 200, height: 15))
+        nameLabel.text = name
+        nameLabel.textColor = UIColor.white
+        let v = UIView()
+        v.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
+        v.backgroundColor = UIColor(hexString: "000000")
+        mainImgView.addSubview(v)
+        mainImgView.addSubview(nameLabel)
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -479,8 +491,10 @@ class ViewController: UIViewController{
     
     func takeScreenShot() {
         //Create the UIImage
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        UIGraphicsBeginImageContext(mainImgView.frame.size)
+        //mainImgView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        mainImgView.drawHierarchy(in: mainImgView.bounds, afterScreenUpdates: true)
+        
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

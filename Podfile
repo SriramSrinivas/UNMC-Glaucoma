@@ -6,7 +6,6 @@ target 'glacInit' do
   use_frameworks!
   pod "VisualEffectView"
   pod "SwiftHSVColorPicker"
-  pod "PopupDialog"
   
   # Pods for glacInit
 
