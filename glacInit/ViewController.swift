@@ -398,6 +398,7 @@ class ViewController: UIViewController{
     func exportTap(sender: UIButton!){
         
         let alert = UIAlertController(title: "Save Image", message: "Enter Patient Identifier", preferredStyle: .alert)
+        let okAlert = UIAlertController(title: "Image was saved", message: "Image was stored in the Photo Gallery", preferredStyle: .alert)
         
         var inputTextField: UITextField?
         
@@ -405,17 +406,28 @@ class ViewController: UIViewController{
             textField.placeholder = "Patient ID"
             inputTextField = textField
         }
+        
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
-            print("ok tap : \(inputTextField?.text)")
+
             self.addWaterMark(name: (inputTextField?.text)!)
             self.takeScreenShot()
+            
+            self.present(okAlert, animated: true){}
         }
+        
+        let action2 = UIAlertAction(title: "Close", style: .default) { _ in
+            
+        }
+        
         alert.addAction(action)
+        alert.addAction(action2)
+        okAlert.addAction(action2)
         self.present(alert, animated: true){}
     }
     
     func addWaterMark(name: String){
         let nameLabel = UILabel(frame: CGRect(x: mainImgView.frame.width/2, y: mainImgView.frame.height - 15, width: 200, height: 15))
+
         nameLabel.text = name
         nameLabel.textColor = UIColor.white
         let v = UIView()
