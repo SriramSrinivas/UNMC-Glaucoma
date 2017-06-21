@@ -6,18 +6,19 @@ class ViewController: UIViewController{
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
     var mainImgView = UIView()
+    var nameView = UIView()
     
     var blurOnIcon = UIImageView()
     var blurOffIcon = UIImageView()
     var sightOnIcon = UIImageView()
     var sightOffIcon = UIImageView()
+    
+    let export = UIButton()
 
-    let controlStack = UIStackView()
     let toggleStack = UIStackView()
     let sliderStack = UIStackView()
 
     var gridViews = [UIView]()
-    var tBlurInt = CGFloat()
     
     let intSlider = UISlider()
     let intText = UILabel()
@@ -51,12 +52,16 @@ class ViewController: UIViewController{
         loadImage(mainImgView: mainImgView)
 
         initToggle(sideView: sideView)
-        //initToggleUdpdate(sideView: sideView)
         addExportButton(view: sideView)
         addControlIcons()
         addSlider(view: sideView)
         initCustomObjects()
         addGridLineUpdate(mainView: mainImgView)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        enterNameDialog()
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,12 +99,6 @@ class ViewController: UIViewController{
         sideView.addSubview(origText)
     }
     
-    func initToggleUdpdate(sideView: UIView){
-        
-        let t1 = CustomToggle(frame: CGRect(x: 0, y: sideView.frame.height*0.40, width: sideView.frame.width, height: 100))
-        sideView.addSubview(t1)
-    }
-    
     func loadImage(mainImgView: UIView){
 
         let image = UIImage(named: "mainTes")
@@ -129,11 +128,11 @@ class ViewController: UIViewController{
         intText.text = "Blur"
         intText.textColor = UIColor.white
         
-        delete.setTitle("Delete", for: UIControlState.normal)
+        delete.setTitle("Reset", for: UIControlState.normal)
         delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
         delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         delete.backgroundColor = UIColor(hexString: "#f44336")
-        delete.addTarget(self, action: #selector(cancelTap), for: .touchUpInside)
+        delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
         
         let tempView = UIButton()
         tempView.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -180,13 +179,12 @@ class ViewController: UIViewController{
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        enableControl(value: false)
+        enableControl(value: .Disable)
     }
     
     func addExportButton(view: UIView){
         let stack = UIStackView()
         
-        let export = UIButton()
         let clear = UIButton()
 
         export.setTitle("Export", for: UIControlState.normal)
@@ -195,7 +193,7 @@ class ViewController: UIViewController{
         export.backgroundColor = UIColor(hexString: "#0D47A1")
         export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
         
-        clear.setTitle("Clear", for: UIControlState.normal)
+        clear.setTitle("Start Over", for: UIControlState.normal)
         clear.heightAnchor.constraint(equalToConstant: 50).isActive = true
         clear.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         clear.backgroundColor = UIColor(hexString: "#1B5E20")
@@ -214,6 +212,8 @@ class ViewController: UIViewController{
         
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stack.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        //addWaterMark(name: "suh dude")
     }
 
     func addGridLineUpdate(mainView: UIView){
@@ -245,19 +245,18 @@ class ViewController: UIViewController{
     
     func addControlIcons(){
         
-        let image = UIImage(named: "BlurOn")
-        let image2 = UIImage(named: "BlurOff")
-        let image3 = UIImage(named: "SightOn")
-        let image4 = UIImage(named: "SightOff")
-
-        blurOnIcon = UIImageView(frame: CGRect(x : 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-        blurOnIcon.image = image
-        blurOffIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: (image2?.size.width)!, height: (image2?.size.height)!))
-        blurOffIcon.image = image2
-        sightOnIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: (image3?.size.width)!, height: (image3?.size.height)!))
-        sightOnIcon.image = image3
-        sightOffIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: (image4?.size.width)!, height: (image4?.size.height)!))
-        sightOffIcon.image = image4
+        let tempImage = {(fileName: String, icon: UIImageView) -> UIImageView in
+            
+            let theImage = UIImage(named: fileName)
+            icon.frame = CGRect(x: 0, y: 0, width: (theImage?.size.width)!, height: (theImage?.size.height)!)
+            icon.image = theImage
+            return icon
+        }
+        
+        blurOnIcon = tempImage("BlurOn",blurOnIcon)
+        blurOffIcon = tempImage("BlurOff", blurOffIcon)
+        sightOnIcon = tempImage("SightOn", sightOnIcon)
+        sightOffIcon = tempImage("SightOff", sightOffIcon)
     }
     
     func initCustomObjects(){
@@ -268,7 +267,7 @@ class ViewController: UIViewController{
                                              CustomObject(imageName: "cone", xPos: 185, yPos: 325.5, sideSize: 60, alphaValue: 1),
                                              CustomObject(imageName: "ball", xPos: 575.5, yPos: 385, sideSize: 50, alphaValue: 1),
                                              CustomObject(imageName: "kid1", xPos: 380, yPos: 279.5, sideSize: 50, alphaValue: 1),
-                                             CustomObject(imageName: "kid1", xPos: 423.5, yPos: 271, sideSize: 50, alphaValue: 1),
+                                             CustomObject(imageName: "kid2", xPos: 423.5, yPos: 271, sideSize: 50, alphaValue: 1),
                                              CustomObject(imageName: "peel", xPos: 55.5, yPos: 460.5, sideSize: 65, alphaValue: 1),
                                              CustomObject(imageName: "helmet", xPos: 176.5, yPos: 387, sideSize: 50, alphaValue: 1),
                                              CustomObject(imageName: "girl", xPos: 735, yPos: 237.6, sideSize: 230, alphaValue: 1),
@@ -363,19 +362,19 @@ class ViewController: UIViewController{
         
         for i in customObjectList {
             if (sender.view == i) {
-                print("Custom Object match found")
-                createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: 200, height: 200))
+                
+                createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: i.frame.width, height: i.frame.height))
                 let temp = customViewUpdateList.last
                 temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
                 temp?.isLinkedToImage = true
                 temp?.linkedImage = i
+                enableControl(value: .BlurAndAlpha)
             }
         }
     }
     
     func handleTapUpdate(sender: UITapGestureRecognizer){
         
-        enableControl(value: true)
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -389,12 +388,15 @@ class ViewController: UIViewController{
                 
                 if i.isLinkedToImage{
                     alphSlider.setValue(Float(i.alphaValue), animated: false)
+                    enableControl(value: .BlurAndAlpha)
+                } else {
+                    enableControl(value: .OnlyBlur)
                 }
             }
         }
     }
     
-    func cancelTap(sender: UIButton!){
+    func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
         if temp.isLinkedToImage {
@@ -402,7 +404,7 @@ class ViewController: UIViewController{
         }
         customViewUpdateList = customViewUpdateList.filter() { $0 != temp }
         temp.removeFromSuperview()
-        enableControl(value: false)
+        enableControl(value: .Disable)
     }
     
     func clearTap(sender: UIButton!){
@@ -414,13 +416,30 @@ class ViewController: UIViewController{
             i.removeFromSuperview()
         }
         customViewUpdateList.removeAll()
+        nameView.subviews.forEach{ $0.removeFromSuperview() }
+        nameView.removeFromSuperview()
+        
+        enterNameDialog()
     }
     
     func exportTap(sender: UIButton!){
+    
+        takeScreenShot()
+        
+        let okAlert = UIAlertController(title: "Image was saved", message: "Image was stored in the Photo Gallery", preferredStyle: .alert)
+        let action2 = UIAlertAction(title: "Close", style: .default) { _ in
+        }
+        
+        okAlert.addAction(action2)
+        
+        self.present(okAlert, animated: true)
+    }
+    
+    func enterNameDialog(){
+        
+        print("Inside enterNameDialog")
         
         let alert = UIAlertController(title: "Save Image", message: "Enter Patient Identifier", preferredStyle: .alert)
-        let okAlert = UIAlertController(title: "Image was saved", message: "Image was stored in the Photo Gallery", preferredStyle: .alert)
-        
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
@@ -429,39 +448,35 @@ class ViewController: UIViewController{
         }
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
-
-            self.addWaterMark(name: (inputTextField?.text)!)
-            self.takeScreenShot()
             
-            self.present(okAlert, animated: true){}
-        }
-        
-        let action2 = UIAlertAction(title: "Close", style: .default) { _ in
+            self.addWaterMark(name: (inputTextField?.text)!)
             
         }
         
         alert.addAction(action)
-        alert.addAction(action2)
-        okAlert.addAction(action2)
-        self.present(alert, animated: true){}
+        
+        self.present(alert,animated: true)
     }
     
     func addWaterMark(name: String){
-        let nameLabel = UILabel(frame: CGRect(x: mainImgView.frame.width/2, y: mainImgView.frame.height - 15, width: 200, height: 15))
 
+        
+        nameView.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
+        nameView.backgroundColor = UIColor(hexString: "000000")
+        
+        let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 200, height: 15))
         nameLabel.text = name
         nameLabel.textColor = UIColor.white
-        let v = UIView()
-        v.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
-        v.backgroundColor = UIColor(hexString: "000000")
-        mainImgView.addSubview(v)
-        mainImgView.addSubview(nameLabel)
+        
+        nameView.addSubview(nameLabel)
+        mainImgView.addSubview(nameView)
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
         createCustomViewUpdate(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200))
     }
     
@@ -480,7 +495,7 @@ class ViewController: UIViewController{
         
         if !activatedViews{
             
-            enableControl(value: true)
+            enableControl(value: .OnlyBlur)
             
             let c = CustomViewUpdate(frame: frame)
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
@@ -491,7 +506,7 @@ class ViewController: UIViewController{
             
             print("c z axis : \(c.layer.zPosition)")
         } else {
-            enableControl(value: false)
+            enableControl(value: .Disable)
         }
     }
     
@@ -546,9 +561,31 @@ class ViewController: UIViewController{
         return temp
     }
     
-    func enableControl(value: Bool){
+    func enableControl(value: ControlState){
         switch value {
-        case false:
+        case .BlurAndAlpha:
+            
+            intText.textColor = UIColor(hexString: "EEEEEE")
+            intText.alpha = 1
+            intSlider.tintColor = UIColor(hexString: "EEEEEE")
+            intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            alphSlider.tintColor = UIColor(hexString: "EEEEEE")
+            alphSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            delete.alpha = 1
+            delete.isEnabled =  true
+            
+            intSlider.alpha = 1
+            intSlider.isEnabled = true
+            alphSlider.alpha = 1
+            alphSlider.isEnabled = true
+            
+            blurOnIcon.isHidden = false
+            blurOffIcon.isHidden = true
+            sightOnIcon.isHidden = false
+            sightOffIcon.isHidden = true
+            
+        case .Disable:
+            
             intText.textColor = UIColor(hexString: "9E9E9E")
             intText.alpha = 0.4
             intSlider.tintColor = UIColor(hexString: "9E9E9E")
@@ -571,28 +608,34 @@ class ViewController: UIViewController{
             sightOffIcon.isHidden = false
             sightOffIcon.alpha = 0.4
             
-        case true:
+        case .OnlyBlur:
+            
             intText.textColor = UIColor(hexString: "EEEEEE")
             intText.alpha = 1
             intSlider.tintColor = UIColor(hexString: "EEEEEE")
             intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
-            alphSlider.tintColor = UIColor(hexString: "EEEEEE")
-            alphSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+        
             delete.alpha = 1
             delete.isEnabled =  true
             
+            alphSlider.tintColor = UIColor(hexString: "9E9E9E")
+            alphSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
+            alphSlider.isEnabled = false
+            alphSlider.alpha = 0.4
+            
             intSlider.alpha = 1
             intSlider.isEnabled = true
-            alphSlider.alpha = 1
-            alphSlider.isEnabled = true
             
             blurOnIcon.isHidden = false
             blurOffIcon.isHidden = true
-            sightOnIcon.isHidden = false
-            sightOffIcon.isHidden = true
-            
+            sightOnIcon.isHidden = true
+            sightOffIcon.isHidden = false
         default:
             break
         }
     }
+}
+
+enum ControlState {
+    case Disable, OnlyBlur, BlurAndAlpha
 }
