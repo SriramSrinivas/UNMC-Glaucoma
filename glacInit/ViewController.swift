@@ -180,7 +180,7 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(sightOffIcon)
         sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(tempView1)
-        sliderStack.addArrangedSubview(greySlider)
+        //sliderStack.addArrangedSubview(greySlider)
         sliderStack.addArrangedSubview(delete)
 
         view.addSubview(sliderStack)
