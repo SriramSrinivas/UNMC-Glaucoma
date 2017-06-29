@@ -154,6 +154,7 @@ class ViewController: UIViewController{
         
         greySlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         greySlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        greySlider.addTarget(self, action: #selector(sliderGrey), for: UIControlEvents.valueChanged)
         greySlider.minimumValue = 0
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
@@ -179,7 +180,7 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(sightOffIcon)
         sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(tempView1)
-        //sliderStack.addArrangedSubview(greySlider)
+        sliderStack.addArrangedSubview(greySlider)
         sliderStack.addArrangedSubview(delete)
 
         view.addSubview(sliderStack)
@@ -363,6 +364,16 @@ class ViewController: UIViewController{
         temp.linkedImage.alpha = CGFloat(value)
         temp.alphaValue = CGFloat(value*10)
     }
+    
+    func sliderGrey(slider: UISlider){
+        var value = slider.value
+        value = value/10
+        //value = 10 - value
+        print("Grey sLider : \(value)")
+        let temp = getCurrentActiveView()
+        //temp.blur.alpha = CGFloat(value)
+
+    }
 
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
         
@@ -503,6 +514,14 @@ class ViewController: UIViewController{
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
         createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
+        //createGreyView(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
+    }
+    
+    func createGreyView(frame: CGRect){
+        
+        let c = CustomGreyView(frame: frame)
+        
+        mainImgView.addSubview(c)
     }
     
     func createCustomViewUpdate(frame: CGRect){
