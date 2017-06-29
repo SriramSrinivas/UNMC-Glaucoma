@@ -23,6 +23,7 @@ class ViewController: UIViewController{
     let intSlider = UISlider()
     let intText = UILabel()
     let alphSlider = UISlider()
+    let greySlider = UISlider()
     var customObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
@@ -151,6 +152,12 @@ class ViewController: UIViewController{
         intSlider.maximumValue = 10
         intSlider.setValue(0, animated: false)
         
+        greySlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        greySlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        greySlider.minimumValue = 0
+        greySlider.maximumValue = 10
+        greySlider.setValue(0, animated: false)
+        
         alphSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         alphSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         alphSlider.addTarget(self, action: #selector(sliderAlpha), for: UIControlEvents.valueChanged)
@@ -172,6 +179,7 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(sightOffIcon)
         sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(tempView1)
+        //sliderStack.addArrangedSubview(greySlider)
         sliderStack.addArrangedSubview(delete)
 
         view.addSubview(sliderStack)
@@ -409,6 +417,25 @@ class ViewController: UIViewController{
     
     func clearTap(sender: UIButton!){
         
+        let alert = UIAlertController(title: "Data will be cleared", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Ok", style: .default){ _ in
+            
+            self.clearScreen()
+        }
+        
+        let action2 = UIAlertAction(title: "Cancel", style: .default){ _ in
+            
+        }
+        
+        alert.addAction(action)
+        alert.addAction(action2)
+        
+        self.present(alert,animated: true)
+    }
+    
+    func clearScreen(){
+        
         for i in customViewUpdateList{
             if i.isLinkedToImage{
                 i.linkedImage.alpha = 1
@@ -437,9 +464,7 @@ class ViewController: UIViewController{
     
     func enterNameDialog(){
         
-        print("Inside enterNameDialog")
-        
-        let alert = UIAlertController(title: "Save Image", message: "Enter Patient Identifier", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Enter Patient Identifier", message: "", preferredStyle: .alert)
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
@@ -477,7 +502,7 @@ class ViewController: UIViewController{
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        createCustomViewUpdate(frame: CGRect(x: touchPoint.x, y: touchPoint.y, width: 200, height: 200))
+        createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
     }
     
     func createCustomViewUpdate(frame: CGRect){
