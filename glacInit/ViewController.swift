@@ -24,6 +24,7 @@ class ViewController: UIViewController{
     let intText = UILabel()
     let alphSlider = UISlider()
     let greySlider = UISlider()
+    let alphaToggle = UISwitch()
     var customObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
@@ -144,6 +145,14 @@ class ViewController: UIViewController{
         tempView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
         tempView1.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView1.backgroundColor = UIColor(hexString: "#424242")
+        
+        let tempView2 = UIButton()
+        tempView2.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView2.backgroundColor = UIColor(hexString: "#424242")
+        
+        alphaToggle.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        alphaToggle.widthAnchor.constraint(equalToConstant: 40).isActive = true
 
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -169,7 +178,7 @@ class ViewController: UIViewController{
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
         sliderStack.alignment = UIStackViewAlignment.center
-        sliderStack.spacing = 10.0
+        sliderStack.spacing = 5.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
         sliderStack.addArrangedSubview(blurOnIcon)
@@ -178,10 +187,13 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(tempView)
         sliderStack.addArrangedSubview(sightOnIcon)
         sliderStack.addArrangedSubview(sightOffIcon)
-        sliderStack.addArrangedSubview(alphSlider)
+        //sliderStack.addArrangedSubview(alphSlider)
+        sliderStack.addArrangedSubview(alphaToggle)
         sliderStack.addArrangedSubview(tempView1)
-        //sliderStack.addArrangedSubview(greySlider)
+        sliderStack.addArrangedSubview(greySlider)
+        sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
+    
 
         view.addSubview(sliderStack)
 
@@ -353,6 +365,8 @@ class ViewController: UIViewController{
         for i in customViewUpdateList {
             if i.isActive {
                 i.blur.blurRadius = CGFloat(value)
+                i.blur.backgroundColor = UIColor.clear
+                i.blur.alpha = 1
             }
         }
     }
@@ -371,8 +385,11 @@ class ViewController: UIViewController{
         //value = 10 - value
         print("Grey sLider : \(value)")
         let temp = getCurrentActiveView()
-        //temp.blur.alpha = CGFloat(value)
-
+        temp.blur.backgroundColor = UIColor.black
+        temp.blur.alpha = CGFloat(value)
+        
+        temp.blur.blurRadius = 0
+        intSlider.setValue(0, animated: false)
     }
 
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
@@ -528,7 +545,7 @@ class ViewController: UIViewController{
         
         var activatedViews: Bool = false
         
-        intSlider.setValue(0, animated: false)
+        intSlider.setValue(5, animated: false)
         
         for i in customViewUpdateList{
             if i.isActive {
@@ -545,6 +562,7 @@ class ViewController: UIViewController{
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
             c.addGestureRecognizer(gestureTap)
             c.layer.zPosition = 2
+            c.blur.blurRadius = 5
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
             
@@ -553,6 +571,12 @@ class ViewController: UIViewController{
             enableControl(value: .Disable)
         }
     }
+    
+    /*func createCustomViewUpdate(frame: CGRect){
+        
+        let c = CustomGreyView(frame: frame)
+        mainImgView.addSubview(c)
+    }*/
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
