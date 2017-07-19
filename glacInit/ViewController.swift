@@ -153,6 +153,8 @@ class ViewController: UIViewController{
         
         alphaToggle.heightAnchor.constraint(equalToConstant: 40).isActive = true
         alphaToggle.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        alphaToggle.addTarget(self, action: #selector(switchAlpha), for: .valueChanged)
+        alphaToggle.setOn(true, animated: true)
 
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -391,10 +393,25 @@ class ViewController: UIViewController{
         temp.blur.blurRadius = 0
         intSlider.setValue(0, animated: false)
     }
+    
+    func switchAlpha(sender: UISwitch!){
+        
+        let temp = getCurrentActiveView()
+        
+        switch sender.isOn {
+        case true:
+                temp.linkedImage.alpha = 1
+                temp.alphaValue = 1
+        case false:
+                temp.linkedImage.alpha = 0
+                temp.alphaValue = 0
+        }
+    }
 
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
         
-        alphSlider.setValue(10, animated: false)
+        //alphSlider.setValue(10, animated: false)
+        alphaToggle.isOn = true
         
         for i in customObjectList {
             if (sender.view == i) {
@@ -405,6 +422,7 @@ class ViewController: UIViewController{
                 temp?.isLinkedToImage = true
                 temp?.linkedImage = i
                 enableControl(value: .BlurAndAlpha)
+                
             }
         }
     }
@@ -423,7 +441,13 @@ class ViewController: UIViewController{
                 intSlider.setValue(Float(i.blur.blurRadius), animated: false)
                 
                 if i.isLinkedToImage{
-                    alphSlider.setValue(Float(i.alphaValue), animated: false)
+                    //alphSlider.setValue(Float(i.alphaValue), animated: false)
+                    print("Alpha Value of image : \(i.alphaValue)")
+                    if (i.alphaValue == 0){
+                        alphaToggle.setOn(false, animated: false)
+                    } else {
+                        alphaToggle.setOn(true, animated: false)
+                    }
                     enableControl(value: .BlurAndAlpha)
                 } else {
                     enableControl(value: .OnlyBlur)
@@ -652,6 +676,9 @@ class ViewController: UIViewController{
             sightOnIcon.isHidden = false
             sightOffIcon.isHidden = true
             
+            alphaToggle.isEnabled = true
+            alphaToggle.alpha = 1
+            
         case .Disable:
             
             intText.textColor = UIColor(hexString: "9E9E9E")
@@ -676,6 +703,9 @@ class ViewController: UIViewController{
             sightOffIcon.isHidden = false
             sightOffIcon.alpha = 0.4
             
+            alphaToggle.isEnabled = false
+            alphaToggle.alpha = 0.4
+            
         case .OnlyBlur:
             
             intText.textColor = UIColor(hexString: "EEEEEE")
@@ -698,6 +728,10 @@ class ViewController: UIViewController{
             blurOffIcon.isHidden = true
             sightOnIcon.isHidden = true
             sightOffIcon.isHidden = false
+            
+            alphaToggle.isEnabled = false
+            alphaToggle.alpha = 0.4
+
         default:
             break
         }
