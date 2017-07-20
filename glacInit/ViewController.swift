@@ -327,6 +327,7 @@ class ViewController: UIViewController{
         switch value {
         case true:
             mainImgView.isUserInteractionEnabled = false
+            enableControl(value: .Disable)
             for i in customViewUpdateList {
                 i.isHidden = true
                 if i.isLinkedToImage {
@@ -335,10 +336,17 @@ class ViewController: UIViewController{
             }
         case false:
             mainImgView.isUserInteractionEnabled = true
+            enableControl(value: .OnlyBlur)
             for i in customViewUpdateList {
                 i.isHidden = false
                 if i.isLinkedToImage {
-                    i.linkedImage.alpha = i.alphaValue/10
+                    i.linkedImage.alpha = i.alphaValue
+                    
+                    if (i.alphaValue == 0){
+                        alphaToggle.setOn(false, animated: false)
+                    } else {
+                        alphaToggle.setOn(true, animated: false)
+                    }
                 }
                 
             }
@@ -428,7 +436,6 @@ class ViewController: UIViewController{
     }
     
     func handleTapUpdate(sender: UITapGestureRecognizer){
-        
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -679,6 +686,9 @@ class ViewController: UIViewController{
             alphaToggle.isEnabled = true
             alphaToggle.alpha = 1
             
+            greySlider.alpha = 1
+            greySlider.isEnabled = true
+            
         case .Disable:
             
             intText.textColor = UIColor(hexString: "9E9E9E")
@@ -706,6 +716,9 @@ class ViewController: UIViewController{
             alphaToggle.isEnabled = false
             alphaToggle.alpha = 0.4
             
+            greySlider.alpha = 0.4
+            greySlider.isEnabled = false
+            
         case .OnlyBlur:
             
             intText.textColor = UIColor(hexString: "EEEEEE")
@@ -731,6 +744,11 @@ class ViewController: UIViewController{
             
             alphaToggle.isEnabled = false
             alphaToggle.alpha = 0.4
+            
+            greySlider.alpha = 1
+            greySlider.isEnabled = true
+            
+            
 
         default:
             break
