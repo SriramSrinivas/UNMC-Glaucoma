@@ -12,6 +12,7 @@ class ViewController: UIViewController{
     var blurOffIcon = UIImageView()
     var sightOnIcon = UIImageView()
     var sightOffIcon = UIImageView()
+    var sunIcon = UIImageView()
     
     let export = UIButton()
 
@@ -25,6 +26,7 @@ class ViewController: UIViewController{
     let alphSlider = UISlider()
     let greySlider = UISlider()
     let alphaToggle = UISwitch()
+    let luminText = UILabel()
     var customObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
@@ -124,11 +126,18 @@ class ViewController: UIViewController{
         
         sightOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sightOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        sunIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sunIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intText.widthAnchor.constraint(equalToConstant: 20).isActive = true
         intText.text = "Blur"
         intText.textColor = UIColor.white
+        
+        luminText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        luminText.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        luminText.text = "Luminosity"
         
         delete.setTitle("Reset", for: UIControlState.normal)
         delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -186,14 +195,15 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(blurOnIcon)
         sliderStack.addArrangedSubview(blurOffIcon)
         sliderStack.addArrangedSubview(intSlider)
-        sliderStack.addArrangedSubview(tempView)
+        //sliderStack.addArrangedSubview(tempView)
+        //sliderStack.addArrangedSubview(luminText)
+        sliderStack.addArrangedSubview(sunIcon)
+        sliderStack.addArrangedSubview(greySlider)
+        //sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(sightOnIcon)
         sliderStack.addArrangedSubview(sightOffIcon)
-        //sliderStack.addArrangedSubview(alphSlider)
         sliderStack.addArrangedSubview(alphaToggle)
-        sliderStack.addArrangedSubview(tempView1)
-        sliderStack.addArrangedSubview(greySlider)
-        sliderStack.addArrangedSubview(tempView2)
+        //sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
     
 
@@ -280,6 +290,7 @@ class ViewController: UIViewController{
         blurOffIcon = tempImage("BlurOff", blurOffIcon)
         sightOnIcon = tempImage("SightOn", sightOnIcon)
         sightOffIcon = tempImage("SightOff", sightOffIcon)
+        sunIcon = tempImage("sun", sunIcon)
     }
     
     func initCustomObjects(){
@@ -377,6 +388,7 @@ class ViewController: UIViewController{
                 i.blur.blurRadius = CGFloat(value)
                 i.blur.backgroundColor = UIColor.clear
                 i.blur.alpha = 1
+                greySlider.setValue(0, animated: false)
             }
         }
     }
@@ -523,7 +535,7 @@ class ViewController: UIViewController{
     
     func enterNameDialog(){
         
-        let alert = UIAlertController(title: "Enter Patient Identifier", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Enter Subject Identifier", message: "", preferredStyle: .alert)
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
@@ -531,10 +543,14 @@ class ViewController: UIViewController{
             inputTextField = textField
         }
         
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Eye"
+            //inputTextField = textField
+        }
+        
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             
             self.addWaterMark(name: (inputTextField?.text)!)
-            
         }
         
         alert.addAction(action)
@@ -549,7 +565,7 @@ class ViewController: UIViewController{
         nameView.backgroundColor = UIColor(hexString: "000000")
         
         let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 200, height: 15))
-        nameLabel.text = name
+        nameLabel.text = name + " || " + getTodayString()
         nameLabel.textColor = UIColor.white
         
         nameView.addSubview(nameLabel)
@@ -660,6 +676,25 @@ class ViewController: UIViewController{
         return temp
     }
     
+    func getTodayString() -> String{
+        
+        let date = Date()
+        let calender = Calendar.current
+        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        let hour = components.hour
+        let minute = components.minute
+        let second = components.second
+        
+        let today_string = String(year!) + "-" + String(month!) + "-" + String(day!) + " " + String(hour!)  + ":" + String(minute!) + ":" +  String(second!)
+        
+        return today_string
+        
+    }
+    
     func enableControl(value: ControlState){
         switch value {
         case .BlurAndAlpha:
@@ -688,6 +723,8 @@ class ViewController: UIViewController{
             
             greySlider.alpha = 1
             greySlider.isEnabled = true
+            
+            sunIcon.alpha = 1
             
         case .Disable:
             
@@ -719,6 +756,8 @@ class ViewController: UIViewController{
             greySlider.alpha = 0.4
             greySlider.isEnabled = false
             
+            sunIcon.alpha = 0.4
+            
         case .OnlyBlur:
             
             intText.textColor = UIColor(hexString: "EEEEEE")
@@ -748,7 +787,7 @@ class ViewController: UIViewController{
             greySlider.alpha = 1
             greySlider.isEnabled = true
             
-            
+            sunIcon.alpha = 1
 
         default:
             break
