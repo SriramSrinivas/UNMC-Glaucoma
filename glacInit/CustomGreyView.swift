@@ -15,9 +15,8 @@ class CustomGreyView : UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        v.frame = frame
-        v.backgroundColor = UIColor.gray
-        v.alpha = 0.8
+        backgroundColor = UIColor.black
+        alpha = 0.5
         
         let panRecog = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panRecog)

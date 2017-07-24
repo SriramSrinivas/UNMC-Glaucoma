@@ -12,6 +12,7 @@ class ViewController: UIViewController{
     var blurOffIcon = UIImageView()
     var sightOnIcon = UIImageView()
     var sightOffIcon = UIImageView()
+    var sunIcon = UIImageView()
     
     let export = UIButton()
 
@@ -24,6 +25,8 @@ class ViewController: UIViewController{
     let intText = UILabel()
     let alphSlider = UISlider()
     let greySlider = UISlider()
+    let alphaToggle = UISwitch()
+    let luminText = UILabel()
     var customObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
@@ -123,11 +126,18 @@ class ViewController: UIViewController{
         
         sightOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sightOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        sunIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sunIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intText.widthAnchor.constraint(equalToConstant: 20).isActive = true
         intText.text = "Blur"
         intText.textColor = UIColor.white
+        
+        luminText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        luminText.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        luminText.text = "Luminosity"
         
         delete.setTitle("Reset", for: UIControlState.normal)
         delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -136,14 +146,24 @@ class ViewController: UIViewController{
         delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
         
         let tempView = UIButton()
-        tempView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        tempView.heightAnchor.constraint(equalToConstant: 10).isActive = true
         tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView.backgroundColor = UIColor(hexString: "#424242")
         
         let tempView1 = UIButton()
-        tempView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tempView1.heightAnchor.constraint(equalToConstant: 10).isActive = true
         tempView1.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView1.backgroundColor = UIColor(hexString: "#424242")
+        
+        let tempView2 = UIButton()
+        tempView2.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView2.backgroundColor = UIColor(hexString: "#424242")
+        
+        alphaToggle.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        alphaToggle.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        alphaToggle.addTarget(self, action: #selector(switchAlpha), for: .valueChanged)
+        alphaToggle.setOn(true, animated: true)
 
         intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
@@ -169,19 +189,22 @@ class ViewController: UIViewController{
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
         sliderStack.alignment = UIStackViewAlignment.center
-        sliderStack.spacing = 10.0
+        sliderStack.spacing = 5.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
         sliderStack.addArrangedSubview(blurOnIcon)
         sliderStack.addArrangedSubview(blurOffIcon)
         sliderStack.addArrangedSubview(intSlider)
         sliderStack.addArrangedSubview(tempView)
+        sliderStack.addArrangedSubview(sunIcon)
+        sliderStack.addArrangedSubview(greySlider)
+        sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(sightOnIcon)
         sliderStack.addArrangedSubview(sightOffIcon)
-        sliderStack.addArrangedSubview(alphSlider)
-        sliderStack.addArrangedSubview(tempView1)
-        //sliderStack.addArrangedSubview(greySlider)
+        sliderStack.addArrangedSubview(alphaToggle)
+        sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
+    
 
         view.addSubview(sliderStack)
 
@@ -266,6 +289,7 @@ class ViewController: UIViewController{
         blurOffIcon = tempImage("BlurOff", blurOffIcon)
         sightOnIcon = tempImage("SightOn", sightOnIcon)
         sightOffIcon = tempImage("SightOff", sightOffIcon)
+        sunIcon = tempImage("sun", sunIcon)
     }
     
     func initCustomObjects(){
@@ -313,6 +337,7 @@ class ViewController: UIViewController{
         switch value {
         case true:
             mainImgView.isUserInteractionEnabled = false
+            enableControl(value: .Disable)
             for i in customViewUpdateList {
                 i.isHidden = true
                 if i.isLinkedToImage {
@@ -321,10 +346,17 @@ class ViewController: UIViewController{
             }
         case false:
             mainImgView.isUserInteractionEnabled = true
+            enableControl(value: .OnlyBlur)
             for i in customViewUpdateList {
                 i.isHidden = false
                 if i.isLinkedToImage {
-                    i.linkedImage.alpha = i.alphaValue/10
+                    i.linkedImage.alpha = i.alphaValue
+                    
+                    if (i.alphaValue == 0){
+                        alphaToggle.setOn(false, animated: false)
+                    } else {
+                        alphaToggle.setOn(true, animated: false)
+                    }
                 }
                 
             }
@@ -353,6 +385,9 @@ class ViewController: UIViewController{
         for i in customViewUpdateList {
             if i.isActive {
                 i.blur.blurRadius = CGFloat(value)
+                i.blur.backgroundColor = UIColor.clear
+                i.blur.alpha = 1
+                greySlider.setValue(0, animated: false)
             }
         }
     }
@@ -371,13 +406,31 @@ class ViewController: UIViewController{
         //value = 10 - value
         print("Grey sLider : \(value)")
         let temp = getCurrentActiveView()
-        //temp.blur.alpha = CGFloat(value)
-
+        temp.blur.backgroundColor = UIColor.black
+        temp.blur.alpha = CGFloat(value)
+        
+        temp.blur.blurRadius = 0
+        intSlider.setValue(0, animated: false)
+    }
+    
+    func switchAlpha(sender: UISwitch!){
+        
+        let temp = getCurrentActiveView()
+        
+        switch sender.isOn {
+        case true:
+                temp.linkedImage.alpha = 1
+                temp.alphaValue = 1
+        case false:
+                temp.linkedImage.alpha = 0
+                temp.alphaValue = 0
+        }
     }
 
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
         
-        alphSlider.setValue(10, animated: false)
+        //alphSlider.setValue(10, animated: false)
+        alphaToggle.isOn = true
         
         for i in customObjectList {
             if (sender.view == i) {
@@ -388,12 +441,12 @@ class ViewController: UIViewController{
                 temp?.isLinkedToImage = true
                 temp?.linkedImage = i
                 enableControl(value: .BlurAndAlpha)
+                
             }
         }
     }
     
     func handleTapUpdate(sender: UITapGestureRecognizer){
-        
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -406,7 +459,13 @@ class ViewController: UIViewController{
                 intSlider.setValue(Float(i.blur.blurRadius), animated: false)
                 
                 if i.isLinkedToImage{
-                    alphSlider.setValue(Float(i.alphaValue), animated: false)
+                    //alphSlider.setValue(Float(i.alphaValue), animated: false)
+                    print("Alpha Value of image : \(i.alphaValue)")
+                    if (i.alphaValue == 0){
+                        alphaToggle.setOn(false, animated: false)
+                    } else {
+                        alphaToggle.setOn(true, animated: false)
+                    }
                     enableControl(value: .BlurAndAlpha)
                 } else {
                     enableControl(value: .OnlyBlur)
@@ -428,7 +487,7 @@ class ViewController: UIViewController{
     
     func clearTap(sender: UIButton!){
         
-        let alert = UIAlertController(title: "Data will be cleared", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Screen will be cleared", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             
@@ -475,18 +534,17 @@ class ViewController: UIViewController{
     
     func enterNameDialog(){
         
-        let alert = UIAlertController(title: "Enter Patient Identifier", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Enter Subject Identifier", message: "", preferredStyle: .alert)
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Patient ID"
+            textField.placeholder = "Subject ID"
             inputTextField = textField
         }
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             
             self.addWaterMark(name: (inputTextField?.text)!)
-            
         }
         
         alert.addAction(action)
@@ -501,7 +559,7 @@ class ViewController: UIViewController{
         nameView.backgroundColor = UIColor(hexString: "000000")
         
         let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 200, height: 15))
-        nameLabel.text = name
+        nameLabel.text = name + " || " + getTodayString()
         nameLabel.textColor = UIColor.white
         
         nameView.addSubview(nameLabel)
@@ -528,7 +586,7 @@ class ViewController: UIViewController{
         
         var activatedViews: Bool = false
         
-        intSlider.setValue(0, animated: false)
+        intSlider.setValue(5, animated: false)
         
         for i in customViewUpdateList{
             if i.isActive {
@@ -545,6 +603,7 @@ class ViewController: UIViewController{
             let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
             c.addGestureRecognizer(gestureTap)
             c.layer.zPosition = 2
+            c.blur.blurRadius = 5
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
             
@@ -553,6 +612,12 @@ class ViewController: UIViewController{
             enableControl(value: .Disable)
         }
     }
+    
+    /*func createCustomViewUpdate(frame: CGRect){
+        
+        let c = CustomGreyView(frame: frame)
+        mainImgView.addSubview(c)
+    }*/
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
@@ -605,6 +670,25 @@ class ViewController: UIViewController{
         return temp
     }
     
+    func getTodayString() -> String{
+        
+        let date = Date()
+        let calender = Calendar.current
+        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        let hour = components.hour
+        let minute = components.minute
+        let second = components.second
+        
+        let today_string = String(year!) + "-" + String(month!) + "-" + String(day!) + " " + String(hour!)  + ":" + String(minute!) + ":" +  String(second!)
+        
+        return today_string
+        
+    }
+    
     func enableControl(value: ControlState){
         switch value {
         case .BlurAndAlpha:
@@ -627,6 +711,14 @@ class ViewController: UIViewController{
             blurOffIcon.isHidden = true
             sightOnIcon.isHidden = false
             sightOffIcon.isHidden = true
+            
+            alphaToggle.isEnabled = true
+            alphaToggle.alpha = 1
+            
+            greySlider.alpha = 1
+            greySlider.isEnabled = true
+            
+            sunIcon.alpha = 1
             
         case .Disable:
             
@@ -652,6 +744,14 @@ class ViewController: UIViewController{
             sightOffIcon.isHidden = false
             sightOffIcon.alpha = 0.4
             
+            alphaToggle.isEnabled = false
+            alphaToggle.alpha = 0.4
+            
+            greySlider.alpha = 0.4
+            greySlider.isEnabled = false
+            
+            sunIcon.alpha = 0.4
+            
         case .OnlyBlur:
             
             intText.textColor = UIColor(hexString: "EEEEEE")
@@ -674,6 +774,15 @@ class ViewController: UIViewController{
             blurOffIcon.isHidden = true
             sightOnIcon.isHidden = true
             sightOffIcon.isHidden = false
+            
+            alphaToggle.isEnabled = false
+            alphaToggle.alpha = 0.4
+            
+            greySlider.alpha = 1
+            greySlider.isEnabled = true
+            
+            sunIcon.alpha = 1
+
         default:
             break
         }

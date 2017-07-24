@@ -16,6 +16,7 @@ class CustomViewUpdate : UIView{
     var isLinkedToImage: Bool = false
     var linkedImage = UIView()
     var alphaValue = CGFloat(1)
+    var greyValue = CGFloat(0)
     
     override init(frame: CGRect) {
 
