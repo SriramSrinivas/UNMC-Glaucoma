@@ -146,17 +146,17 @@ class ViewController: UIViewController{
         delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
         
         let tempView = UIButton()
-        tempView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        tempView.heightAnchor.constraint(equalToConstant: 10).isActive = true
         tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView.backgroundColor = UIColor(hexString: "#424242")
         
         let tempView1 = UIButton()
-        tempView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tempView1.heightAnchor.constraint(equalToConstant: 10).isActive = true
         tempView1.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView1.backgroundColor = UIColor(hexString: "#424242")
         
         let tempView2 = UIButton()
-        tempView2.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tempView2.heightAnchor.constraint(equalToConstant: 10).isActive = true
         tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView2.backgroundColor = UIColor(hexString: "#424242")
         
@@ -195,15 +195,14 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(blurOnIcon)
         sliderStack.addArrangedSubview(blurOffIcon)
         sliderStack.addArrangedSubview(intSlider)
-        //sliderStack.addArrangedSubview(tempView)
-        //sliderStack.addArrangedSubview(luminText)
+        sliderStack.addArrangedSubview(tempView)
         sliderStack.addArrangedSubview(sunIcon)
         sliderStack.addArrangedSubview(greySlider)
-        //sliderStack.addArrangedSubview(tempView1)
+        sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(sightOnIcon)
         sliderStack.addArrangedSubview(sightOffIcon)
         sliderStack.addArrangedSubview(alphaToggle)
-        //sliderStack.addArrangedSubview(tempView2)
+        sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
     
 
@@ -488,7 +487,7 @@ class ViewController: UIViewController{
     
     func clearTap(sender: UIButton!){
         
-        let alert = UIAlertController(title: "Data will be cleared", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Screen will be cleared", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             
@@ -539,13 +538,8 @@ class ViewController: UIViewController{
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Patient ID"
+            textField.placeholder = "Subject ID"
             inputTextField = textField
-        }
-        
-        alert.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Eye"
-            //inputTextField = textField
         }
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
