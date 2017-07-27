@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 import VisualEffectView
 
 class ViewController: UIViewController{
@@ -36,6 +37,7 @@ class ViewController: UIViewController{
     let delete = UIButton()
     
     let tempBlur = VisualEffectView()
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         
@@ -62,6 +64,8 @@ class ViewController: UIViewController{
         initCustomObjects()
         addGridLineUpdate(mainView: mainImgView)
         
+
+        addGridPoints(view: mainImgView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -517,6 +521,11 @@ class ViewController: UIViewController{
         nameView.removeFromSuperview()
         
         enterNameDialog()
+        
+        let patients = realm.objects(PatientData.self)
+        for i in patients {
+            print("Stored Patient: \(i.name)")
+        }
     }
     
     func exportTap(sender: UIButton!){
@@ -545,6 +554,12 @@ class ViewController: UIViewController{
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             
             self.addWaterMark(name: (inputTextField?.text)!)
+            
+            let patient = PatientData()
+            patient.age = 10
+            patient.name = "Ram"
+            
+            
         }
         
         alert.addAction(action)
@@ -564,6 +579,14 @@ class ViewController: UIViewController{
         
         nameView.addSubview(nameLabel)
         mainImgView.addSubview(nameView)
+        
+        let patient = PatientData()
+        patient.age = 10
+        patient.name = name
+        
+        try! realm.write {
+            realm.add(patient)
+        }
     }
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -668,6 +691,21 @@ class ViewController: UIViewController{
             }
         }
         return temp
+    }
+    
+    func addGridPoints(view: UIView){
+        
+        let width = view.frame.width/2
+        var initWidth = width/8
+        
+        for _ in 1...8{
+            
+            let c = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
+            c.backgroundColor = UIColor.red
+            view.addSubview(c)
+            
+            initWidth = initWidth + width/8
+        }
     }
     
     func getTodayString() -> String{
