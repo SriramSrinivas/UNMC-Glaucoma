@@ -11,7 +11,9 @@
 		743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */; };
 		743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */; };
 		74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907C1EDDDC2500628B38 /* CustomObject.swift */; };
+		74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */; };
 		74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */; };
+		74E768561F2A2F8500F2FD9C /* CustomPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E768551F2A2F8500F2FD9C /* CustomPoint.swift */; };
 		753A2D7141F89F7141A3E06B /* Pods_glacInitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5954356F73D8C979F42E4B76 /* Pods_glacInitTests.framework */; };
 		7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65A1E50020A003ACC5F /* AppDelegate.swift */; };
 		7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7752F65C1E50020A003ACC5F /* ViewController.swift */; };
@@ -51,7 +53,9 @@
 		743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToggle.swift; sourceTree = "<group>"; };
 		743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomGreyView.swift; sourceTree = "<group>"; };
 		74BB907C1EDDDC2500628B38 /* CustomObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomObject.swift; sourceTree = "<group>"; };
+		74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientData.swift; sourceTree = "<group>"; };
 		74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewUpdate.swift; sourceTree = "<group>"; };
+		74E768551F2A2F8500F2FD9C /* CustomPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPoint.swift; sourceTree = "<group>"; };
 		7752F6571E50020A003ACC5F /* glacInit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glacInit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F65A1E50020A003ACC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7752F65C1E50020A003ACC5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -139,7 +143,9 @@
 			children = (
 				7752F65A1E50020A003ACC5F /* AppDelegate.swift */,
 				7752F65C1E50020A003ACC5F /* ViewController.swift */,
+				74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */,
 				743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */,
+				74E768551F2A2F8500F2FD9C /* CustomPoint.swift */,
 				74BB907C1EDDDC2500628B38 /* CustomObject.swift */,
 				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
 				743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */,
@@ -463,7 +469,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */,
+				74E768561F2A2F8500F2FD9C /* CustomPoint.swift in Sources */,
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
+				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */,
@@ -624,6 +632,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 489C84LLEE;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = glacInit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.unomaha.ist.glac;
@@ -641,6 +653,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 489C84LLEE;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = glacInit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.unomaha.ist.glac;

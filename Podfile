@@ -6,7 +6,8 @@ target 'glacInit' do
   use_frameworks!
   pod "VisualEffectView"
   pod "SwiftHSVColorPicker"
-  
+  pod "RealmSwift"
+
   # Pods for glacInit
 
   target 'glacInitTests' do
