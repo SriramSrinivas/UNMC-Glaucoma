@@ -11,3 +11,7 @@ class PatientData : Object{
     dynamic var name = ""
     dynamic var age = 0
 }
+
+enum Effect {
+    case None, Blur, Luminous, ObjectHidden
+}
