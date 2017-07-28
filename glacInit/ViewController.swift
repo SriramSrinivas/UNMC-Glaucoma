@@ -293,7 +293,7 @@ class ViewController: UIViewController{
         blurOffIcon = tempImage("BlurOff", blurOffIcon)
         sightOnIcon = tempImage("SightOn", sightOnIcon)
         sightOffIcon = tempImage("SightOff", sightOffIcon)
-        sunIcon = tempImage("sun", sunIcon)
+        sunIcon = tempImage("lumin", sunIcon)
     }
     
     func initCustomObjects(){
