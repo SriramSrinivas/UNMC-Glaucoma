@@ -65,7 +65,7 @@ class ViewController: UIViewController{
         addGridLineUpdate(mainView: mainImgView)
         
 
-        addGridPoints(view: mainImgView)
+        //addGridPoints(view: mainImgView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -293,7 +293,7 @@ class ViewController: UIViewController{
         blurOffIcon = tempImage("BlurOff", blurOffIcon)
         sightOnIcon = tempImage("SightOn", sightOnIcon)
         sightOffIcon = tempImage("SightOff", sightOffIcon)
-        sunIcon = tempImage("sun", sunIcon)
+        sunIcon = tempImage("lumin", sunIcon)
     }
     
     func initCustomObjects(){
@@ -721,7 +721,7 @@ class ViewController: UIViewController{
         let minute = components.minute
         let second = components.second
         
-        let today_string = String(year!) + "-" + String(month!) + "-" + String(day!) + " " + String(hour!)  + ":" + String(minute!) + ":" +  String(second!)
+        let today_string = String(year!) + "-" + String(format: "%02d",month!) + "-" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + ":" + String(format: "%02d",minute!) + ":" +  String(format: "%02d",second!)
         
         return today_string
         
