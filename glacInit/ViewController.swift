@@ -65,7 +65,7 @@ class ViewController: UIViewController{
         addGridLineUpdate(mainView: mainImgView)
         
 
-        addGridPoints(view: mainImgView)
+        //addGridPoints(view: mainImgView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
