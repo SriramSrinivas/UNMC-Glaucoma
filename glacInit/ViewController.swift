@@ -38,6 +38,8 @@ class ViewController: UIViewController{
     
     let tempBlur = VisualEffectView()
     let realm = try! Realm()
+
+    var testPoint: CustomPoint!
     
     override func viewDidLoad() {
         
@@ -65,7 +67,7 @@ class ViewController: UIViewController{
         addGridLineUpdate(mainView: mainImgView)
         
 
-        //addGridPoints(view: mainImgView)
+        addGridPoints(view: mainImgView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -340,6 +342,9 @@ class ViewController: UIViewController{
         let value = mySwitch.isOn
         switch value {
         case true:
+
+            includesEffect(pointView: testPoint)
+
             mainImgView.isUserInteractionEnabled = false
             enableControl(value: .Disable)
             for i in customViewUpdateList {
@@ -408,7 +413,6 @@ class ViewController: UIViewController{
         var value = slider.value
         value = value/10
         //value = 10 - value
-        print("Grey sLider : \(value)")
         let temp = getCurrentActiveView()
         temp.blur.backgroundColor = UIColor.black
         temp.blur.alpha = CGFloat(value)
@@ -629,8 +633,8 @@ class ViewController: UIViewController{
             c.blur.blurRadius = 5
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
-            
-            print("c z axis : \(c.layer.zPosition)")
+
+            c.includesEffect()
         } else {
             enableControl(value: .Disable)
         }
@@ -697,15 +701,19 @@ class ViewController: UIViewController{
         
         let width = view.frame.width/2
         var initWidth = width/8
+
+        testPoint = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
+        testPoint.backgroundColor = UIColor.red
+        view.addSubview(testPoint)
         
-        for _ in 1...8{
+/*        for _ in 1...8{
             
             let c = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
             c.backgroundColor = UIColor.red
             view.addSubview(c)
             
             initWidth = initWidth + width/8
-        }
+        }*/
     }
     
     func getTodayString() -> String{
@@ -725,6 +733,18 @@ class ViewController: UIViewController{
         
         return today_string
         
+    }
+
+    func includesEffect(pointView: UIView){
+
+        let point = CGPoint(x: pointView.frame.origin.x, y: pointView.frame.origin.y)
+
+        for i in customViewUpdateList{
+
+            if i.frame.contains(point){
+                print("Point in uivuiew")
+            }
+        }
     }
     
     func enableControl(value: ControlState){

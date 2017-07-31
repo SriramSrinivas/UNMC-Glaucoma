@@ -46,3 +46,11 @@ extension UIImage {
         return image
     }
 }
+
+extension UIView {
+    func includesEffect(){
+
+        print("Origin : \(self.frame.origin.x) and \(self.frame.origin.y)")
+
+    }
+}
