@@ -72,7 +72,11 @@ class CustomViewUpdate : UIView{
                 blur.frame.size.width = 200*(gestureRecognizer.scale)
         }
     }
-    
+
+    func getEffectValue(){
+
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

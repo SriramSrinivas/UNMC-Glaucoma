@@ -184,13 +184,6 @@ class ViewController: UIViewController{
         greySlider.minimumValue = 0
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
-        
-        alphSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        alphSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        alphSlider.addTarget(self, action: #selector(sliderAlpha), for: UIControlEvents.valueChanged)
-        alphSlider.minimumValue = 0
-        alphSlider.maximumValue = 10
-        alphSlider.setValue(10, animated: false)
 
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
@@ -399,14 +392,6 @@ class ViewController: UIViewController{
                 greySlider.setValue(0, animated: false)
             }
         }
-    }
-    
-    func sliderAlpha(slider: UISlider){
-        var value = slider.value
-        value = value/10
-        let temp = getCurrentActiveView()
-        temp.linkedImage.alpha = CGFloat(value)
-        temp.alphaValue = CGFloat(value*10)
     }
     
     func sliderGrey(slider: UISlider){
