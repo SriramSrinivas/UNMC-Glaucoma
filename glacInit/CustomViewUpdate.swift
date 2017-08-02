@@ -30,7 +30,7 @@ class CustomViewUpdate : UIView{
 
         valueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         valueLabel.textAlignment = .center
-        valueLabel.text = "12"
+        valueLabel.text = "5"
         valueLabel.textColor = .green
         
         let panRecog = UIPanGestureRecognizer(target: self, action: #selector(handlePan))

@@ -8,6 +8,8 @@ class ViewController: UIViewController{
     var bckImage = UIImage()
     var mainImgView = UIView()
     var nameView = UIView()
+
+    var isGridHidden = false
     
     var blurOnIcon = UIImageView()
     var blurOffIcon = UIImageView()
@@ -323,10 +325,18 @@ class ViewController: UIViewController{
         case false:
             for i in gridViews {
                 i.isHidden = true
+                isGridHidden = true
+                for i in customViewUpdateList{
+                    i.valueLabel.alpha = 0
+                }
             }
         case true:
             for i in gridViews {
                 i.isHidden = false
+                isGridHidden = false
+                for i in customViewUpdateList{
+                    i.valueLabel.alpha = 1
+                }
             }
         }
     }
@@ -620,6 +630,10 @@ class ViewController: UIViewController{
             c.blur.blurRadius = 5
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
+
+            if isGridHidden {
+                c.valueLabel.alpha = 0
+            }
 
             c.includesEffect()
         } else {
