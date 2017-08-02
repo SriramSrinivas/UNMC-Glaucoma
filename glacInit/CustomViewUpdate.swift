@@ -17,6 +17,7 @@ class CustomViewUpdate : UIView{
     var linkedImage = UIView()
     var alphaValue = CGFloat(1)
     var greyValue = CGFloat(0)
+    var valueLabel = UILabel()
     
     override init(frame: CGRect) {
 
@@ -26,14 +27,24 @@ class CustomViewUpdate : UIView{
         blur.blurRadius = 0
         blur.layer.borderWidth = 5
         isActive(value: true)
+
+        valueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        valueLabel.textAlignment = .center
+        valueLabel.text = "12"
         
         let panRecog = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
 
         addGestureRecognizer(pinchZoom)
         addGestureRecognizer(panRecog)
-        
+
+        blur.addSubview(valueLabel)
         addSubview(blur)
+    }
+
+    func setValue(value: Int){
+
+        valueLabel.text = String(value)
     }
     
     func isActive(value: Bool){

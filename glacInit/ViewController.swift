@@ -67,7 +67,7 @@ class ViewController: UIViewController{
         addGridLineUpdate(mainView: mainImgView)
         
 
-        addGridPoints(view: mainImgView)
+        //addGridPoints(view: mainImgView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -562,7 +562,7 @@ class ViewController: UIViewController{
         nameView.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
         nameView.backgroundColor = UIColor(hexString: "000000")
         
-        let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 200, height: 15))
+        let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 400, height: 15))
         nameLabel.text = name + " || " + getTodayString()
         nameLabel.textColor = UIColor.white
         
