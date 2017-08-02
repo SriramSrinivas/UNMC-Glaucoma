@@ -336,7 +336,7 @@ class ViewController: UIViewController{
         switch value {
         case true:
 
-            includesEffect(pointView: testPoint)
+            //includesEffect(pointView: testPoint)
 
             mainImgView.isUserInteractionEnabled = false
             enableControl(value: .Disable)
@@ -389,6 +389,8 @@ class ViewController: UIViewController{
                 i.blur.blurRadius = CGFloat(value)
                 i.blur.backgroundColor = UIColor.clear
                 i.blur.alpha = 1
+                i.setValue(value: Int(value))
+
                 greySlider.setValue(0, animated: false)
             }
         }
@@ -397,12 +399,12 @@ class ViewController: UIViewController{
     func sliderGrey(slider: UISlider){
         var value = slider.value
         value = value/10
-        //value = 10 - value
         let temp = getCurrentActiveView()
         temp.blur.backgroundColor = UIColor.black
         temp.blur.alpha = CGFloat(value)
-        
         temp.blur.blurRadius = 0
+        temp.setValue(value: Int(value * 10))
+
         intSlider.setValue(0, animated: false)
     }
     
