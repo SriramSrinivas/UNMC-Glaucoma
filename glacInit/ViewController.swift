@@ -8,6 +8,8 @@ class ViewController: UIViewController{
     var bckImage = UIImage()
     var mainImgView = UIView()
     var nameView = UIView()
+
+    var isGridHidden = false
     
     var blurOnIcon = UIImageView()
     var blurOffIcon = UIImageView()
@@ -38,6 +40,8 @@ class ViewController: UIViewController{
     
     let tempBlur = VisualEffectView()
     let realm = try! Realm()
+
+    var testPoint: CustomPoint!
     
     override func viewDidLoad() {
         
@@ -182,13 +186,6 @@ class ViewController: UIViewController{
         greySlider.minimumValue = 0
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
-        
-        alphSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        alphSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        alphSlider.addTarget(self, action: #selector(sliderAlpha), for: UIControlEvents.valueChanged)
-        alphSlider.minimumValue = 0
-        alphSlider.maximumValue = 10
-        alphSlider.setValue(10, animated: false)
 
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
@@ -328,10 +325,18 @@ class ViewController: UIViewController{
         case false:
             for i in gridViews {
                 i.isHidden = true
+                isGridHidden = true
+                for i in customViewUpdateList{
+                    i.valueLabel.alpha = 0
+                }
             }
         case true:
             for i in gridViews {
                 i.isHidden = false
+                isGridHidden = false
+                for i in customViewUpdateList{
+                    i.valueLabel.alpha = 1
+                }
             }
         }
     }
@@ -340,6 +345,9 @@ class ViewController: UIViewController{
         let value = mySwitch.isOn
         switch value {
         case true:
+
+            //includesEffect(pointView: testPoint)
+
             mainImgView.isUserInteractionEnabled = false
             enableControl(value: .Disable)
             for i in customViewUpdateList {
@@ -391,29 +399,22 @@ class ViewController: UIViewController{
                 i.blur.blurRadius = CGFloat(value)
                 i.blur.backgroundColor = UIColor.clear
                 i.blur.alpha = 1
+                i.setValue(value: Int(value))
+
                 greySlider.setValue(0, animated: false)
             }
         }
     }
     
-    func sliderAlpha(slider: UISlider){
-        var value = slider.value
-        value = value/10
-        let temp = getCurrentActiveView()
-        temp.linkedImage.alpha = CGFloat(value)
-        temp.alphaValue = CGFloat(value*10)
-    }
-    
     func sliderGrey(slider: UISlider){
         var value = slider.value
         value = value/10
-        //value = 10 - value
-        print("Grey sLider : \(value)")
         let temp = getCurrentActiveView()
         temp.blur.backgroundColor = UIColor.black
         temp.blur.alpha = CGFloat(value)
-        
         temp.blur.blurRadius = 0
+        temp.setValue(value: Int(value * 10))
+
         intSlider.setValue(0, animated: false)
     }
     
@@ -573,7 +574,7 @@ class ViewController: UIViewController{
         nameView.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
         nameView.backgroundColor = UIColor(hexString: "000000")
         
-        let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 200, height: 15))
+        let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 400, height: 15))
         nameLabel.text = name + " || " + getTodayString()
         nameLabel.textColor = UIColor.white
         
@@ -629,8 +630,12 @@ class ViewController: UIViewController{
             c.blur.blurRadius = 5
             mainImgView.addSubview(c)
             customViewUpdateList.append(c)
-            
-            print("c z axis : \(c.layer.zPosition)")
+
+            if isGridHidden {
+                c.valueLabel.alpha = 0
+            }
+
+            c.includesEffect()
         } else {
             enableControl(value: .Disable)
         }
@@ -697,15 +702,19 @@ class ViewController: UIViewController{
         
         let width = view.frame.width/2
         var initWidth = width/8
+
+        testPoint = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
+        testPoint.backgroundColor = UIColor.red
+        view.addSubview(testPoint)
         
-        for _ in 1...8{
+/*        for _ in 1...8{
             
             let c = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
             c.backgroundColor = UIColor.red
             view.addSubview(c)
             
             initWidth = initWidth + width/8
-        }
+        }*/
     }
     
     func getTodayString() -> String{
@@ -725,6 +734,18 @@ class ViewController: UIViewController{
         
         return today_string
         
+    }
+
+    func includesEffect(pointView: UIView){
+
+        let point = CGPoint(x: pointView.frame.origin.x, y: pointView.frame.origin.y)
+
+        for i in customViewUpdateList{
+
+            if i.frame.contains(point){
+                print("Point in uivuiew")
+            }
+        }
     }
     
     func enableControl(value: ControlState){
