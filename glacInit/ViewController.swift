@@ -23,6 +23,9 @@ class ViewController: UIViewController{
     let sliderStack = UIStackView()
 
     var gridViews = [UIView]()
+
+    var distances = [CGFloat]()
+
     
     let intSlider = UISlider()
     let intText = UILabel()
@@ -46,6 +49,8 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+        distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
 
         mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
         mainImgView.isUserInteractionEnabled = true
@@ -345,9 +350,7 @@ class ViewController: UIViewController{
         let value = mySwitch.isOn
         switch value {
         case true:
-
-            //includesEffect(pointView: testPoint)
-
+            addGridPoints(view: mainImgView)
             mainImgView.isUserInteractionEnabled = false
             enableControl(value: .Disable)
             for i in customViewUpdateList {
@@ -357,6 +360,7 @@ class ViewController: UIViewController{
                 }
             }
         case false:
+
             mainImgView.isUserInteractionEnabled = true
             enableControl(value: .OnlyBlur)
             for i in customViewUpdateList {
@@ -699,22 +703,49 @@ class ViewController: UIViewController{
     }
     
     func addGridPoints(view: UIView){
-        
-        let width = view.frame.width/2
-        var initWidth = width/8
 
-        testPoint = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
-        testPoint.backgroundColor = UIColor.red
-        view.addSubview(testPoint)
-        
-/*        for _ in 1...8{
-            
-            let c = CustomPoint(xPos: initWidth, yPos: view.frame.height/2)
-            c.backgroundColor = UIColor.red
-            view.addSubview(c)
-            
-            initWidth = initWidth + width/8
-        }*/
+        let width = mainImgView.frame.width
+        let height = mainImgView.frame.height
+        let halfWidth = width/2
+        let halfHeight = height/2
+
+        for i  in distances {
+            for j in distances {
+                let x = halfWidth + (halfWidth * i)
+                let y = halfHeight + (halfHeight * j)
+
+                let c = CustomPoint(point: CGPoint(x: x, y: y))
+                if( i == -1){
+                    c.backgroundColor = .green
+                } else {
+                    c.backgroundColor = .red
+                }
+                view.addSubview(c)
+
+                var pointVal = 0
+                for o in customViewUpdateList{
+                    if o.frame.contains(CGPoint(x: x, y: y)){
+
+                        if(o.blur.blurRadius > 0) {
+                            pointVal = pointVal + 1
+                        }
+
+                        if(o.blur.backgroundColor == UIColor.black){
+                            pointVal = pointVal + 2
+                        }
+
+                        if(o.isLinkedToImage){
+                            if(o.alphaValue == 0) {
+                                pointVal = pointVal + 10
+                            }
+                        }
+
+                        print("Point has effect : \(i) and \(j) is \(pointVal)")
+
+                    }
+                }
+            }
+        }
     }
     
     func getTodayString() -> String{
@@ -734,18 +765,6 @@ class ViewController: UIViewController{
         
         return today_string
         
-    }
-
-    func includesEffect(pointView: UIView){
-
-        let point = CGPoint(x: pointView.frame.origin.x, y: pointView.frame.origin.y)
-
-        for i in customViewUpdateList{
-
-            if i.frame.contains(point){
-                print("Point in uivuiew")
-            }
-        }
     }
     
     func enableControl(value: ControlState){

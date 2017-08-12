@@ -10,9 +10,9 @@ import UIKit
 
 class CustomPoint : UIView {
     
-    init(xPos: CGFloat, yPos: CGFloat){
+    init(point: CGPoint){
         
-        super.init(frame: CGRect(x: xPos, y: yPos, width: 7, height: 7))
+        super.init(frame: CGRect(x: point.x, y: point.y, width: 7, height: 7))
     }
     
     required init?(coder aDecoder: NSCoder) {
