@@ -1,6 +1,8 @@
 import UIKit
 import RealmSwift
 import VisualEffectView
+import BoxContentSDK
+import SwiftMessages
 
 class ViewController: UIViewController{
         
@@ -25,7 +27,7 @@ class ViewController: UIViewController{
     var gridViews = [UIView]()
 
     var distances = [CGFloat]()
-
+    
     
     let intSlider = UISlider()
     let intText = UILabel()
@@ -40,23 +42,24 @@ class ViewController: UIViewController{
     var customViewUpdateList = [CustomViewUpdate]()
     
     let delete = UIButton()
-    
+    var subjectID = ""
     let tempBlur = VisualEffectView()
     let realm = try! Realm()
-
+    var exportCount = 0
     var testPoint: CustomPoint!
     
     override func viewDidLoad() {
-        
-        super.viewDidLoad()
 
+        super.viewDidLoad()
+        
+        
         distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
 
         mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
         mainImgView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         mainImgView.addGestureRecognizer(tap)
-
+        
         let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
         sideView.layer.zPosition = 2
         sideView.backgroundColor = UIColor(hexString: "#424242")
@@ -66,6 +69,8 @@ class ViewController: UIViewController{
 
         loadImage(mainImgView: mainImgView)
 
+        SwiftMessages.pauseBetweenMessages = 0
+        
         initToggle(sideView: sideView)
         addExportButton(view: sideView)
         addControlIcons()
@@ -85,6 +90,7 @@ class ViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     func initToggle(sideView: UIView){
         
@@ -245,7 +251,6 @@ class ViewController: UIViewController{
         
         stack.addArrangedSubview(clear)
         stack.addArrangedSubview(export)
-        
         view.addSubview(stack)
         
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -350,7 +355,6 @@ class ViewController: UIViewController{
         let value = mySwitch.isOn
         switch value {
         case true:
-            addGridPoints(view: mainImgView)
             mainImgView.isUserInteractionEnabled = false
             enableControl(value: .Disable)
             for i in customViewUpdateList {
@@ -360,7 +364,6 @@ class ViewController: UIViewController{
                 }
             }
         case false:
-
             mainImgView.isUserInteractionEnabled = true
             enableControl(value: .OnlyBlur)
             for i in customViewUpdateList {
@@ -495,7 +498,7 @@ class ViewController: UIViewController{
     }
     
     func clearTap(sender: UIButton!){
-        
+        exportCount = 0
         let alert = UIAlertController(title: "Screen will be cleared", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
@@ -534,10 +537,11 @@ class ViewController: UIViewController{
     }
     
     func exportTap(sender: UIButton!){
-    
+        exportCount = exportCount + 1
         takeScreenShot()
+        exportCsvFiles()
         
-        let okAlert = UIAlertController(title: "Image was saved", message: "Image was stored in the Photo Gallery", preferredStyle: .alert)
+        let okAlert = UIAlertController(title: "Files were uploaded", message: "Screenshot and CSV Files were stored in the Box Drive", preferredStyle: .alert)
         let action2 = UIAlertAction(title: "Close", style: .default) { _ in
         }
         
@@ -547,34 +551,28 @@ class ViewController: UIViewController{
     }
     
     func enterNameDialog(){
-        
         let alert = UIAlertController(title: "Enter Subject Identifier", message: "", preferredStyle: .alert)
         var inputTextField: UITextField?
         
         alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Subject ID"
             inputTextField = textField
+            textField.addTarget(alert, action: #selector(alert.textDidChangeInLoginAlert), for: .editingChanged)
         }
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
-            
             self.addWaterMark(name: (inputTextField?.text)!)
-            
-            let patient = PatientData()
-            patient.age = 10
-            patient.name = "Ram"
-            
-            
+            self.subjectID = (inputTextField?.text)!
+            self.boxAuthorization()
         }
         
+        action.isEnabled = false
         alert.addAction(action)
-        
         self.present(alert,animated: true)
     }
     
     func addWaterMark(name: String){
-
-        
+        print("watermark added")
         nameView.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
         nameView.backgroundColor = UIColor(hexString: "000000")
         
@@ -687,8 +685,17 @@ class ViewController: UIViewController{
         UIGraphicsEndImageContext()
         
         //Save it to the camera roll
-        UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
-        
+        if let data = UIImagePNGRepresentation(image!){
+            let fileName = "\(subjectID)_screenshot_\(getTodayString())_\(exportCount).png"
+            let file = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+            do {
+                try data.write(to: file!)
+            } catch {
+                
+            }
+            uploadFile(filePath: file!, fileName: fileName)
+            showToast(message: "Screenshot was uploaded", theme: .success)
+        }
     }
     
     func getCurrentActiveView() -> CustomViewUpdate{
@@ -708,8 +715,8 @@ class ViewController: UIViewController{
         let height = mainImgView.frame.height
         let halfWidth = width/2
         let halfHeight = height/2
-
-        for i  in distances {
+        
+        for i in distances {
             for j in distances {
                 let x = halfWidth + (halfWidth * i)
                 let y = halfHeight + (halfHeight * j)
@@ -720,33 +727,13 @@ class ViewController: UIViewController{
                 } else {
                     c.backgroundColor = .red
                 }
+            
                 view.addSubview(c)
-
-                var pointVal = 0
-                for o in customViewUpdateList{
-                    if o.frame.contains(CGPoint(x: x, y: y)){
-
-                        if(o.blur.blurRadius > 0) {
-                            pointVal = pointVal + 1
-                        }
-
-                        if(o.blur.backgroundColor == UIColor.black){
-                            pointVal = pointVal + 2
-                        }
-
-                        if(o.isLinkedToImage){
-                            if(o.alphaValue == 0) {
-                                pointVal = pointVal + 10
-                            }
-                        }
-
-                        print("Point has effect : \(i) and \(j) is \(pointVal)")
-
-                    }
-                }
             }
         }
+
     }
+
     
     func getTodayString() -> String{
         
@@ -761,9 +748,143 @@ class ViewController: UIViewController{
         let minute = components.minute
         let second = components.second
         
-        let today_string = String(year!) + "-" + String(format: "%02d",month!) + "-" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + ":" + String(format: "%02d",minute!) + ":" +  String(format: "%02d",second!)
+        let today_string = String(year!) + "-" + String(format: "%02d",month!) + "-" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + "-" + String(format: "%02d",minute!) + "-" +  String(format: "%02d",second!)
         
         return today_string
+        
+    }
+    
+    func createFolder(){
+        let contentClient = BOXContentClient.default()
+        let folderCreateRequest: BOXFolderCreateRequest? = contentClient?.folderCreateRequest(withName: "UNMC-GLAC", parentFolderID: BOXAPIFolderIDRoot)
+        
+        folderCreateRequest?.perform(completion: { (folder:BOXFolder?, error:Error?) in
+            self.getFolderInfo()
+            print("Folder Created")
+        })
+    }
+
+    func getFolderInfo(){
+        let contentClient = BOXContentClient.default()
+        let searchRequest: BOXSearchRequest? = contentClient?.searchRequest(withQuery: "UNMC-GLAC", in: NSRange(location: 0, length: 1000))
+        // Optional: Specify advanced search parameters. See BOXSearchRequest.h for the full list of parameters supported.
+        searchRequest?.ancestorFolderIDs = []
+        // only files with these extensions will be returned
+        searchRequest?.perform(completion: { (items:[Any]?, totalCount: UInt, range: NSRange, error: Error?) in
+            let firstItem = (items?[0] as AnyObject)
+            
+            print(firstItem.name)
+        })
+    }
+    
+    func uploadFile(filePath: URL,fileName: String){
+        print("uploading file")
+        let contentClient : BOXContentClient = BOXContentClient.default()
+        let fileData : Data
+        
+        do {
+            fileData = try Data(contentsOf:filePath)
+            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: "39409628439", from: fileData, fileName: fileName)
+            uploadRequest.perform()
+        } catch {
+            print("Data not found")
+        }
+    }
+    
+    func exportCsvFiles(){
+        let width = mainImgView.frame.width
+        let height = mainImgView.frame.height
+        let halfWidth = width/2
+        let halfHeight = height/2
+        
+        var blurGrid = Matrix(rows:17,columns:17)
+        var greyGrid = Matrix(rows:17,columns:17)
+        var hiddenGrid = Matrix(rows: 17, columns: 17)
+        
+        for (row,i) in distances.enumerated() {
+            for (column,j) in distances.enumerated() {
+                let x = halfWidth + (halfWidth * j)
+                let y = halfHeight + (halfHeight * i)
+                
+                var greyValue = 0
+                var blurValue = 0
+                var hiddenValue = 0
+                for o in customViewUpdateList{
+                    if o.frame.contains(CGPoint(x: x, y: y)){
+                        
+                        if(o.blur.blurRadius > 0) {
+                            blurValue += o.viewValue
+                        }
+                    
+                        if(o.blur.backgroundColor == UIColor.black){
+                            greyValue += o.viewValue
+                        }
+                        
+                        if(o.isLinkedToImage){
+                            if(o.alphaValue == 0) {
+                                hiddenValue = hiddenValue + 10
+                            }
+                        }
+            
+                    }
+                }
+
+                blurGrid[row,column] = blurValue + blurGrid[row,column]
+                greyGrid[row,column] = greyValue + greyGrid[row,column]
+                hiddenGrid[row,column] = hiddenValue + hiddenGrid[row,column]
+            }
+        }
+
+        let blurCSV = createCSV(grid:blurGrid)
+        let greyCSV = createCSV(grid:greyGrid)
+        let hiddenCSV = createCSV(grid:hiddenGrid)
+        
+        saveFile(csvText: blurCSV,name: "blurPoints")
+        saveFile(csvText: greyCSV,name: "greyPoints")
+        saveFile(csvText: hiddenCSV, name: "hidden")
+       
+    }
+    
+    func createCSV(grid: Matrix) -> String{
+        var csvText = ",-1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1"
+        for (row,i) in distances.enumerated() {
+            var newLine = ""
+            for (column,_) in distances.enumerated() {
+                if(column == 0){
+                    newLine = "\(i),\(grid[row,column])"
+                }
+                else {
+                    newLine = "\(newLine),\(grid[row,column])"
+                }
+            }
+            csvText = "\(csvText)\n\(newLine)"
+        }
+        
+        return csvText
+    }
+    
+    func saveFile(csvText: String,name:String){
+        let fileName = "\(subjectID)_\(name)_\(getTodayString())_\(exportCount).csv"
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        
+        do {
+            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            print("Failed create to file")
+            print("\(error)")
+        }
+        
+        uploadFile(filePath: path!,fileName: fileName)
+    }
+    
+    
+    func boxAuthorization(){
+        BOXContentClient.default().authenticate(completionBlock: { (user:BOXUser?, error:Error?) in
+            if (error == nil )
+            {
+                print((user?.login!)! as String)
+            }
+        })
         
     }
     
