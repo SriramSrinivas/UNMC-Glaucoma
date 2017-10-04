@@ -7,7 +7,8 @@ target 'glacInit' do
   pod "VisualEffectView"
   pod "SwiftHSVColorPicker"
   pod "RealmSwift"
-
+  pod "box-ios-sdk"
+  pod "SwiftMessages"
   # Pods for glacInit
 
   target 'glacInitTests' do
