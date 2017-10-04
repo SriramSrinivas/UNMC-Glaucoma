@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import BoxContentSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        BOXContentClient.setClientID("5f76j51mw5r8lubckv8fdwi3es0edfi2", clientSecret: "kKv3KEByAfRz8JZekU9IIDaGpc3fF6nl")
+        
         return true
     }
 
@@ -39,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        //var contentClient = BOXContentClient.default()
+        //contentClient?.logOut()
     }
 
 
