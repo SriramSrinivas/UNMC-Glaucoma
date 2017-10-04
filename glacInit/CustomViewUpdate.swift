@@ -18,7 +18,7 @@ class CustomViewUpdate : UIView{
     var alphaValue = CGFloat(1)
     var greyValue = CGFloat(0)
     var valueLabel = UILabel()
-    
+    var viewValue = 5
     override init(frame: CGRect) {
 
         super.init(frame: frame)
@@ -44,7 +44,7 @@ class CustomViewUpdate : UIView{
     }
 
     func setValue(value: Int){
-
+        viewValue = value
         valueLabel.text = String(value)
     }
     
@@ -66,7 +66,7 @@ class CustomViewUpdate : UIView{
     
     func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
-        if isActive{
+        if isActive && !(isLinkedToImage){
             if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
                 let translation = gestureRecognizer.translation(in: self)
                 gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
