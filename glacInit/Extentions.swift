@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SwiftMessages
 
 enum stackType{
     case sideStack, controlStack
@@ -52,5 +53,46 @@ extension UIView {
 
         print("Origin : \(self.frame.origin.x) and \(self.frame.origin.y)")
 
+    }
+}
+
+extension UIViewController {
+    
+    func showToast(message: String, theme: Theme) {
+        let view = MessageView.viewFromNib(layout: .CardView)
+        
+        view.configureTheme(theme)
+        view.configureDropShadow()
+        view.button?.setTitle("OK", for: .normal)
+        
+        view.buttonTapHandler = { _ in SwiftMessages.hide() }
+        view.tapHandler = { _ in SwiftMessages.hide() }
+        
+        var title = ""
+        
+        switch theme {
+        case .success:
+            title = "Success"
+        case .error:
+            title = "Error"
+        case .warning:
+            title = "Warning"
+        default:
+            title = "Warning"
+        }
+        
+        
+        view.configureContent(title: title, body: message)
+        
+        SwiftMessages.show(view:view)
+    
+    }
+}
+
+extension UIAlertController {
+    func textDidChangeInLoginAlert() {
+        if let inputTextField = textFields?[0].text,let action = actions.last {
+            action.isEnabled = Regex("^[\\w\\-. ]+$").test(input: inputTextField)
+        }
     }
 }
