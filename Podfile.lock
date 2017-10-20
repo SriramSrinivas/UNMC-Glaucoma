@@ -5,6 +5,7 @@ PODS:
   - box-ios-sdk/logger (1.0.14)
   - box-ios-sdk/no-arc (1.0.14):
     - box-ios-sdk/logger
+  - Reachability (3.2)
   - Realm (2.8.3):
     - Realm/Headers (= 2.8.3)
   - Realm/Headers (2.8.3)
@@ -16,6 +17,7 @@ PODS:
 
 DEPENDENCIES:
   - box-ios-sdk
+  - Reachability
   - RealmSwift
   - SwiftHSVColorPicker
   - SwiftMessages
@@ -23,12 +25,13 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   box-ios-sdk: 8034a7b0fcac562105725afa744011c81da99398
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Realm: 3601ef091c8c499a31101d8563b991e75546cdce
   RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
   SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
   SwiftMessages: 323c2847255ebf380f01b95ad1121a750be4d117
   VisualEffectView: 38e6dd10e7cef1155c53b099b458b78bcab52cef
 
-PODFILE CHECKSUM: c962122296b1be5857a8f52d9e8ded92129ba464
+PODFILE CHECKSUM: 3a5a37333b7c6bf27a051a5bf3e6f34cd6eb6a78
 
 COCOAPODS: 1.3.1

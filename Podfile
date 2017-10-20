@@ -9,6 +9,8 @@ target 'glacInit' do
   pod "RealmSwift"
   pod "box-ios-sdk"
   pod "SwiftMessages"
+  pod "Reachability"
+  
   # Pods for glacInit
 
   target 'glacInitTests' do
