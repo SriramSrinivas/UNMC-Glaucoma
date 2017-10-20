@@ -11,12 +11,13 @@ import BoxContentSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        BOXContentClient.setClientID("5f76j51mw5r8lubckv8fdwi3es0edfi2", clientSecret: "kKv3KEByAfRz8JZekU9IIDaGpc3fF6nl")
+        // Reachability code
+        // Allocate a reachability object
+        BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         
         return true
     }
