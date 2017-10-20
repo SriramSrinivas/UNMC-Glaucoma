@@ -3,6 +3,7 @@ import RealmSwift
 import VisualEffectView
 import BoxContentSDK
 import SwiftMessages
+import Reachability
 
 class ViewController: UIViewController{
         
@@ -18,6 +19,7 @@ class ViewController: UIViewController{
     var sightOnIcon = UIImageView()
     var sightOffIcon = UIImageView()
     var sunIcon = UIImageView()
+    var sunOffIcon = UIImageView()
     
     let export = UIButton()
 
@@ -47,6 +49,14 @@ class ViewController: UIViewController{
     let realm = try! Realm()
     var exportCount = 0
     var testPoint: CustomPoint!
+    var reach: Reachability!
+    
+    //amount of csv and png files uploaded
+    var csvFilesUploadedCount = 0
+    var pngFilesUploadedCount = 0
+    //amount of times box tried to upload a file
+    var uploadAttempt = 0
+    var currentSession: Session!
     
     override func viewDidLoad() {
 
@@ -78,6 +88,26 @@ class ViewController: UIViewController{
         initCustomObjects()
         addGridLineUpdate(mainView: mainImgView)
         
+        reach = Reachability.forInternetConnection()
+
+        // Set the blocks
+        reach.reachableBlock = {
+            ( reach: Reachability!) -> Void in
+            // keep in mind this is called on a background thread
+            // and if you are updating the UI it needs to happen
+            // on the main thread, like this:
+            self.showToast(message: "Internet connection back online", theme: .success)
+        }
+        
+        reach.unreachableBlock = {
+            ( reach: Reachability!) -> Void in
+            self.showToast(message: "The Internet connection appears to be offline", theme: .error)
+        }
+        do {
+            try self.reach.startNotifier()
+        } catch {
+            // Handle it 👍
+        }
 
         //addGridPoints(view: mainImgView)
     }
@@ -94,8 +124,8 @@ class ViewController: UIViewController{
     
     func initToggle(sideView: UIView){
         
-        let gridHeight = sideView.frame.size.height*0.65
-        let origHeight = sideView.frame.size.height*0.75
+        let gridHeight = sideView.frame.size.height*0.60
+        let origHeight = sideView.frame.size.height*0.70
     
         let gridSwitch = UISwitch()
         gridSwitch.frame = CGRect(x: 30, y: gridHeight, width: 50, height: 100)
@@ -107,14 +137,15 @@ class ViewController: UIViewController{
         origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
         
         let gridText = UILabel()
-        gridText.frame = CGRect(x: 100, y: gridHeight, width: 150, height: 50)
+        gridText.frame = CGRect(x: 100, y: gridHeight - 8, width: 150, height: 50)
         gridText.text = "Grid"
         gridText.textColor = UIColor.white
         
         let origText = UILabel()
-        origText.frame = CGRect(x: 100, y: origHeight, width: 150, height: 50)
+        origText.frame = CGRect(x: 100, y: origHeight - 8, width: 150, height: 50)
         origText.text = "Original"
         origText.textColor = UIColor.white
+        
         
         sideView.addSubview(gridSwitch)
         sideView.addSubview(origSwitch)
@@ -134,11 +165,11 @@ class ViewController: UIViewController{
 
     func addSlider(view: UIView){
         
-        blurOnIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        blurOnIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOnIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        blurOnIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
-        blurOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        blurOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        blurOffIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        blurOffIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
         sightOnIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sightOnIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -146,9 +177,12 @@ class ViewController: UIViewController{
         sightOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sightOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        sunIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        sunIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        sunIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        sunIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
 
+        sunOffIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        sunOffIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        
         intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
         intText.widthAnchor.constraint(equalToConstant: 20).isActive = true
         intText.text = "Blur"
@@ -184,14 +218,14 @@ class ViewController: UIViewController{
         alphaToggle.addTarget(self, action: #selector(switchAlpha), for: .valueChanged)
         alphaToggle.setOn(true, animated: true)
 
-        intSlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        intSlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControlEvents.valueChanged)
         intSlider.minimumValue = 0
         intSlider.maximumValue = 10
         intSlider.setValue(0, animated: false)
         
-        greySlider.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        greySlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
         greySlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         greySlider.addTarget(self, action: #selector(sliderGrey), for: UIControlEvents.valueChanged)
         greySlider.minimumValue = 0
@@ -201,7 +235,7 @@ class ViewController: UIViewController{
         sliderStack.axis = UILayoutConstraintAxis.vertical
         sliderStack.distribution = UIStackViewDistribution.equalSpacing
         sliderStack.alignment = UIStackViewAlignment.center
-        sliderStack.spacing = 5.0
+        sliderStack.spacing = 4.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
         sliderStack.addArrangedSubview(blurOnIcon)
@@ -209,6 +243,7 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(intSlider)
         sliderStack.addArrangedSubview(tempView)
         sliderStack.addArrangedSubview(sunIcon)
+        sliderStack.addArrangedSubview(sunOffIcon)
         sliderStack.addArrangedSubview(greySlider)
         sliderStack.addArrangedSubview(tempView1)
         sliderStack.addArrangedSubview(sightOnIcon)
@@ -248,9 +283,11 @@ class ViewController: UIViewController{
         stack.alignment = UIStackViewAlignment.center
         stack.spacing = 10.0
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.layoutMargins = UIEdgeInsets(top:0,left:0,bottom:20,right:0)
+        stack.isLayoutMarginsRelativeArrangement = true
         
-        stack.addArrangedSubview(clear)
         stack.addArrangedSubview(export)
+        stack.addArrangedSubview(clear)
         view.addSubview(stack)
         
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -301,6 +338,7 @@ class ViewController: UIViewController{
         sightOnIcon = tempImage("SightOn", sightOnIcon)
         sightOffIcon = tempImage("SightOff", sightOffIcon)
         sunIcon = tempImage("lumin", sunIcon)
+        sunOffIcon = tempImage("luminOff",sunOffIcon)
     }
     
     func initCustomObjects(){
@@ -538,16 +576,18 @@ class ViewController: UIViewController{
     
     func exportTap(sender: UIButton!){
         exportCount = exportCount + 1
-        takeScreenShot()
-        exportCsvFiles()
         
-        let okAlert = UIAlertController(title: "Files were uploaded", message: "Screenshot and CSV Files were stored in the Box Drive", preferredStyle: .alert)
-        let action2 = UIAlertAction(title: "Close", style: .default) { _ in
-        }
-        
-        okAlert.addAction(action2)
-        
-        self.present(okAlert, animated: true)
+        currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList)
+        currentSession.savedFiles.map { uploadFile(file: $0) }
+
+        showToast(message: "Uploading files", theme: .success)
+        export.loadingIndicator(true)
+        export.setTitle("", for: UIControlState.normal)
+        export.isEnabled = false
+    }
+    
+    func reachibiltyChanged(message:String){
+        showToast(message: message, theme: .error)
     }
     
     func enterNameDialog(){
@@ -564,6 +604,7 @@ class ViewController: UIViewController{
             self.addWaterMark(name: (inputTextField?.text)!)
             self.subjectID = (inputTextField?.text)!
             self.boxAuthorization()
+            self.currentSession = Session(currentSubjectId: self.subjectID)
         }
         
         action.isEnabled = false
@@ -591,6 +632,8 @@ class ViewController: UIViewController{
             realm.add(patient)
         }
     }
+    
+    
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
@@ -675,29 +718,6 @@ class ViewController: UIViewController{
         return newImage!
     }
     
-    func takeScreenShot() {
-        //Create the UIImage
-        UIGraphicsBeginImageContext(mainImgView.frame.size)
-        //mainImgView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        mainImgView.drawHierarchy(in: mainImgView.bounds, afterScreenUpdates: true)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        //Save it to the camera roll
-        if let data = UIImagePNGRepresentation(image!){
-            let fileName = "\(subjectID)_screenshot_\(getTodayString())_\(exportCount).png"
-            let file = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-            do {
-                try data.write(to: file!)
-            } catch {
-                
-            }
-            uploadFile(filePath: file!, fileName: fileName)
-            showToast(message: "Screenshot was uploaded", theme: .success)
-        }
-    }
-    
     func getCurrentActiveView() -> CustomViewUpdate{
         
         var temp = CustomViewUpdate()
@@ -733,26 +753,6 @@ class ViewController: UIViewController{
         }
 
     }
-
-    
-    func getTodayString() -> String{
-        
-        let date = Date()
-        let calender = Calendar.current
-        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
-        
-        let year = components.year
-        let month = components.month
-        let day = components.day
-        let hour = components.hour
-        let minute = components.minute
-        let second = components.second
-        
-        let today_string = String(year!) + "-" + String(format: "%02d",month!) + "-" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + "-" + String(format: "%02d",minute!) + "-" +  String(format: "%02d",second!)
-        
-        return today_string
-        
-    }
     
     func createFolder(){
         let contentClient = BOXContentClient.default()
@@ -777,106 +777,50 @@ class ViewController: UIViewController{
         })
     }
     
-    func uploadFile(filePath: URL,fileName: String){
+    func showUploadedMessage(){
+        
+        if csvFilesUploadedCount > 0 && pngFilesUploadedCount > 0{
+            showToast(message: "\(csvFilesUploadedCount) csv and \(pngFilesUploadedCount) png (screenshot) files successfully uploaded", theme: .success)
+        } else if csvFilesUploadedCount > 0 {
+            showToast(message: "\(csvFilesUploadedCount) csv files successfully uploaded", theme: .success)
+        }
+        
+        export.loadingIndicator(false)
+        export.setTitle("Export", for: UIControlState.normal)
+        export.isEnabled = true
+        csvFilesUploadedCount = 0
+        pngFilesUploadedCount = 0
+    }
+    
+    func uploadFile(file:FileObject){
         print("uploading file")
         let contentClient : BOXContentClient = BOXContentClient.default()
         let fileData : Data
         
         do {
-            fileData = try Data(contentsOf:filePath)
-            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: "39409628439", from: fileData, fileName: fileName)
-            uploadRequest.perform()
+            fileData = try Data(contentsOf:file.path)
+            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: "40445416498", from: fileData, fileName: file.name)
+            uploadRequest.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
+            }, completion: { (_ boxFile:BOXFile?, _ error:Error?) in
+                self.uploadAttempt = self.uploadAttempt + 1
+                
+                if let fileError = error {
+                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                } else if file.type == FileType.CSV {
+                    self.csvFilesUploadedCount = self.csvFilesUploadedCount + 1
+                } else {
+                    self.pngFilesUploadedCount = self.pngFilesUploadedCount + 1
+                }
+                
+                if self.uploadAttempt == 4 {
+                    self.uploadAttempt = 0
+                    self.showUploadedMessage()
+                }
+            })
         } catch {
             print("Data not found")
         }
     }
-    
-    func exportCsvFiles(){
-        let width = mainImgView.frame.width
-        let height = mainImgView.frame.height
-        let halfWidth = width/2
-        let halfHeight = height/2
-        
-        var blurGrid = Matrix(rows:17,columns:17)
-        var greyGrid = Matrix(rows:17,columns:17)
-        var hiddenGrid = Matrix(rows: 17, columns: 17)
-        
-        for (row,i) in distances.enumerated() {
-            for (column,j) in distances.enumerated() {
-                let x = halfWidth + (halfWidth * j)
-                let y = halfHeight + (halfHeight * i)
-                
-                var greyValue = 0
-                var blurValue = 0
-                var hiddenValue = 0
-                for o in customViewUpdateList{
-                    if o.frame.contains(CGPoint(x: x, y: y)){
-                        
-                        if(o.blur.blurRadius > 0) {
-                            blurValue += o.viewValue
-                        }
-                    
-                        if(o.blur.backgroundColor == UIColor.black){
-                            greyValue += o.viewValue
-                        }
-                        
-                        if(o.isLinkedToImage){
-                            if(o.alphaValue == 0) {
-                                hiddenValue = hiddenValue + 10
-                            }
-                        }
-            
-                    }
-                }
-
-                blurGrid[row,column] = blurValue + blurGrid[row,column]
-                greyGrid[row,column] = greyValue + greyGrid[row,column]
-                hiddenGrid[row,column] = hiddenValue + hiddenGrid[row,column]
-            }
-        }
-
-        let blurCSV = createCSV(grid:blurGrid)
-        let greyCSV = createCSV(grid:greyGrid)
-        let hiddenCSV = createCSV(grid:hiddenGrid)
-        
-        saveFile(csvText: blurCSV,name: "blurPoints")
-        saveFile(csvText: greyCSV,name: "greyPoints")
-        saveFile(csvText: hiddenCSV, name: "hidden")
-       
-    }
-    
-    func createCSV(grid: Matrix) -> String{
-        var csvText = ",-1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1"
-        for (row,i) in distances.enumerated() {
-            var newLine = ""
-            for (column,_) in distances.enumerated() {
-                if(column == 0){
-                    newLine = "\(i),\(grid[row,column])"
-                }
-                else {
-                    newLine = "\(newLine),\(grid[row,column])"
-                }
-            }
-            csvText = "\(csvText)\n\(newLine)"
-        }
-        
-        return csvText
-    }
-    
-    func saveFile(csvText: String,name:String){
-        let fileName = "\(subjectID)_\(name)_\(getTodayString())_\(exportCount).csv"
-        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-        
-        do {
-            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
-            print("Failed create to file")
-            print("\(error)")
-        }
-        
-        uploadFile(filePath: path!,fileName: fileName)
-    }
-    
     
     func boxAuthorization(){
         BOXContentClient.default().authenticate(completionBlock: { (user:BOXUser?, error:Error?) in
@@ -888,14 +832,33 @@ class ViewController: UIViewController{
         
     }
     
+    func getTodayString() -> String{
+        
+        let date = Date()
+        let calender = Calendar.current
+        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        let hour = components.hour
+        let minute = components.minute
+        let second = components.second
+        
+        let today_string = String(year!) + "-" + String(format: "%02d",month!) + "-" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + "-" + String(format: "%02d",minute!) + "-" +  String(format: "%02d",second!)
+        
+        return today_string
+        
+    }
+    
     func enableControl(value: ControlState){
         switch value {
         case .BlurAndAlpha:
             
             intText.textColor = UIColor(hexString: "EEEEEE")
             intText.alpha = 1
-            intSlider.tintColor = UIColor(hexString: "EEEEEE")
-            intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            //intSlider.tintColor = UIColor(hexString: "EEEEEE")
+            //intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
             alphSlider.tintColor = UIColor(hexString: "EEEEEE")
             alphSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
             delete.alpha = 1
@@ -917,15 +880,16 @@ class ViewController: UIViewController{
             greySlider.alpha = 1
             greySlider.isEnabled = true
             
+            sunIcon.isHidden = false
+            sunOffIcon.isHidden = true
             sunIcon.alpha = 1
-            
         case .Disable:
             
             intText.textColor = UIColor(hexString: "9E9E9E")
             intText.alpha = 0.4
-            intSlider.tintColor = UIColor(hexString: "9E9E9E")
-            intSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
-            intSlider.alpha = 0.4
+            //intSlider.tintColor = UIColor(hexString: "9E9E9E")
+            //intSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
+            //intSlider.alpha = 0.4
             
             alphSlider.tintColor = UIColor(hexString: "9E9E9E")
             alphSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
@@ -939,6 +903,7 @@ class ViewController: UIViewController{
             blurOnIcon.isHidden = true
             blurOffIcon.isHidden = false
             blurOffIcon.alpha = 0.4
+            
             sightOnIcon.isHidden = true
             sightOffIcon.isHidden = false
             sightOffIcon.alpha = 0.4
@@ -949,14 +914,16 @@ class ViewController: UIViewController{
             greySlider.alpha = 0.4
             greySlider.isEnabled = false
             
-            sunIcon.alpha = 0.4
+            sunIcon.isHidden = true
+            sunOffIcon.isHidden = false
+            sunOffIcon.alpha = 0.4
             
         case .OnlyBlur:
             
             intText.textColor = UIColor(hexString: "EEEEEE")
             intText.alpha = 1
-            intSlider.tintColor = UIColor(hexString: "EEEEEE")
-            intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            //intSlider.tintColor = UIColor(hexString: "EEEEEE")
+            //intSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
         
             delete.alpha = 1
             delete.isEnabled =  true
@@ -980,6 +947,8 @@ class ViewController: UIViewController{
             greySlider.alpha = 1
             greySlider.isEnabled = true
             
+            sunOffIcon.isHidden = true
+            sunIcon.isHidden = false
             sunIcon.alpha = 1
 
         default:
