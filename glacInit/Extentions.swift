@@ -91,8 +91,45 @@ extension UIViewController {
 
 extension UIAlertController {
     func textDidChangeInLoginAlert() {
-        if let inputTextField = textFields?[0].text,let action = actions.last {
-            action.isEnabled = Regex("^[\\w\\-. ]+$").test(input: inputTextField)
+        if let action = actions.last {
+            var attributedString : NSAttributedString;
+            if Regex("^[\\w\\-. ]+$").test(input: (textFields?[0].text)!) {
+                attributedString = NSAttributedString(string: "")
+                self.setValue(attributedString, forKey: "attributedMessage")
+                action.isEnabled = true
+            }
+            else {
+                attributedString = NSAttributedString(string: "Error: Don't use characters like (: ? & /)", attributes: [
+                    NSFontAttributeName : UIFont.systemFont(ofSize: 15),
+                    NSForegroundColorAttributeName : UIColor.init(hexString: "#e74c3c")
+                    ])
+                self.setValue(attributedString, forKey: "attributedMessage")
+                action.isEnabled = false
+            }
+        }
+    }
+}
+
+extension UIButton {
+    func loadingIndicator(_ show: Bool) {
+        let tag = 808404
+        if show {
+            self.isEnabled = false
+            self.alpha = 1
+            let indicator = UIActivityIndicatorView()
+            let buttonHeight = self.bounds.size.height
+            let buttonWidth = self.bounds.size.width
+            indicator.center = CGPoint(x: buttonWidth/2, y: buttonHeight/2)
+            indicator.tag = tag
+            self.addSubview(indicator)
+            indicator.startAnimating()
+        } else {
+            self.isEnabled = true
+            self.alpha = 1.0
+            if let indicator = self.viewWithTag(tag) as? UIActivityIndicatorView {
+                indicator.stopAnimating()
+                indicator.removeFromSuperview()
+            }
         }
     }
 }
