@@ -81,19 +81,41 @@ extension UIViewController {
             title = "Warning"
         }
         
-        
         view.configureContent(title: title, body: message)
         
         SwiftMessages.show(view:view)
     
     }
+    
+    func reachibiltyChanged(online:Bool){
+        let view = MessageView.viewFromNib(layout: .StatusLine)
+        
+        view.configureTheme(.success)
+        view.configureDropShadow()
+        view.tapHandler = { _ in SwiftMessages.hide() }
+        
+        if online {
+            view.configureTheme(.success)
+            view.configureContent(body: "Internet connection back online")
+        }
+        else {
+            view.configureTheme(.error)
+            view.configureContent(body: "Internet connection appears to be offline")
+        }
+    
+        var config = SwiftMessages.Config()
+        config.presentationStyle = .bottom
+        
+        SwiftMessages.show(config:config,view:view)
+    }
+    
 }
 
 extension UIAlertController {
     func textDidChangeInLoginAlert() {
         if let action = actions.last {
             var attributedString : NSAttributedString;
-            if Regex("^[\\w\\-. ]+$").test(input: (textFields?[0].text)!) {
+            if Regex("^[\\w\\-.]+$").test(input: (textFields?[0].text)!) {
                 attributedString = NSAttributedString(string: "")
                 self.setValue(attributedString, forKey: "attributedMessage")
                 action.isEnabled = true
@@ -114,16 +136,20 @@ extension UIButton {
     func loadingIndicator(_ show: Bool) {
         let tag = 808404
         if show {
-            self.isEnabled = false
-            self.alpha = 1
             let indicator = UIActivityIndicatorView()
             let buttonHeight = self.bounds.size.height
             let buttonWidth = self.bounds.size.width
             indicator.center = CGPoint(x: buttonWidth/2, y: buttonHeight/2)
             indicator.tag = tag
+            indicator.color = UIColor(hexString: "#000000")
             self.addSubview(indicator)
             indicator.startAnimating()
+            self.isEnabled = false
+            self.backgroundColor = UIColor(hexString: "#bdc3c7")
+            self.alpha = 0.7
         } else {
+            self.setTitle("Export", for: UIControlState.normal)
+            self.backgroundColor = UIColor(hexString: "#0D47A1")
             self.isEnabled = true
             self.alpha = 1.0
             if let indicator = self.viewWithTag(tag) as? UIActivityIndicatorView {
