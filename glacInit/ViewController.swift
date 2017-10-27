@@ -58,6 +58,9 @@ class ViewController: UIViewController{
     var uploadAttempt = 0
     var currentSession: Session!
     
+    var bottomMessageView = SwiftMessages()
+    var nameLabel = UILabel()
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -90,23 +93,19 @@ class ViewController: UIViewController{
         
         reach = Reachability.forInternetConnection()
 
-        // Set the blocks
         reach.reachableBlock = {
             ( reach: Reachability!) -> Void in
-            // keep in mind this is called on a background thread
-            // and if you are updating the UI it needs to happen
-            // on the main thread, like this:
-            self.showToast(message: "Internet connection back online", theme: .success)
+            self.reachibiltyChanged(online:true)
         }
         
         reach.unreachableBlock = {
             ( reach: Reachability!) -> Void in
-            self.showToast(message: "The Internet connection appears to be offline", theme: .error)
+            self.reachibiltyChanged(online:false)
         }
         do {
             try self.reach.startNotifier()
         } catch {
-            // Handle it 👍
+            self.showToast(message: "\(error)", theme: .error)
         }
 
         //addGridPoints(view: mainImgView)
@@ -129,7 +128,7 @@ class ViewController: UIViewController{
     
         let gridSwitch = UISwitch()
         gridSwitch.frame = CGRect(x: 30, y: gridHeight, width: 50, height: 100)
-        gridSwitch.isOn = true
+        gridSwitch.isOn = true 
         gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControlEvents.valueChanged)
         
         let origSwitch = UISwitch()
@@ -474,26 +473,58 @@ class ViewController: UIViewController{
         case false:
                 temp.linkedImage.alpha = 0
                 temp.alphaValue = 0
+                for i in customViewUpdateList {
+                    if i.isActive {
+                        i.blur.blurRadius = CGFloat(0)
+                        i.blur.backgroundColor = UIColor.clear
+                        i.blur.alpha = 1
+                        i.setValue(value: Int(0))
+                    }
+                }
         }
     }
 
     func handleCustomObjectTap(sender: UITapGestureRecognizer){
-        
+        print("Custom Object Tapped")
         //alphSlider.setValue(10, animated: false)
+
         alphaToggle.isOn = true
+
+        if !customViewActive() {
+            for i in customObjectList {
+                if (sender.view == i) {
+                    
+                    createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: i.frame.width, height: i.frame.height))
+                    let temp = customViewUpdateList.last
+                    temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+                    temp?.isLinkedToImage = true
+                    temp?.linkedImage = i
+                    enableControl(value: .BlurAndAlpha)
+                    
+                }
+            }    
+        }
         
-        for i in customObjectList {
-            if (sender.view == i) {
-                
-                createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: i.frame.width, height: i.frame.height))
-                let temp = customViewUpdateList.last
-                temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
-                temp?.isLinkedToImage = true
-                temp?.linkedImage = i
-                enableControl(value: .BlurAndAlpha)
-                
+    }
+    
+    func customViewActive() -> Bool{
+        var activatedViews: Bool = false
+        
+        for i in customViewUpdateList{
+            if i.isActive {
+                i.isActive(value: false)
+                activatedViews = true
             }
         }
+        
+        if !activatedViews {
+            enableControl(value: .BlurAndAlpha)
+        } else {
+            enableControl(value: .Disable)
+        }
+        
+        return activatedViews
+        
     }
     
     func handleTapUpdate(sender: UITapGestureRecognizer){
@@ -510,7 +541,6 @@ class ViewController: UIViewController{
                 
                 if i.isLinkedToImage{
                     //alphSlider.setValue(Float(i.alphaValue), animated: false)
-                    print("Alpha Value of image : \(i.alphaValue)")
                     if (i.alphaValue == 0){
                         alphaToggle.setOn(false, animated: false)
                     } else {
@@ -569,26 +599,56 @@ class ViewController: UIViewController{
         enterNameDialog()
         
         let patients = realm.objects(PatientData.self)
-        for i in patients {
-            print("Stored Patient: \(i.name)")
-        }
+        //for i in patients {
+            //print("Stored Patient: \(i.name)")
+        //}
     }
     
+    func bottomMessage(_ message:String){
+        let view = MessageView.viewFromNib(layout: .StatusLine)
+            
+        view.configureTheme(.success)
+        view.configureDropShadow()
+        view.button?.setTitle("OK", for: .normal)
+        view.buttonTapHandler = { _ in SwiftMessages.hide() }
+        view.tapHandler = { _ in SwiftMessages.hide() }
+        view.configureContent(body: message)
+        
+        var config = SwiftMessages.Config()
+            
+        config.presentationStyle = .bottom
+        config.duration = .forever
+            
+        bottomMessageView.show(config:config,view:view)
+    }
+
+    
     func exportTap(sender: UIButton!){
+        bottomMessage("Uploading Files")
         exportCount = exportCount + 1
         
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList)
-        currentSession.savedFiles.map { uploadFile(file: $0) }
-
-        showToast(message: "Uploading files", theme: .success)
+    
+        _ = currentSession.savedFiles.map { (savedFile:FileObject) in
+            currentSession.uploadFile(file: savedFile, completion: { (uploaded:Bool, error:Error?) in
+                self.uploadAttempt = self.uploadAttempt + 1
+                if let fileError = error {
+                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                } else if savedFile.type == FileType.CSV {
+                    self.csvFilesUploadedCount = self.csvFilesUploadedCount + 1
+                } else {
+                    self.pngFilesUploadedCount = self.pngFilesUploadedCount + 1
+                }
+                
+                if self.uploadAttempt == self.currentSession.savedFiles.count {
+                    self.showUploadedMessage()
+                }
+            })
+        }
+        
         export.loadingIndicator(true)
-        export.setTitle("", for: UIControlState.normal)
-        export.isEnabled = false
     }
     
-    func reachibiltyChanged(message:String){
-        showToast(message: message, theme: .error)
-    }
     
     func enterNameDialog(){
         let alert = UIAlertController(title: "Enter Subject Identifier", message: "", preferredStyle: .alert)
@@ -602,9 +662,11 @@ class ViewController: UIViewController{
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             self.addWaterMark(name: (inputTextField?.text)!)
+            self.nameLabel.textAlignment = .center
+            self.nameLabel.center.x = self.nameLabel.frame.maxX
             self.subjectID = (inputTextField?.text)!
-            self.boxAuthorization()
             self.currentSession = Session(currentSubjectId: self.subjectID)
+            self.currentSession.boxAuthorize()
         }
         
         action.isEnabled = false
@@ -612,15 +674,30 @@ class ViewController: UIViewController{
         self.present(alert,animated: true)
     }
     
+    func showUploadedMessage(){
+        bottomMessageView.hideAll()
+        SwiftMessages.hide()
+        uploadAttempt = 0
+        
+        if csvFilesUploadedCount > 0 && pngFilesUploadedCount > 0{
+            showToast(message: "\(csvFilesUploadedCount) csv and \(pngFilesUploadedCount) png (screenshot) files successfully uploaded", theme: .success)
+        } else if csvFilesUploadedCount > 0 {
+            showToast(message: "\(csvFilesUploadedCount) csv files successfully uploaded", theme: .success)
+        }
+        
+        export.loadingIndicator(false)
+        csvFilesUploadedCount = 0
+        pngFilesUploadedCount = 0
+    }
+    
     func addWaterMark(name: String){
-        print("watermark added")
         nameView.frame = CGRect(x: 0, y: mainImgView.frame.height - 15, width: mainImgView.frame.width, height: 15)
         nameView.backgroundColor = UIColor(hexString: "000000")
         
-        let nameLabel = UILabel(frame: CGRect(x: nameView.frame.width/2, y: 0, width: 400, height: 15))
+        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 400, height: 15))
         nameLabel.text = name + " || " + getTodayString()
         nameLabel.textColor = UIColor.white
-        
+
         nameView.addSubview(nameLabel)
         mainImgView.addSubview(nameView)
         
@@ -636,11 +713,14 @@ class ViewController: UIViewController{
     
 
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        print("Image Tapped")
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
+        if !customViewActive() {
+            createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
+        }
         //createGreyView(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
     }
     
@@ -652,47 +732,28 @@ class ViewController: UIViewController{
     }
     
     func createCustomViewUpdate(frame: CGRect){
-        
-        var activatedViews: Bool = false
-        
+
         intSlider.setValue(5, animated: false)
-        
-        for i in customViewUpdateList{
-            if i.isActive {
-                i.isActive(value: false)
-                activatedViews = true
-            }
-        }
-        
-        if !activatedViews{
-            
-            enableControl(value: .OnlyBlur)
-            
-            let c = CustomViewUpdate(frame: frame)
-            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
-            c.addGestureRecognizer(gestureTap)
-            c.layer.zPosition = 2
-            c.blur.blurRadius = 5
-            mainImgView.addSubview(c)
-            customViewUpdateList.append(c)
 
-            if isGridHidden {
-                c.valueLabel.alpha = 0
-            }
+        let c = CustomViewUpdate(frame: frame)
+        let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
+        c.addGestureRecognizer(gestureTap)
+        c.layer.zPosition = 2
+        c.blur.blurRadius = 5
+        mainImgView.addSubview(c)
+        customViewUpdateList.append(c)
 
-            c.includesEffect()
-        } else {
-            enableControl(value: .Disable)
+        if isGridHidden {
+            c.valueLabel.alpha = 0
         }
+
+        c.includesEffect()
+
     }
     
-    /*func createCustomViewUpdate(frame: CGRect){
-        
-        let c = CustomGreyView(frame: frame)
-        mainImgView.addSubview(c)
-    }*/
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        print("Resizing Image")
         let size = image.size
         
         let widthRatio  = targetSize.width  / image.size.width
@@ -752,84 +813,6 @@ class ViewController: UIViewController{
             }
         }
 
-    }
-    
-    func createFolder(){
-        let contentClient = BOXContentClient.default()
-        let folderCreateRequest: BOXFolderCreateRequest? = contentClient?.folderCreateRequest(withName: "UNMC-GLAC", parentFolderID: BOXAPIFolderIDRoot)
-        
-        folderCreateRequest?.perform(completion: { (folder:BOXFolder?, error:Error?) in
-            self.getFolderInfo()
-            print("Folder Created")
-        })
-    }
-
-    func getFolderInfo(){
-        let contentClient = BOXContentClient.default()
-        let searchRequest: BOXSearchRequest? = contentClient?.searchRequest(withQuery: "UNMC-GLAC", in: NSRange(location: 0, length: 1000))
-        // Optional: Specify advanced search parameters. See BOXSearchRequest.h for the full list of parameters supported.
-        searchRequest?.ancestorFolderIDs = []
-        // only files with these extensions will be returned
-        searchRequest?.perform(completion: { (items:[Any]?, totalCount: UInt, range: NSRange, error: Error?) in
-            let firstItem = (items?[0] as AnyObject)
-            
-            print(firstItem.name)
-        })
-    }
-    
-    func showUploadedMessage(){
-        
-        if csvFilesUploadedCount > 0 && pngFilesUploadedCount > 0{
-            showToast(message: "\(csvFilesUploadedCount) csv and \(pngFilesUploadedCount) png (screenshot) files successfully uploaded", theme: .success)
-        } else if csvFilesUploadedCount > 0 {
-            showToast(message: "\(csvFilesUploadedCount) csv files successfully uploaded", theme: .success)
-        }
-        
-        export.loadingIndicator(false)
-        export.setTitle("Export", for: UIControlState.normal)
-        export.isEnabled = true
-        csvFilesUploadedCount = 0
-        pngFilesUploadedCount = 0
-    }
-    
-    func uploadFile(file:FileObject){
-        print("uploading file")
-        let contentClient : BOXContentClient = BOXContentClient.default()
-        let fileData : Data
-        
-        do {
-            fileData = try Data(contentsOf:file.path)
-            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: "40445416498", from: fileData, fileName: file.name)
-            uploadRequest.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
-            }, completion: { (_ boxFile:BOXFile?, _ error:Error?) in
-                self.uploadAttempt = self.uploadAttempt + 1
-                
-                if let fileError = error {
-                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
-                } else if file.type == FileType.CSV {
-                    self.csvFilesUploadedCount = self.csvFilesUploadedCount + 1
-                } else {
-                    self.pngFilesUploadedCount = self.pngFilesUploadedCount + 1
-                }
-                
-                if self.uploadAttempt == 4 {
-                    self.uploadAttempt = 0
-                    self.showUploadedMessage()
-                }
-            })
-        } catch {
-            print("Data not found")
-        }
-    }
-    
-    func boxAuthorization(){
-        BOXContentClient.default().authenticate(completionBlock: { (user:BOXUser?, error:Error?) in
-            if (error == nil )
-            {
-                print((user?.login!)! as String)
-            }
-        })
-        
     }
     
     func getTodayString() -> String{
