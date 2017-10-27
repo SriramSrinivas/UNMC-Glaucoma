@@ -2,7 +2,7 @@
 //  FileObject.swift
 //  glacInit
 //
-//  Created by Abdullahi Mahamed on 10/11/17.
+//  Created by Abdullahi Mahamed on 10/26/17.
 //  Copyright © 2017 Parshav Chauhan. All rights reserved.
 //
 
@@ -19,11 +19,11 @@ struct FileObject {
     var name: String
     var path : URL
     var type: FileType
+    
     init(name:String,type:FileType){
         self.name = "\(name).\(type.rawValue)"
         self.type = type
         self.path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(name)")!
-
     }
     
     func saveCSV(grid:Matrix){

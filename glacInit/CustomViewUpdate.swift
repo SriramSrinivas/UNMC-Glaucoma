@@ -76,12 +76,11 @@ class CustomViewUpdate : UIView{
     }
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
-        
         if isActive {
-                frame.size.height = 200*(gestureRecognizer.scale)
-                frame.size.width = 200*(gestureRecognizer.scale)
-                blur.frame.size.height = 200*(gestureRecognizer.scale)
-                blur.frame.size.width = 200*(gestureRecognizer.scale)
+            frame.size.height = 200*(gestureRecognizer.scale)
+            frame.size.width = 200*(gestureRecognizer.scale)
+            blur.frame.size.height = 200*(gestureRecognizer.scale)
+            blur.frame.size.width = 200*(gestureRecognizer.scale)
         }
     }
 

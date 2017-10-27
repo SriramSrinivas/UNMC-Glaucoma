@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import BoxContentSDK
-import SwiftMessages
 
 class Session {
     var subjectId: String
@@ -89,6 +88,39 @@ class Session {
         hiddenPointsFile.saveCSV(grid:hiddenGrid)
         
         savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile]
+    }
+    
+    func uploadFile(file:FileObject,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
+        let contentClient : BOXContentClient = BOXContentClient.default()
+        let fileData : Data
+        
+        do {
+            fileData = try Data(contentsOf:file.path)
+            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: "41017077987", from: fileData, fileName: file.name)
+            uploadRequest.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
+            }, completion: { (_ boxFile:BOXFile?, _ boxError:Error?) in
+                
+                if let fileError = boxError {
+                    completion(false,fileError)
+                } else {
+                    completion(true, nil)
+                }
+                
+            })
+        } catch {
+            completion(false,error)
+        }
+        
+    }
+    
+    func boxAuthorize(){
+        BOXContentClient.default().authenticate(completionBlock: { (user:BOXUser?, error:Error?) in
+            if (error == nil )
+            {
+                print((user?.login!)! as String)
+            }
+        })
+        
     }
     
     private func getTodayString() -> String{

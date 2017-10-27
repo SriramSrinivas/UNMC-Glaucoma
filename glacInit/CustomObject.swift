@@ -21,11 +21,7 @@ class CustomObject : UIView {
         addSubview(imageView)
         super.frame = self.frame
     }
-    
-    /*func handleCustomObjectTap(sender: UITapGestureRecognizer!){
-        print("Item tapped")
-    }*/
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
