@@ -115,13 +115,13 @@ extension UIAlertController {
     func textDidChangeInLoginAlert() {
         if let action = actions.last {
             var attributedString : NSAttributedString;
-            if Regex("^[\\w\\-.]+$").test(input: (textFields?[0].text)!) {
+            if Regex("[^~%&*{}\\:<>?/+|\"]+$").test(input: (textFields?[0].text)!) {
                 attributedString = NSAttributedString(string: "")
                 self.setValue(attributedString, forKey: "attributedMessage")
                 action.isEnabled = true
             }
             else {
-                attributedString = NSAttributedString(string: "Error: Don't use characters like (: ? & /)", attributes: [
+                attributedString = NSAttributedString(string: "Error: Don't use these characters \n ~ % & * { } \\ : < > ? / + | \" ", attributes: [
                     NSFontAttributeName : UIFont.systemFont(ofSize: 15),
                     NSForegroundColorAttributeName : UIColor.init(hexString: "#e74c3c")
                     ])

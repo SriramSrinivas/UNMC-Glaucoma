@@ -76,11 +76,16 @@ class CustomViewUpdate : UIView{
     }
     
     func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
-        if isActive {
+        if isActive && !(isLinkedToImage){
+            let currentCenter = center
+
             frame.size.height = 200*(gestureRecognizer.scale)
             frame.size.width = 200*(gestureRecognizer.scale)
             blur.frame.size.height = 200*(gestureRecognizer.scale)
             blur.frame.size.width = 200*(gestureRecognizer.scale)
+            
+            blur.center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
+            center = currentCenter
         }
     }
 
