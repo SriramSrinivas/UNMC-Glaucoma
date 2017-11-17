@@ -61,6 +61,7 @@ class ViewController: UIViewController{
     var bottomMessageView = SwiftMessages()
     var nameLabel = UILabel()
     
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -423,12 +424,9 @@ class ViewController: UIViewController{
     func hideButtonTap(mySwitch: UISwitch!){
         
         let value = mySwitch.isOn
-        
         switch value {
         case false:
             tempImageView.isHidden = true
-            //customViewList.removeLast()
-            //currView.removeFromSuperview()
         case true:
             tempImageView.isHidden = false
         default: break
@@ -471,6 +469,10 @@ class ViewController: UIViewController{
                 temp.linkedImage.alpha = 1
                 temp.alphaValue = 1
         case false:
+
+            greySlider.setValue(0, animated: false)
+            intSlider.setValue(0, animated: false)
+            
                 temp.linkedImage.alpha = 0
                 temp.alphaValue = 0
                 for i in customViewUpdateList {
@@ -537,8 +539,15 @@ class ViewController: UIViewController{
             }
             else {
                 i.isActive(value: true)
-                intSlider.setValue(Float(i.blur.blurRadius), animated: false)
                 
+                if(i.blur.backgroundColor == UIColor.black){
+                    greySlider.setValue(Float(i.viewValue), animated: false)
+                } else {
+                    greySlider.setValue(0, animated: false)
+                }
+                
+                intSlider.setValue(Float(i.blur.blurRadius), animated: false)
+
                 if i.isLinkedToImage{
                     //alphSlider.setValue(Float(i.alphaValue), animated: false)
                     if (i.alphaValue == 0){
@@ -734,7 +743,7 @@ class ViewController: UIViewController{
     func createCustomViewUpdate(frame: CGRect){
 
         intSlider.setValue(5, animated: false)
-
+        greySlider.setValue(0, animated: false)
         let c = CustomViewUpdate(frame: frame)
         let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
         c.addGestureRecognizer(gestureTap)
