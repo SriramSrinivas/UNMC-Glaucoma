@@ -121,7 +121,7 @@ extension UIAlertController {
                 action.isEnabled = true
             }
             else {
-                attributedString = NSAttributedString(string: "Error: Don't use these characters \n ~ % & * { } \\ : < > ? / + |", attributes: [
+                attributedString = NSAttributedString(string: "Error: Don't use these characters \n ~ % & * { } \\ : < > ? / + | \" ", attributes: [
                     NSFontAttributeName : UIFont.systemFont(ofSize: 15),
                     NSForegroundColorAttributeName : UIColor.init(hexString: "#e74c3c")
                     ])
