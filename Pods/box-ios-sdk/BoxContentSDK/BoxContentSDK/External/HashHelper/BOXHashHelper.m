@@ -23,11 +23,14 @@
 
 // System framework and libraries
 #define COMMON_DIGEST_FOR_OPENSSL
-#include <CommonCrypto/CommonDigest.h>
+#include <CommonCrypto/commonDigest.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <AssetsLibrary/AssetsLibrary.h>
+#ifndef SHA_DIGEST_LENGTH
+#define SHA_DIGEST_LENGTH CC_SHA1_DIGEST_LENGTH
+#endif
 
 // Constants
 static const size_t FileHashDefaultChunkSizeForReadingData = 4096;

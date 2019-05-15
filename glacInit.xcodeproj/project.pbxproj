@@ -10,6 +10,8 @@
 		030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BE09C1F7C1E1F00012B3C /* Regex.swift */; };
 		030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BE09E1F7C1E3000012B3C /* Matrix.swift */; };
 		0FD24FC8BEB7454FD0814B55 /* Pods_glacInit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FF6EEF7E87E90F7E13CB4E /* Pods_glacInit.framework */; };
+		21E14243228CBF1A004657BA /* FileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14242228CBF1A004657BA /* FileObject.swift */; };
+		21E14245228CBF23004657BA /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14244228CBF22004657BA /* Session.swift */; };
 		743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */; };
 		743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */; };
 		74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907C1EDDDC2500628B38 /* CustomObject.swift */; };
@@ -49,6 +51,8 @@
 		030BE09C1F7C1E1F00012B3C /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		030BE09E1F7C1E3000012B3C /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		08843755EC2939FFFE785AB5 /* Pods-glacInitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitUITests/Pods-glacInitUITests.release.xcconfig"; sourceTree = "<group>"; };
+		21E14242228CBF1A004657BA /* FileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileObject.swift; sourceTree = "<group>"; };
+		21E14244228CBF22004657BA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		3D970461C6AD33F91841D653 /* Pods-glacInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.debug.xcconfig"; sourceTree = "<group>"; };
 		4811ECE61C227719ADCE1745 /* Pods-glacInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.release.xcconfig"; sourceTree = "<group>"; };
 		5760E2D06B454BB71A67455E /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitTests/Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
 				743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */,
 				74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */,
+				21E14242228CBF1A004657BA /* FileObject.swift */,
+				21E14244228CBF22004657BA /* Session.swift */,
 				7752F65E1E50020A003ACC5F /* Main.storyboard */,
 				7752F6611E50020A003ACC5F /* Assets.xcassets */,
 				7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */,
@@ -204,7 +210,6 @@
 				7752F6541E50020A003ACC5F /* Frameworks */,
 				7752F6551E50020A003ACC5F /* Resources */,
 				CA1CD510280F62E30CB199B5 /* [CP] Embed Pods Frameworks */,
-				6AE08E698E095988DE2D5627 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -223,8 +228,6 @@
 				7752F6671E50020A003ACC5F /* Sources */,
 				7752F6681E50020A003ACC5F /* Frameworks */,
 				7752F6691E50020A003ACC5F /* Resources */,
-				F1157B2261DB5F9CDFF557DF /* [CP] Embed Pods Frameworks */,
-				F5F7372BBD3D67C315874115 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,8 +247,6 @@
 				7752F6721E50020A003ACC5F /* Sources */,
 				7752F6731E50020A003ACC5F /* Frameworks */,
 				7752F6741E50020A003ACC5F /* Resources */,
-				9AF6D5A090B421EC0A82A856 /* [CP] Embed Pods Frameworks */,
-				636492C51AF283900751984B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -269,7 +270,7 @@
 				TargetAttributes = {
 					7752F6561E50020A003ACC5F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = D6ST4NU279;
+						DevelopmentTeam = N8TLASBATQ;
 						ProvisioningStyle = Automatic;
 					};
 					7752F66A1E50020A003ACC5F = {
@@ -289,6 +290,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -332,21 +334,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		636492C51AF283900751984B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-glacInitUITests/Pods-glacInitUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		65151007BBC67F2209F140D3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -363,36 +350,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6AE08E698E095988DE2D5627 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-glacInit/Pods-glacInit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9AF6D5A090B421EC0A82A856 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-glacInitUITests/Pods-glacInitUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B5B45D06EDFF86D7D694288D /* [CP] Check Pods Manifest.lock */ = {
@@ -419,7 +376,8 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-glacInit/Pods-glacInit-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-glacInit/Pods-glacInit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftHSVColorPicker/SwiftHSVColorPicker.framework",
@@ -429,6 +387,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftHSVColorPicker.framework",
@@ -438,7 +397,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-glacInit/Pods-glacInit-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-glacInit/Pods-glacInit-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E867B9574F17D946696A12EC /* [CP] Check Pods Manifest.lock */ = {
@@ -459,36 +418,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F1157B2261DB5F9CDFF557DF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-glacInitTests/Pods-glacInitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F5F7372BBD3D67C315874115 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-glacInitTests/Pods-glacInitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -502,6 +431,8 @@
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
 				030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */,
+				21E14243228CBF1A004657BA /* FileObject.swift in Sources */,
+				21E14245228CBF23004657BA /* Session.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */,
@@ -660,18 +591,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = D6ST4NU279;
+				DEVELOPMENT_TEAM = N8TLASBATQ;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = glacInit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.unomaha.ist.ios.glac.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -681,18 +613,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = D6ST4NU279;
+				DEVELOPMENT_TEAM = N8TLASBATQ;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = glacInit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.unomaha.ist.ios.glac.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
