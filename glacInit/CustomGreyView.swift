@@ -28,7 +28,7 @@ class CustomGreyView : UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
             if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
                 let translation = gestureRecognizer.translation(in: self)

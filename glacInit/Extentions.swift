@@ -20,7 +20,7 @@ extension UIColor {
         var int = UInt32()
         Scanner(string: hex).scanHexInt32(&int)
         let a, r, g, b: UInt32
-        switch hex.characters.count {
+        switch hex.count {
         case 3: // RGB (12-bit)
             (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
         case 6: // RGB (24-bit)
@@ -59,7 +59,7 @@ extension UIView {
 extension UIViewController {
     
     func showToast(message: String, theme: Theme) {
-        let view = MessageView.viewFromNib(layout: .CardView)
+        let view = MessageView.viewFromNib(layout: .cardView)
         
         view.configureTheme(theme)
         view.configureDropShadow()
@@ -88,7 +88,7 @@ extension UIViewController {
     }
     
     func reachibiltyChanged(online:Bool){
-        let view = MessageView.viewFromNib(layout: .StatusLine)
+        let view = MessageView.viewFromNib(layout: .statusLine)
         
         view.configureTheme(.success)
         view.configureDropShadow()
@@ -112,7 +112,7 @@ extension UIViewController {
 }
 
 extension UIAlertController {
-    func textDidChangeInLoginAlert() {
+    @objc func textDidChangeInLoginAlert() {
         if let action = actions.last {
             var attributedString : NSAttributedString;
             if Regex("[^~%&*{}\\:<>?/+|\"]+$").test(input: (textFields?[0].text)!) {
@@ -122,8 +122,8 @@ extension UIAlertController {
             }
             else {
                 attributedString = NSAttributedString(string: "Error: Don't use these characters \n ~ % & * { } \\ : < > ? / + | \" ", attributes: [
-                    NSFontAttributeName : UIFont.systemFont(ofSize: 15),
-                    NSForegroundColorAttributeName : UIColor.init(hexString: "#e74c3c")
+                    NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+                    NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#e74c3c")
                     ])
                 self.setValue(attributedString, forKey: "attributedMessage")
                 action.isEnabled = false
@@ -148,7 +148,7 @@ extension UIButton {
             self.backgroundColor = UIColor(hexString: "#bdc3c7")
             self.alpha = 0.7
         } else {
-            self.setTitle("Export", for: UIControlState.normal)
+            self.setTitle("Export", for: UIControl.State.normal)
             self.backgroundColor = UIColor(hexString: "#0D47A1")
             self.isEnabled = true
             self.alpha = 1.0

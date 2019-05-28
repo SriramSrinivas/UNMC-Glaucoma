@@ -130,11 +130,11 @@ class ViewController: UIViewController{
         let gridSwitch = UISwitch()
         gridSwitch.frame = CGRect(x: 30, y: gridHeight, width: 50, height: 100)
         gridSwitch.isOn = true 
-        gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControlEvents.valueChanged)
+        gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControl.Event.valueChanged)
         
         let origSwitch = UISwitch()
         origSwitch.frame = CGRect(x: 30, y: origHeight, width: 50, height: 100)
-        origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControlEvents.valueChanged)
+        origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControl.Event.valueChanged)
         
         let gridText = UILabel()
         gridText.frame = CGRect(x: 100, y: gridHeight - 8, width: 150, height: 50)
@@ -192,7 +192,7 @@ class ViewController: UIViewController{
         luminText.widthAnchor.constraint(equalToConstant: 50).isActive = true
         luminText.text = "Luminosity"
         
-        delete.setTitle("Reset", for: UIControlState.normal)
+        delete.setTitle("Reset", for: UIControl.State.normal)
         delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
         delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         delete.backgroundColor = UIColor(hexString: "#f44336")
@@ -220,21 +220,21 @@ class ViewController: UIViewController{
 
         intSlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
         intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControlEvents.valueChanged)
+        intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControl.Event.valueChanged)
         intSlider.minimumValue = 0
         intSlider.maximumValue = 10
         intSlider.setValue(0, animated: false)
         
         greySlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
         greySlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        greySlider.addTarget(self, action: #selector(sliderGrey), for: UIControlEvents.valueChanged)
+        greySlider.addTarget(self, action: #selector(sliderGrey), for: UIControl.Event.valueChanged)
         greySlider.minimumValue = 0
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
 
-        sliderStack.axis = UILayoutConstraintAxis.vertical
-        sliderStack.distribution = UIStackViewDistribution.equalSpacing
-        sliderStack.alignment = UIStackViewAlignment.center
+        sliderStack.axis = NSLayoutConstraint.Axis.vertical
+        sliderStack.distribution = UIStackView.Distribution.equalSpacing
+        sliderStack.alignment = UIStackView.Alignment.center
         sliderStack.spacing = 4.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
@@ -266,21 +266,21 @@ class ViewController: UIViewController{
         
         let clear = UIButton()
 
-        export.setTitle("Export", for: UIControlState.normal)
+        export.setTitle("Export", for: UIControl.State.normal)
         export.heightAnchor.constraint(equalToConstant: 50).isActive = true
         export.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         export.backgroundColor = UIColor(hexString: "#0D47A1")
         export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
         
-        clear.setTitle("Start Over", for: UIControlState.normal)
+        clear.setTitle("Start Over", for: UIControl.State.normal)
         clear.heightAnchor.constraint(equalToConstant: 50).isActive = true
         clear.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         clear.backgroundColor = UIColor(hexString: "#1B5E20")
         clear.addTarget(self, action: #selector(clearTap), for: .touchUpInside)
         
-        stack.axis = UILayoutConstraintAxis.vertical
-        stack.distribution = UIStackViewDistribution.equalSpacing
-        stack.alignment = UIStackViewAlignment.center
+        stack.axis = NSLayoutConstraint.Axis.vertical
+        stack.distribution = UIStackView.Distribution.equalSpacing
+        stack.alignment = UIStackView.Alignment.center
         stack.spacing = 10.0
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.layoutMargins = UIEdgeInsets(top:0,left:0,bottom:20,right:0)
@@ -366,7 +366,7 @@ class ViewController: UIViewController{
     }
     
 
-    func toggleGrid(mySwitch: UISwitch) {
+    @objc func toggleGrid(mySwitch: UISwitch) {
         let value = mySwitch.isOn
 
         switch (value) {
@@ -389,7 +389,7 @@ class ViewController: UIViewController{
         }
     }
     
-    func toggleOriginal(mySwitch: UISwitch) {
+    @objc func toggleOriginal(mySwitch: UISwitch) {
         let value = mySwitch.isOn
         switch value {
         case true:
@@ -433,7 +433,7 @@ class ViewController: UIViewController{
         }
     }
     
-    func sliderIntensity(slider: UISlider){
+    @objc func sliderIntensity(slider: UISlider){
         let value = slider.value
         
         for i in customViewUpdateList {
@@ -448,7 +448,7 @@ class ViewController: UIViewController{
         }
     }
     
-    func sliderGrey(slider: UISlider){
+    @objc func sliderGrey(slider: UISlider){
         var value = slider.value
         value = value/10
         let temp = getCurrentActiveView()
@@ -460,7 +460,7 @@ class ViewController: UIViewController{
         intSlider.setValue(0, animated: false)
     }
     
-    func switchAlpha(sender: UISwitch!){
+    @objc func switchAlpha(sender: UISwitch!){
         
         let temp = getCurrentActiveView()
         
@@ -486,7 +486,7 @@ class ViewController: UIViewController{
         }
     }
 
-    func handleCustomObjectTap(sender: UITapGestureRecognizer){
+    @objc func handleCustomObjectTap(sender: UITapGestureRecognizer){
         print("Custom Object Tapped")
         //alphSlider.setValue(10, animated: false)
 
@@ -529,7 +529,7 @@ class ViewController: UIViewController{
         
     }
     
-    func handleTapUpdate(sender: UITapGestureRecognizer){
+    @objc func handleTapUpdate(sender: UITapGestureRecognizer){
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -563,7 +563,7 @@ class ViewController: UIViewController{
         }
     }
     
-    func resetTap(sender: UIButton!){
+    @objc func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
         if temp.isLinkedToImage {
@@ -574,7 +574,7 @@ class ViewController: UIViewController{
         enableControl(value: .Disable)
     }
     
-    func clearTap(sender: UIButton!){
+    @objc func clearTap(sender: UIButton!){
         exportCount = 0
         let alert = UIAlertController(title: "Screen will be cleared", message: "", preferredStyle: .alert)
         
@@ -614,7 +614,7 @@ class ViewController: UIViewController{
     }
     
     func bottomMessage(_ message:String){
-        let view = MessageView.viewFromNib(layout: .StatusLine)
+        let view = MessageView.viewFromNib(layout: .statusLine)
             
         view.configureTheme(.success)
         view.configureDropShadow()
@@ -632,7 +632,7 @@ class ViewController: UIViewController{
     }
 
     
-    func exportTap(sender: UIButton!){
+    @objc func exportTap(sender: UIButton!){
         bottomMessage("Uploading Files")
         exportCount = exportCount + 1
         
@@ -721,7 +721,7 @@ class ViewController: UIViewController{
     
     
 
-    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         print("Image Tapped")
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         

@@ -8,8 +8,8 @@
 import RealmSwift
 
 class PatientData : Object{
-    dynamic var name = ""
-    dynamic var age = 0
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
 }
 
 enum Effect {

@@ -60,7 +60,7 @@ struct FileObject {
         UIGraphicsEndImageContext()
         
         //Save it to the camera roll
-        if let data = UIImagePNGRepresentation(image!){
+        if let data = image!.pngData(){
             do {
                 try data.write(to: path)
             } catch {

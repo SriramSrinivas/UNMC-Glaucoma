@@ -39,7 +39,7 @@ class CustomViewUpdate : UIView{
         addGestureRecognizer(pinchZoom)
         addGestureRecognizer(panRecog)
 
-        blur.addSubview(valueLabel)
+        blur.contentView.addSubview(valueLabel)
         addSubview(blur)
     }
 
@@ -64,7 +64,7 @@ class CustomViewUpdate : UIView{
         }
     }
     
-    func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
         if isActive && !(isLinkedToImage){
             if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
@@ -75,7 +75,7 @@ class CustomViewUpdate : UIView{
         }
     }
     
-    func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
+    @objc func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         if isActive && !(isLinkedToImage){
             let currentCenter = center
 
