@@ -6,6 +6,13 @@
 //  Copyright © 2017 Parshav Chauhan. All rights reserved.
 //
 
+//Questions that arise
+//do we assume everyone will have the same size Ipad or will it be modular? if so will need to refactor (more for if others are planning on using it
+//Standardization if refactored/ we will need to create a standard that everything will be reformatted to, like 600 by 400 regardless of screen size
+//export button will need to be updated where it checks if account is connected if not will will reprompt user to connect
+
+
+
 import UIKit
 import BoxContentSDK
 
@@ -16,8 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // Reachability code
-        // Allocate a reachability object
-        BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
+        // Allocate a reachability object\
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        let layout = UICollectionViewFlowLayout()
+        window?.rootViewController = UINavigationController(rootViewController: BackgroundChangeController(collectionViewLayout: layout))
+        
+        //BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         
         return true
     }

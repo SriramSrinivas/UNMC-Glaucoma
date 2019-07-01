@@ -6,7 +6,9 @@ import SwiftMessages
 import Reachability
 
 class ViewController: UIViewController{
-        
+    
+    var backImageName = "mainTes"
+    
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
     var mainImgView = UIView()
@@ -115,6 +117,9 @@ class ViewController: UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         enterNameDialog()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        enterNameDialog()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -152,10 +157,13 @@ class ViewController: UIViewController{
         sideView.addSubview(gridText)
         sideView.addSubview(origText)
     }
-    
+    //MARK: load background picture
+    //idea - present defualt picture but allow for change. grays out picrure and presents available picture on top of view
     func loadImage(mainImgView: UIView){
+        
+        
 
-        let image = UIImage(named: "mainTes")
+        let image = UIImage(named: backImageName)
         bckImage = image!
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
@@ -340,21 +348,11 @@ class ViewController: UIViewController{
         sunIcon = tempImage("lumin", sunIcon)
         sunOffIcon = tempImage("luminOff",sunOffIcon)
     }
-    
+    //MARK: location of items on view
+   
     func initCustomObjects(){
         
-        customObjectList = [CustomObject(imageName: "doggo", xPos: 413, yPos: 413, sideSize: 90, alphaValue: 1),
-                                             CustomObject(imageName: "trashcan", xPos: -21, yPos: 366, sideSize: 130, alphaValue: 1),
-                                             CustomObject(imageName: "cone", xPos: 122, yPos: 361, sideSize: 60, alphaValue: 1),
-                                             CustomObject(imageName: "cone", xPos: 185, yPos: 325.5, sideSize: 60, alphaValue: 1),
-                                             CustomObject(imageName: "ball", xPos: 575.5, yPos: 385, sideSize: 50, alphaValue: 1),
-                                             CustomObject(imageName: "kid1", xPos: 380, yPos: 279.5, sideSize: 50, alphaValue: 1),
-                                             CustomObject(imageName: "kid2", xPos: 423.5, yPos: 271, sideSize: 50, alphaValue: 1),
-                                             CustomObject(imageName: "peel", xPos: 55.5, yPos: 460.5, sideSize: 65, alphaValue: 1),
-                                             CustomObject(imageName: "helmet", xPos: 176.5, yPos: 387, sideSize: 50, alphaValue: 1),
-                                             CustomObject(imageName: "girl", xPos: 735, yPos: 237.6, sideSize: 230, alphaValue: 1),
-                                             CustomObject(imageName: "hydrant", xPos: 606, yPos: 300, sideSize: 70, alphaValue: 1)]
-
+        customObjectList = createobjects(pictureID: 1)
         
         for i in customObjectList {
             i.isUserInteractionEnabled = true
@@ -635,6 +633,7 @@ class ViewController: UIViewController{
     @objc func exportTap(sender: UIButton!){
         bottomMessage("Uploading Files")
         exportCount = exportCount + 1
+
         
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList)
     
@@ -642,7 +641,11 @@ class ViewController: UIViewController{
             currentSession.uploadFile(file: savedFile, completion: { (uploaded:Bool, error:Error?) in
                 self.uploadAttempt = self.uploadAttempt + 1
                 if let fileError = error {
+                    //self.currentSession = Session(currentSubjectId: self.subjectID)
+                    //self.currentSession.boxAuthorize() 
+                    //self.currentSession.boxAuthorize()
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                    
                 } else if savedFile.type == FileType.CSV {
                     self.csvFilesUploadedCount = self.csvFilesUploadedCount + 1
                 } else {
@@ -658,7 +661,7 @@ class ViewController: UIViewController{
         export.loadingIndicator(true)
     }
     
-    
+    //MARK: box autho
     func enterNameDialog(){
         let alert = UIAlertController(title: "Enter Subject Identifier", message: "", preferredStyle: .alert)
         var inputTextField: UITextField?
@@ -948,6 +951,19 @@ class ViewController: UIViewController{
         }
     }
 }
+
+//MARK: work in progress
+
+
+//var changeBackgroundView : UIView = {
+//   let temp = UIView()
+//    temp.backgroundColor = .black
+//    temp.backgroundColor?.withAlphaComponent(0.5)
+//    
+//    
+//    
+//    return temp
+//}()
 
 enum ControlState {
     case Disable, OnlyBlur, BlurAndAlpha

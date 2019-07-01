@@ -12,6 +12,7 @@ class CustomObject : UIView {
     
     var imageView = UIView()
     //var alphaValue = 1
+    //var customObjectList = [CustomObject]()
     
     init(imageName: String, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat, alphaValue: Int) {
 
