@@ -34,8 +34,10 @@ class BackgroundChangeController : UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = UIColor.black
-        collectionView?.backgroundColor?.withAlphaComponent(0.5)
+        view.isOpaque = false
+        //view.alpha = 0.5
+        collectionView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        //collectionView?.backgroundColor.
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "cellID")
     }
     

@@ -118,7 +118,7 @@ class ViewController: UIViewController{
         enterNameDialog()
     }
     override func viewWillAppear(_ animated: Bool) {
-        enterNameDialog()
+       // enterNameDialog()
     }
 
     override func didReceiveMemoryWarning() {
@@ -374,6 +374,7 @@ class ViewController: UIViewController{
         //warn user that this will delete self
         let layout = UICollectionViewFlowLayout()
         let vc = BackgroundChangeController(collectionViewLayout: layout)
+        vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
         //self.dismiss(animated: true, completion: nil)
     }
