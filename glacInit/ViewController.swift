@@ -273,6 +273,7 @@ class ViewController: UIViewController{
         let stack = UIStackView()
         
         let clear = UIButton()
+        let newBackground = UIButton()
 
         export.setTitle("Export", for: UIControl.State.normal)
         export.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -286,6 +287,12 @@ class ViewController: UIViewController{
         clear.backgroundColor = UIColor(hexString: "#1B5E20")
         clear.addTarget(self, action: #selector(clearTap), for: .touchUpInside)
         
+        newBackground.setTitle("Switch background", for: UIControl.State.normal)
+        newBackground.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        newBackground.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        newBackground.backgroundColor = UIColor(hexString: "#1B5E20")
+        newBackground.addTarget(self, action: #selector(setNewBackground), for: .touchUpInside)
+        
         stack.axis = NSLayoutConstraint.Axis.vertical
         stack.distribution = UIStackView.Distribution.equalSpacing
         stack.alignment = UIStackView.Alignment.center
@@ -296,6 +303,7 @@ class ViewController: UIViewController{
         
         stack.addArrangedSubview(export)
         stack.addArrangedSubview(clear)
+        stack.addArrangedSubview(newBackground)
         view.addSubview(stack)
         
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -362,7 +370,13 @@ class ViewController: UIViewController{
             mainImgView.addSubview(i)
         }
     }
-    
+    @objc func setNewBackground(_sender: UIButton){
+        //warn user that this will delete self
+        let layout = UICollectionViewFlowLayout()
+        let vc = BackgroundChangeController(collectionViewLayout: layout)
+        self.present(vc, animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
+    }
 
     @objc func toggleGrid(mySwitch: UISwitch) {
         let value = mySwitch.isOn

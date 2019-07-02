@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         let layout = UICollectionViewFlowLayout()
-        window?.rootViewController = UINavigationController(rootViewController: BackgroundChangeController(collectionViewLayout: layout))
+        window?.rootViewController = UINavigationController(rootViewController: ViewController())
         
         //BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         
