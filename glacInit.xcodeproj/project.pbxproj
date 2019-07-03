@@ -14,6 +14,8 @@
 		21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */; };
 		21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */; };
 		21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1B22CAB714009CDAD3 /* imageCell.swift */; };
+		21BA7FB322CCE6AF003DC229 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */; };
+		21E13B0022CC0FB300429F58 /* SubImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E13AFF22CC0FB300429F58 /* SubImage.swift */; };
 		21E14243228CBF1A004657BA /* FileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14242228CBF1A004657BA /* FileObject.swift */; };
 		21E14245228CBF23004657BA /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14244228CBF22004657BA /* Session.swift */; };
 		743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */; };
@@ -59,6 +61,8 @@
 		21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundChangeController.swift; sourceTree = "<group>"; };
 		21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundImage.swift; sourceTree = "<group>"; };
 		21A6BB1B22CAB714009CDAD3 /* imageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageCell.swift; sourceTree = "<group>"; };
+		21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		21E13AFF22CC0FB300429F58 /* SubImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImage.swift; sourceTree = "<group>"; };
 		21E14242228CBF1A004657BA /* FileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileObject.swift; sourceTree = "<group>"; };
 		21E14244228CBF22004657BA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		3D970461C6AD33F91841D653 /* Pods-glacInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,7 +85,7 @@
 		7752F6661E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7752F66B1E50020A003ACC5F /* glacInitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glacInitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F66F1E50020A003ACC5F /* glacInitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glacInitTests.swift; sourceTree = "<group>"; };
-		7752F6711E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7752F6711E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Extensions/Info.plist; sourceTree = "<group>"; };
 		7752F6761E50020A003ACC5F /* glacInitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glacInitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F67A1E50020A003ACC5F /* glacInitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glacInitUITests.swift; sourceTree = "<group>"; };
 		7752F67C1E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -163,6 +167,74 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		21E13AF822CC0CA900429F58 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				21E13AFD22CC0D2800429F58 /* Views */,
+				21E13AFC22CC0D2100429F58 /* ViewModels */,
+				21E13AFB22CC0D0C00429F58 /* Models */,
+				21E13AFA22CC0CFB00429F58 /* Controller */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		21E13AF922CC0CC900429F58 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7752F65E1E50020A003ACC5F /* Main.storyboard */,
+				7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */,
+				7752F6611E50020A003ACC5F /* Assets.xcassets */,
+				7752F65A1E50020A003ACC5F /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		21E13AFA22CC0CFB00429F58 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7752F65C1E50020A003ACC5F /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		21E13AFB22CC0D0C00429F58 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				74E768551F2A2F8500F2FD9C /* CustomPoint.swift */,
+				030BE09E1F7C1E3000012B3C /* Matrix.swift */,
+				74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		21E13AFC22CC0D2100429F58 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				74BB907C1EDDDC2500628B38 /* CustomObject.swift */,
+				21A6BB0F22CA837D009CDAD3 /* ObjectModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		21E13AFD22CC0D2800429F58 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */,
+				21E13AFF22CC0FB300429F58 /* SubImage.swift */,
+				74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */,
+				743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		21E13AFE22CC0E0C00429F58 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		5E697DDCC56BE1E1A81A68DD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +251,7 @@
 		7752F64E1E50020A003ACC5F = {
 			isa = PBXGroup;
 			children = (
+				21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */,
 				7752F6591E50020A003ACC5F /* glacInit */,
 				7752F66E1E50020A003ACC5F /* glacInitTests */,
 				7752F6791E50020A003ACC5F /* glacInitUITests */,
@@ -201,23 +274,13 @@
 		7752F6591E50020A003ACC5F /* glacInit */ = {
 			isa = PBXGroup;
 			children = (
+				7752F6661E50020A003ACC5F /* Info.plist */,
+				7752F6711E50020A003ACC5F /* Info.plist */,
+				21E13AF922CC0CC900429F58 /* App */,
 				21E13AF722CB8CCB00429F58 /* Services */,
 				21A6BB1122CA86FE009CDAD3 /* BackGroundChange */,
-				7752F65A1E50020A003ACC5F /* AppDelegate.swift */,
-				7752F65C1E50020A003ACC5F /* ViewController.swift */,
-				030BE09E1F7C1E3000012B3C /* Matrix.swift */,
-				74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */,
-				743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */,
-				74E768551F2A2F8500F2FD9C /* CustomPoint.swift */,
-				74BB907C1EDDDC2500628B38 /* CustomObject.swift */,
-				21A6BB0F22CA837D009CDAD3 /* ObjectModel.swift */,
-				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
-				743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */,
-				74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */,
-				7752F65E1E50020A003ACC5F /* Main.storyboard */,
-				7752F6611E50020A003ACC5F /* Assets.xcassets */,
-				7752F6631E50020A003ACC5F /* LaunchScreen.storyboard */,
-				7752F6661E50020A003ACC5F /* Info.plist */,
+				21E13AF822CC0CA900429F58 /* ViewController */,
+				21E13AFE22CC0E0C00429F58 /* Extensions */,
 			);
 			path = glacInit;
 			sourceTree = "<group>";
@@ -226,7 +289,6 @@
 			isa = PBXGroup;
 			children = (
 				7752F66F1E50020A003ACC5F /* glacInitTests.swift */,
-				7752F6711E50020A003ACC5F /* Info.plist */,
 			);
 			path = glacInitTests;
 			sourceTree = "<group>";
@@ -364,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7752F6651E50020A003ACC5F /* LaunchScreen.storyboard in Resources */,
+				21BA7FB322CCE6AF003DC229 /* Default-568h@2x.png in Resources */,
 				7752F6621E50020A003ACC5F /* Assets.xcassets in Resources */,
 				7752F6601E50020A003ACC5F /* Main.storyboard in Resources */,
 			);
@@ -483,6 +546,7 @@
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */,
 				21A6BB1022CA837D009CDAD3 /* ObjectModel.swift in Sources */,
+				21E13B0022CC0FB300429F58 /* SubImage.swift in Sources */,
 				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
 				030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */,
 				21E14243228CBF1A004657BA /* FileObject.swift in Sources */,

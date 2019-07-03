@@ -18,15 +18,17 @@ class CustomViewUpdate : UIView{
     var alphaValue = CGFloat(1)
     var greyValue = CGFloat(0)
     var valueLabel = UILabel()
+    var image = UIImageView()
     var viewValue = 5
     override init(frame: CGRect) {
 
         super.init(frame: frame)
-        
+        //self.frame.
         blur.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         blur.blurRadius = 0
         blur.layer.borderWidth = 5
         isActive(value: true)
+        
 
         valueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         valueLabel.textAlignment = .center
@@ -39,10 +41,23 @@ class CustomViewUpdate : UIView{
         addGestureRecognizer(pinchZoom)
         addGestureRecognizer(panRecog)
 
+        image =  UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.width))
+        blur.contentView.addSubview(image)
         blur.contentView.addSubview(valueLabel)
         addSubview(blur)
     }
 
+    func addImage(images: UIImage){
+        image.image = images
+//        let image = images
+//
+//        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image.size.width), height: (image.size.height)))
+//        imageView.image = image
+//
+//        self.frame = CGRect(x: self.frame.minX, y: self.frame.maxY, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        //self.backgroundColor = UIColor(patternImage: image)
+    }
+    
     func setValue(value: Int){
         viewValue = value
         valueLabel.text = String(value)

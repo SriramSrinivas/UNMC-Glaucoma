@@ -4,10 +4,17 @@ import VisualEffectView
 import BoxContentSDK
 import SwiftMessages
 import Reachability
+import CoreImage
+import CoreGraphics
 
 class ViewController: UIViewController{
     
+    //image heght 1024.0
+    //image width 1366.0
     var backImageName = "mainTes"
+    var constimage = UIImage()
+    var height: CGFloat = 0
+    var width: CGFloat = 0
     
     let screenSize: CGRect = UIScreen.main.bounds
     var bckImage = UIImage()
@@ -37,9 +44,11 @@ class ViewController: UIViewController{
     let intText = UILabel()
     let alphSlider = UISlider()
     let greySlider = UISlider()
+    let blackSlader = UISlider()
     let alphaToggle = UISwitch()
     let luminText = UILabel()
     var customObjectList = [CustomObject]()
+    var customBlackObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
     
@@ -68,7 +77,11 @@ class ViewController: UIViewController{
 
         super.viewDidLoad()
         
-        
+        self.navigationController?.isNavigationBarHidden = true
+        height = view.frame.height
+        width = view.frame.width
+        print(view.bounds.size.width)
+        print(view.bounds.size.height)
         distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
 
         mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
@@ -164,13 +177,48 @@ class ViewController: UIViewController{
         
 
         let image = UIImage(named: backImageName)
+       
+        //epiaFilter(image, intensity: 2)
+        //this will change the image color
+        //image = image?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.7), blendMode: .luminosity)
+        
         bckImage = image!
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
+        
         imageView.image = image
+        //constimage = imageView.image!
+        constimage = resizeImage(image: image!, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+        print("know these")
+//        print(mainImgView.frame.size.height)
+//        print(mainImgView.frame.size.width)
+        
         mainImgView.addSubview(imageView)
     }
+    
+    func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = width  / size.width
+        let heightRatio = height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
 
+        newSize = CGSize(width: size.width * widthRatio,  height: size.height * heightRatio)
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+         return newImage
+        
+    }
+    
     func addSlider(view: UIView){
         
         blurOnIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
@@ -239,6 +287,13 @@ class ViewController: UIViewController{
         greySlider.minimumValue = 0
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
+        
+        blackSlader.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        blackSlader.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        blackSlader.addTarget(self, action: #selector(sliderBlack), for: UIControl.Event.valueChanged)
+        blackSlader.minimumValue = 0
+        blackSlader.maximumValue = 10
+        blackSlader.setValue(0, animated: false)
 
         sliderStack.axis = NSLayoutConstraint.Axis.vertical
         sliderStack.distribution = UIStackView.Distribution.equalSpacing
@@ -246,6 +301,7 @@ class ViewController: UIViewController{
         sliderStack.spacing = 4.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
+        sliderStack.addArrangedSubview(blackSlader)
         sliderStack.addArrangedSubview(blurOnIcon)
         sliderStack.addArrangedSubview(blurOffIcon)
         sliderStack.addArrangedSubview(intSlider)
@@ -344,6 +400,7 @@ class ViewController: UIViewController{
         let tempImage = {(fileName: String, icon: UIImageView) -> UIImageView in
             
             let theImage = UIImage(named: fileName)
+            
             icon.frame = CGRect(x: 0, y: 0, width: (theImage?.size.width)!, height: (theImage?.size.height)!)
             icon.image = theImage
             return icon
@@ -360,7 +417,7 @@ class ViewController: UIViewController{
    
     func initCustomObjects(){
         
-        customObjectList = createobjects(pictureID: 1)
+        customObjectList = createobjects(pictureID: 1, height: height, width: width)
         
         for i in customObjectList {
             i.isUserInteractionEnabled = true
@@ -461,6 +518,22 @@ class ViewController: UIViewController{
         }
     }
     
+    
+    
+    @objc func sliderBlack(slider: UISlider){
+        var value = slider.value
+        
+        value = value/10
+        var cropImage = constimage
+        let temp = getCurrentActiveView()
+        cropImage = cropImage.crop(rect: temp.frame)
+        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+        
+        temp.addImage(images: cropImage)
+    
+        temp.setValue(value: Int(value * 10))
+      
+    }
     @objc func sliderGrey(slider: UISlider){
         var value = slider.value
         value = value/10
@@ -522,6 +595,7 @@ class ViewController: UIViewController{
         
     }
     
+    
     func customViewActive() -> Bool{
         var activatedViews: Bool = false
         
@@ -552,7 +626,9 @@ class ViewController: UIViewController{
             }
             else {
                 i.isActive(value: true)
-                
+                if ( i.blur.backgroundColor == UIColor.clear){
+                    blackSlader.setValue(Float(i.viewValue), animated: false)
+                }
                 if(i.blur.backgroundColor == UIColor.black){
                     greySlider.setValue(Float(i.viewValue), animated: false)
                 } else {
@@ -560,6 +636,7 @@ class ViewController: UIViewController{
                 }
                 
                 intSlider.setValue(Float(i.blur.blurRadius), animated: false)
+                
 
                 if i.isLinkedToImage{
                     //alphSlider.setValue(Float(i.alphaValue), animated: false)
@@ -572,6 +649,7 @@ class ViewController: UIViewController{
                 } else {
                     enableControl(value: .OnlyBlur)
                 }
+                //enableControl(value: .Black)
             }
         }
     }
@@ -579,8 +657,12 @@ class ViewController: UIViewController{
     @objc func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
+        
         if temp.isLinkedToImage {
             temp.linkedImage.alpha = 1
+        }
+        if temp.isLinkedToImage {
+            temp.removeFromSuperview()
         }
         customViewUpdateList = customViewUpdateList.filter() { $0 != temp }
         temp.removeFromSuperview()
@@ -615,6 +697,7 @@ class ViewController: UIViewController{
             i.removeFromSuperview()
         }
         customViewUpdateList.removeAll()
+            
         nameView.subviews.forEach{ $0.removeFromSuperview() }
         nameView.removeFromSuperview()
         
@@ -692,7 +775,7 @@ class ViewController: UIViewController{
             self.nameLabel.textAlignment = .center
             self.nameLabel.center.x = self.nameLabel.frame.maxX
             self.subjectID = (inputTextField?.text)!
-            self.currentSession = Session(currentSubjectId: self.subjectID)
+            self.currentSession = Session(currentSubjectId: (self.subjectID + "." + self.backImageName))
             self.currentSession.boxAuthorize()
         }
         
@@ -960,6 +1043,12 @@ class ViewController: UIViewController{
             sunOffIcon.isHidden = true
             sunIcon.isHidden = false
             sunIcon.alpha = 1
+            
+        case .Black:
+            
+           
+            blackSlader.isEnabled = true
+           
 
         default:
             break
@@ -981,5 +1070,5 @@ class ViewController: UIViewController{
 //}()
 
 enum ControlState {
-    case Disable, OnlyBlur, BlurAndAlpha
+    case Disable, OnlyBlur, BlurAndAlpha, Black
 }

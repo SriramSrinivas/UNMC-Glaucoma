@@ -23,6 +23,17 @@ class CustomObject : UIView {
         super.frame = self.frame
     }
 
+    init(image: UIImage, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat, alphaValue: Int) {
+        
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
+        addImage(images: image, xPos: xPos, yPos: yPos, sideSize: sideSize)
+        addSubview(imageView)
+        super.frame = self.frame
+    }
+    func removeImage () {
+        imageView.removeFromSuperview()
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,6 +49,18 @@ class CustomObject : UIView {
         
         self.frame = CGRect(x: xPos, y: yPos, width: imageView.frame.size.width, height: imageView.frame.size.height)
         self.backgroundColor = UIColor(patternImage: image!)
+    }
+    func addImage(images: UIImage, xPos: CGFloat, yPos: CGFloat, sideSize: CGFloat){
+        
+        var image = images
+        
+        image = resizeImage(image: image, targetSize: CGSize(width: sideSize, height: sideSize))
+        
+        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image.size.width), height: (image.size.height)))
+        imageView.image = image
+        
+        self.frame = CGRect(x: xPos, y: yPos, width: imageView.frame.size.width, height: imageView.frame.size.height)
+        self.backgroundColor = UIColor(patternImage: image)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

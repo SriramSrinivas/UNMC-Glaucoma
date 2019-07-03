@@ -9,11 +9,26 @@
 import Foundation
 import UIKit
 import SwiftMessages
+import CoreGraphics
 
 enum stackType{
     case sideStack, controlStack
 }
-
+extension UIImage{
+    func tint(color: UIColor, blendMode: CGBlendMode) -> UIImage
+    {
+        
+        let drawRect = CGRect(x: 0,y: 0,width: size.width,height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        color.setFill()
+        UIRectFill(drawRect)
+        draw(in: drawRect, blendMode: blendMode, alpha: 1.0)
+        let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return tintedImage!
+    }
+    
+}
 extension UIColor {
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
