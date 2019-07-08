@@ -92,7 +92,7 @@ class CustomViewUpdate : UIView{
                 let translation = gestureRecognizer.translation(in: self)
                 gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
                 gestureRecognizer.setTranslation(CGPoint.zero, in: self)
-                image.image = getImageFromMain()
+                image.image? = getImageFromMain()
             }
         }
     }
@@ -108,7 +108,7 @@ class CustomViewUpdate : UIView{
             
             blur.center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
             image.frame = blur.frame
-            image.image = getImageFromMain()
+            image.image? = getImageFromMain()
             center = currentCenter
         }
     }

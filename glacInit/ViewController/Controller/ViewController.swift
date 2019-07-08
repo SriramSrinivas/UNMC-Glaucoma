@@ -7,6 +7,8 @@ import Reachability
 import CoreImage
 import CoreGraphics
 
+// YOOOOOO FIX THE IMAGE BEING TO BIG (will be fixed when constraining the images to the screen)
+
 class ViewController: UIViewController{
     
     //image heght 1024.0
@@ -391,7 +393,8 @@ class ViewController: UIViewController{
 
         for i in gridViews {
             
-            mainImgView.addSubview(i)
+            mainImgView.insertSubview(i, aboveSubview: mainImgView)
+            mainImgView.bringSubviewToFront(i)
         }
     }
     
@@ -425,6 +428,7 @@ class ViewController: UIViewController{
             i.addGestureRecognizer(gestureTap)
 
             mainImgView.addSubview(i)
+            mainImgView.bringSubviewToFront(i)
         }
     }
     @objc func setNewBackground(_sender: UIButton){
@@ -532,14 +536,16 @@ class ViewController: UIViewController{
         temp.setImageConst(images: constimage)
         cropImage = cropImage.crop(rect: temp.frame)
         cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
-        mainImgView.insertSubview(temp, belowSubview: gridViews.first!)
+        mainImgView.insertSubview(temp, belowSubview: customObjectList.first!)
+//        self.view.layer.zPosition = 1;
+        //temp.layer.zPosition = 100;
         if (value < 0.1){
             temp.resetImage()
         }
         else{
             temp.addImage(images: cropImage)
         }
-    
+        view.layoutIfNeeded()
         temp.setValue(value: Int(value * 10))
         
         temp.blur.backgroundColor = nil
@@ -555,6 +561,8 @@ class ViewController: UIViewController{
         temp.blur.alpha = CGFloat(value)
         temp.blur.blurRadius = 0
         temp.setValue(value: Int(value * 10))
+        
+        
 
         intSlider.setValue(0, animated: false)
         blackSlider.setValue(0, animated: false)
@@ -876,7 +884,8 @@ class ViewController: UIViewController{
         c.addGestureRecognizer(gestureTap)
         c.layer.zPosition = 2
         c.blur.blurRadius = 5
-        mainImgView.addSubview(c)
+        //mainImgView.addSubview(c)
+        mainImgView.insertSubview(c, aboveSubview: mainImgView)
         customViewUpdateList.append(c)
 
         if isGridHidden {
@@ -886,7 +895,6 @@ class ViewController: UIViewController{
         c.includesEffect()
 
     }
-    
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         print("Resizing Image")

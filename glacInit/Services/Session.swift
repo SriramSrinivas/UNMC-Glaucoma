@@ -35,7 +35,7 @@ class Session {
         var blurGrid = Matrix(rows:17,columns:17)
         var greyGrid = Matrix(rows:17,columns:17)
         var hiddenGrid = Matrix(rows: 17, columns: 17)
-        var colorGrid = Matrix(rows: 17, columns: 17)
+        //var colorGrid = Matrix(rows: 17, columns: 17)
         
         for (row,i) in distances.enumerated() {
             for (column,j) in distances.enumerated() {
@@ -45,7 +45,7 @@ class Session {
                 var greyValue = 0
                 var blurValue = 0
                 var hiddenValue = 0
-                var colorValue = 0
+                //var colorValue = 0
                 for o in customViewList{
                     if o.frame.contains(CGPoint(x: x, y: y)){
                         
@@ -62,16 +62,16 @@ class Session {
                                 hiddenValue = hiddenValue + 10
                             }
                         }
-                        if(o.image != nil) {
-                            colorValue += o.viewValue
-                        }
+//                        if(o.image != nil) {
+//                            colorValue += o.viewValue
+//                        }
                     }
                 }
                 
                 blurGrid[row,column] = blurValue + blurGrid[row,column]
                 greyGrid[row,column] = greyValue + greyGrid[row,column]
                 hiddenGrid[row,column] = hiddenValue + hiddenGrid[row,column]
-                colorGrid[row,column] = hiddenValue + hiddenGrid[row,column]
+                //colorGrid[row,column] = hiddenValue + hiddenGrid[row,column]
             }
         }
         
@@ -79,16 +79,16 @@ class Session {
         let blurPointsFile = FileObject(name:"\(subjectId)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         let greyPointsFile = FileObject(name:"\(subjectId)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         let hiddenPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        let ColorPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        //let ColorPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
         
         screenShotFile.savePNG(view: mainView)
         blurPointsFile.saveCSV(grid:blurGrid)
         greyPointsFile.saveCSV(grid:greyGrid)
         hiddenPointsFile.saveCSV(grid:hiddenGrid)
-        ColorPointsFile.saveCSV(grid: colorGrid)
+        //ColorPointsFile.saveCSV(grid: colorGrid)
         
-        savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile]
+        savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile]
     }
     
     func uploadFile(file:FileObject,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
@@ -103,6 +103,7 @@ class Session {
                 
                 if let fileError = boxError {
                     completion(false,fileError)
+                    print(fileError)
                 } else {
                     completion(true, nil)
                 }
