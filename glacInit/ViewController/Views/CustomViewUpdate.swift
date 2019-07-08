@@ -19,6 +19,7 @@ class CustomViewUpdate : UIView{
     var greyValue = CGFloat(0)
     var valueLabel = UILabel()
     var image = UIImageView()
+    var constImage = UIImage()
     var viewValue = 5
     override init(frame: CGRect) {
 
@@ -49,15 +50,20 @@ class CustomViewUpdate : UIView{
 
     func addImage(images: UIImage){
         image.image = images
-//        let image = images
-//
-//        let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: (image.size.width), height: (image.size.height)))
-//        imageView.image = image
-//
-//        self.frame = CGRect(x: self.frame.minX, y: self.frame.maxY, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        //self.backgroundColor = UIColor(patternImage: image)
     }
-    
+    func resetImage()
+    {
+        image.image = nil
+    }
+    func getImageFromMain() -> UIImage {
+        var cropImage = constImage
+        cropImage = cropImage.crop(rect: self.frame)
+        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(viewValue)), blendMode: .luminosity)
+        return cropImage
+    }
+    func setImageConst(images: UIImage){
+        constImage = images
+    }
     func setValue(value: Int){
         viewValue = value
         valueLabel.text = String(value)
@@ -86,6 +92,7 @@ class CustomViewUpdate : UIView{
                 let translation = gestureRecognizer.translation(in: self)
                 gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
                 gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+                image.image = getImageFromMain()
             }
         }
     }
@@ -100,6 +107,8 @@ class CustomViewUpdate : UIView{
             blur.frame.size.width = 200*(gestureRecognizer.scale)
             
             blur.center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
+            image.frame = blur.frame
+            image.image = getImageFromMain()
             center = currentCenter
         }
     }

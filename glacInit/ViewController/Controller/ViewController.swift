@@ -44,11 +44,11 @@ class ViewController: UIViewController{
     let intText = UILabel()
     let alphSlider = UISlider()
     let greySlider = UISlider()
-    let blackSlader = UISlider()
+    let blackSlider = UISlider()
     let alphaToggle = UISwitch()
     let luminText = UILabel()
     var customObjectList = [CustomObject]()
-    var customBlackObjectList = [CustomObject]()
+    //var customBlackObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
     
@@ -288,12 +288,12 @@ class ViewController: UIViewController{
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
         
-        blackSlader.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        blackSlader.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
-        blackSlader.addTarget(self, action: #selector(sliderBlack), for: UIControl.Event.valueChanged)
-        blackSlader.minimumValue = 0
-        blackSlader.maximumValue = 10
-        blackSlader.setValue(0, animated: false)
+        blackSlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        blackSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        blackSlider.addTarget(self, action: #selector(sliderBlack), for: UIControl.Event.valueChanged)
+        blackSlider.minimumValue = 0
+        blackSlider.maximumValue = 10
+        blackSlider.setValue(0, animated: false)
 
         sliderStack.axis = NSLayoutConstraint.Axis.vertical
         sliderStack.distribution = UIStackView.Distribution.equalSpacing
@@ -301,7 +301,7 @@ class ViewController: UIViewController{
         sliderStack.spacing = 4.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
 
-        sliderStack.addArrangedSubview(blackSlader)
+        sliderStack.addArrangedSubview(blackSlider)
         sliderStack.addArrangedSubview(blurOnIcon)
         sliderStack.addArrangedSubview(blurOffIcon)
         sliderStack.addArrangedSubview(intSlider)
@@ -343,7 +343,7 @@ class ViewController: UIViewController{
         clear.backgroundColor = UIColor(hexString: "#1B5E20")
         clear.addTarget(self, action: #selector(clearTap), for: .touchUpInside)
         
-        newBackground.setTitle("Switch background", for: UIControl.State.normal)
+        newBackground.setTitle("Switch", for: UIControl.State.normal)
         newBackground.heightAnchor.constraint(equalToConstant: 50).isActive = true
         newBackground.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         newBackground.backgroundColor = UIColor(hexString: "#1B5E20")
@@ -505,6 +505,7 @@ class ViewController: UIViewController{
     
     @objc func sliderIntensity(slider: UISlider){
         let value = slider.value
+        let temp = getCurrentActiveView()
         
         for i in customViewUpdateList {
             if i.isActive {
@@ -514,6 +515,8 @@ class ViewController: UIViewController{
                 i.setValue(value: Int(value))
 
                 greySlider.setValue(0, animated: false)
+                blackSlider.setValue(0, animated: false)
+                temp.resetImage()
             }
         }
     }
@@ -526,12 +529,22 @@ class ViewController: UIViewController{
         value = value/10
         var cropImage = constimage
         let temp = getCurrentActiveView()
+        temp.setImageConst(images: constimage)
         cropImage = cropImage.crop(rect: temp.frame)
         cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
-        
-        temp.addImage(images: cropImage)
+        mainImgView.insertSubview(temp, belowSubview: gridViews.first!)
+        if (value < 0.1){
+            temp.resetImage()
+        }
+        else{
+            temp.addImage(images: cropImage)
+        }
     
         temp.setValue(value: Int(value * 10))
+        
+        temp.blur.backgroundColor = nil
+        intSlider.setValue(0, animated: false)
+        greySlider.setValue(0, animated: false)
       
     }
     @objc func sliderGrey(slider: UISlider){
@@ -544,6 +557,8 @@ class ViewController: UIViewController{
         temp.setValue(value: Int(value * 10))
 
         intSlider.setValue(0, animated: false)
+        blackSlider.setValue(0, animated: false)
+        temp.resetImage()
     }
     
     @objc func switchAlpha(sender: UISwitch!){
@@ -585,6 +600,11 @@ class ViewController: UIViewController{
                     createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: i.frame.width, height: i.frame.height))
                     let temp = customViewUpdateList.last
                     temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+                    
+//                        var cropImage = constimage
+//                        cropImage = cropImage.crop(rect: temp!.frame)
+//                        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(i.alpha)), blendMode: .luminosity)
+                    
                     temp?.isLinkedToImage = true
                     temp?.linkedImage = i
                     enableControl(value: .BlurAndAlpha)
@@ -627,7 +647,10 @@ class ViewController: UIViewController{
             else {
                 i.isActive(value: true)
                 if ( i.blur.backgroundColor == UIColor.clear){
-                    blackSlader.setValue(Float(i.viewValue), animated: false)
+                    blackSlider.setValue(Float(i.viewValue), animated: false)
+                }
+                else{
+                    blackSlider.setValue(0, animated: false)
                 }
                 if(i.blur.backgroundColor == UIColor.black){
                     greySlider.setValue(Float(i.viewValue), animated: false)
@@ -646,6 +669,7 @@ class ViewController: UIViewController{
                         alphaToggle.setOn(true, animated: false)
                     }
                     enableControl(value: .BlurAndAlpha)
+                    enableControl(value: .Black)
                 } else {
                     enableControl(value: .OnlyBlur)
                 }
@@ -826,6 +850,7 @@ class ViewController: UIViewController{
         print("Image Tapped")
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
+        
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
         if !customViewActive() {
@@ -845,6 +870,7 @@ class ViewController: UIViewController{
 
         intSlider.setValue(5, animated: false)
         greySlider.setValue(0, animated: false)
+        blackSlider.setValue(0, animated: false)
         let c = CustomViewUpdate(frame: frame)
         let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
         c.addGestureRecognizer(gestureTap)
@@ -957,6 +983,11 @@ class ViewController: UIViewController{
             delete.alpha = 1
             delete.isEnabled =  true
             
+            blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            blackSlider.tintColor = UIColor(hexString: "EEEEEE")
+            blackSlider.alpha = 1
+            blackSlider.isEnabled = true
+            
             intSlider.alpha = 1
             intSlider.isEnabled = true
             alphSlider.alpha = 1
@@ -987,6 +1018,9 @@ class ViewController: UIViewController{
             alphSlider.tintColor = UIColor(hexString: "9E9E9E")
             alphSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
             alphSlider.alpha = 0.4
+            
+            blackSlider.isEnabled = false                                                                                                                                      
+            blackSlider.alpha = 0.4
             
             delete.alpha = 0.4
             delete.isEnabled = false
@@ -1021,6 +1055,11 @@ class ViewController: UIViewController{
             delete.alpha = 1
             delete.isEnabled =  true
             
+            blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            blackSlider.tintColor = UIColor(hexString: "EEEEEE")
+            blackSlider.alpha = 1
+            blackSlider.isEnabled = true
+            
             alphSlider.tintColor = UIColor(hexString: "9E9E9E")
             alphSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
             alphSlider.isEnabled = false
@@ -1047,7 +1086,7 @@ class ViewController: UIViewController{
         case .Black:
             
            
-            blackSlader.isEnabled = true
+            blackSlider.isEnabled = true
            
 
         default:
