@@ -24,12 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         // Reachability code
         // Allocate a reachability object\
-        BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
+        //BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = UINavigationController(rootViewController: ViewController())
         
-        //BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
+        BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         
         return true
     }

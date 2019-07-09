@@ -8,6 +8,7 @@ import CoreImage
 import CoreGraphics
 
 // YOOOOOO FIX THE IMAGE BEING TO BIG (will be fixed when constraining the images to the screen)
+// there is a little issue with the screen shotting but.. it will do for now 
 
 class ViewController: UIViewController{
     
@@ -178,7 +179,7 @@ class ViewController: UIViewController{
         
         
 
-        let image = UIImage(named: backImageName)
+        var image = UIImage(named: backImageName)
        
         //epiaFilter(image, intensity: 2)
         //this will change the image color
@@ -189,13 +190,18 @@ class ViewController: UIViewController{
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         
         imageView.image = image
+//        UIGraphicsBeginImageContext(mainImgView.frame.size)
+//        image = UIGraphicsGetImageFromCurrentImageContext()
         //constimage = imageView.image!
+        //constimage = image!
         constimage = resizeImage(image: image!, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         print("know these")
 //        print(mainImgView.frame.size.height)
 //        print(mainImgView.frame.size.width)
         
         mainImgView.addSubview(imageView)
+        
+        
     }
     
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
@@ -396,6 +402,8 @@ class ViewController: UIViewController{
             mainImgView.insertSubview(i, aboveSubview: mainImgView)
             mainImgView.bringSubviewToFront(i)
         }
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     
     func addControlIcons(){
@@ -430,6 +438,8 @@ class ViewController: UIViewController{
             mainImgView.addSubview(i)
             mainImgView.bringSubviewToFront(i)
         }
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     @objc func setNewBackground(_sender: UIButton){
         //warn user that this will delete self
@@ -545,7 +555,7 @@ class ViewController: UIViewController{
         else{
             temp.addImage(images: cropImage)
         }
-        view.layoutIfNeeded()
+        mainImgView.layoutSubviews()
         temp.setValue(value: Int(value * 10))
         
         temp.blur.backgroundColor = nil
@@ -562,8 +572,6 @@ class ViewController: UIViewController{
         temp.blur.blurRadius = 0
         temp.setValue(value: Int(value * 10))
         
-        
-
         intSlider.setValue(0, animated: false)
         blackSlider.setValue(0, animated: false)
         temp.resetImage()
@@ -623,7 +631,6 @@ class ViewController: UIViewController{
         
     }
     
-    
     func customViewActive() -> Bool{
         var activatedViews: Bool = false
         
@@ -645,6 +652,9 @@ class ViewController: UIViewController{
     }
     
     @objc func handleTapUpdate(sender: UITapGestureRecognizer){
+        
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -772,7 +782,7 @@ class ViewController: UIViewController{
                 self.uploadAttempt = self.uploadAttempt + 1
                 if let fileError = error {
                     //self.currentSession = Session(currentSubjectId: self.subjectID)
-                    //self.currentSession.boxAuthorize() 
+                    self.currentSession.boxAuthorize() 
                     //self.currentSession.boxAuthorize()
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
                     
@@ -807,7 +817,7 @@ class ViewController: UIViewController{
             self.nameLabel.textAlignment = .center
             self.nameLabel.center.x = self.nameLabel.frame.maxX
             self.subjectID = (inputTextField?.text)!
-            self.currentSession = Session(currentSubjectId: (self.subjectID + "." + self.backImageName))
+            self.currentSession = Session(currentSubjectId: (self.subjectID))
             self.currentSession.boxAuthorize()
         }
         
@@ -856,6 +866,9 @@ class ViewController: UIViewController{
 
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         print("Image Tapped")
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+        
         let touchPoint = tapGestureRecognizer.location(in: tapGestureRecognizer.view!)
         
         
@@ -976,6 +989,15 @@ class ViewController: UIViewController{
         
         return today_string
         
+    }
+    
+    func captureScreen() -> UIImage? {
+        guard let context = UIGraphicsGetCurrentContext() else { return .none }
+        UIGraphicsBeginImageContextWithOptions(mainImgView.bounds.size, false, UIScreen.main.scale)
+        mainImgView.layer.render(in: context)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
     
     func enableControl(value: ControlState){
@@ -1119,3 +1141,5 @@ class ViewController: UIViewController{
 enum ControlState {
     case Disable, OnlyBlur, BlurAndAlpha, Black
 }
+
+

@@ -14,7 +14,6 @@
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
 		2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48222D3FD1700734063 /* UIGenerics.swift */; };
-		2132E48522D4011300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48422D4011300734063 /* LoadedImageViewController.swift */; };
 		21A6BB1022CA837D009CDAD3 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB0F22CA837D009CDAD3 /* ObjectModel.swift */; };
 		21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */; };
 		21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */; };
@@ -66,7 +65,6 @@
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		2132E48222D3FD1700734063 /* UIGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGenerics.swift; sourceTree = "<group>"; };
-		2132E48422D4011300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		21A6BB0F22CA837D009CDAD3 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundChangeController.swift; sourceTree = "<group>"; };
 		21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundImage.swift; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 				21A6BB1122CA86FE009CDAD3 /* BackGroundChange */,
 				21E13AF822CC0CA900429F58 /* ViewController */,
 				21E13AFE22CC0E0C00429F58 /* Extensions */,
-				2132E48422D4011300734063 /* LoadedImageViewController.swift */,
 			);
 			path = glacInit;
 			sourceTree = "<group>";
@@ -603,7 +600,6 @@
 				2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */,
 				21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
-				2132E48522D4011300734063 /* LoadedImageViewController.swift in Sources */,
 				2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */,
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,

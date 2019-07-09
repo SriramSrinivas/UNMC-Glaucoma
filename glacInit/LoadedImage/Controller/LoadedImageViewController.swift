@@ -31,12 +31,12 @@ class LoadedImageViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(<#T##view: UIView##UIView#>)
+        //view.addSubview()
         setUpView()
     }
     
     private func setUpView(){
-        mainImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: (view.frame.size.width - view.frame.size.width/5), height: view.frame.height))
+       // mainImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: (view.frame.size.width - view.frame.size.width/5), height: view.frame.height))
     }
     
 }

@@ -92,7 +92,21 @@ class CustomViewUpdate : UIView{
                 let translation = gestureRecognizer.translation(in: self)
                 gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
                 gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+        
                 image.image? = getImageFromMain()
+            }
+            
+            if(gestureRecognizer.view!.center.x < gestureRecognizer.view!.frame.height/2){
+                gestureRecognizer.view!.center.x = gestureRecognizer.view!.frame.height/2
+            }
+            if(gestureRecognizer.view!.center.y < gestureRecognizer.view!.frame.height/2){
+                gestureRecognizer.view!.center.y = gestureRecognizer.view!.frame.height/2
+            }
+            if(gestureRecognizer.view!.center.x > (image.frame.width * 4.1) - gestureRecognizer.view!.frame.height/2){
+                gestureRecognizer.view!.center.x = (image.frame.width * 4.1) - gestureRecognizer.view!.frame.height/2
+            }
+            if(gestureRecognizer.view!.center.y > (image.frame.height * 3.8) - gestureRecognizer.view!.frame.height/2){
+                gestureRecognizer.view!.center.y = (image.frame.height * 3.8) - gestureRecognizer.view!.frame.height/2
             }
         }
     }
