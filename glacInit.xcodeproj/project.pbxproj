@@ -317,11 +317,11 @@
 		7752F6591E50020A003ACC5F /* glacInit */ = {
 			isa = PBXGroup;
 			children = (
-				2132E47A22D3FA7B00734063 /* LoadedImage */,
 				7752F6661E50020A003ACC5F /* Info.plist */,
 				7752F6711E50020A003ACC5F /* Info.plist */,
 				21E13AF922CC0CC900429F58 /* App */,
 				21E13AF722CB8CCB00429F58 /* Services */,
+				2132E47A22D3FA7B00734063 /* LoadedImage */,
 				21A6BB1122CA86FE009CDAD3 /* BackGroundChange */,
 				21E13AF822CC0CA900429F58 /* ViewController */,
 				21E13AFE22CC0E0C00429F58 /* Extensions */,
