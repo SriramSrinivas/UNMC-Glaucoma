@@ -16,6 +16,8 @@
 
 import Foundation
 import UIKit
+import CoreImage
+import CoreGraphics
 
 class LoadedImageViewController: UIViewController {
     
@@ -38,30 +40,34 @@ class LoadedImageViewController: UIViewController {
     
     var blurSwitch : UISwitch = {
         let origSwitch = UISwitch(frame:CGRect(x: 0, y: 0, width: 100, height: 50))
+        origSwitch.isOn = true
         origSwitch.addTarget(self, action: #selector(grewSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
 
     var blackSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.addTarget(self, action: #selector(grewSwitch(_sender:)), for: UIControl.Event.valueChanged)
+        origSwitch.isOn = true
+        origSwitch.addTarget(self, action: #selector(blackSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var colorSwitch : UISwitch = {
         let origSwitch = UISwitch()
+        origSwitch.isOn = true
         origSwitch.addTarget(self, action: #selector(colorSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var isHiddenSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.addTarget(self, action: #selector(allSwitch(_sender:)), for: UIControl.Event.valueChanged)
+        origSwitch.addTarget(self, action: #selector(isHiddenSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var allSwitch : UISwitch = {
         let origSwitch = UISwitch()
+        
         origSwitch.addTarget(self, action: #selector(allSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
@@ -118,6 +124,9 @@ class LoadedImageViewController: UIViewController {
      var colorCustomViewUpdateList = [CustomViewUpdate]()
      var objectCustomViewUpdateList = [CustomViewUpdate]()
     
+    var fileTypes = [1,2,3]
+    var constImage = UIImage(named: "mainTes")
+    
     var gridViews = [UIView]()
     let distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
     
@@ -127,17 +136,42 @@ class LoadedImageViewController: UIViewController {
         view.backgroundColor = .red
 //        view.addSubview(mainImageView)
         [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch].forEach {view.addSubview($0)}
+        initCustomObjects(h: 0, w: 0)
         //view.addSubview(sideImageView)
         setUpView()
         addblur()
     }
     
+    func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = width  / size.width
+        let heightRatio = height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        
+        newSize = CGSize(width: size.width * widthRatio,  height: size.height * heightRatio)
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+        
+    }
     
     func addblur(){
         let midx = ((view.frame.width/5)*4)/2
         let midy = view.frame.height/2
         let width = (view.frame.width/5)*4
         let height = view.frame.height
+        
+        constImage = resizeImage(image: constImage!, width: width, height: height + 1)
         
         for number in distances {
             for numb in distances {
@@ -146,22 +180,55 @@ class LoadedImageViewController: UIViewController {
                 let y = ((number/2) * Double(height) + Double(midy))
                 let rectWidth = (numb.nextUp * Double(width) + Double(midx))/2 - x
                 let frame = CGRect(x: x, y:y, width: 15, height: 15)
-                let c = CustomViewUpdate(frame: frame)
+//                let c = CustomViewUpdate(frame: frame)
+//
+//                c.isActive = false
+//                c.blur.layer.borderWidth = 1
                 
-                c.layer.zPosition = 2
-                c.blur.blurRadius = 5
-                mainImageView.addSubview(c)
-                c.isActive = false
-                c.includesEffect()
-                c.blur.layer.borderWidth = 1
-                blurCustomViewUpdateList.append(c)
-                
-                c.blur.backgroundColor = UIColor.black
-                c.blur.alpha = 10
-                c.blur.blurRadius = 0
-                greyCustomViewUpdateList.append(c)
-                
-                mainImageView.addSubview(c)
+                if fileTypes.contains(1){
+                    let c = CustomViewUpdate(frame: frame)
+                    
+                    c.isActive = false
+                    c.blur.layer.borderWidth = 1
+                    c.layer.zPosition = 2
+                    c.blur.blurRadius = 7
+                    c.isActive = false
+                    c.includesEffect()
+                    blurCustomViewUpdateList.append(c)
+                    mainImageView.addSubview(c)
+                }
+                if fileTypes.contains(2){
+                    let c = CustomViewUpdate(frame: frame)
+                    c.layer.zPosition = 2
+                    c.isActive = false
+                    c.blur.layer.borderWidth = 1
+                    c.blur.backgroundColor = UIColor.black
+                    c.blur.alpha = 1/10
+                    c.blur.blurRadius = 0
+                    greyCustomViewUpdateList.append(c)
+                    mainImageView.addSubview(c)
+                }
+                if (fileTypes.contains(3)){
+                    let c = CustomViewUpdate(frame: frame)
+                    //value = value/10
+                    var cropImage = constImage
+                    //let temp = getCurrentActiveView()
+                    c.setImageConst(images: constImage!)
+                    c.blur.layer.borderWidth = 1
+
+                    cropImage = cropImage!.crop(rect: c.frame)
+                    cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(8)), blendMode: .luminosity)
+                    //m//ainImageView.insertSubview(c, belowSubview: customObjectList.first!)
+                    //        self.view.layer.zPosition = 1;
+                    //temp.layer.zPosition =
+                    if ((cropImage) != nil){
+                        c.addImage(images: cropImage!)
+                    }
+                    
+                    c.blur.backgroundColor = nil
+                    colorCustomViewUpdateList.append(c)
+                    mainImageView.addSubview(c)
+                }
             }
         }
         
@@ -191,12 +258,34 @@ class LoadedImageViewController: UIViewController {
         gridSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 525, width: 100, height: 50)
     }
     
-    
+    func initCustomObjects(h:CGFloat, w:CGFloat){
+        
+        customObjectList = createobjects(pictureID: 1, height: 0, width: 0)
+        
+        for i in customObjectList {
+            i.isUserInteractionEnabled = true
+           // let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
+           // i.addGestureRecognizer(gestureTap)
+            
+            mainImageView.addSubview(i)
+            mainImageView.bringSubviewToFront(i)
+        }
+    }
     
     @objc func grewSwitch(_sender: UISwitch){
         if (allSwitch.isOn == true)
         {
             allSwitch.setOn(false, animated: true)
+        }
+        if (_sender.isOn == true){
+            for i in blurCustomViewUpdateList{
+                i.isHidden = false
+            }
+        }
+        else{
+            for i in blurCustomViewUpdateList{
+               i.isHidden = true
+            }
         }
     }
     @objc func blackSwitch(_sender: UISwitch){
@@ -204,25 +293,79 @@ class LoadedImageViewController: UIViewController {
         {
             allSwitch.setOn(false, animated: true)
         }
+        if (_sender.isOn == true){
+            for i in greyCustomViewUpdateList{
+                i.isHidden = false
+            }
+        }
+        else{
+            for i in greyCustomViewUpdateList{
+                i.isHidden = true
+            }
+        }
     }
     @objc func colorSwitch(_sender: UISwitch){
         if (allSwitch.isOn == true)
         {
             allSwitch.setOn(false, animated: true)
         }
+        if (_sender.isOn == true){
+            for i in colorCustomViewUpdateList{
+                i.isHidden = false
+            }
+        }
+        else{
+            for i in colorCustomViewUpdateList{
+                i.isHidden = true
+            }
+        }
+        
+        
     }
     @objc func allSwitch(_sender: UISwitch){
         
         if (_sender.isOn == true){
             blackSwitch.setOn(true, animated: true)
-       
+            for i in colorCustomViewUpdateList{
+                i.isHidden = false
+            }
             blurSwitch.setOn(true, animated: true)
             colorSwitch.setOn(true, animated: true)
+            for i in greyCustomViewUpdateList{
+                i.isHidden = false
+            }
+            for i in blurCustomViewUpdateList{
+                i.isHidden = false
+            }
         }
         else{
             blackSwitch.setOn(false, animated: true)
             blurSwitch.setOn(false, animated: true)
             colorSwitch.setOn(false, animated: true)
+            for i in colorCustomViewUpdateList{
+                i.isHidden = true
+            }
+            for i in greyCustomViewUpdateList{
+                i.isHidden = true
+            }
+            for i in blurCustomViewUpdateList{
+                i.isHidden = true
+            }
+        }
+    }
+    @objc func isHiddenSwitch(_sender: UISwitch){
+        if (_sender.isOn == true){
+            for i in customObjectList{
+                i.isHidden = false
+                i.layer.borderWidth = 0
+            }
+        }
+        else{
+            for i in customObjectList{
+                i.layer.borderWidth = 1
+                i.layer.borderColor = UIColor.red.cgColor
+                i.isHidden = true
+            }
         }
     }
 }

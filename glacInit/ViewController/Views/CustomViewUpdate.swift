@@ -68,7 +68,7 @@ class CustomViewUpdate : UIView{
         viewValue = value
         valueLabel.text = String(value)
     }
-    
+
     func isActive(value: Bool){
         switch value {
         case true:
