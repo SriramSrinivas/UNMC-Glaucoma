@@ -13,7 +13,7 @@
 // controls needed iseditable, which files show. like only blur? grey? ishidden? two of them? or all?
 // maybe have a temp storage on device? so they dont have to keep reloading the data
 
-
+//import SwiftUI
 import Foundation
 import UIKit
 import CoreImage
@@ -61,19 +61,21 @@ class LoadedImageViewController: UIViewController {
     
     var isHiddenSwitch : UISwitch = {
         let origSwitch = UISwitch()
+        origSwitch.isOn = true
         origSwitch.addTarget(self, action: #selector(isHiddenSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var allSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        
+        origSwitch.isOn = true
         origSwitch.addTarget(self, action: #selector(allSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     var gridSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.addTarget(self, action: #selector(allSwitch(_sender:)), for: UIControl.Event.valueChanged)
+        origSwitch.isOn = true
+        origSwitch.addTarget(self, action: #selector(toggleGrid(mySwitch:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
@@ -115,6 +117,7 @@ class LoadedImageViewController: UIViewController {
     var backButton : UIButton = {
         var temp = UIButton()
         setUpButton(&temp, title: "Back", cornerRadius: 25, borderWidth: 0, color: "red")
+        temp.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         return temp
     }()
     
@@ -123,6 +126,8 @@ class LoadedImageViewController: UIViewController {
      var blurCustomViewUpdateList = [CustomViewUpdate]()
      var colorCustomViewUpdateList = [CustomViewUpdate]()
      var objectCustomViewUpdateList = [CustomViewUpdate]()
+    var currentFileType = 1
+    var currentData = [[String]]()
     
     var fileTypes = [1,2,3]
     var constImage = UIImage(named: "mainTes")
@@ -135,11 +140,12 @@ class LoadedImageViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .red
 //        view.addSubview(mainImageView)
-        [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch].forEach {view.addSubview($0)}
+        [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
         //view.addSubview(sideImageView)
         setUpView()
         addblur()
+        addGridLineUpdate(mainView: mainImageView)
     }
     
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
@@ -184,8 +190,10 @@ class LoadedImageViewController: UIViewController {
 //
 //                c.isActive = false
 //                c.blur.layer.borderWidth = 1
-                
-                if fileTypes.contains(1){
+                //currentData[2][1] = "18"
+             //  let value = currentData[2][1]
+                var value = "1"
+                if (currentFileType == 1 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     
                     c.isActive = false
@@ -197,7 +205,7 @@ class LoadedImageViewController: UIViewController {
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
-                if fileTypes.contains(2){
+                if (currentFileType == 2 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
@@ -208,7 +216,7 @@ class LoadedImageViewController: UIViewController {
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
-                if (fileTypes.contains(3)){
+               if (currentFileType == 3 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     //value = value/10
                     var cropImage = constImage
@@ -236,6 +244,42 @@ class LoadedImageViewController: UIViewController {
 //
 //        mainImageView.addSubview(c)
     }
+    //will need some sort of local storage for it most likely
+    // give the file path.. this should work for any of the files (color, grey and blur)
+    func csv(data: String) -> [[String]] {
+        var result: [[String]] = []
+        let rows = data.components(separatedBy: "\n")
+        for row in rows {
+            let columns = row.components(separatedBy: ";")
+            result.append(columns)
+        }
+        return result
+    }
+    func readDataFromCSV(fileName:String, fileType: String)-> String!{
+        guard let filepath = Bundle.main.path(forResource: fileName, ofType: fileType)
+            else {
+                return nil
+        }
+        do {
+            var contents = try String(contentsOfFile: filepath, encoding: .utf8)
+            contents = cleanRows(file: contents)
+            return contents
+        } catch {
+            print("File Read Error for file \(filepath)")
+            return nil
+        }
+    }
+    func cleanRows(file:String)->String{
+        var cleanFile = file
+        cleanFile = cleanFile.replacingOccurrences(of: "\r", with: "\n")
+        cleanFile = cleanFile.replacingOccurrences(of: "\n\n", with: "\n")
+        return cleanFile
+    }
+   
+//    var data = readDataFromCSV(fileName: kCSVFileName, fileType: kCSVFileExtension)
+//    data = cleanRows(file: data)
+//    let csvRows = csv(data: data)
+//    print(csvRows[1][1]) //UXM n. 166/167.
     
     private func setUpView(){
         
@@ -250,12 +294,13 @@ class LoadedImageViewController: UIViewController {
         colorSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 300, width: 100, height: 50)
         
         allLabel.anchor(top: colorLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        allSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 375, width: 100, height: 50)
+        isHiddenSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 375, width: 100, height: 50)
          isHiddenLabel.anchor(top: allLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        isHiddenSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 450, width: 100, height: 50)
+        allSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 450, width: 100, height: 50)
         
         gridLabel.anchor(top: isHiddenLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
         gridSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 525, width: 100, height: 50)
+        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
     }
     
     func initCustomObjects(h:CGFloat, w:CGFloat){
@@ -264,12 +309,42 @@ class LoadedImageViewController: UIViewController {
         
         for i in customObjectList {
             i.isUserInteractionEnabled = true
-           // let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleCustomObjectTap))
-           // i.addGestureRecognizer(gestureTap)
-            
+          
             mainImageView.addSubview(i)
             mainImageView.bringSubviewToFront(i)
         }
+    }
+    
+    func addGridLineUpdate(mainView: UIView){
+        
+        let width = (view.frame.width/5)*4
+        let height = view.frame.height
+        
+        let line1 = UIButton()
+        line1.frame = CGRect(x: width*0.3, y: 0, width: 5, height: height)
+        line1.layer.borderWidth = 5
+        line1.layer.borderColor = UIColor(hexString: "FF9800").cgColor
+        
+        let line2 = UIButton()
+        line2.frame = CGRect(x: width*0.66, y: 0, width: 5, height: height)
+        line2.layer.borderWidth = 5
+        line2.layer.borderColor = UIColor(hexString: "FF9800").cgColor
+        
+        let line3 = UIButton()
+        line3.frame = CGRect(x: 0, y: height*0.5, width: width, height: 5)
+        line3.layer.borderWidth = 5
+        line3.layer.borderColor = UIColor(hexString: "FF9800").cgColor
+        
+        gridViews.append(line1)
+        gridViews.append(line2)
+        gridViews.append(line3)
+        
+        for i in gridViews {
+            
+            mainImageView.insertSubview(i, aboveSubview: mainImageView)
+            mainImageView.bringSubviewToFront(i)
+        }
+       
     }
     
     @objc func grewSwitch(_sender: UISwitch){
@@ -367,6 +442,25 @@ class LoadedImageViewController: UIViewController {
                 i.isHidden = true
             }
         }
+    }
+    @objc func toggleGrid(mySwitch: UISwitch) {
+        let value = mySwitch.isOn
+        
+        switch (value) {
+        case false:
+            for i in gridViews {
+                i.isHidden = true
+                
+            }
+        case true:
+            for i in gridViews {
+                i.isHidden = false
+               
+                }
+            }
+        }
+    @objc func backButtonPressed(sender: UIButton){
+        self.removeFromParent()
     }
 }
 enum fileTypes{
