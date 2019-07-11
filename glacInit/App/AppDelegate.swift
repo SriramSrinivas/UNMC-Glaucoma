@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: LoadedImageViewController())
+        window?.rootViewController = UINavigationController(rootViewController: ViewController())
         
         BOXContentClient.setClientID("k7md28kj4bojyxxa65kd1bwraxlhhq60", clientSecret: "ES1YfYYpIFyKo4lkBdhphhFlEBfqPtpg")
         

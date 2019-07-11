@@ -817,7 +817,7 @@ class ViewController: UIViewController{
             self.nameLabel.textAlignment = .center
             self.nameLabel.center.x = self.nameLabel.frame.maxX
             self.subjectID = (inputTextField?.text)!
-            self.currentSession = Session(currentSubjectId: (self.subjectID))
+            self.currentSession = Session(currentSubjectId: (self.subjectID + "_" + self.backImageName))
             self.currentSession.boxAuthorize()
         }
         
