@@ -19,31 +19,51 @@ class importFile {
 
     var subjectId: String
     var backGroundId: String
-    var date: Date
+    //var date: Date
      var type: FileType
-    var path: URL
+    var path = "/GlacInit/"
+    var fileURL : URL?
+    let stream = OutputStream()
+    var fileName = "NewFile" + ".csv"
+    var csvText = ""
     
-    init(subjectId: String, backGroundId: String, date: Date, file: FileType) {
+    init(subjectId: String, backGroundId: String, file: FileType) {
         self.subjectId = subjectId
         self.backGroundId = backGroundId
-        self.date = date
+        //self.date = date
         self.type = file
-        self.path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(subjectId)")!
+       // self.path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(subjectId)")!
     }
     
 // sets the background
-    
+    func newFile(){
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            var fileURL = dir.appendingPathComponent(path)
+            do{
+                try FileManager.default.createDirectory(atPath: fileURL.path, withIntermediateDirectories: true, attributes: nil)
+                fileURL = dir.appendingPathComponent(path + fileName)
+            }
+            catch{
+                print("Unable to create directory \(Error.self)")
+            }
+            self.fileURL = fileURL
+        }
+    }
     func setBackGround() -> String{
         return backGroundId
     }
 // method to get the files from box
-    func downlaodFile(){
-        let stream = OutputStream()
-        //let file = FileManager.file
+    func downLoadFile(){
+        newFile()
         let contentClient = BOXContentClient.default()
-        //let localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test.jpg"];
-        let boxRequest = contentClient?.fileDownloadRequest(withID: "woah", to: stream)
-//            [contentClient fileDownloadRequestWithID:@"file-id" toLocalFilePath:localFilePath];
+      
+         let searchRequest = contentClient?.searchRequest(withQuery: "dog_mainTes_blurPoints_2019-07-11 11-11-32_1.csv", in: NSMakeRange(0, 10000))
+        
+        searchRequest?.perform(completion: nil)
+        
+        let boxRequest = contentClient?.fileDownloadRequest(withID: "489481746578", toLocalFilePath: fileURL?.path)
+        //let boxReq = contentClient?.searchRequest(withQuery: "dog_mainTes_blurPoints_2019-07-11 11-11-32_1.csv", in: NSRange(location: 2, length: 100))
+       
         boxRequest?.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
         }, completion: {(_ error: Error?) -> Void in
             if error == nil {
@@ -51,8 +71,13 @@ class importFile {
              else {
         }
         })
+       // let data: Data
+ 
     }
     
+    func downloadedFile() -> URL {
+        return fileURL!
+    }
 
 // method to go through the data and display the info
 

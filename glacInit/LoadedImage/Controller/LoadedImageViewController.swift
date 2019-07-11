@@ -9,8 +9,9 @@
 // TODO:
 // Load data into CSV'S
 // present data using dots or squares or whatever (I think circles would look cool XD)
-// have a control bar similar to the viewController but different controls
-// controls needed iseditable, which files show. like only blur? grey? ishidden? two of them? or all?
+// Add a button for importing files
+// imports need to have an exact name to query
+
 // maybe have a temp storage on device? so they dont have to keep reloading the data
 
 //import SwiftUI
@@ -121,11 +122,10 @@ class LoadedImageViewController: UIViewController {
         return temp
     }()
     
-    
-     var greyCustomViewUpdateList = [CustomViewUpdate]()
-     var blurCustomViewUpdateList = [CustomViewUpdate]()
-     var colorCustomViewUpdateList = [CustomViewUpdate]()
-     var objectCustomViewUpdateList = [CustomViewUpdate]()
+    var greyCustomViewUpdateList = [CustomViewUpdate]()
+    var blurCustomViewUpdateList = [CustomViewUpdate]()
+    var colorCustomViewUpdateList = [CustomViewUpdate]()
+    var objectCustomViewUpdateList = [CustomViewUpdate]()
     var currentFileType = 1
     var currentData = [[String]]()
     
@@ -139,30 +139,47 @@ class LoadedImageViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .red
-//        view.addSubview(mainImageView)
+
         [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
-        //view.addSubview(sideImageView)
+    
         setUpView()
+    
+        let file = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
+        file.downLoadFile()
+        let newfile = file.downloadedFile()
+        var content = String()
+        do{
+            content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
+        }
+         catch {
+            print ("loading image file error")
+        }
+        let data = cleanRows(file: content)
+        currentData = csv(data: data)
         addblur()
         addGridLineUpdate(mainView: mainImageView)
     }
     
+    func importFilesssss(){
+        
+    }
+    //    var data = readDataFromCSV(fileName: kCSVFileName, fileType: kCSVFileExtension)
+    //    data = cleanRows(file: data)
+    //    let csvRows = csv(data: data)
+    //    print(csvRows[1][1]) //UXM n. 166/167.
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         let size = image.size
         
         let widthRatio  = width  / size.width
         let heightRatio = height / size.height
         
-        // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         
         newSize = CGSize(width: size.width * widthRatio,  height: size.height * heightRatio)
         
-        // This is the rect that we've calculated out and this is what is actually used below
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
-        // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()!
@@ -176,7 +193,8 @@ class LoadedImageViewController: UIViewController {
         let midy = view.frame.height/2
         let width = (view.frame.width/5)*4
         let height = view.frame.height
-        
+        var countx = 1
+        var county = 1
         constImage = resizeImage(image: constImage!, width: width, height: height + 1)
         
         for number in distances {
@@ -184,22 +202,18 @@ class LoadedImageViewController: UIViewController {
                 
                 let x = ((numb/2) * Double(width) + Double(midx))
                 let y = ((number/2) * Double(height) + Double(midy))
-                let rectWidth = (numb.nextUp * Double(width) + Double(midx))/2 - x
+                _ = (numb.nextUp * Double(width) + Double(midx))/2 - x
                 let frame = CGRect(x: x, y:y, width: 15, height: 15)
-//                let c = CustomViewUpdate(frame: frame)
-//
-//                c.isActive = false
-//                c.blur.layer.borderWidth = 1
-                //currentData[2][1] = "18"
-             //  let value = currentData[2][1]
-                var value = "1"
+
+                let value = currentData[countx][county]
+                let a:Int? = Int(value)
                 if (currentFileType == 1 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     
                     c.isActive = false
                     c.blur.layer.borderWidth = 1
                     c.layer.zPosition = 2
-                    c.blur.blurRadius = 7
+                    c.blur.blurRadius = CGFloat(a!/10)
                     c.isActive = false
                     c.includesEffect()
                     blurCustomViewUpdateList.append(c)
@@ -211,24 +225,20 @@ class LoadedImageViewController: UIViewController {
                     c.isActive = false
                     c.blur.layer.borderWidth = 1
                     c.blur.backgroundColor = UIColor.black
-                    c.blur.alpha = 1/10
+                    c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                if (currentFileType == 3 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
-                    //value = value/10
                     var cropImage = constImage
-                    //let temp = getCurrentActiveView()
                     c.setImageConst(images: constImage!)
                     c.blur.layer.borderWidth = 1
 
                     cropImage = cropImage!.crop(rect: c.frame)
-                    cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(8)), blendMode: .luminosity)
-                    //m//ainImageView.insertSubview(c, belowSubview: customObjectList.first!)
-                    //        self.view.layer.zPosition = 1;
-                    //temp.layer.zPosition =
+                    cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
+                
                     if ((cropImage) != nil){
                         c.addImage(images: cropImage!)
                     }
@@ -237,12 +247,11 @@ class LoadedImageViewController: UIViewController {
                     colorCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
+                countx = countx + 1
             }
+            county = county + 1
+            countx = 1
         }
-        
-//        let c = CustomGreyView(frame: frame)
-//
-//        mainImageView.addSubview(c)
     }
     //will need some sort of local storage for it most likely
     // give the file path.. this should work for any of the files (color, grey and blur)
@@ -250,7 +259,7 @@ class LoadedImageViewController: UIViewController {
         var result: [[String]] = []
         let rows = data.components(separatedBy: "\n")
         for row in rows {
-            let columns = row.components(separatedBy: ";")
+            let columns = row.components(separatedBy: ",")
             result.append(columns)
         }
         return result
@@ -275,11 +284,6 @@ class LoadedImageViewController: UIViewController {
         cleanFile = cleanFile.replacingOccurrences(of: "\n\n", with: "\n")
         return cleanFile
     }
-   
-//    var data = readDataFromCSV(fileName: kCSVFileName, fileType: kCSVFileExtension)
-//    data = cleanRows(file: data)
-//    let csvRows = csv(data: data)
-//    print(csvRows[1][1]) //UXM n. 166/167.
     
     private func setUpView(){
         
@@ -461,6 +465,10 @@ class LoadedImageViewController: UIViewController {
         }
     @objc func backButtonPressed(sender: UIButton){
         self.removeFromParent()
+    }
+    
+    @objc func getNewFile(){
+        
     }
 }
 enum fileTypes{
