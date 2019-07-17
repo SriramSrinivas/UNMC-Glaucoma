@@ -6,6 +6,7 @@ import SwiftMessages
 import Reachability
 import CoreImage
 import CoreGraphics
+import SwiftyDropbox
 
 // YOOOOOO FIX THE IMAGE BEING TO BIG (will be fixed when constraining the images to the screen)
 // there is a little issue with the screen shotting but.. it will do for now 
@@ -58,6 +59,7 @@ class ViewController: UIViewController{
     var customViewUpdateList = [CustomViewUpdate]()
     
     let delete = UIButton()
+    let download = UIButton()
     var subjectID = ""
     let tempBlur = VisualEffectView()
     let realm = try! Realm()
@@ -128,7 +130,7 @@ class ViewController: UIViewController{
         }
 
         let newFile = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
-        newFile.downLoadFile()
+//        newFile.downLoadFile()
         //addGridPoints(view: mainImgView)
     }
     
@@ -254,15 +256,21 @@ class ViewController: UIViewController{
         intText.text = "Blur"
         intText.textColor = UIColor.white
         
-        luminText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        luminText.heightAnchor.constraint(equalToConstant: 40).isActive = true
         luminText.widthAnchor.constraint(equalToConstant: 50).isActive = true
         luminText.text = "Luminosity"
         
         delete.setTitle("Reset", for: UIControl.State.normal)
-        delete.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        delete.heightAnchor.constraint(equalToConstant: 40).isActive = true
         delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
+        
+        download.setTitle("Import", for: UIControl.State.normal)
+        download.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        download.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        download.backgroundColor = UIColor(hexString: "#1B5E20")
+        download.addTarget(self, action: #selector(ImportTap), for: .touchUpInside)
         
         let tempView = UIButton()
         tempView.heightAnchor.constraint(equalToConstant: 10).isActive = true
@@ -279,7 +287,7 @@ class ViewController: UIViewController{
         tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
         tempView2.backgroundColor = UIColor(hexString: "#424242")
         
-        alphaToggle.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        alphaToggle.heightAnchor.constraint(equalToConstant: 30).isActive = true
         alphaToggle.widthAnchor.constraint(equalToConstant: 40).isActive = true
         alphaToggle.addTarget(self, action: #selector(switchAlpha), for: .valueChanged)
         alphaToggle.setOn(true, animated: true)
@@ -325,12 +333,13 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(alphaToggle)
         sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
+        sliderStack.addArrangedSubview(download)
     
 
         view.addSubview(sliderStack)
 
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
         
         enableControl(value: .Disable)
     }
@@ -555,6 +564,7 @@ class ViewController: UIViewController{
             temp.resetImage()
         }
         else{
+            temp.resetImage()
             temp.addImage(images: cropImage)
         }
         mainImgView.layoutSubviews()
@@ -697,7 +707,10 @@ class ViewController: UIViewController{
             }
         }
     }
-    
+    @objc func ImportTap(sender: UIButton){
+        let vc = LoadedImageViewController()
+        self.present(vc,animated: true, completion: nil)
+    }
     @objc func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
@@ -775,31 +788,30 @@ class ViewController: UIViewController{
     @objc func exportTap(sender: UIButton!){
         bottomMessage("Uploading Files")
         exportCount = exportCount + 1
-
         
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList)
-    
+
         _ = currentSession.savedFiles.map { (savedFile:FileObject) in
             currentSession.uploadFile(file: savedFile, completion: { (uploaded:Bool, error:Error?) in
                 self.uploadAttempt = self.uploadAttempt + 1
                 if let fileError = error {
                     //self.currentSession = Session(currentSubjectId: self.subjectID)
-                    self.currentSession.boxAuthorize() 
+                    self.currentSession.boxAuthorize()
                     //self.currentSession.boxAuthorize()
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
-                    
+
                 } else if savedFile.type == FileType.CSV {
                     self.csvFilesUploadedCount = self.csvFilesUploadedCount + 1
                 } else {
                     self.pngFilesUploadedCount = self.pngFilesUploadedCount + 1
                 }
-                
+
                 if self.uploadAttempt == self.currentSession.savedFiles.count {
                     self.showUploadedMessage()
                 }
             })
         }
-        
+
         export.loadingIndicator(true)
     }
     
@@ -992,6 +1004,9 @@ class ViewController: UIViewController{
         return today_string
         
     }
+    
+   
+
     
     func captureScreen() -> UIImage? {
         guard let context = UIGraphicsGetCurrentContext() else { return .none }

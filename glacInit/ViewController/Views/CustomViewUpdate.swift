@@ -21,8 +21,11 @@ class CustomViewUpdate : UIView{
     var image = UIImageView()
     var constImage = UIImage()
     var viewValue = 5
+    
+     let screenSize: CGRect = UIScreen.main.bounds
     override init(frame: CGRect) {
-
+   
+        
         super.init(frame: frame)
         //self.frame.
         blur.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
@@ -58,7 +61,7 @@ class CustomViewUpdate : UIView{
     func getImageFromMain() -> UIImage {
         var cropImage = constImage
         cropImage = cropImage.crop(rect: self.frame)
-        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(viewValue)), blendMode: .luminosity)
+        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(viewValue)/10), blendMode: .luminosity)
         return cropImage
     }
     func setImageConst(images: UIImage){
@@ -102,11 +105,11 @@ class CustomViewUpdate : UIView{
             if(gestureRecognizer.view!.center.y < gestureRecognizer.view!.frame.height/2){
                 gestureRecognizer.view!.center.y = gestureRecognizer.view!.frame.height/2
             }
-            if(gestureRecognizer.view!.center.x > (image.frame.width * 4.1) - gestureRecognizer.view!.frame.height/2){
-                gestureRecognizer.view!.center.x = (image.frame.width * 4.1) - gestureRecognizer.view!.frame.height/2
+            if(gestureRecognizer.view!.center.x > ((screenSize.width / 5) * 4) - gestureRecognizer.view!.frame.height/2){
+                gestureRecognizer.view!.center.x = ((screenSize.width / 5) * 4) - gestureRecognizer.view!.frame.height/2
             }
-            if(gestureRecognizer.view!.center.y > (image.frame.height * 3.8) - gestureRecognizer.view!.frame.height/2){
-                gestureRecognizer.view!.center.y = (image.frame.height * 3.8) - gestureRecognizer.view!.frame.height/2
+            if(gestureRecognizer.view!.center.y > (screenSize.height) - gestureRecognizer.view!.frame.height/2){
+                gestureRecognizer.view!.center.y = (screenSize.height) - gestureRecognizer.view!.frame.height/2
             }
         }
     }
@@ -114,16 +117,31 @@ class CustomViewUpdate : UIView{
     @objc func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         if isActive && !(isLinkedToImage){
             let currentCenter = center
-
-            frame.size.height = 200*(gestureRecognizer.scale)
-            frame.size.width = 200*(gestureRecognizer.scale)
-            blur.frame.size.height = 200*(gestureRecognizer.scale)
-            blur.frame.size.width = 200*(gestureRecognizer.scale)
+            
+            var change = 200*(gestureRecognizer.scale)
+            if change > screenSize.size.height {
+                change = screenSize.size.height
+            }
+            
+            //MARK: TODO test this 
+           
+            frame.size.height = change
+            frame.size.width = change
+//            if (frame.size.height > screenSize.size.height){
+//                frame.size.height = screenSize.size.height
+//                frame.size.width = frame.size.height
+//            }
+            
+            blur.frame.size.height = change
+            blur.frame.size.width = change
+            
+            
             
             blur.center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
             image.frame = blur.frame
             image.image? = getImageFromMain()
             center = currentCenter
+           
         }
     }
 

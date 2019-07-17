@@ -19,10 +19,12 @@
 		21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */; };
 		21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1B22CAB714009CDAD3 /* imageCell.swift */; };
 		21BA7FB322CCE6AF003DC229 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */; };
+		21C36EEF22DF71F2009FE967 /* fileDownloadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C36EEE22DF71F2009FE967 /* fileDownloadModel.swift */; };
 		21E13B0022CC0FB300429F58 /* SubImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E13AFF22CC0FB300429F58 /* SubImage.swift */; };
 		21E14243228CBF1A004657BA /* FileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14242228CBF1A004657BA /* FileObject.swift */; };
 		21E14245228CBF23004657BA /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14244228CBF22004657BA /* Session.swift */; };
 		21E2B1FA22D79DAE009FD72D /* TitleRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E2B1F922D79DAE009FD72D /* TitleRegex.swift */; };
+		21E2B20022DE6683009FD72D /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E2B1FF22DE6683009FD72D /* Networking.swift */; };
 		743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */; };
 		743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */; };
 		74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907C1EDDDC2500628B38 /* CustomObject.swift */; };
@@ -71,10 +73,13 @@
 		21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundImage.swift; sourceTree = "<group>"; };
 		21A6BB1B22CAB714009CDAD3 /* imageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageCell.swift; sourceTree = "<group>"; };
 		21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		21C36EEE22DF71F2009FE967 /* fileDownloadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileDownloadModel.swift; sourceTree = "<group>"; };
 		21E13AFF22CC0FB300429F58 /* SubImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImage.swift; sourceTree = "<group>"; };
 		21E14242228CBF1A004657BA /* FileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileObject.swift; sourceTree = "<group>"; };
 		21E14244228CBF22004657BA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		21E2B1F922D79DAE009FD72D /* TitleRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleRegex.swift; sourceTree = "<group>"; };
+		21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "glacInit-Bridging-Header.h"; sourceTree = "<group>"; };
+		21E2B1FF22DE6683009FD72D /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3D970461C6AD33F91841D653 /* Pods-glacInit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.debug.xcconfig"; sourceTree = "<group>"; };
 		4811ECE61C227719ADCE1745 /* Pods-glacInit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInit.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInit/Pods-glacInit.release.xcconfig"; sourceTree = "<group>"; };
 		5760E2D06B454BB71A67455E /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-glacInitTests/Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,7 +100,7 @@
 		7752F6661E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7752F66B1E50020A003ACC5F /* glacInitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glacInitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F66F1E50020A003ACC5F /* glacInitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glacInitTests.swift; sourceTree = "<group>"; };
-		7752F6711E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Extensions/Info.plist; sourceTree = "<group>"; };
+		7752F6711E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7752F6761E50020A003ACC5F /* glacInitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = glacInitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7752F67A1E50020A003ACC5F /* glacInitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glacInitUITests.swift; sourceTree = "<group>"; };
 		7752F67C1E50020A003ACC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -157,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				21E2B1F922D79DAE009FD72D /* TitleRegex.swift */,
+				21C36EEE22DF71F2009FE967 /* fileDownloadModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -209,6 +215,8 @@
 				21E14244228CBF22004657BA /* Session.swift */,
 				21E14242228CBF1A004657BA /* FileObject.swift */,
 				2132E47822D38E2600734063 /* importFile.swift */,
+				21E2B1FF22DE6683009FD72D /* Networking.swift */,
+				21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -321,7 +329,6 @@
 			isa = PBXGroup;
 			children = (
 				7752F6661E50020A003ACC5F /* Info.plist */,
-				7752F6711E50020A003ACC5F /* Info.plist */,
 				21E13AF922CC0CC900429F58 /* App */,
 				21E13AF722CB8CCB00429F58 /* Services */,
 				2132E47A22D3FA7B00734063 /* LoadedImage */,
@@ -335,6 +342,7 @@
 		7752F66E1E50020A003ACC5F /* glacInitTests */ = {
 			isa = PBXGroup;
 			children = (
+				7752F6711E50020A003ACC5F /* Info.plist */,
 				7752F66F1E50020A003ACC5F /* glacInitTests.swift */,
 			);
 			path = glacInitTests;
@@ -432,6 +440,7 @@
 					7752F6561E50020A003ACC5F = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = N8TLASBATQ;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					7752F66A1E50020A003ACC5F = {
@@ -539,21 +548,25 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-glacInit/Pods-glacInit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftHSVColorPicker/SwiftHSVColorPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
 				"${BUILT_PRODUCTS_DIR}/VisualEffectView/VisualEffectView.framework",
 				"${BUILT_PRODUCTS_DIR}/box-ios-sdk/BoxContentSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftHSVColorPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VisualEffectView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoxContentSDK.framework",
 			);
@@ -587,6 +600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21C36EEF22DF71F2009FE967 /* fileDownloadModel.swift in Sources */,
 				743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */,
 				2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */,
 				030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */,
@@ -608,6 +622,7 @@
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,
 				743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */,
 				74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */,
+				21E2B20022DE6683009FD72D /* Networking.swift in Sources */,
 				74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */,
 				21E2B1FA22D79DAE009FD72D /* TitleRegex.swift in Sources */,
 			);
@@ -704,7 +719,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -748,7 +763,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -762,6 +777,7 @@
 			baseConfigurationReference = 3D970461C6AD33F91841D653 /* Pods-glacInit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = N8TLASBATQ;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -775,6 +791,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.unomaha.ist.ios.glac.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "glacInit/Services/glacInit-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -784,6 +802,7 @@
 			baseConfigurationReference = 4811ECE61C227719ADCE1745 /* Pods-glacInit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = N8TLASBATQ;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -797,6 +816,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.unomaha.ist.ios.glac.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "glacInit/Services/glacInit-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -811,7 +831,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvc.glacInitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/glacInit.app/glacInit";
 			};
 			name = Debug;
@@ -826,7 +846,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvc.glacInitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/glacInit.app/glacInit";
 			};
 			name = Release;
@@ -840,7 +860,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvc.glacInitUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = glacInit;
 			};
 			name = Debug;
@@ -854,7 +874,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvc.glacInitUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = glacInit;
 			};
 			name = Release;

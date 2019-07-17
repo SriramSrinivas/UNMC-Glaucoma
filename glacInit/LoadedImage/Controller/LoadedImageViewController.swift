@@ -13,6 +13,12 @@
 // imports need to have an exact name to query
 
 // maybe have a temp storage on device? so they dont have to keep reloading the data
+// create a table view controller to grab the selected file
+// prob similiar to the collection view but
+// regex file and check the closest 5 in either direction
+// if the name and the date and the time match then grab them
+// and display them according to the file type they are (eg blur, grey, or colorless)
+// the files should be deleted after that
 
 //import SwiftUI
 import Foundation
@@ -126,10 +132,7 @@ class LoadedImageViewController: UIViewController {
     var blurCustomViewUpdateList = [CustomViewUpdate]()
     var colorCustomViewUpdateList = [CustomViewUpdate]()
     var objectCustomViewUpdateList = [CustomViewUpdate]()
-    var currentFileType = 1
-    var currentData = [[String]]()
-    
-    var fileTypes = [1,2,3]
+    //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
     
     var gridViews = [UIView]()
@@ -145,19 +148,6 @@ class LoadedImageViewController: UIViewController {
     
         setUpView()
     
-        let file = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
-        file.downLoadFile()
-        let newfile = file.downloadedFile()
-        var content = String()
-        do{
-            content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
-        }
-         catch {
-            print ("loading image file error")
-        }
-        let data = cleanRows(file: content)
-        currentData = csv(data: data)
-        addblur()
         addGridLineUpdate(mainView: mainImageView)
     }
     
@@ -188,7 +178,7 @@ class LoadedImageViewController: UIViewController {
         
     }
     
-    func addblur(){
+    func addblur(currentFileType: Int, currentData: [[String]]){
         let midx = ((view.frame.width/5)*4)/2
         let midy = view.frame.height/2
         let width = (view.frame.width/5)*4
@@ -464,12 +454,94 @@ class LoadedImageViewController: UIViewController {
             }
         }
     @objc func backButtonPressed(sender: UIButton){
-        self.removeFromParent()
+        let vc = ViewController()
+        self.present(vc,animated: true, completion: nil)
     }
     
     @objc func getNewFile(){
         
     }
+    func split(){
+
+        let test = "HELLO_MAN_THIS_IS"
+        
+        
+
+        //test.sp
+        
+        //var string
+        
+        //make a truct for the data or a model i suppose
+        // insta the the structs
+        //compare them
+        // and get the import to import the other needed ones
+        //if a png is selected grab the other but dont do anything with the png
+        // 
+        
+    }
+    //expects some sort of model
+    // comapres model and returns an array of the model
+    // expected parameter [SubjectID][date]
+    func comparesFolderItemsSelected(listings: [folderListingViewModel]) -> [folderListingViewModel]{
+        var retList = [folderListingViewModel]()
+        //let listings = [folderListingViewModel]()
+        for folder in listings {
+//            if (folder.name[0] == FolderItems[0] && folder.name[4] == FolderItems[1]){
+//                retList.append(folder)
+//            }
+        }
+        return retList
+    }
+    
+    func callDownloads(specifiedItems: [folderListingViewModel]) -> [Int] {
+        var filetypes = [0]
+        for items in specifiedItems{
+            let file = items.name[5].split(separator: ".")
+            if (file.last == "csv"){
+                //downloadFile
+                if (items.name[3] == "blurPoints")
+                {
+                    filetypes.append(1)
+                }
+                if (items.name[3] == "greyPoints"){
+                    filetypes.append(2)
+                }
+                if (items.name[3] == "ColorPoints"){
+                    filetypes.append(3)
+                }
+                if (items.name[3] == "hiddenPoints"){
+                    filetypes.append(4)
+                }
+            }
+        }
+        return filetypes
+    }
+    //Mark: TODO
+    //only should be 5
+    //downloading should be done here then
+    func checkAountOfFilesDownlaodinf(){
+        
+        
+        let file = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
+        file.downLoadFile()
+        let newfile = file.downloadedFile()
+        file.getFolderItems()
+        var content = String()
+        do{
+            content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
+        }
+        catch {
+            print ("loading image file error")
+        }
+        let data = cleanRows(file: content)
+        var currentData = csv(data: data)
+            if (currentData.count > 10 ){
+              //  addblur(fileTypes: [1,2])
+            }
+
+    }
+    
+    
 }
 enum fileTypes{
     case blur, grey, color, isHidden

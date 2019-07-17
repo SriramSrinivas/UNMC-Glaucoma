@@ -26,6 +26,7 @@ class importFile {
     let stream = OutputStream()
     var fileName = "NewFile" + ".csv"
     var csvText = ""
+    var items = Array<Any>()
     
     init(subjectId: String, backGroundId: String, file: FileType) {
         self.subjectId = subjectId
@@ -52,26 +53,37 @@ class importFile {
     func setBackGround() -> String{
         return backGroundId
     }
+    
+    func boxAuthorize(){
+        BOXContentClient.default().authenticate(completionBlock: { (user:BOXUser?, error:Error?) in
+            if (error == nil )
+            {
+                print((user?.login!)! as String)
+            }
+        })
+        
+    }
 // method to get the files from box
+    func getFolderItems(){
+        
+        let contentClient = BOXContentClient.default()
+        let boxfolderrequest = contentClient?.folderItemsRequest(withID: "0")
+        boxfolderrequest?.perform(completion: {(items, error) -> Void in
+        })
+      
+    }
     func downLoadFile(){
         newFile()
         let contentClient = BOXContentClient.default()
-      
-         let searchRequest = contentClient?.searchRequest(withQuery: "dog_mainTes_blurPoints_2019-07-11 11-11-32_1.csv", in: NSMakeRange(0, 10000))
-        
-        searchRequest?.perform(completion: nil)
-        
+
         let boxRequest = contentClient?.fileDownloadRequest(withID: "489481746578", toLocalFilePath: fileURL?.path)
         //let boxReq = contentClient?.searchRequest(withQuery: "dog_mainTes_blurPoints_2019-07-11 11-11-32_1.csv", in: NSRange(location: 2, length: 100))
-       
+
         boxRequest?.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
         }, completion: {(_ error: Error?) -> Void in
-            if error == nil {
-            }
-             else {
-        }
+
         })
-       // let data: Data
+        let data: Data
  
     }
     

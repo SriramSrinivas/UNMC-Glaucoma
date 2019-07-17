@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.8.2)
   - box-ios-sdk (1.0.14):
     - box-ios-sdk/logger (= 1.0.14)
     - box-ios-sdk/no-arc (= 1.0.14)
@@ -6,15 +7,17 @@ PODS:
   - box-ios-sdk/no-arc (1.0.14):
     - box-ios-sdk/logger
   - Reachability (3.2)
-  - Realm (3.15.0):
-    - Realm/Headers (= 3.15.0)
-  - Realm/Headers (3.15.0)
-  - RealmSwift (3.15.0):
-    - Realm (= 3.15.0)
+  - Realm (3.17.1):
+    - Realm/Headers (= 3.17.1)
+  - Realm/Headers (3.17.1)
+  - RealmSwift (3.17.1):
+    - Realm (= 3.17.1)
   - SwiftHSVColorPicker (1.1.1)
-  - SwiftMessages (6.0.2):
-    - SwiftMessages/App (= 6.0.2)
-  - SwiftMessages/App (6.0.2)
+  - SwiftMessages (7.0.0):
+    - SwiftMessages/App (= 7.0.0)
+  - SwiftMessages/App (7.0.0)
+  - SwiftyDropbox (5.1.0):
+    - Alamofire (~> 4.8.2)
   - VisualEffectView (4.0.0)
 
 DEPENDENCIES:
@@ -23,27 +26,32 @@ DEPENDENCIES:
   - RealmSwift
   - SwiftHSVColorPicker
   - SwiftMessages
+  - SwiftyDropbox
   - VisualEffectView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - box-ios-sdk
     - Reachability
     - Realm
     - RealmSwift
     - SwiftHSVColorPicker
     - SwiftMessages
+    - SwiftyDropbox
     - VisualEffectView
 
 SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   box-ios-sdk: 8034a7b0fcac562105725afa744011c81da99398
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: 9b834e1be6062f544805252c812348872dc5d4ed
-  RealmSwift: 8a41886f8ab6efef9eb8df97de2f2bb911561a79
+  Realm: c204f1a890f07dea43b14132a6aad118c054b8f2
+  RealmSwift: 4d3c9233544b9cd08a8913e0872b9038eb99b054
   SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
-  SwiftMessages: 8b3cc68dba2f1c91aac1a74c90b10287aac35371
+  SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
+  SwiftyDropbox: 7ca4961e0340c62c8d6d1ece91d67badfe4c0380
   VisualEffectView: 9e9883f07d8a929b98c9c08a068f726279d92754
 
-PODFILE CHECKSUM: 2795f0598e6e266f503afb4df6990ed4cfe2ce9d
+PODFILE CHECKSUM: f47d8609bf1c9c265a7e3931357c536609cfa9f9
 
 COCOAPODS: 1.6.1
