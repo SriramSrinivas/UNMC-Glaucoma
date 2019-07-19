@@ -1,11 +1,4 @@
 PODS:
-  - Alamofire (4.8.2)
-  - box-ios-sdk (1.0.14):
-    - box-ios-sdk/logger (= 1.0.14)
-    - box-ios-sdk/no-arc (= 1.0.14)
-  - box-ios-sdk/logger (1.0.14)
-  - box-ios-sdk/no-arc (1.0.14):
-    - box-ios-sdk/logger
   - Reachability (3.2)
   - Realm (3.17.1):
     - Realm/Headers (= 3.17.1)
@@ -16,42 +9,32 @@ PODS:
   - SwiftMessages (7.0.0):
     - SwiftMessages/App (= 7.0.0)
   - SwiftMessages/App (7.0.0)
-  - SwiftyDropbox (5.1.0):
-    - Alamofire (~> 4.8.2)
   - VisualEffectView (4.0.0)
 
 DEPENDENCIES:
-  - box-ios-sdk
   - Reachability
   - RealmSwift
   - SwiftHSVColorPicker
   - SwiftMessages
-  - SwiftyDropbox
   - VisualEffectView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
-    - box-ios-sdk
     - Reachability
     - Realm
     - RealmSwift
     - SwiftHSVColorPicker
     - SwiftMessages
-    - SwiftyDropbox
     - VisualEffectView
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  box-ios-sdk: 8034a7b0fcac562105725afa744011c81da99398
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Realm: c204f1a890f07dea43b14132a6aad118c054b8f2
   RealmSwift: 4d3c9233544b9cd08a8913e0872b9038eb99b054
   SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
   SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
-  SwiftyDropbox: 7ca4961e0340c62c8d6d1ece91d67badfe4c0380
   VisualEffectView: 9e9883f07d8a929b98c9c08a068f726279d92754
 
-PODFILE CHECKSUM: f47d8609bf1c9c265a7e3931357c536609cfa9f9
+PODFILE CHECKSUM: 0c08b2ebbbd9246cf9111b29d904724f18e7610b
 
 COCOAPODS: 1.6.1

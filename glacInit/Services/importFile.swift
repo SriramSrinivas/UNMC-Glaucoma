@@ -10,6 +10,11 @@
 //questions:
 // ahould data be changable and if so does the resaved data
 
+
+//
+
+
+
 import Foundation
 import BoxContentSDK
 
@@ -67,8 +72,11 @@ class importFile {
     func getFolderItems(){
         
         let contentClient = BOXContentClient.default()
-        let boxfolderrequest = contentClient?.folderItemsRequest(withID: "0")
-        boxfolderrequest?.perform(completion: {(items, error) -> Void in
+        let boxfolderrequest = contentClient?.folderItemsRequest(withID: "81480776750")
+        boxfolderrequest?.perform(completion: {(items: Array?, error: Error?) -> Void in
+            items?.first?.isFile
+            
+            
         })
       
     }

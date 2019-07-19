@@ -153,26 +153,20 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Realm/Realm.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftHSVColorPicker/SwiftHSVColorPicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/VisualEffectView/VisualEffectView.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/box-ios-sdk/BoxContentSDK.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Realm/Realm.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftHSVColorPicker/SwiftHSVColorPicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/VisualEffectView/VisualEffectView.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/box-ios-sdk/BoxContentSDK.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

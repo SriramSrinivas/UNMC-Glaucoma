@@ -6,7 +6,7 @@ import SwiftMessages
 import Reachability
 import CoreImage
 import CoreGraphics
-import SwiftyDropbox
+
 
 // YOOOOOO FIX THE IMAGE BEING TO BIG (will be fixed when constraining the images to the screen)
 // there is a little issue with the screen shotting but.. it will do for now 

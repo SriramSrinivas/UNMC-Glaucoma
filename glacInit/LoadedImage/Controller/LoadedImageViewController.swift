@@ -145,7 +145,7 @@ class LoadedImageViewController: UIViewController {
 
         [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
-    
+        checkAountOfFilesDownlaodinf()
         setUpView()
     
         addGridLineUpdate(mainView: mainImageView)
