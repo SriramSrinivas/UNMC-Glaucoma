@@ -157,9 +157,16 @@ class LoadedImageViewController: UIViewController {
         twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
         twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
         
+       // let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "pickerView") as! PickerView
+       // let navController = UINavigationController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
+        //self.present(navController, animated:true, completion: nil)
+        
         let vc = PickerView()
+        
         vc.twodimArray = twoDArray
-        self.present(vc,animated: true, completion: nil)
+        let nav = UINavigationController(rootViewController: vc)
+        //vc.twodimArray = twoDArray
+        self.present(nav,animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -551,7 +558,7 @@ class LoadedImageViewController: UIViewController {
         
         file.downLoadFile()
         let newfile = file.downloadedFile()
-        file.getFolderItems()
+        file.getFolderItems(withID: "0")
         var content = String()
         do{
             content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)

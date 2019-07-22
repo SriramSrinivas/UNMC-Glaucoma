@@ -85,11 +85,11 @@ class importFile {
         
     }
 // method to get the files from box
-    func getFolderItems(){
+    func getFolderItems(withID: String){
        
         
         let contentClient = BOXContentClient.default()
-        let boxfolderrequest = contentClient?.folderItemsRequest(withID: "81480776750")
+        let boxfolderrequest = contentClient?.folderItemsRequest(withID: withID)
         boxfolderrequest?.perform(completion: {(items: Array?, error: Error?) -> Void in
             //items?.first?.isFile
             //var delegate: TransferDataDelegate?
