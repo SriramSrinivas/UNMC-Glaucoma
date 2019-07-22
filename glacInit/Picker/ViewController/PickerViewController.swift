@@ -15,7 +15,7 @@ class PickerView: UITableViewController {
     let cellID = "FluffyBunny"
     let boxItems : [BOXItem]? = nil
     
-    var twodimArray : [ExpandableNames] = []
+    public var twodimArray : [ExpandableNames] = []
     
     var showindexPaths = false
     
@@ -45,19 +45,7 @@ class PickerView: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var fileItems: [BoxItemsData]?
-        var folderItems: [BoxItemsData]?
-        for items in boxItems! {
-            let changedata = BoxItemsData(boxItem: items)
-            if changedata.isFolder {
-                folderItems?.append(changedata)
-            } else {
-                fileItems?.append(changedata)
-            }
-        }
-        let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
-        twodimArray.append(newArray)
-        twodimArray.append( ExpandableNames(isExpanded: true, items: fileItems!) )
+       
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "ShowIndexPath", style: .plain, target: self, action: #selector(handleShowIndexPath))
         

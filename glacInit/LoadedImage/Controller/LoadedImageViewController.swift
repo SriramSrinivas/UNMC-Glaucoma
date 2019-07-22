@@ -25,6 +25,7 @@ import Foundation
 import UIKit
 import CoreImage
 import CoreGraphics
+import NotificationCenter
 
 class LoadedImageViewController: UIViewController {
     
@@ -134,15 +135,40 @@ class LoadedImageViewController: UIViewController {
     var objectCustomViewUpdateList = [CustomViewUpdate]()
     //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
+    let file = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
     
     var gridViews = [UIView]()
     let distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
     
+    func getImportedData(boxitems: [BOXItem]){
+        //let vc = PickerView()
+        var twoDArray : [ExpandableNames] = []
+        var fileItems: [BoxItemsData] = []
+        var folderItems: [BoxItemsData] = []
+        for items in boxitems {
+            let changedata = BoxItemsData(boxItem: items)
+            if changedata.isFolder {
+                folderItems.append(changedata)
+            } else {
+                fileItems.append(changedata)
+            }
+        }
+        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
+        twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
+        twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+        
+        let vc = PickerView()
+        vc.twodimArray = twoDArray
+        self.present(vc,animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        file.delegate = self
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .red
 
+        //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
         [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
         checkAountOfFilesDownlaodinf()
@@ -522,7 +548,7 @@ class LoadedImageViewController: UIViewController {
     func checkAountOfFilesDownlaodinf(){
         
         
-        let file = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
+        
         file.downLoadFile()
         let newfile = file.downloadedFile()
         file.getFolderItems()
@@ -542,6 +568,11 @@ class LoadedImageViewController: UIViewController {
     }
     
     
+}
+extension LoadedImageViewController: ImportDelegate{
+    func didReceiveData(boxItems: [BOXItem]) {
+        getImportedData(boxitems: boxItems)
+    }
 }
 enum fileTypes{
     case blur, grey, color, isHidden

@@ -25,17 +25,17 @@
 
 import Foundation
 import BoxContentSDK
-
+//import NotificationCenter
 // init will get the data needed from the user
 //protocol TransferDataDelegate {
 //    func transferData(folderitems: Array<BOXItem>)
 //}
-
+protocol ImportDelegate: class {
+    func didReceiveData(boxItems: [BOXItem])
+}
 class importFile {
     
-    
-
-
+    weak var delegate: ImportDelegate?
     var subjectId: String
     var backGroundId: String
     //var date: Date
@@ -86,7 +86,7 @@ class importFile {
     }
 // method to get the files from box
     func getFolderItems(){
-        
+       
         
         let contentClient = BOXContentClient.default()
         let boxfolderrequest = contentClient?.folderItemsRequest(withID: "81480776750")
@@ -95,9 +95,10 @@ class importFile {
             //var delegate: TransferDataDelegate?
 //            self.delegate?.transferData(folderitems: (items as! Array<BOXItem>))
             
+            self.delegate?.didReceiveData(boxItems: items!)
+            
             //Instance member 'transferData' cannot be used on type 'TransferDataDelegate'; did you mean to use a value of this type instead?
         })
-      
     }
     func downLoadFile(){
         newFile()
