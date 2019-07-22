@@ -482,40 +482,40 @@ class LoadedImageViewController: UIViewController {
     //expects some sort of model
     // comapres model and returns an array of the model
     // expected parameter [SubjectID][date]
-    func comparesFolderItemsSelected(listings: [folderListingViewModel]) -> [folderListingViewModel]{
-        var retList = [folderListingViewModel]()
-        //let listings = [folderListingViewModel]()
-        for folder in listings {
-//            if (folder.name[0] == FolderItems[0] && folder.name[4] == FolderItems[1]){
-//                retList.append(folder)
-//            }
-        }
-        return retList
-    }
+//    func comparesFolderItemsSelected(listings: [folderListingViewModel]) -> [folderListingViewModel]{
+//        var retList = [folderListingViewModel]()
+//        //let listings = [folderListingViewModel]()
+//        for folder in listings {
+////            if (folder.name[0] == FolderItems[0] && folder.name[4] == FolderItems[1]){
+////                retList.append(folder)
+////            }
+//        }
+//        return retList
+//    }
     
-    func callDownloads(specifiedItems: [folderListingViewModel]) -> [Int] {
-        var filetypes = [0]
-        for items in specifiedItems{
-            let file = items.name[5].split(separator: ".")
-            if (file.last == "csv"){
-                //downloadFile
-                if (items.name[3] == "blurPoints")
-                {
-                    filetypes.append(1)
-                }
-                if (items.name[3] == "greyPoints"){
-                    filetypes.append(2)
-                }
-                if (items.name[3] == "ColorPoints"){
-                    filetypes.append(3)
-                }
-                if (items.name[3] == "hiddenPoints"){
-                    filetypes.append(4)
-                }
-            }
-        }
-        return filetypes
-    }
+//    func callDownloads(specifiedItems: [folderListingViewModel]) -> [Int] {
+//        var filetypes = [0]
+//        for items in specifiedItems{
+//            let file = items.name[5].split(separator: ".")
+//            if (file.last == "csv"){
+//                //downloadFile
+//                if (items.name[3] == "blurPoints")
+//                {
+//                    filetypes.append(1)
+//                }
+//                if (items.name[3] == "greyPoints"){
+//                    filetypes.append(2)
+//                }
+//                if (items.name[3] == "ColorPoints"){
+//                    filetypes.append(3)
+//                }
+//                if (items.name[3] == "hiddenPoints"){
+//                    filetypes.append(4)
+//                }
+//            }
+//        }
+//        return filetypes
+//    }
     //Mark: TODO
     //only should be 5
     //downloading should be done here then

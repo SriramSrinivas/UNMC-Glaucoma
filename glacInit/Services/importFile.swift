@@ -11,16 +11,30 @@
 // ahould data be changable and if so does the resaved data
 
 
-//
+// alright will now need to pass the data off
+// need to make a picker view for the data
+// allow the user to select multiple files
+// load all csv files on the screen
+//make a model for both folders and files maybe not refer down below
+// brain Vong has cool vids for the picker view
+// start cleaning up code that is making this messy
+// be cool and stay in school XD
 
+// maybe just make box items to begin with and see if you can work with that 
 
 
 import Foundation
 import BoxContentSDK
 
 // init will get the data needed from the user
+//protocol TransferDataDelegate {
+//    func transferData(folderitems: Array<BOXItem>)
+//}
 
 class importFile {
+    
+    
+
 
     var subjectId: String
     var backGroundId: String
@@ -32,6 +46,8 @@ class importFile {
     var fileName = "NewFile" + ".csv"
     var csvText = ""
     var items = Array<Any>()
+//    var delegate: TransferDataDelegate?
+    //var help = TransferDataDelegate?.self
     
     init(subjectId: String, backGroundId: String, file: FileType) {
         self.subjectId = subjectId
@@ -71,12 +87,15 @@ class importFile {
 // method to get the files from box
     func getFolderItems(){
         
+        
         let contentClient = BOXContentClient.default()
         let boxfolderrequest = contentClient?.folderItemsRequest(withID: "81480776750")
         boxfolderrequest?.perform(completion: {(items: Array?, error: Error?) -> Void in
-            items?.first?.isFile
+            //items?.first?.isFile
+            //var delegate: TransferDataDelegate?
+//            self.delegate?.transferData(folderitems: (items as! Array<BOXItem>))
             
-            
+            //Instance member 'transferData' cannot be used on type 'TransferDataDelegate'; did you mean to use a value of this type instead?
         })
       
     }

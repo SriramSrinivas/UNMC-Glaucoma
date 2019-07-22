@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BE09C1F7C1E1F00012B3C /* Regex.swift */; };
 		030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BE09E1F7C1E3000012B3C /* Matrix.swift */; };
+		21182C8822E5EBE100712670 /* DataProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8722E5EBE100712670 /* DataProcessing.swift */; };
+		21182C8C22E6117400712670 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8B22E6117400712670 /* PickerViewController.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -66,6 +68,8 @@
 		030BE09E1F7C1E3000012B3C /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		12D41B08A6AB3BE33597F41C /* Pods-glacInitUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitUITests.debug.xcconfig"; path = "Target Support Files/Pods-glacInitUITests/Pods-glacInitUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		14933DE4617434F6797F89B7 /* Pods_glacInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_glacInitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		21182C8722E5EBE100712670 /* DataProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessing.swift; sourceTree = "<group>"; };
+		21182C8B22E6117400712670 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -138,6 +142,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21182C8922E610D400712670 /* Picker */ = {
+			isa = PBXGroup;
+			children = (
+				21182C8A22E6115800712670 /* ViewController */,
+			);
+			path = Picker;
+			sourceTree = "<group>";
+		};
+		21182C8A22E6115800712670 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				21182C8B22E6117400712670 /* PickerViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		2132E47A22D3FA7B00734063 /* LoadedImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				030BE09C1F7C1E1F00012B3C /* Regex.swift */,
+				21182C8722E5EBE100712670 /* DataProcessing.swift */,
 				21E14244228CBF22004657BA /* Session.swift */,
 				21E14242228CBF1A004657BA /* FileObject.swift */,
 				2132E47822D38E2600734063 /* importFile.swift */,
@@ -318,6 +339,7 @@
 				7752F6661E50020A003ACC5F /* Info.plist */,
 				21E13AF922CC0CC900429F58 /* App */,
 				21E13AF722CB8CCB00429F58 /* Services */,
+				21182C8922E610D400712670 /* Picker */,
 				2132E47A22D3FA7B00734063 /* LoadedImage */,
 				21A6BB1122CA86FE009CDAD3 /* BackGroundChange */,
 				21E13AF822CC0CA900429F58 /* ViewController */,
@@ -633,7 +655,9 @@
 				21C36EEF22DF71F2009FE967 /* fileDownloadModel.swift in Sources */,
 				743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */,
 				2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */,
+				21182C8C22E6117400712670 /* PickerViewController.swift in Sources */,
 				030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */,
+				21182C8822E5EBE100712670 /* DataProcessing.swift in Sources */,
 				74E768561F2A2F8500F2FD9C /* CustomPoint.swift in Sources */,
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */,
