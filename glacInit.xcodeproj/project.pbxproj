@@ -11,6 +11,8 @@
 		030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BE09E1F7C1E3000012B3C /* Matrix.swift */; };
 		21182C8822E5EBE100712670 /* DataProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8722E5EBE100712670 /* DataProcessing.swift */; };
 		21182C8C22E6117400712670 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8B22E6117400712670 /* PickerViewController.swift */; };
+		21182C8F22E62F9A00712670 /* ExpandableNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8E22E62F9A00712670 /* ExpandableNames.swift */; };
+		21182C9222E635FB00712670 /* BoxItemsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9122E635FB00712670 /* BoxItemsData.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -70,6 +72,8 @@
 		14933DE4617434F6797F89B7 /* Pods_glacInitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_glacInitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21182C8722E5EBE100712670 /* DataProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessing.swift; sourceTree = "<group>"; };
 		21182C8B22E6117400712670 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		21182C8E22E62F9A00712670 /* ExpandableNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableNames.swift; sourceTree = "<group>"; };
+		21182C9122E635FB00712670 /* BoxItemsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoxItemsData.swift; path = /Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/glacInit/Picker/Models/BoxItemsData.swift; sourceTree = "<absolute>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 		21182C8922E610D400712670 /* Picker */ = {
 			isa = PBXGroup;
 			children = (
+				21182C8D22E62F8900712670 /* Models */,
 				21182C8A22E6115800712670 /* ViewController */,
 			);
 			path = Picker;
@@ -156,6 +161,15 @@
 				21182C8B22E6117400712670 /* PickerViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		21182C8D22E62F8900712670 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				21182C9122E635FB00712670 /* BoxItemsData.swift */,
+				21182C8E22E62F9A00712670 /* ExpandableNames.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		2132E47A22D3FA7B00734063 /* LoadedImage */ = {
@@ -652,6 +666,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21182C9222E635FB00712670 /* BoxItemsData.swift in Sources */,
 				21C36EEF22DF71F2009FE967 /* fileDownloadModel.swift in Sources */,
 				743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */,
 				2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */,
@@ -672,6 +687,7 @@
 				21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
 				2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */,
+				21182C8F22E62F9A00712670 /* ExpandableNames.swift in Sources */,
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,
 				743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */,
