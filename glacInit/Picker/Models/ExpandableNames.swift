@@ -12,6 +12,21 @@ import Foundation
 struct ExpandableNames {
     
     var isExpanded: Bool
-    let items : [BoxItemsData]
+    var items : [BoxItemsData]
     
 }
+
+struct FilesToDownload {
+    let name: String
+    let id: String
+//    init(boxItems: BoxItemsData) {
+//        self.name = boxItems.name
+//        self.id = boxItems.ID
+//    }
+}
+//struct Picker {
+//    let name: String
+//    var isSelected: Bool
+//    
+//}
+

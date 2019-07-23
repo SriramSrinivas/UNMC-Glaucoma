@@ -13,6 +13,8 @@
 		21182C8C22E6117400712670 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8B22E6117400712670 /* PickerViewController.swift */; };
 		21182C8F22E62F9A00712670 /* ExpandableNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C8E22E62F9A00712670 /* ExpandableNames.swift */; };
 		21182C9222E635FB00712670 /* BoxItemsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9122E635FB00712670 /* BoxItemsData.swift */; };
+		21182C9522E7415000712670 /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9422E7415000712670 /* PickerCell.swift */; };
+		21182C9722E7932100712670 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9622E7932100712670 /* Globals.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -74,6 +76,8 @@
 		21182C8B22E6117400712670 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		21182C8E22E62F9A00712670 /* ExpandableNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableNames.swift; sourceTree = "<group>"; };
 		21182C9122E635FB00712670 /* BoxItemsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoxItemsData.swift; path = /Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/glacInit/Picker/Models/BoxItemsData.swift; sourceTree = "<absolute>"; };
+		21182C9422E7415000712670 /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
+		21182C9622E7932100712670 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 		21182C8922E610D400712670 /* Picker */ = {
 			isa = PBXGroup;
 			children = (
+				21182C9322E7410D00712670 /* Views */,
 				21182C8D22E62F8900712670 /* Models */,
 				21182C8A22E6115800712670 /* ViewController */,
 			);
@@ -170,6 +175,14 @@
 				21182C8E22E62F9A00712670 /* ExpandableNames.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		21182C9322E7410D00712670 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				21182C9422E7415000712670 /* PickerCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2132E47A22D3FA7B00734063 /* LoadedImage */ = {
@@ -351,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				7752F6661E50020A003ACC5F /* Info.plist */,
+				21182C9622E7932100712670 /* Globals.swift */,
 				21E13AF922CC0CC900429F58 /* App */,
 				21E13AF722CB8CCB00429F58 /* Services */,
 				21182C8922E610D400712670 /* Picker */,
@@ -691,10 +705,12 @@
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,
 				743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */,
+				21182C9722E7932100712670 /* Globals.swift in Sources */,
 				74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */,
 				21E2B20022DE6683009FD72D /* Networking.swift in Sources */,
 				74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */,
 				21E2B1FA22D79DAE009FD72D /* TitleRegex.swift in Sources */,
+				21182C9522E7415000712670 /* PickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,13 +12,7 @@
 // Add a button for importing files
 // imports need to have an exact name to query
 
-// maybe have a temp storage on device? so they dont have to keep reloading the data
-// create a table view controller to grab the selected file
-// prob similiar to the collection view but
-// regex file and check the closest 5 in either direction
-// if the name and the date and the time match then grab them
-// and display them according to the file type they are (eg blur, grey, or colorless)
-// the files should be deleted after that
+
 
 //import SwiftUI
 import Foundation
@@ -26,6 +20,11 @@ import UIKit
 import CoreImage
 import CoreGraphics
 import NotificationCenter
+
+//protocol PickerViewdelegate: class {
+//    func getFilestoDownload(files: [FilesToDownload])
+//}
+
 
 class LoadedImageViewController: UIViewController {
     
@@ -124,18 +123,27 @@ class LoadedImageViewController: UIViewController {
     
     var backButton : UIButton = {
         var temp = UIButton()
-        setUpButton(&temp, title: "Back", cornerRadius: 25, borderWidth: 0, color: "red")
+        setUpButton(&temp, title: "Back", cornerRadius: 10, borderWidth: 0, color: "red")
         temp.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         return temp
     }()
+    var importButton : UIButton = {
+        var temp = UIButton()
+        setUpButton(&temp, title: "Import", cornerRadius: 10, borderWidth: 0, color: "red")
+        temp.addTarget(self, action: #selector(getNewFile), for: .touchUpInside)
+        return temp
+    }()
     
+    
+    var backGroundImages = ["mainTes", "tes-1"]
     var greyCustomViewUpdateList = [CustomViewUpdate]()
     var blurCustomViewUpdateList = [CustomViewUpdate]()
     var colorCustomViewUpdateList = [CustomViewUpdate]()
     var objectCustomViewUpdateList = [CustomViewUpdate]()
     //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
-    let file = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
+    let file = importFile.init()
+    var pickerView = PickerView()
     
     var gridViews = [UIView]()
     let distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
@@ -156,41 +164,35 @@ class LoadedImageViewController: UIViewController {
         //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
         twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
         twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+   
+        pickerView.twodimArray = twoDArray
+        let nav = UINavigationController(rootViewController: pickerView)
+        nav.modalPresentationStyle = .overCurrentContext
         
-       // let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "pickerView") as! PickerView
-       // let navController = UINavigationController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
-        //self.present(navController, animated:true, completion: nil)
-        
-        let vc = PickerView()
-        
-        vc.twodimArray = twoDArray
-        let nav = UINavigationController(rootViewController: vc)
         //vc.twodimArray = twoDArray
         self.present(nav,animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickerView.delegate = self
         file.delegate = self
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .red
 
         //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
-        [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton].forEach {view.addSubview($0)}
+        [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
-        checkAountOfFilesDownlaodinf()
+        //checkAountOfFilesDownlaodinf()
         setUpView()
-    
+       // file.getFolderItems(withID: "0")
         addGridLineUpdate(mainView: mainImageView)
     }
     
     func importFilesssss(){
         
     }
-    //    var data = readDataFromCSV(fileName: kCSVFileName, fileType: kCSVFileExtension)
-    //    data = cleanRows(file: data)
-    //    let csvRows = csv(data: data)
-    //    print(csvRows[1][1]) //UXM n. 166/167.
+  
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         let size = image.size
         
@@ -210,7 +212,7 @@ class LoadedImageViewController: UIViewController {
         return newImage
         
     }
-    
+  //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     func addblur(currentFileType: Int, currentData: [[String]]){
         let midx = ((view.frame.width/5)*4)/2
         let midy = view.frame.height/2
@@ -328,6 +330,7 @@ class LoadedImageViewController: UIViewController {
         gridLabel.anchor(top: isHiddenLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
         gridSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 525, width: 100, height: 50)
         backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
+        importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 25, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
     }
     
     func initCustomObjects(h:CGFloat, w:CGFloat){
@@ -492,86 +495,85 @@ class LoadedImageViewController: UIViewController {
     }
     
     @objc func getNewFile(){
-        
-    }
-    func split(){
-
-        let test = "HELLO_MAN_THIS_IS"
-        
-        
-
-        //test.sp
-        
-        //var string
-        
-        //make a truct for the data or a model i suppose
-        // insta the the structs
-        //compare them
-        // and get the import to import the other needed ones
-        //if a png is selected grab the other but dont do anything with the png
-        // 
-        
-    }
-    //expects some sort of model
-    // comapres model and returns an array of the model
-    // expected parameter [SubjectID][date]
-//    func comparesFolderItemsSelected(listings: [folderListingViewModel]) -> [folderListingViewModel]{
-//        var retList = [folderListingViewModel]()
-//        //let listings = [folderListingViewModel]()
-//        for folder in listings {
-////            if (folder.name[0] == FolderItems[0] && folder.name[4] == FolderItems[1]){
-////                retList.append(folder)
-////            }
-//        }
-//        return retList
-//    }
-    
-//    func callDownloads(specifiedItems: [folderListingViewModel]) -> [Int] {
-//        var filetypes = [0]
-//        for items in specifiedItems{
-//            let file = items.name[5].split(separator: ".")
-//            if (file.last == "csv"){
-//                //downloadFile
-//                if (items.name[3] == "blurPoints")
-//                {
-//                    filetypes.append(1)
-//                }
-//                if (items.name[3] == "greyPoints"){
-//                    filetypes.append(2)
-//                }
-//                if (items.name[3] == "ColorPoints"){
-//                    filetypes.append(3)
-//                }
-//                if (items.name[3] == "hiddenPoints"){
-//                    filetypes.append(4)
-//                }
-//            }
-//        }
-//        return filetypes
-//    }
-    //Mark: TODO
-    //only should be 5
-    //downloading should be done here then
-    func checkAountOfFilesDownlaodinf(){
-        
-        
-        
-        file.downLoadFile()
-        let newfile = file.downloadedFile()
+        greyCustomViewUpdateList.removeAll()
+        blurCustomViewUpdateList.removeAll()
+        colorCustomViewUpdateList.removeAll()
+        objectCustomViewUpdateList.removeAll()
         file.getFolderItems(withID: "0")
-        var content = String()
-        do{
-            content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
+        pickerView = PickerView()
+        pickerView.delegate = self
+    }
+    //name then id
+    func checkFilesToDownLoad(Files: [FilesToDownload]){
+        if Files.isEmpty{
+            //do nothing
         }
-        catch {
-            print ("loading image file error")
-        }
-        let data = cleanRows(file: content)
-        var currentData = csv(data: data)
-            if (currentData.count > 10 ){
-              //  addblur(fileTypes: [1,2])
+        else{
+            for file in Files {
+                let names = file.name.components(separatedBy: "_")
+                
+                
+                let back = checkForBackGround(name: names)
+                mainImageView.image = UIImage(named: back)
+                mainImageView.reloadInputViews()
+                //if returns 0 it failed
+                let fileIntValue = checkForKindOfFile(name: names)
+                
+                
+                let newfile = self.file.downLoadFile(withId: file.id)
+                
+                //TODO should implement a completion handler here!!!!
+                sleep(1)
+                var content = String()
+                do{
+                    content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
+                }
+                catch {
+                    print ("loading image file error")
+                }
+                let data = cleanRows(file: content)
+                var currentData = csv(data: data)
+                if (currentData.count > 10 ){
+                    addblur(currentFileType: fileIntValue, currentData: currentData)
+                }
             }
-
+            
+        }
+        
+    }
+    
+    
+    // TODO put these into a global variable
+    func checkForKindOfFile(name: [String]) -> Int{
+        for word in name {
+            if (word == "blurPoints")
+            {
+                return 1
+            }
+            if (word == "greyPoints"){
+                return 2
+            }
+            if (word == "ColorPoints"){
+                return 3
+            }
+            if (word == "hiddenPoints"){
+                return 4
+            }
+        }
+        return 0
+    }
+    
+    
+    func checkForBackGround(name: [String]) -> String{
+        for word in name{
+            for back in backGroundImages{
+                if word == back
+                {
+                    return word
+                }
+            }
+        }
+        return "MainTes"
     }
     
     
@@ -579,6 +581,14 @@ class LoadedImageViewController: UIViewController {
 extension LoadedImageViewController: ImportDelegate{
     func didReceiveData(boxItems: [BOXItem]) {
         getImportedData(boxitems: boxItems)
+    }
+    func FileInfoReceived(){
+        
+    }
+}
+extension LoadedImageViewController: PickerViewdelegate{
+    func getFilestoDownload(files: [FilesToDownload]) {
+        checkFilesToDownLoad(Files: files)
     }
 }
 enum fileTypes{

@@ -79,7 +79,7 @@ class Session {
         let blurPointsFile = FileObject(name:"\(subjectId)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         let greyPointsFile = FileObject(name:"\(subjectId)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         let hiddenPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        let ColorPointsFile = FileObject(name:"\(subjectId)_ColorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        let ColorPointsFile = FileObject(name:"\(subjectId)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
         
         screenShotFile.savePNG(view: mainView)

@@ -32,47 +32,34 @@ import BoxContentSDK
 //}
 protocol ImportDelegate: class {
     func didReceiveData(boxItems: [BOXItem])
+    func FileInfoReceived()
 }
 class importFile {
     
     weak var delegate: ImportDelegate?
-    var subjectId: String
-    var backGroundId: String
-    //var date: Date
-     var type: FileType
     var path = "/GlacInit/"
     var fileURL : URL?
     let stream = OutputStream()
-    var fileName = "NewFile" + ".csv"
-    var csvText = ""
+    var fileName: String?
     var items = Array<Any>()
-//    var delegate: TransferDataDelegate?
-    //var help = TransferDataDelegate?.self
+
     
-    init(subjectId: String, backGroundId: String, file: FileType) {
-        self.subjectId = subjectId
-        self.backGroundId = backGroundId
-        //self.date = date
-        self.type = file
-       // self.path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(subjectId)")!
+    init() {
     }
     
-// sets the background
-    func newFile(){
+    func newFile(withId: String){
+        fileName = withId
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             var fileURL = dir.appendingPathComponent(path)
             do{
                 try FileManager.default.createDirectory(atPath: fileURL.path, withIntermediateDirectories: true, attributes: nil)
-                fileURL = dir.appendingPathComponent(path + fileName)
+                fileURL = dir.appendingPathComponent(path + fileName!)
             }
             catch{
                 print("Unable to create directory \(Error.self)")
             }
             self.fileURL = fileURL
         }
-    }
-    func setBackGround() -> String{
-        return backGroundId
     }
     
     func boxAuthorize(){
@@ -86,76 +73,25 @@ class importFile {
     }
 // method to get the files from box
     func getFolderItems(withID: String){
-       
-        
         let contentClient = BOXContentClient.default()
         let boxfolderrequest = contentClient?.folderItemsRequest(withID: withID)
         boxfolderrequest?.perform(completion: {(items: Array?, error: Error?) -> Void in
-            //items?.first?.isFile
-            //var delegate: TransferDataDelegate?
-//            self.delegate?.transferData(folderitems: (items as! Array<BOXItem>))
-            
+
             self.delegate?.didReceiveData(boxItems: items!)
-            
-            //Instance member 'transferData' cannot be used on type 'TransferDataDelegate'; did you mean to use a value of this type instead?
+      
         })
     }
-    func downLoadFile(){
-        newFile()
+    func downLoadFile(withId: String) -> URL{
+        newFile(withId: withId)
         let contentClient = BOXContentClient.default()
 
-        let boxRequest = contentClient?.fileDownloadRequest(withID: "489481746578", toLocalFilePath: fileURL?.path)
-        //let boxReq = contentClient?.searchRequest(withQuery: "dog_mainTes_blurPoints_2019-07-11 11-11-32_1.csv", in: NSRange(location: 2, length: 100))
-
+        let boxRequest = contentClient?.fileDownloadRequest(withID: withId, toLocalFilePath: fileURL?.path)
+       
         boxRequest?.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
         }, completion: {(_ error: Error?) -> Void in
-
+            
         })
-        let data: Data
- 
-    }
-    
-    func downloadedFile() -> URL {
         return fileURL!
     }
-
-// method to go through the data and display the info
-
-//struct FileObject {
-//    var name: String
-//    var path : URL
-//    var type: FileType
-//
-//    init(name:String,type:FileType){
-//        self.name = "\(name).\(type.rawValue)"
-//        self.type = type
-//        self.path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(name)")!
-//    }
-//
-//    func saveCSV(grid:Matrix){
-//        let distances: [CGFloat] = [-1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
-//        var csvText = ",-1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1"
-//        for (row,i) in distances.enumerated() {
-//            var newLine = ""
-//            for (column,_) in distances.enumerated() {
-//                if(column == 0){
-//                    newLine = "\(i),\(grid[row,column])"
-//                }
-//                else {
-//                    newLine = "\(newLine),\(grid[row,column])"
-//                }
-//            }
-//            csvText = "\(csvText)\n\(newLine)"
-//        }
-//
-//        do {
-//            try csvText.write(to: path, atomically: true, encoding: String.Encoding.utf8)
-//        } catch {
-//            print("Failed create to file")
-//            print("\(error)")
-//        }
-//}
-
-//
-
+   
 }

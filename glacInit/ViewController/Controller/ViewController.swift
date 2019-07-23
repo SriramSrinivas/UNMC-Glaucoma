@@ -129,7 +129,7 @@ class ViewController: UIViewController{
             self.showToast(message: "\(error)", theme: .error)
         }
 
-        let newFile = importFile.init(subjectId: "", backGroundId: "", file: FileType.CSV)
+        let newFile = importFile.init()
 //        newFile.downLoadFile()
         //addGridPoints(view: mainImgView)
     }
