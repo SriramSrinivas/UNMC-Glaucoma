@@ -92,14 +92,22 @@ class importFile {
       
         })
     }
-    func downLoadFile(withId: String) -> URL{
+    func downLoadFile(withId: String, completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void) -> URL{
         newFile(withId: withId)
         let contentClient = BOXContentClient.default()
 
         let boxRequest = contentClient?.fileDownloadRequest(withID: withId, toLocalFilePath: fileURL?.path)
        
         boxRequest?.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in
-        }, completion: {(_ error: Error?) -> Void in
+        }, completion: {(_ error: Error?) in
+            
+            if let folerError = error {
+                
+                completion(false, folerError)
+                print(folerError)
+            } else {
+                completion(true, nil)
+            }
             
         })
         return fileURL!

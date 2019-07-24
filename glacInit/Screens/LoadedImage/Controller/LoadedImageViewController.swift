@@ -556,28 +556,44 @@ class LoadedImageViewController: UIViewController {
                 
                 
                 let back = checkForBackGround(name: names)
+                //back = "MainTes"
                 mainImageView.image = UIImage(named: back)
                 mainImageView.reloadInputViews()
                 //if returns 0 it failed
                 let fileIntValue = checkForKindOfFile(name: names)
                 
                 
-                let newfile = self.file.downLoadFile(withId: file.id)
+                let newfile = self.file.downLoadFile(withId: file.id, completion: { (uploaded:Bool, error:Error?) in
+                    if let fileError = error {
+                        //self.currentSession = Session(currentSubjectId: self.subjectID)
+                        //self.currentSession.boxAuthorize()
+                        //self.currentSession.boxAuthorize()
+                        self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                    }
+                    else {
+                        print("Success")
+                    }
+                })
                 
                 //TODO should implement a completion handler here!!!!
                 sleep(1)
                 var content = String()
                 do{
                     content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
+                    let data = cleanRows(file: content)
+                    let currentData = csv(data: data)
+                    if (currentData.count > 10 ){
+                        addblur(currentFileType: fileIntValue, currentData: currentData)
+                    }
                 }
                 catch {
                     print ("loading image file error")
                 }
-                let data = cleanRows(file: content)
-                let currentData = csv(data: data)
-                if (currentData.count > 10 ){
-                    addblur(currentFileType: fileIntValue, currentData: currentData)
-                }
+//                let data = cleanRows(file: content)
+//                let currentData = csv(data: data)
+//                if (currentData.count > 10 ){
+//                    addblur(currentFileType: fileIntValue, currentData: currentData)
+//                }
             }
             
         }
@@ -616,7 +632,7 @@ class LoadedImageViewController: UIViewController {
                 }
             }
         }
-        return "MainTes"
+        return "mainTes"
     }
     
     

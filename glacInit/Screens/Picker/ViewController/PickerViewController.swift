@@ -213,20 +213,32 @@ class PickerView: UITableViewController, PickerViewdelegate {
         if twodimArray[indexPath.section].items[indexPath.row].isFolder{
             let file = importFile.init()
             let id = twodimArray[indexPath.section].items[indexPath.row].ID
-            file.getFolderItems(withID: id)
+            file.getFolderItems(withID: id, completion:  { (uploaded:Bool, error:Error?) in
+                if let fileError = error {
+                    //self.currentSession = Session(currentSubjectId: self.subjectID)
+                    //self.currentSession.boxAuthorize()
+                    //self.currentSession.boxAuthorize()
+                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                }
+                else {
+                    self.alltwodimArray.append(self.twodimArray[0])
+                    self.alltwodimArray.append(self.twodimArray[1])
+                    print("Success")
+                }
+            })
             file.delegate = self
             //file.delegate?.didReceiveData(boxItems: ite)
            
             
         }
             
-        else{
-            let item = twodimArray[indexPath.section].items[indexPath.row]
-           // let index =
-            if !item.isFolder {
-                tableView.reloadRows(at: [indexPath], with: .right)
-            }
-        }
+//        else{
+//            let item = twodimArray[indexPath.section].items[indexPath.row]
+//           // let index =
+//            if !item.isFolder {
+//                tableView.reloadRows(at: [indexPath], with: .right)
+//            }
+//        }
     }
     func getData(boxitems: [ExpandableNames]){
         if alltwodimArray.count == 0 {
@@ -237,7 +249,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         for items in boxitems{
             //twodimArray.removeAll()
             twodimArray.append(items)
-            alltwodimArray.append(items)
+            //alltwodimArray.append(items)
         }
         //tableView.reloadData()
        // var indexPathsToReload = [IndexPath]()
