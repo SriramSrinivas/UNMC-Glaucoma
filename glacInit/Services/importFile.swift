@@ -24,6 +24,7 @@
 
 
 import Foundation
+import UIKit
 import BoxContentSDK
 //import NotificationCenter
 // init will get the data needed from the user
@@ -71,13 +72,23 @@ class importFile {
         })
         
     }
+    //check for internet
 // method to get the files from box
-    func getFolderItems(withID: String){
+    func getFolderItems(withID: String, completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
         let contentClient = BOXContentClient.default()
         let boxfolderrequest = contentClient?.folderItemsRequest(withID: withID)
-        boxfolderrequest?.perform(completion: {(items: Array?, error: Error?) -> Void in
+        boxfolderrequest?.perform(completion: {(items: Array?, error: Error?) in
 
-            self.delegate?.didReceiveData(boxItems: items!)
+            if let folerError = error {
+                
+                completion(false, folerError)
+                print(folerError)
+            } else {
+                completion(true, nil)
+                self.delegate?.didReceiveData(boxItems: items!)
+            }
+            
+            //self.delegate?.didReceiveData(boxItems: items!)
       
         })
     }

@@ -20,6 +20,7 @@ import UIKit
 import CoreImage
 import CoreGraphics
 import NotificationCenter
+import Reachability
 
 //protocol PickerViewdelegate: class {
 //    func getFilestoDownload(files: [FilesToDownload])
@@ -134,7 +135,7 @@ class LoadedImageViewController: UIViewController {
         return temp
     }()
     
-    
+    var reach: Reachability?
     var backGroundImages = ["mainTes", "tes-1"]
     var greyCustomViewUpdateList = [CustomViewUpdate]()
     var blurCustomViewUpdateList = [CustomViewUpdate]()
@@ -187,6 +188,8 @@ class LoadedImageViewController: UIViewController {
         setUpView()
        // file.getFolderItems(withID: "0")
         addGridLineUpdate(mainView: mainImageView)
+        //throw err0r
+        //addblur(currentFileType: 1, currentData: [[]])
     }
     
     func importFilesssss(){
@@ -231,7 +234,13 @@ class LoadedImageViewController: UIViewController {
                 let frame = CGRect(x: y, y:x, width: 15, height: 15)
 
                 let value = currentData[countx][county]
+                
+                //var current = 1
+                //var value = "10"
                 let a:Int? = Int(value)
+                //test
+                
+                //value = "10"
                 if (currentFileType == 1 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     
@@ -511,13 +520,30 @@ class LoadedImageViewController: UIViewController {
     }
     
     @objc func getNewFile(){
+        self.reach = Reachability.forInternetConnection()
+        //TODO perform internet check 
+        if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
         greyCustomViewUpdateList.removeAll()
         blurCustomViewUpdateList.removeAll()
         colorCustomViewUpdateList.removeAll()
         objectCustomViewUpdateList.removeAll()
-        file.getFolderItems(withID: "0")
+            file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
+                if let fileError = error {
+                    //self.currentSession = Session(currentSubjectId: self.subjectID)
+                    //self.currentSession.boxAuthorize()
+                    //self.currentSession.boxAuthorize()
+                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                }
+                else {
+                    print("Success")
+                }
+            })
         pickerView = PickerView()
         pickerView.delegate = self
+        }
+        else{
+           showToast(message: "No Internet Connection", theme: .error)
+        }
     }
     //name then id
     func checkFilesToDownLoad(Files: [FilesToDownload]){
@@ -548,7 +574,7 @@ class LoadedImageViewController: UIViewController {
                     print ("loading image file error")
                 }
                 let data = cleanRows(file: content)
-                var currentData = csv(data: data)
+                let currentData = csv(data: data)
                 if (currentData.count > 10 ){
                     addblur(currentFileType: fileIntValue, currentData: currentData)
                 }
