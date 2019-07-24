@@ -6,7 +6,19 @@
 //  Copyright © 2019 Parshav Chauhan. All rights reserved.
 //
 
+//TODO for the project
+//refactorization - bring globals here for a starter, and make code easier to follow
+// error checking, not implemeneted in the filedownlaods
+// completion handler for files
+// switch mantiance
+// hidden objects still have to be dealt with
+// smaller view for the picker view would be nice
+// custom objects not being hardcoded into place.
+
+
 import Foundation
+
+
 
 class Globals {
     

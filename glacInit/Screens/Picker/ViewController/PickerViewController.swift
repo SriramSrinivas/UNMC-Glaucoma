@@ -21,6 +21,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     let boxItems : [BOXItem]? = nil
     
     public var twodimArray : [ExpandableNames] = []
+    var checkingForFiles : Bool = true
     var alltwodimArray : [ExpandableNames] = []
     
     var showindexPaths = false
@@ -107,8 +108,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let height = view.frame.height
-        let width = view.frame.width
+
+
         //tableView.frame = CGRect(x: height/4, y: width/4, width: width/2, height: height/2)
         alltwodimArray = twodimArray
        self.navigationController?.isNavigationBarHidden = false
@@ -195,26 +196,36 @@ class PickerView: UITableViewController, PickerViewdelegate {
         
         cell.backgroundColor = boxitem.isSelected ? UIColor.blue : .white
         cell.accessoryView?.backgroundColor = boxitem.isSelected ? UIColor.white : .blue
+        if checkingForFiles {
+            cell.accessoryView?.isHidden = boxitem.isFolder
+        }
+        else {
+            cell.accessoryView?.isHidden = !boxitem.isFolder
+        }
         
-        if showindexPaths{
-            cell.textLabel?.text = "\(boxitem.name) Section: \(indexPath.section) Row:\(indexPath.row)"
-        }
-        else{
-            cell.textLabel?.text = boxitem.name
-        }
+      
+        cell.textLabel?.text = boxitem.name
+       
         
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if twodimArray[indexPath.section].items[indexPath.row].isFolder{
-            var file = importFile.init()
+            let file = importFile.init()
             let id = twodimArray[indexPath.section].items[indexPath.row].ID
             file.getFolderItems(withID: id)
             file.delegate = self
+            //file.delegate?.didReceiveData(boxItems: ite)
+           
             
         }
+            
         else{
-            //prepare for downloading
+            let item = twodimArray[indexPath.section].items[indexPath.row]
+           // let index =
+            if !item.isFolder {
+                tableView.reloadRows(at: [indexPath], with: .right)
+            }
         }
     }
     func getData(boxitems: [ExpandableNames]){
@@ -228,7 +239,24 @@ class PickerView: UITableViewController, PickerViewdelegate {
             twodimArray.append(items)
             alltwodimArray.append(items)
         }
+        //tableView.reloadData()
+       // var indexPathsToReload = [IndexPath]()
         tableView.reloadData()
+//        for section in twodimArray.indices{
+//            if twodimArray[section].isExpanded{
+//                for index in twodimArray[section].items.indices{
+//                    let indexPath = IndexPath(row: index, section: section)
+//                    indexPathsToReload.append(indexPath)
+//                }
+//            }
+//        }
+//
+//        //showindexPaths = !showindexPaths
+//
+//        //let animationStyle = showindexPaths ? UITableView.RowAnimation.right : .left
+//
+//        //let indexPath = IndexPath(row: 0, section: 0)
+//        tableView.reloadRows(at: indexPathsToReload, with: .right)
     }
     
 }
@@ -253,6 +281,6 @@ extension PickerView: ImportDelegate{
         twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
         twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
         getData(boxitems: twoDArray)
-        
+     
     }
 }

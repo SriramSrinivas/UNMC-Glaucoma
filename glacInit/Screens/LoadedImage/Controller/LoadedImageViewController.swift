@@ -47,54 +47,54 @@ class LoadedImageViewController: UIViewController {
     
     var blurSwitch : UISwitch = {
         let origSwitch = UISwitch(frame:CGRect(x: 0, y: 0, width: 100, height: 50))
-        origSwitch.isOn = true
+        origSwitch.isOn = false
         origSwitch.addTarget(self, action: #selector(grewSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
 
     var blackSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.isOn = true
+        origSwitch.isOn = false
         origSwitch.addTarget(self, action: #selector(blackSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var colorSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.isOn = true
+        origSwitch.isOn = false
         origSwitch.addTarget(self, action: #selector(colorSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var isHiddenSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.isOn = true
+        origSwitch.isOn = false
         origSwitch.addTarget(self, action: #selector(isHiddenSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
     var allSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.isOn = true
+        origSwitch.isOn = false
         origSwitch.addTarget(self, action: #selector(allSwitch(_sender:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     var gridSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.isOn = true
+        origSwitch.isOn = false
         origSwitch.addTarget(self, action: #selector(toggleGrid(mySwitch:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
     
-    var greyLabel : UITextView = {
-       var temp = UITextView()
-        nonEditableTextView(&temp, text: "Grey", fontSize: 15)
+    var blurLabel : UIImageView = {
+        let image = UIImage(named: "BlurOn")
+       var temp = UIImageView.init(image: image)
         return temp
     }()
     
-    var blackLabel : UITextView = {
-        var temp = UITextView()
-        nonEditableTextView(&temp, text: "Black", fontSize: 15)
+    var illumLabel : UIImageView = {
+        let image = UIImage(named: "lumin")
+        var temp = UIImageView.init(image: image)
         return temp
     }()
     
@@ -104,13 +104,13 @@ class LoadedImageViewController: UIViewController {
         return temp
     }()
     
-    var allLabel : UITextView = {
-        var temp = UITextView()
-        nonEditableTextView(&temp, text: "isHidden", fontSize: 15)
+    var IsHiddenLabel : UIImageView = {
+        let image = UIImage(named: "SightOn")
+        var temp = UIImageView.init(image: image)
         return temp
     }()
     
-    var isHiddenLabel : UITextView = {
+    var allLabel : UITextView = {
         var temp = UITextView()
         nonEditableTextView(&temp, text: "All", fontSize: 15)
         return temp
@@ -181,7 +181,7 @@ class LoadedImageViewController: UIViewController {
         view.backgroundColor = .red
 
         //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
-        [sideImageView, mainImageView, greyLabel, blurSwitch, blackLabel, blackSwitch, colorLabel, colorSwitch, allLabel, allSwitch, isHiddenLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton].forEach {view.addSubview($0)}
+        [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
         //checkAountOfFilesDownlaodinf()
         setUpView()
@@ -225,10 +225,10 @@ class LoadedImageViewController: UIViewController {
         for number in distances {
             for numb in distances {
                 
-                let x = ((numb/2) * Double(width) + Double(midx))
-                let y = ((number/2) * Double(height) + Double(midy))
+                let x = ((numb/2) * Double(height) + Double(midy))
+                let y = ((number/2) * Double(width) + Double(midx))
                 _ = (numb.nextUp * Double(width) + Double(midx))/2 - x
-                let frame = CGRect(x: x, y:y, width: 15, height: 15)
+                let frame = CGRect(x: y, y:x, width: 15, height: 15)
 
                 let value = currentData[countx][county]
                 let a:Int? = Int(value)
@@ -248,7 +248,8 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
-                    c.blur.layer.borderWidth = 1
+                    c.layer.borderWidth = 1
+                    c.layer.borderColor = UIColor.red.cgColor
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
@@ -270,6 +271,18 @@ class LoadedImageViewController: UIViewController {
                     
                     c.blur.backgroundColor = nil
                     colorCustomViewUpdateList.append(c)
+                    mainImageView.addSubview(c)
+                }
+                if (currentFileType == 3 && value != "0"){
+                    let c = CustomViewUpdate(frame: frame)
+                    c.layer.zPosition = 2
+                    c.isActive = false
+                    c.layer.borderWidth = 6
+                    c.layer.borderColor = UIColor.red.cgColor
+                    c.blur.backgroundColor = UIColor.black
+                    c.blur.alpha = CGFloat(a!/10)
+                    c.blur.blurRadius = 0
+                    greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 countx = countx + 1
@@ -314,22 +327,25 @@ class LoadedImageViewController: UIViewController {
         
         mainImageView.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .zero, size: .init(width: view.frame.width - view.frame.width/5, height: view.frame.height))
         sideImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.rightAnchor, padding: .zero, size: .init(width: view.frame.width/5, height: view.frame.height))
-        greyLabel.anchor(top: sideImageView.topAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        blurSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 150, width: 100, height: 50)
+        //blurLabel.anchor(top: sideImageView.topAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+        blurLabel.frame = CGRect(x: view.bounds.size.width - 140, y: 40, width: 50, height: 50)
+        blurSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 100, width: 100, height: 50)
         
-        blackLabel.anchor(top: greyLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        blackSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 225, width: 100, height: 50)
-        colorLabel.anchor(top: blackLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+        //illumLabel.anchor(top: blurLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+        illumLabel.frame = CGRect(x: view.bounds.size.width - 140, y: 140, width: 50, height: 50)
+        blackSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 200, width: 100, height: 50)
+        colorLabel.anchor(top: illumLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
         colorSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 300, width: 100, height: 50)
         
-        allLabel.anchor(top: colorLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        isHiddenSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 375, width: 100, height: 50)
-         isHiddenLabel.anchor(top: allLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        allSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 450, width: 100, height: 50)
+        //IsHiddenLabel.anchor(top: colorLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+        IsHiddenLabel.frame = CGRect(x: view.bounds.size.width - 140, y: 340, width: 50, height: 50)
+        isHiddenSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 400, width: 100, height: 50)
+         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+        allSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 470, width: 100, height: 50)
         
-        gridLabel.anchor(top: isHiddenLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        gridSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 525, width: 100, height: 50)
-        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
+        gridLabel.anchor(top: allLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+        gridSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 545, width: 100, height: 50)
+        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 25, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
         importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 25, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
     }
     
@@ -544,6 +560,7 @@ class LoadedImageViewController: UIViewController {
     
     
     // TODO put these into a global variable
+    //maybe add a switch turning on call here (maybe later with some error checking
     func checkForKindOfFile(name: [String]) -> Int{
         for word in name {
             if (word == "blurPoints")
@@ -553,7 +570,7 @@ class LoadedImageViewController: UIViewController {
             if (word == "greyPoints"){
                 return 2
             }
-            if (word == "ColorPoints"){
+            if (word == "colorPoints"){
                 return 3
             }
             if (word == "hiddenPoints"){
