@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: LoadedImageViewController())
+        window?.rootViewController = UINavigationController(rootViewController: ViewController())
         
         //DropboxClientsManager.setupWithAppKey("k7md28kj4bojyxxa65kd1bwraxlhhq60")
         
