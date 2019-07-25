@@ -6,6 +6,9 @@
 //  Copyright © 2019 Parshav Chauhan. All rights reserved.
 //
 
+//how to get rid of the grey for non selectable
+// bring up another view for showing which files will be imported
+
 import Foundation
 import UIKit
 import BoxContentSDK
@@ -19,7 +22,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     weak var delegate : PickerViewdelegate?
     let cellID = "FluffyBunny"
     let boxItems : [BOXItem]? = nil
-    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var spinner = UIActivityIndicatorView(style: .whiteLarge)
     internal let refreshControll = UIRefreshControl()
     
     public var twodimArray : [ExpandableNames] = []
@@ -29,6 +32,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     var currentFolderID = "0"
     var titlePathString = "Home"
     var titlePathCount = 0
+    var child : SpinnerViewController?
     
     var showindexPaths = false
     
@@ -130,10 +134,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = UIActivityIndicatorView.Style.gray
-        view.addSubview(activityIndicator)
+        
         
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControll
@@ -141,6 +142,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
             tableView.addSubview(refreshControll)
         }
         refreshControll.addTarget(self, action: #selector(getCurrentFolder(_:)), for: .valueChanged)
+        refreshControll.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: .init())
         alltwodimArray = twodimArray
        self.navigationController?.isNavigationBarHidden = false
         
@@ -173,7 +175,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
                 self.changeRightNav()
                 print("Success")
                 self.refreshControl?.endRefreshing()
-                self.activityIndicator.stopAnimating()
+                //self.activityIndicator.stopAnimating()
             }
         })
     }
@@ -270,9 +272,11 @@ class PickerView: UITableViewController, PickerViewdelegate {
         cell.accessoryView?.backgroundColor = boxitem.isSelected ? lightBlue : darkBlue
         if checkingForFiles {
             cell.accessoryView?.isHidden = boxitem.isFolder
+            cell.selectionStyle = .none
         }
         else {
             cell.accessoryView?.isHidden = !boxitem.isFolder
+            cell.selectionStyle = .none
         }
         cell.textLabel?.text = boxitem.name
         return cell
@@ -280,10 +284,11 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if twodimArray[indexPath.section].items[indexPath.row].isFolder{
+            
             let file = importFile.init()
             let id = twodimArray[indexPath.section].items[indexPath.row].ID
             let name = twodimArray[indexPath.section].items[indexPath.row].name
-            activityIndicator.startAnimating()
+            createSpinnerView()
             file.getFolderItems(withID: id, completion:  { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
@@ -299,13 +304,38 @@ class PickerView: UITableViewController, PickerViewdelegate {
                     self.changeNavTitle()
                     self.currentFolderID = id
                     print("Success")
+                    self.removeSpinner()
                 }
             })
-            activityIndicator.stopAnimating()
+            //activityIndicator.stopAnimating()
             file.delegate = self
         }
     }
-    
+    func createSpinnerView() {
+        child = SpinnerViewController()
+        // add the spinner view controller
+        addChild(child!)
+        child?.view.frame = view.frame
+        view.addSubview(child!.view)
+        child?.didMove(toParent: self)
+        
+        // wait two seconds to simulate some work happening
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5 ) {
+            // then remove the spinner view controller
+            self.child?.willMove(toParent: nil)
+            self.child?.view.removeFromSuperview()
+            self.child?.removeFromParent()
+        }
+    }
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            self.child?.removeFromParent()
+            self.child?.hideSpinner()
+            self.child = nil
+            
+        }
+    }
+
     func changeNavTitle(){
         if (titlePathCount > 0){
             navigationItem.title = titlePathString
@@ -336,6 +366,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
         tableView.reloadData()
     }
+    
+    
 }
 extension PickerView: ImportDelegate{
     func FileInfoReceived() {
@@ -358,5 +390,27 @@ extension PickerView: ImportDelegate{
         twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
         getData(boxitems: twoDArray)
      
+    }
+}
+class SpinnerViewController: UIViewController {
+    var spinner = UIActivityIndicatorView(style: .whiteLarge)
+    
+    override func loadView() {
+        view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        view.addSubview(spinner)
+        
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+   
+    public func hideSpinner() {
+        spinner.stopAnimating()
+       // self.removeFromParent()
+        self.view.removeFromSuperview()
+        self.removeFromParent()
     }
 }

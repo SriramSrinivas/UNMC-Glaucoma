@@ -245,7 +245,7 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     
                     c.isActive = false
-                    c.blur.layer.borderWidth = 1
+                    c.blur.layer.borderWidth = 5
                     c.layer.zPosition = 2
                     c.blur.blurRadius = CGFloat(a!/10)
                     c.isActive = false
@@ -257,7 +257,7 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
-                    c.layer.borderWidth = 1
+                    c.layer.borderWidth = 5
                     c.layer.borderColor = UIColor.red.cgColor
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
@@ -269,7 +269,7 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     var cropImage = constImage
                     c.setImageConst(images: constImage!)
-                    c.blur.layer.borderWidth = 1
+                    c.blur.layer.borderWidth = 5
 
                     //cropImage = cropImage!.crop(rect: c.frame)
                     //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
@@ -286,7 +286,7 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
-                    c.layer.borderWidth = 6
+                    c.layer.borderWidth = 5
                     c.layer.borderColor = UIColor.red.cgColor
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
@@ -576,6 +576,7 @@ class LoadedImageViewController: UIViewController {
                         self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
                     }
                     else {
+                        self.showToast(message: "\(file.name) has Successfully been downloaded", theme: .success)
                         print("Success")
                         group.leave()
                     }
