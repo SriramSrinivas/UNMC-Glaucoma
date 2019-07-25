@@ -19,10 +19,12 @@ class PickerView: UITableViewController, PickerViewdelegate {
     weak var delegate : PickerViewdelegate?
     let cellID = "FluffyBunny"
     let boxItems : [BOXItem]? = nil
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     public var twodimArray : [ExpandableNames] = []
     var checkingForFiles : Bool = true
     var alltwodimArray : [ExpandableNames] = []
+    var isSelectedCount = 0
     
     var showindexPaths = false
     
@@ -32,13 +34,20 @@ class PickerView: UITableViewController, PickerViewdelegate {
         print(boxItem.name)
         //print(indexPathclickedon)
         let selected = boxItem.isSelected
+        if boxItem.isSelected{
+            isSelectedCount = isSelectedCount + 1
+        }
+        else{
+            isSelectedCount = isSelectedCount - 1
+        }
+        changeRightNav()
         twodimArray[(indexPathclickedon.section)].items[(indexPathclickedon.row)].isSelected = !selected
         tableView.reloadRows(at: [indexPathclickedon], with: .fade)
     }
     
-    
     func getFilestoDownload(files: [FilesToDownload]) {
     }
+    
     func prepareFilesFortransfer(){
         var files : [FilesToDownload] = []
         for section in twodimArray.indices{
@@ -54,45 +63,27 @@ class PickerView: UITableViewController, PickerViewdelegate {
                 }
             }
         }
-        
-//        for FileType in twodimArray{
-//            //let FileType.items.count
-//            for i in 0...FileType.items.count{
-//                if FileType.items[i].isSelected {
-//                    let name = FileType.items[i].name
-//                    let Id = FileType.items[i].ID
-//                    let file = FilesToDownload(name: name, id: Id)
-//                    files.append(file)
-//                }
-//            }
-//        }
         delegate!.getFilestoDownload(files: files)
     }
+    func changeRightNav() {
+        if isSelectedCount == 0 {
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleShowIndexPath))
+        }
+        else{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Import", style: .plain, target: self, action: #selector(handleShowIndexPath))
+        }
+    }
+    
     @objc func handleShowIndexPath(){
         print("attempting")
         
         prepareFilesFortransfer()
         self.dismiss(animated: true, completion: nil)
-//        var indexPathsToReload = [IndexPath]()
-        
-//        for section in twodimArray.indices{
-//            if twodimArray[section].isExpanded{
-//                for index in twodimArray[section].items.indices{
-//                    let indexPath = IndexPath(row: index, section: section)
-//                    indexPathsToReload.append(indexPath)
-//                }
-//            }
-//        }
-//
-//        showindexPaths = !showindexPaths
-//
-//        let animationStyle = showindexPaths ? UITableView.RowAnimation.right : .left
-//
-//        //let indexPath = IndexPath(row: 0, section: 0)
-//        tableView.reloadRows(at: indexPathsToReload, with: animationStyle)
     }
     @objc func BackTapped(){
         if (alltwodimArray.count > 1){
+            isSelectedCount = 0
             twodimArray.removeAll()
             let last = alltwodimArray.last!
             alltwodimArray.remove(at: (alltwodimArray.count - 1))
@@ -101,27 +92,29 @@ class PickerView: UITableViewController, PickerViewdelegate {
             twodimArray.append(secondlast)
             twodimArray.append(last)
         }
-        
+        isSelectedCount = 0
+        changeRightNav()
         print(alltwodimArray.count, twodimArray.count)
         tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
 
-
-        //tableView.frame = CGRect(x: height/4, y: width/4, width: width/2, height: height/2)
         alltwodimArray = twodimArray
        self.navigationController?.isNavigationBarHidden = false
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Import", style: .plain, target: self, action: #selector(handleShowIndexPath))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleShowIndexPath))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(BackTapped))
         
         navigationItem.title = "Box Files and Folders"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.register(PickerCell.self, forCellReuseIdentifier: cellID)
-        //tableView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width/2, height: view.frame.size.height/2)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -130,19 +123,27 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
+        let stackview = UIStackView()
         let button = UIButton(type: .system)
-        button.setTitle("close", for: .normal)
-        button.backgroundColor = .gray
+        let image = UIImage(named: "minus")
+        
+        button.setImage(image, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageView?.tintColor = .black
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         
         button.addTarget(self, action: #selector(closeSection), for: .touchUpInside)
         button.tag = section
-        return button
-//        let label = UILabel()
-//        label.text = "Header"
-//        label.backgroundColor = .gray
-//        return label
+        
+        let headerName = UILabel()
+        let headernamestext = (section == 0) ? "Folders" : "Files"
+        headerName.text = headernamestext
+        
+        stackview.addArrangedSubview(headerName)
+        stackview.addArrangedSubview(button)
+        return stackview
     }
     
     @objc func closeSection(button: UIButton){
@@ -157,7 +158,9 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
         let isExpanded = twodimArray[section].isExpanded
         twodimArray[section].isExpanded = !isExpanded
-        button.setTitle(isExpanded ? "open" : "close", for: .normal)
+        let name = isExpanded ? "plus" : "minus"
+        let image = UIImage(named: name)
+        button.setImage(image, for: .normal)
         
         if !isExpanded{
             tableView.insertRows(at: indexPaths, with: .fade)
@@ -166,8 +169,6 @@ class PickerView: UITableViewController, PickerViewdelegate {
             tableView.deleteRows(at: indexPaths, with: .fade)
         }
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 35
@@ -190,87 +191,54 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PickerCell
         
         cell.link = self
-       // let name = names[indexPath.row]
-        
+      
         let boxitem = twodimArray[indexPath.section].items[indexPath.row]
+        let darkBlue = UIColor(red: 66/255, green: 167/255, blue: 198/255, alpha: 1.0)
+        let lightBlue = UIColor(red: 107/255, green: 185/255, blue: 210/255, alpha: 1.0)
         
-        cell.backgroundColor = boxitem.isSelected ? UIColor.blue : .white
-        cell.accessoryView?.backgroundColor = boxitem.isSelected ? UIColor.white : .blue
+        cell.backgroundColor = boxitem.isSelected ? darkBlue : .white
+        cell.accessoryView?.backgroundColor = boxitem.isSelected ? lightBlue : darkBlue
         if checkingForFiles {
             cell.accessoryView?.isHidden = boxitem.isFolder
         }
         else {
             cell.accessoryView?.isHidden = !boxitem.isFolder
         }
-        
-      
         cell.textLabel?.text = boxitem.name
-       
-        
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if twodimArray[indexPath.section].items[indexPath.row].isFolder{
             let file = importFile.init()
             let id = twodimArray[indexPath.section].items[indexPath.row].ID
+            activityIndicator.startAnimating()
             file.getFolderItems(withID: id, completion:  { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
-                    //self.currentSession = Session(currentSubjectId: self.subjectID)
-                    //self.currentSession.boxAuthorize()
-                    //self.currentSession.boxAuthorize()
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
                 }
                 else {
+                    self.isSelectedCount = 0
+                    self.changeRightNav()
                     self.alltwodimArray.append(self.twodimArray[0])
                     self.alltwodimArray.append(self.twodimArray[1])
                     print("Success")
                 }
             })
+            activityIndicator.stopAnimating()
             file.delegate = self
-            //file.delegate?.didReceiveData(boxItems: ite)
-           
-            
         }
-            
-//        else{
-//            let item = twodimArray[indexPath.section].items[indexPath.row]
-//           // let index =
-//            if !item.isFolder {
-//                tableView.reloadRows(at: [indexPath], with: .right)
-//            }
-//        }
     }
     func getData(boxitems: [ExpandableNames]){
         if alltwodimArray.count == 0 {
             alltwodimArray = twodimArray
         }
-        //twodimArray.removeAll()
         twodimArray.removeAll()
         for items in boxitems{
-            //twodimArray.removeAll()
             twodimArray.append(items)
-            //alltwodimArray.append(items)
         }
-        //tableView.reloadData()
-       // var indexPathsToReload = [IndexPath]()
         tableView.reloadData()
-//        for section in twodimArray.indices{
-//            if twodimArray[section].isExpanded{
-//                for index in twodimArray[section].items.indices{
-//                    let indexPath = IndexPath(row: index, section: section)
-//                    indexPathsToReload.append(indexPath)
-//                }
-//            }
-//        }
-//
-//        //showindexPaths = !showindexPaths
-//
-//        //let animationStyle = showindexPaths ? UITableView.RowAnimation.right : .left
-//
-//        //let indexPath = IndexPath(row: 0, section: 0)
-//        tableView.reloadRows(at: indexPathsToReload, with: .right)
     }
-    
 }
 extension PickerView: ImportDelegate{
     func FileInfoReceived() {
@@ -289,7 +257,6 @@ extension PickerView: ImportDelegate{
                 fileItems.append(changedata)
             }
         }
-        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
         twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
         twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
         getData(boxitems: twoDArray)

@@ -68,6 +68,7 @@ class ViewController: UIViewController{
     var reach: Reachability!
     
     //amount of csv and png files uploaded
+    
     var csvFilesUploadedCount = 0
     var pngFilesUploadedCount = 0
     //amount of times box tried to upload a file
@@ -439,7 +440,10 @@ class ViewController: UIViewController{
    
     func initCustomObjects(){
         
-        customObjectList = createobjects(pictureID: 1, height: height, width: width)
+        let H = view.frame.height
+        let W = (view.frame.width/5) * 4
+        
+        customObjectList = createobjects(pictureID: 1, height: H, width: W)
         
         for i in customObjectList {
             i.isUserInteractionEnabled = true

@@ -82,7 +82,7 @@ class LoadedImageViewController: UIViewController {
     }()
     var gridSwitch : UISwitch = {
         let origSwitch = UISwitch()
-        origSwitch.isOn = false
+        origSwitch.isOn = true
         origSwitch.addTarget(self, action: #selector(toggleGrid(mySwitch:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
@@ -179,7 +179,7 @@ class LoadedImageViewController: UIViewController {
         pickerView.delegate = self
         file.delegate = self
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor.darkGray
 
         //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
         [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton].forEach {view.addSubview($0)}
@@ -271,13 +271,13 @@ class LoadedImageViewController: UIViewController {
                     c.setImageConst(images: constImage!)
                     c.blur.layer.borderWidth = 1
 
-                    cropImage = cropImage!.crop(rect: c.frame)
-                    cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
+                    //cropImage = cropImage!.crop(rect: c.frame)
+                    //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
                 
-                    if ((cropImage) != nil){
-                        c.addImage(images: cropImage!)
-                    }
-                    
+//                    if ((cropImage) != nil){
+//                        c.addImage(images: cropImage!)
+//                    }
+                
                     c.blur.backgroundColor = nil
                     colorCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
@@ -334,33 +334,40 @@ class LoadedImageViewController: UIViewController {
     
     private func setUpView(){
         
+        let width = view.bounds.width
+        let sideWidth = view.bounds.width/5
+        
         mainImageView.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .zero, size: .init(width: view.frame.width - view.frame.width/5, height: view.frame.height))
         sideImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.rightAnchor, padding: .zero, size: .init(width: view.frame.width/5, height: view.frame.height))
         //blurLabel.anchor(top: sideImageView.topAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        blurLabel.frame = CGRect(x: view.bounds.size.width - 140, y: 40, width: 50, height: 50)
-        blurSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 100, width: 100, height: 50)
+        blurLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: 40, width: 50, height: 50)
+        blurSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 50, width: 100, height: 50)
         
         //illumLabel.anchor(top: blurLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        illumLabel.frame = CGRect(x: view.bounds.size.width - 140, y: 140, width: 50, height: 50)
-        blackSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 200, width: 100, height: 50)
-        colorLabel.anchor(top: illumLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        colorSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 300, width: 100, height: 50)
+        illumLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: 100, width: 50, height: 50)
+        blackSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 110, width: 100, height: 50)
+        colorLabel.anchor(top: illumLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: 70, height: 25))
+        colorSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 160, width: 100, height: 50)
         
         //IsHiddenLabel.anchor(top: colorLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        IsHiddenLabel.frame = CGRect(x: view.bounds.size.width - 140, y: 340, width: 50, height: 50)
-        isHiddenSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 400, width: 100, height: 50)
-         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        allSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 470, width: 100, height: 50)
+        IsHiddenLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: 220, width: 50, height: 50)
+        isHiddenSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 230, width: 100, height: 50)
+         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: 70, height: 25))
+        allSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 280, width: 100, height: 50)
         
-        gridLabel.anchor(top: allLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        gridSwitch.frame = CGRect(x: view.bounds.size.width - 140, y: 545, width: 100, height: 50)
-        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 25, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
+        gridLabel.anchor(top: allLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 30, left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: 70, height: 25))
+        gridSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 340, width: 100, height: 50)
+        
+        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
         importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 25, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
     }
     
     func initCustomObjects(h:CGFloat, w:CGFloat){
         
-        customObjectList = createobjects(pictureID: 1, height: 0, width: 0)
+        let H = view.frame.height
+        let W = (view.frame.width/5) * 4
+        
+        customObjectList = createobjects(pictureID: 1, height: H, width: W)
         
         for i in customObjectList {
             i.isUserInteractionEnabled = true
@@ -561,30 +568,30 @@ class LoadedImageViewController: UIViewController {
                 mainImageView.reloadInputViews()
                 //if returns 0 it failed
                 let fileIntValue = checkForKindOfFile(name: names)
-                
+                let group = DispatchGroup()
+                group.enter()
                 
                 let newfile = self.file.downLoadFile(withId: file.id, completion: { (uploaded:Bool, error:Error?) in
                     if let fileError = error {
-                        //self.currentSession = Session(currentSubjectId: self.subjectID)
-                        //self.currentSession.boxAuthorize()
-                        //self.currentSession.boxAuthorize()
                         self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
                     }
                     else {
                         print("Success")
+                        group.leave()
                     }
                 })
+                group.notify(queue: .main) {
+                    //print(a)
                 
-                //TODO should implement a completion handler here!!!!
-                sleep(1)
                 var content = String()
                 do{
                     content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
-                    let data = cleanRows(file: content)
-                    let currentData = csv(data: data)
+                    let data = self.cleanRows(file: content)
+                    let currentData = self.csv(data: data)
                     if (currentData.count > 10 ){
-                        addblur(currentFileType: fileIntValue, currentData: currentData)
+                        self.addblur(currentFileType: fileIntValue, currentData: currentData)
                     }
+                    self.turnOnGrid(filetype: fileIntValue)
                 }
                 catch {
                     print ("loading image file error")
@@ -595,11 +602,25 @@ class LoadedImageViewController: UIViewController {
 //                    addblur(currentFileType: fileIntValue, currentData: currentData)
 //                }
             }
+            }
             
         }
         
     }
-    
+    func turnOnGrid(filetype: Int){
+        if filetype == 1 {
+            blurSwitch.setOn(true, animated: true)
+        }
+        else if filetype == 2 {
+            blackSwitch.setOn(true, animated: true)
+        }
+        else if filetype == 3 {
+            colorSwitch.setOn(true, animated: true)
+        }
+        else if filetype == 4 {
+            isHiddenSwitch.setOn(true, animated: true)
+        }
+    }
     
     // TODO put these into a global variable
     //maybe add a switch turning on call here (maybe later with some error checking

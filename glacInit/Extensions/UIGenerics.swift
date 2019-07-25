@@ -51,7 +51,8 @@ func editableTextView<T:UITextView>(_ a: inout T, text: String, borderWidth: Dou
     a.layer.borderColor = UIColor.gray.cgColor
     a.text = text
     a.clearsOnInsertion = true
-    a.textColor = UIColor.lightGray
+    a.textColor = UIColor.white
+    a.layer.backgroundColor = UIColor.lightGray.cgColor
     a.font = UIFont.systemFont(ofSize: CGFloat(fontSize))
     a.textAlignment = .center
     a.isEditable = true
@@ -64,6 +65,8 @@ func editableTextView<T:UITextView>(_ a: inout T, text: String, borderWidth: Dou
 func nonEditableTextView<T:UITextView>(_ textView: inout T, text: String, fontSize: Int){
     textView.text = text
     textView.font = UIFont.boldSystemFont(ofSize: CGFloat(fontSize))
+    textView.textColor = UIColor.white
+    textView.backgroundColor = .clear
     textView.textAlignment = .center
     textView.isEditable = false
     textView.isScrollEnabled = false

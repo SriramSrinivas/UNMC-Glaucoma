@@ -5,13 +5,13 @@
 //  Created by Lyle Reinholz on 7/17/19.
 //  Copyright © 2019 Parshav Chauhan. All rights reserved.
 //
-
-import Foundation
-
-
-struct root {
-    let items: [BOXItem]
-}
+//
+//import Foundation
+//
+//
+//struct root {
+//    let items: [BOXItem]
+//}
 
 //struct folderItems: Codable {
 //    var type: String
