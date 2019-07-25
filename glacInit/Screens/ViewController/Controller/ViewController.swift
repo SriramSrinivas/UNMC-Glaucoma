@@ -8,8 +8,7 @@ import CoreImage
 import CoreGraphics
 
 
-// YOOOOOO FIX THE IMAGE BEING TO BIG (will be fixed when constraining the images to the screen)
-// there is a little issue with the screen shotting but.. it will do for now 
+// YO grid is appearing in the images, when grid gets turn on and off we might need to update somehow,
 
 class ViewController: UIViewController{
     

@@ -20,11 +20,15 @@ class PickerView: UITableViewController, PickerViewdelegate {
     let cellID = "FluffyBunny"
     let boxItems : [BOXItem]? = nil
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    internal let refreshControll = UIRefreshControl()
     
     public var twodimArray : [ExpandableNames] = []
     var checkingForFiles : Bool = true
     var alltwodimArray : [ExpandableNames] = []
     var isSelectedCount = 0
+    var currentFolderID = "0"
+    var titlePathString = "Home"
+    var titlePathCount = 0
     
     var showindexPaths = false
     
@@ -67,11 +71,14 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     func changeRightNav() {
         if isSelectedCount == 0 {
-            
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleShowIndexPath))
+            let cancel = (UIImage(named: "cancel"))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))
+            navigationItem.rightBarButtonItem?.tintColor = .black
         }
         else{
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Import", style: .plain, target: self, action: #selector(handleShowIndexPath))
+            let downloads = (UIImage(named: "downloads"))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: downloads, style: .plain, target: self, action: #selector(handleShowIndexPath))
+            navigationItem.rightBarButtonItem?.tintColor = .black
         }
     }
     
@@ -91,11 +98,34 @@ class PickerView: UITableViewController, PickerViewdelegate {
             alltwodimArray.remove(at: (alltwodimArray.count - 1))
             twodimArray.append(secondlast)
             twodimArray.append(last)
+            removeLastPath()
+        }
+        if (titlePathCount == 0){
+            let home = UIImage(named: "home-page")
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
+            navigationItem.leftBarButtonItem?.tintColor = .black
         }
         isSelectedCount = 0
         changeRightNav()
         print(alltwodimArray.count, twodimArray.count)
         tableView.reloadData()
+    }
+    
+    func removeLastPath(){
+        var newPath = titlePathString.components(separatedBy: "/")
+        if titlePathString != "Home" {
+            newPath.popLast()
+    
+        var Path = String()
+        Path.append(newPath.remove(at: 0))
+        while newPath.count >= 1{
+            Path.append("/" + newPath.remove(at: 0))
+        }
+        
+        titlePathString = Path
+        titlePathCount = titlePathCount - 1
+        }
+        changeNavTitle()
     }
     
     override func viewDidLoad() {
@@ -104,14 +134,25 @@ class PickerView: UITableViewController, PickerViewdelegate {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray
         view.addSubview(activityIndicator)
-
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControll
+        } else {
+            tableView.addSubview(refreshControll)
+        }
+        refreshControll.addTarget(self, action: #selector(getCurrentFolder(_:)), for: .valueChanged)
         alltwodimArray = twodimArray
        self.navigationController?.isNavigationBarHidden = false
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleShowIndexPath))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(BackTapped))
+        let cancel = (UIImage(named: "cancel"))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))
+        navigationItem.rightBarButtonItem?.tintColor = .black
+        let home = UIImage(named: "home-page")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
+        navigationItem.leftBarButtonItem?.tintColor = .black
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(BackTapped))
         
-        navigationItem.title = "Box Files and Folders"
+        navigationItem.title = "Box - Home Directory"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.register(PickerCell.self, forCellReuseIdentifier: cellID)
@@ -120,12 +161,28 @@ class PickerView: UITableViewController, PickerViewdelegate {
     override func viewDidDisappear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
     }
-    
+    @objc private func getCurrentFolder(_ sender: Any) {
+        let file = importFile.init()
+        file.getFolderItems(withID: currentFolderID, completion:  { (uploaded:Bool, error:Error?) in
+            if let fileError = error {
+                self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+            }
+            else {
+                //self.twodimArray.removeAll()
+                self.isSelectedCount = 0
+                self.changeRightNav()
+                print("Success")
+                self.refreshControl?.endRefreshing()
+                self.activityIndicator.stopAnimating()
+            }
+        })
+    }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let stackview = UIStackView()
         let button = UIButton(type: .system)
-        let image = UIImage(named: "minus")
+        let image = UIImage(named: "chevron-down")
+        let innerSt = UIStackView()
         
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
@@ -133,16 +190,29 @@ class PickerView: UITableViewController, PickerViewdelegate {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.backgroundColor = .gray
         
         button.addTarget(self, action: #selector(closeSection), for: .touchUpInside)
         button.tag = section
         
         let headerName = UILabel()
-        let headernamestext = (section == 0) ? "Folders" : "Files"
+        let headernamestext = (section == 0) ? "Folders" : "Files     "
+        headerName.backgroundColor = .gray
         headerName.text = headernamestext
         
-        stackview.addArrangedSubview(headerName)
+        let fileNameImage = (section == 0) ? "folder-invoices" : "file"
+        let fileImage = UIImage(named: fileNameImage)
+        let fileimageView = UIImageView()
+        fileimageView.image = fileImage
+        fileimageView.contentMode = .scaleAspectFit
+        fileimageView.backgroundColor = .gray
+        
+        //stackview.spacing = 10
+        innerSt.addArrangedSubview(fileimageView)
+        innerSt.addArrangedSubview(headerName)
+        stackview.addArrangedSubview(innerSt)
         stackview.addArrangedSubview(button)
+        stackview.backgroundColor = .gray
         return stackview
     }
     
@@ -158,7 +228,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
         let isExpanded = twodimArray[section].isExpanded
         twodimArray[section].isExpanded = !isExpanded
-        let name = isExpanded ? "plus" : "minus"
+        let name = isExpanded ? "chevron-up" : "chevron-down"
         let image = UIImage(named: name)
         button.setImage(image, for: .normal)
         
@@ -212,6 +282,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         if twodimArray[indexPath.section].items[indexPath.row].isFolder{
             let file = importFile.init()
             let id = twodimArray[indexPath.section].items[indexPath.row].ID
+            let name = twodimArray[indexPath.section].items[indexPath.row].name
             activityIndicator.startAnimating()
             file.getFolderItems(withID: id, completion:  { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
@@ -222,12 +293,38 @@ class PickerView: UITableViewController, PickerViewdelegate {
                     self.changeRightNav()
                     self.alltwodimArray.append(self.twodimArray[0])
                     self.alltwodimArray.append(self.twodimArray[1])
+                    self.changeLeftNavitem()
+                    self.titlePathCount = self.titlePathCount + 1
+                    self.titlePathString.append("/" + "\(name)")
+                    self.changeNavTitle()
+                    self.currentFolderID = id
                     print("Success")
                 }
             })
             activityIndicator.stopAnimating()
             file.delegate = self
         }
+    }
+    
+    func changeNavTitle(){
+        if (titlePathCount > 0){
+            navigationItem.title = titlePathString
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
+        else if (titlePathCount == 0){
+            navigationItem.title = "Box - Home Directory"
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
+        else{
+            titlePathCount = 0
+        }
+        
+    }
+    
+    func changeLeftNavitem(){
+        let back = UIImage(named: "circled-left")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: back, style: .plain, target: self, action: #selector(self.BackTapped))
+        navigationItem.leftBarButtonItem?.tintColor = .black
     }
     func getData(boxitems: [ExpandableNames]){
         if alltwodimArray.count == 0 {
