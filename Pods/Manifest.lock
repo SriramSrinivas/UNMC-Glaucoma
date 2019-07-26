@@ -1,10 +1,13 @@
 PODS:
+  - DynamicBlurView (3.0.1)
+  - PopupDialog (1.1.0):
+    - DynamicBlurView (~> 3.0.1)
   - Reachability (3.2)
-  - Realm (3.17.1):
-    - Realm/Headers (= 3.17.1)
-  - Realm/Headers (3.17.1)
-  - RealmSwift (3.17.1):
-    - Realm (= 3.17.1)
+  - Realm (3.17.3):
+    - Realm/Headers (= 3.17.3)
+  - Realm/Headers (3.17.3)
+  - RealmSwift (3.17.3):
+    - Realm (= 3.17.3)
   - SwiftHSVColorPicker (1.1.1)
   - SwiftMessages (7.0.0):
     - SwiftMessages/App (= 7.0.0)
@@ -12,6 +15,7 @@ PODS:
   - VisualEffectView (4.0.0)
 
 DEPENDENCIES:
+  - PopupDialog (~> 1.1)
   - Reachability
   - RealmSwift
   - SwiftHSVColorPicker
@@ -20,6 +24,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - DynamicBlurView
+    - PopupDialog
     - Reachability
     - Realm
     - RealmSwift
@@ -28,13 +34,15 @@ SPEC REPOS:
     - VisualEffectView
 
 SPEC CHECKSUMS:
+  DynamicBlurView: b1df5415f9bd31897549e5d7077e5ec120a4d636
+  PopupDialog: 42fb7a0bc4fafdf89fef8b5b2b127a6023f3e1cc
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: c204f1a890f07dea43b14132a6aad118c054b8f2
-  RealmSwift: 4d3c9233544b9cd08a8913e0872b9038eb99b054
+  Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
+  RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
   SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
   SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
   VisualEffectView: 9e9883f07d8a929b98c9c08a068f726279d92754
 
-PODFILE CHECKSUM: 0c08b2ebbbd9246cf9111b29d904724f18e7610b
+PODFILE CHECKSUM: c1d12c30e4a40ce15d6fddcc2d145bba68fa76fb
 
 COCOAPODS: 1.6.1

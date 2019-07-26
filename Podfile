@@ -9,6 +9,7 @@ target 'glacInit' do
   pod "RealmSwift"
   pod "SwiftMessages"
   pod "Reachability"
+  pod 'PopupDialog', '~> 1.1'
   
   # Pods for glacInit
 

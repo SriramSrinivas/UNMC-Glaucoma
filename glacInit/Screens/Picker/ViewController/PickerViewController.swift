@@ -12,6 +12,7 @@
 import Foundation
 import UIKit
 import BoxContentSDK
+import PopupDialog
 
 protocol PickerViewdelegate: class{
     func getFilestoDownload(files: [FilesToDownload])
@@ -56,7 +57,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
     func getFilestoDownload(files: [FilesToDownload]) {
     }
     
-    func prepareFilesFortransfer(){
+    func prepareFilesFortransfer(completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void) -> Bool{
+        var flag = true
         var files : [FilesToDownload] = []
         for section in twodimArray.indices{
             if twodimArray[section].isExpanded{
@@ -71,7 +73,34 @@ class PickerView: UITableViewController, PickerViewdelegate {
                 }
             }
         }
-        delegate!.getFilestoDownload(files: files)
+        var title = ""
+        if files.count == 1{
+            title = "Are you sure you want to import this files"
+        }
+        else {
+            title = "Are you sure you want to import thesee file"
+        }
+        var message = ""
+        for file in files {
+            message.append(file.name + "\n")
+        }
+        //let image = UIImage(named: "pexels-photo-103290")
+        
+        let popup = PopupDialog(title: title, message: message, tapGestureDismissal: true, panGestureDismissal: false)
+       // flag = true
+        let buttonOne = CancelButton(title: "CANCEL", dismissOnTap: true) {
+            completion(false,nil)
+        }
+        let buttonTwo = DefaultButton(title: "YES", dismissOnTap: true) {
+            self.delegate!.getFilestoDownload(files: files)
+            completion(true,nil)
+        }
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        self.present(popup, animated: true, completion: nil)
+       // delegate!.getFilestoDownload(files: files)
+        return flag
+        
     }
     func changeRightNav() {
         if isSelectedCount == 0 {
@@ -89,8 +118,30 @@ class PickerView: UITableViewController, PickerViewdelegate {
     @objc func handleShowIndexPath(){
         print("attempting")
         
-        prepareFilesFortransfer()
-        self.dismiss(animated: true, completion: nil)
+        prepareFilesFortransfer(completion: { (importReady:Bool, error:Error?) in
+            if importReady {
+                self.dismiss(animated: true, completion: nil)
+            }
+            else{
+                for section in self.twodimArray.indices{
+                    if self.twodimArray[section].isExpanded{
+                        for index in self.twodimArray[section].items.indices{
+                            if self.twodimArray[section].items[index].isSelected{
+                                self.twodimArray[section].items[index].isSelected = false
+                                let indexPath = IndexPath(item: index, section: section)
+                                print(indexPath, section, index)
+                                self.tableView.reloadRows(at: [indexPath], with: .fade)
+                            }
+                            
+                        }
+                    }
+                }
+                self.isSelectedCount = 0
+                self.changeRightNav()
+            }
+            
+        })
+        
     }
     @objc func BackTapped(){
         if (alltwodimArray.count > 1){
@@ -118,7 +169,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     func removeLastPath(){
         var newPath = titlePathString.components(separatedBy: "/")
         if titlePathString != "Home" {
-            newPath.popLast()
+        newPath.popLast()
     
         var Path = String()
         Path.append(newPath.remove(at: 0))
@@ -412,5 +463,12 @@ class SpinnerViewController: UIViewController {
        // self.removeFromParent()
         self.view.removeFromSuperview()
         self.removeFromParent()
+    }
+}
+
+class ImportConfirm: UIViewController {
+    override func loadView() {
+        view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
     }
 }
