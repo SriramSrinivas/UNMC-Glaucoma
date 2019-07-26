@@ -21,7 +21,7 @@ func createobjects(pictureID: Int, height: CGFloat, width: CGFloat) -> [CustomOb
     
             //819.2
     
-    let hello = ((735.0 / 819.2) * width)
+   //let hello = ((735.0 / 819.2) * width)
 //        let newHR = height / 768.0
 //        let newWR = width /  819.2
 //        var newt1 = 735.0 * newHR

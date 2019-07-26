@@ -595,7 +595,9 @@ class LoadedImageViewController: UIViewController {
                     self.turnOnGrid(filetype: fileIntValue)
                 }
                 catch {
-                    print ("loading image file error")
+                    //print ("loading image file error"
+                    self.showToast(message: "Did not load Data, Incorrect: FileType/Data", theme: .error)
+                    
                 }
 //                let data = cleanRows(file: content)
 //                let currentData = csv(data: data)
@@ -603,6 +605,7 @@ class LoadedImageViewController: UIViewController {
 //                    addblur(currentFileType: fileIntValue, currentData: currentData)
 //                }
             }
+                
             }
             
         }

@@ -9,6 +9,8 @@
 //how to get rid of the grey for non selectable
 // bring up another view for showing which files will be imported
 
+//BUG: when not expanded
+
 import Foundation
 import UIKit
 import BoxContentSDK
@@ -61,7 +63,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         var flag = true
         var files : [FilesToDownload] = []
         for section in twodimArray.indices{
-            if twodimArray[section].isExpanded{
+            //if twodimArray[section].isExpanded{
                 for index in twodimArray[section].items.indices{
                     if twodimArray[section].items[index].isSelected{
                         let name = twodimArray[section].items[index].name
@@ -71,7 +73,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
                     }
                     
                 }
-            }
+           // }
         }
         var title = ""
         if files.count == 1{
@@ -124,16 +126,18 @@ class PickerView: UITableViewController, PickerViewdelegate {
             }
             else{
                 for section in self.twodimArray.indices{
-                    if self.twodimArray[section].isExpanded{
+                    //if self.twodimArray[section].isExpanded{
                         for index in self.twodimArray[section].items.indices{
                             if self.twodimArray[section].items[index].isSelected{
                                 self.twodimArray[section].items[index].isSelected = false
                                 let indexPath = IndexPath(item: index, section: section)
                                 print(indexPath, section, index)
-                                self.tableView.reloadRows(at: [indexPath], with: .fade)
+                                if self.twodimArray[section].isExpanded{
+                                    self.tableView.reloadRows(at: [indexPath], with: .fade)
+                                }
                             }
                             
-                        }
+                      //  }
                     }
                 }
                 self.isSelectedCount = 0

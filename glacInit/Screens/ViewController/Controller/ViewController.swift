@@ -232,7 +232,9 @@ class ViewController: UIViewController{
     }
     
     func addSlider(view: UIView){
-        
+        //768.0
+        //204.8
+        let width = view.frame.width
         blurOnIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
         blurOnIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
