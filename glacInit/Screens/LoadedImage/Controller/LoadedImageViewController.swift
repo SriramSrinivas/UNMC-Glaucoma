@@ -141,6 +141,7 @@ class LoadedImageViewController: UIViewController {
     var blurCustomViewUpdateList = [CustomViewUpdate]()
     var colorCustomViewUpdateList = [CustomViewUpdate]()
     var objectCustomViewUpdateList = [CustomViewUpdate]()
+    var isHiddenCustomUpdateList = [CustomViewUpdate]()
     //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
     let file = importFile.init()
@@ -192,9 +193,6 @@ class LoadedImageViewController: UIViewController {
         //addblur(currentFileType: 1, currentData: [[]])
     }
     
-    func importFilesssss(){
-        
-    }
   
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         let size = image.size
@@ -270,7 +268,10 @@ class LoadedImageViewController: UIViewController {
                     var cropImage = constImage
                     c.setImageConst(images: constImage!)
                     c.blur.layer.borderWidth = 5
-
+                    c.layer.borderColor = UIColor.red.cgColor
+                    c.blur.backgroundColor = UIColor.black
+                    c.blur.alpha = CGFloat(a!/10)
+                    c.blur.blurRadius = 0
                     //cropImage = cropImage!.crop(rect: c.frame)
                     //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
                 
@@ -278,11 +279,11 @@ class LoadedImageViewController: UIViewController {
 //                        c.addImage(images: cropImage!)
 //                    }
                 
-                    c.blur.backgroundColor = nil
+                   // c.blur.backgroundColor = nil
                     colorCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
-                if (currentFileType == 3 && value != "0"){
+                if (currentFileType == 4 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
@@ -291,7 +292,7 @@ class LoadedImageViewController: UIViewController {
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
-                    greyCustomViewUpdateList.append(c)
+                    isHiddenCustomUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 countx = countx + 1
@@ -321,7 +322,6 @@ class LoadedImageViewController: UIViewController {
             contents = cleanRows(file: contents)
             return contents
         } catch {
-            print("File Read Error for file \(filepath)")
             return nil
         }
     }
@@ -481,29 +481,34 @@ class LoadedImageViewController: UIViewController {
             }
         }
         else{
-            blackSwitch.setOn(false, animated: true)
-            blurSwitch.setOn(false, animated: true)
-            colorSwitch.setOn(false, animated: true)
-            for i in colorCustomViewUpdateList{
-                i.isHidden = true
-            }
-            for i in greyCustomViewUpdateList{
-                i.isHidden = true
-            }
-            for i in blurCustomViewUpdateList{
-                i.isHidden = true
-            }
+          HideAllObjects()
         }
     }
+    func HideAllObjects(){
+        blackSwitch.setOn(false, animated: true)
+        blurSwitch.setOn(false, animated: true)
+        colorSwitch.setOn(false, animated: true)
+        for i in colorCustomViewUpdateList{
+            i.isHidden = true
+        }
+        for i in greyCustomViewUpdateList{
+            i.isHidden = true
+        }
+        for i in blurCustomViewUpdateList{
+            i.isHidden = true
+        }
+    }
+        
+    
     @objc func isHiddenSwitch(_sender: UISwitch){
         if (_sender.isOn == true){
-            for i in customObjectList{
+            for i in isHiddenCustomUpdateList{
                 i.isHidden = false
                 i.layer.borderWidth = 0
             }
         }
         else{
-            for i in customObjectList{
+            for i in isHiddenCustomUpdateList{
                 i.layer.borderWidth = 1
                 i.layer.borderColor = UIColor.red.cgColor
                 i.isHidden = true
@@ -535,19 +540,17 @@ class LoadedImageViewController: UIViewController {
         self.reach = Reachability.forInternetConnection()
         //TODO perform internet check 
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
+            HideAllObjects()
         greyCustomViewUpdateList.removeAll()
         blurCustomViewUpdateList.removeAll()
         colorCustomViewUpdateList.removeAll()
         objectCustomViewUpdateList.removeAll()
             file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
-                    //self.currentSession = Session(currentSubjectId: self.subjectID)
-                    //self.currentSession.boxAuthorize()
-                    //self.currentSession.boxAuthorize()
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
                 }
                 else {
-                    print("Success")
+        
                 }
             })
         pickerView = PickerView()
@@ -582,13 +585,10 @@ class LoadedImageViewController: UIViewController {
                     }
                     else {
                         self.showToast(message: "\(file.name) has Successfully been downloaded", theme: .success)
-                        print("Success")
                         group.leave()
                     }
                 })
                 group.notify(queue: .main) {
-                    //print(a)
-                
                 var content = String()
                 do{
                     content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
@@ -600,21 +600,13 @@ class LoadedImageViewController: UIViewController {
                     self.turnOnGrid(filetype: fileIntValue)
                 }
                 catch {
-                    //print ("loading image file error"
+                    
                     self.showToast(message: "Did not load Data from \(file.name), Incorrect: FileType/Data", theme: .error)
                     
                 }
-//                let data = cleanRows(file: content)
-//                let currentData = csv(data: data)
-//                if (currentData.count > 10 ){
-//                    addblur(currentFileType: fileIntValue, currentData: currentData)
-//                }
             }
-                
             }
-            
         }
-        
     }
     func turnOnGrid(filetype: Int){
         if filetype == 1 {
@@ -664,8 +656,6 @@ class LoadedImageViewController: UIViewController {
         }
         return "mainTes"
     }
-    
-    
 }
 extension LoadedImageViewController: ImportDelegate{
     func didReceiveData(boxItems: [BOXItem]) {
