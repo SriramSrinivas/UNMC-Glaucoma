@@ -42,8 +42,6 @@ class PickerView: UITableViewController, PickerViewdelegate {
     func someMethodCall(cell: UITableViewCell){
         guard let indexPathclickedon = tableView.indexPath(for: cell) else {return}
         let boxItem = twodimArray[(indexPathclickedon.section)].items[(indexPathclickedon.row)]
-        print(boxItem.name)
-        //print(indexPathclickedon)
         let selected = boxItem.isSelected
         if boxItem.isSelected{
             isSelectedCount = isSelectedCount + 1
@@ -61,6 +59,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     func prepareFilesFortransfer(completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void) -> Bool{
         var flag = true
+        if (isSelectedCount < 0){
         var files : [FilesToDownload] = []
         for section in twodimArray.indices{
             //if twodimArray[section].isExpanded{
@@ -102,7 +101,11 @@ class PickerView: UITableViewController, PickerViewdelegate {
         self.present(popup, animated: true, completion: nil)
        // delegate!.getFilestoDownload(files: files)
         return flag
-        
+        } else {
+            completion(true,nil)
+            
+        }
+        return true
     }
     func changeRightNav() {
         if isSelectedCount == 0 {
@@ -118,26 +121,20 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     
     @objc func handleShowIndexPath(){
-        print("attempting")
-        
         prepareFilesFortransfer(completion: { (importReady:Bool, error:Error?) in
             if importReady {
                 self.dismiss(animated: true, completion: nil)
             }
             else{
                 for section in self.twodimArray.indices{
-                    //if self.twodimArray[section].isExpanded{
                         for index in self.twodimArray[section].items.indices{
                             if self.twodimArray[section].items[index].isSelected{
                                 self.twodimArray[section].items[index].isSelected = false
                                 let indexPath = IndexPath(item: index, section: section)
-                                print(indexPath, section, index)
                                 if self.twodimArray[section].isExpanded{
                                     self.tableView.reloadRows(at: [indexPath], with: .fade)
                                 }
                             }
-                            
-                      //  }
                     }
                 }
                 self.isSelectedCount = 0
@@ -166,7 +163,6 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
         isSelectedCount = 0
         changeRightNav()
-        print(alltwodimArray.count, twodimArray.count)
         tableView.reloadData()
     }
     
@@ -219,18 +215,17 @@ class PickerView: UITableViewController, PickerViewdelegate {
         navigationController?.navigationBar.isHidden = true
     }
     @objc private func getCurrentFolder(_ sender: Any) {
+        //self.refreshControl?.beginRefreshing()
         let file = importFile.init()
         file.getFolderItems(withID: currentFolderID, completion:  { (uploaded:Bool, error:Error?) in
             if let fileError = error {
                 self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
             }
             else {
-                //self.twodimArray.removeAll()
                 self.isSelectedCount = 0
                 self.changeRightNav()
-                print("Success")
                 self.refreshControl?.endRefreshing()
-                //self.activityIndicator.stopAnimating()
+
             }
         })
     }
@@ -241,12 +236,15 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let image = UIImage(named: "chevron-down")
         let innerSt = UIStackView()
         
+        let OH: CGFloat = 768.0
+        let height = (30 / OH) * view.frame.height
+        
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.imageView?.tintColor = .black
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: (14 / OH) * view.frame.height)
+        button.frame = CGRect(x: 0, y: 0, width: height, height: height)
         button.backgroundColor = .gray
         
         button.addTarget(self, action: #selector(closeSection), for: .touchUpInside)
@@ -279,7 +277,6 @@ class PickerView: UITableViewController, PickerViewdelegate {
         
         var indexPaths = [IndexPath]()
         for row in twodimArray[section].items.indices {
-            print(section, row)
             let indexPath = IndexPath(row: row, section: section)
             indexPaths.append(indexPath)
         }
@@ -298,7 +295,9 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
+        let OH: CGFloat = 768.0
+        let height = view.frame.height
+        return ((35 / OH) * height)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -358,7 +357,6 @@ class PickerView: UITableViewController, PickerViewdelegate {
                     self.titlePathString.append("/" + "\(name)")
                     self.changeNavTitle()
                     self.currentFolderID = id
-                    print("Success")
                     self.removeSpinner()
                 }
             })
@@ -394,7 +392,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     func changeNavTitle(){
         if (titlePathCount > 0){
             navigationItem.title = titlePathString
-            navigationController?.navigationBar.prefersLargeTitles = false
+            navigationController?.navigationBar.prefersLargeTitles = true
         }
         else if (titlePathCount == 0){
             navigationItem.title = "Box - Home Directory"

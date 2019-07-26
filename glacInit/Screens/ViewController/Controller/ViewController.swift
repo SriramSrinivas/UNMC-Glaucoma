@@ -148,27 +148,33 @@ class ViewController: UIViewController{
     
     
     func initToggle(sideView: UIView){
+        let OH: CGFloat = 768.0
+        let OW: CGFloat = 204.8
+        let width = sideView.frame.width
+        let height = view.frame.height
         
         let gridHeight = sideView.frame.size.height*0.60
         let origHeight = sideView.frame.size.height*0.70
     
         let gridSwitch = UISwitch()
-        gridSwitch.frame = CGRect(x: 30, y: gridHeight, width: 50, height: 100)
+        gridSwitch.frame = CGRect(x: ((30 / OW) * width), y: gridHeight, width: ((50 / OW) * width), height: ((100 / OH) * height))
         gridSwitch.isOn = true 
         gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControl.Event.valueChanged)
         
         let origSwitch = UISwitch()
-        origSwitch.frame = CGRect(x: 30, y: origHeight, width: 50, height: 100)
+        origSwitch.frame = CGRect(x: ((30 / OW) * width), y: origHeight, width: ((50 / OW) * width), height: ((100 / OH) * height))
         origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControl.Event.valueChanged)
         
         let gridText = UILabel()
-        gridText.frame = CGRect(x: 100, y: gridHeight - 8, width: 150, height: 50)
+        gridText.frame = CGRect(x: ((100 / OW) * width), y: gridHeight - ((8 / OH) * height), width: ((150 / OW) * width), height: ((50 / OH) * height))
         gridText.text = "Grid"
+        gridText.font = UIFont.systemFont(ofSize: ((20 / OH) * height))
         gridText.textColor = UIColor.white
         
         let origText = UILabel()
-        origText.frame = CGRect(x: 100, y: origHeight - 8, width: 150, height: 50)
+        origText.frame = CGRect(x: ((100 / OW) * width), y: origHeight - ((8 / OH) * height), width: ((150 / OW) * width), height: ((50 / OH) * height))
         origText.text = "Original"
+        origText.font = UIFont.systemFont(ofSize: ((20 / OH) * height))
         origText.textColor = UIColor.white
         
         
@@ -232,84 +238,85 @@ class ViewController: UIViewController{
     }
     
     func addSlider(view: UIView){
-        //768.0
-        //204.8
+        let OH: CGFloat = 768.0
+        let OW: CGFloat = 204.8
         let width = view.frame.width
-        blurOnIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        blurOnIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        let height = view.frame.height
+        blurOnIcon.heightAnchor.constraint(equalToConstant: ((45 / OH) * height)).isActive = true
+        blurOnIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
         
-        blurOffIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        blurOffIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        blurOffIcon.heightAnchor.constraint(equalToConstant: ((45 / OH) * height)).isActive = true
+        blurOffIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
         
-        sightOnIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        sightOnIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOnIcon.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        sightOnIcon.widthAnchor.constraint(equalToConstant: ((50 / OW) * width)).isActive = true
         
-        sightOffIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        sightOffIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        sightOffIcon.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        sightOffIcon.widthAnchor.constraint(equalToConstant: ((50 / OW) * width)).isActive = true
         
-        sunIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        sunIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        sunIcon.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        sunIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
 
-        sunOffIcon.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        sunOffIcon.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        sunOffIcon.heightAnchor.constraint(equalToConstant: ((45 / OH) * height)).isActive = true
+        sunOffIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
         
-        intText.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        intText.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        intText.heightAnchor.constraint(equalToConstant: ((20 / OH) * height)).isActive = true
+        intText.widthAnchor.constraint(equalToConstant: ((20 / OW) * width)).isActive = true
         intText.text = "Blur"
         intText.textColor = UIColor.white
         
-        luminText.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        luminText.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        luminText.heightAnchor.constraint(equalToConstant: ((40 / OH) * height)).isActive = true
+        luminText.widthAnchor.constraint(equalToConstant: ((50 / OW) * width)).isActive = true
         luminText.text = "Luminosity"
         
         delete.setTitle("Reset", for: UIControl.State.normal)
-        delete.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        delete.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        delete.heightAnchor.constraint(equalToConstant: ((40 / OH) * height)).isActive = true
+        delete.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
         
         download.setTitle("Import", for: UIControl.State.normal)
-        download.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        download.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        download.heightAnchor.constraint(equalToConstant: ((40 / OH) * height)).isActive = true
+        download.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         download.backgroundColor = UIColor(hexString: "#1B5E20")
         download.addTarget(self, action: #selector(ImportTap), for: .touchUpInside)
         
         let tempView = UIButton()
-        tempView.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView.heightAnchor.constraint(equalToConstant: ((10 / OH) * height)).isActive = true
+        tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         tempView.backgroundColor = UIColor(hexString: "#424242")
         
         let tempView1 = UIButton()
-        tempView1.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        tempView1.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView1.heightAnchor.constraint(equalToConstant: ((10 / OH) * height)).isActive = true
+        tempView1.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         tempView1.backgroundColor = UIColor(hexString: "#424242")
         
         let tempView2 = UIButton()
-        tempView2.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        tempView2.heightAnchor.constraint(equalToConstant: ((10 / OH) * height)).isActive = true
+        tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         tempView2.backgroundColor = UIColor(hexString: "#424242")
         
-        alphaToggle.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        alphaToggle.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        alphaToggle.heightAnchor.constraint(equalToConstant: ((30 / OH) * height)).isActive = true
+        alphaToggle.widthAnchor.constraint(equalToConstant: ((40 / OW) * width)).isActive = true
         alphaToggle.addTarget(self, action: #selector(switchAlpha), for: .valueChanged)
         alphaToggle.setOn(true, animated: true)
 
-        intSlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        intSlider.heightAnchor.constraint(equalToConstant: ((30 / OH) * height)).isActive = true
+        intSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         intSlider.addTarget(self, action: #selector(sliderIntensity), for: UIControl.Event.valueChanged)
         intSlider.minimumValue = 0
         intSlider.maximumValue = 10
         intSlider.setValue(0, animated: false)
         
-        greySlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        greySlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        greySlider.heightAnchor.constraint(equalToConstant: ((30 / OH) * height)).isActive = true
+        greySlider.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         greySlider.addTarget(self, action: #selector(sliderGrey), for: UIControl.Event.valueChanged)
         greySlider.minimumValue = 0
         greySlider.maximumValue = 10
         greySlider.setValue(0, animated: false)
         
-        blackSlider.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        blackSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        blackSlider.heightAnchor.constraint(equalToConstant: ((30 / OH) * height)).isActive = true
+        blackSlider.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         blackSlider.addTarget(self, action: #selector(sliderBlack), for: UIControl.Event.valueChanged)
         blackSlider.minimumValue = 0
         blackSlider.maximumValue = 10
@@ -351,22 +358,26 @@ class ViewController: UIViewController{
         
         let clear = UIButton()
         let newBackground = UIButton()
+        let OH: CGFloat = 768.0
+        let OW: CGFloat = 204.8
+        let width = view.frame.width
+        let height = view.frame.height
 
         export.setTitle("Export", for: UIControl.State.normal)
-        export.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        export.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        export.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        export.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         export.backgroundColor = UIColor(hexString: "#0D47A1")
         export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
         
         clear.setTitle("Start Over", for: UIControl.State.normal)
-        clear.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        clear.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        clear.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        clear.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         clear.backgroundColor = UIColor(hexString: "#1B5E20")
         clear.addTarget(self, action: #selector(clearTap), for: .touchUpInside)
         
         newBackground.setTitle("Switch", for: UIControl.State.normal)
-        newBackground.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        newBackground.widthAnchor.constraint(equalToConstant: (view.frame.width - 50)).isActive = true
+        newBackground.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        newBackground.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         newBackground.backgroundColor = UIColor(hexString: "#1B5E20")
         newBackground.addTarget(self, action: #selector(setNewBackground), for: .touchUpInside)
         
@@ -390,6 +401,7 @@ class ViewController: UIViewController{
     }
 
     func addGridLineUpdate(mainView: UIView){
+        
 
         let line1 = UIButton()
         line1.frame = CGRect(x: mainImgView.frame.width*0.3, y: 0, width: 5, height: mainImgView.frame.height)

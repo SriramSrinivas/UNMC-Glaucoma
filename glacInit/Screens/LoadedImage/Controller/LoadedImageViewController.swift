@@ -334,32 +334,37 @@ class LoadedImageViewController: UIViewController {
     
     private func setUpView(){
         
+        let OH: CGFloat = 768.0
+        let OW: CGFloat = 204.8
+        //let newwidth = sideView.frame.width
+        let height = view.frame.height
+        
         let width = view.bounds.width
         let sideWidth = view.bounds.width/5
         
         mainImageView.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .zero, size: .init(width: view.frame.width - view.frame.width/5, height: view.frame.height))
         sideImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.rightAnchor, padding: .zero, size: .init(width: view.frame.width/5, height: view.frame.height))
         //blurLabel.anchor(top: sideImageView.topAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        blurLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: 40, width: 50, height: 50)
-        blurSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 50, width: 100, height: 50)
+        blurLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((40 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
+        blurSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((50 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
         //illumLabel.anchor(top: blurLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        illumLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: 100, width: 50, height: 50)
-        blackSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 110, width: 100, height: 50)
-        colorLabel.anchor(top: illumLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: 70, height: 25))
-        colorSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 160, width: 100, height: 50)
+        illumLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((100 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
+        blackSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((110 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+        colorLabel.anchor(top: illumLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((10 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
+        colorSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((160 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
         //IsHiddenLabel.anchor(top: colorLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
-        IsHiddenLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: 220, width: 50, height: 50)
-        isHiddenSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 230, width: 100, height: 50)
-         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: 70, height: 25))
-        allSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 280, width: 100, height: 50)
+        IsHiddenLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((220 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
+        isHiddenSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((230 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((10 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
+        allSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((280 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
-        gridLabel.anchor(top: allLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 30, left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: 70, height: 25))
-        gridSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: 340, width: 100, height: 50)
+        gridLabel.anchor(top: allLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((30 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
+        gridSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((340 / OH) * height), width: ((100 / OW) * width), height: ((50 / OH) * height))
         
-        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
-        importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 25, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 50))
+        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((30 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((30 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
     }
     
     func initCustomObjects(h:CGFloat, w:CGFloat){
@@ -596,7 +601,7 @@ class LoadedImageViewController: UIViewController {
                 }
                 catch {
                     //print ("loading image file error"
-                    self.showToast(message: "Did not load Data, Incorrect: FileType/Data", theme: .error)
+                    self.showToast(message: "Did not load Data from \(file.name), Incorrect: FileType/Data", theme: .error)
                     
                 }
 //                let data = cleanRows(file: content)
