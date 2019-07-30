@@ -117,20 +117,28 @@ class CustomViewUpdate : UIView{
     @objc func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         if isActive && !(isLinkedToImage){
             let currentCenter = center
+            let gesCenter = gestureRecognizer.view?.center
             
             var change = 200*(gestureRecognizer.scale)
             if change > screenSize.size.height {
                 change = screenSize.size.height
             }
-            
+            if change > gesCenter!.y * 2 {
+                change = gesCenter!.y * 2
+            }
+            if change > gesCenter!.x * 2{
+                change = gesCenter!.x * 2
+            }
+            if change > (screenSize.size.height - gesCenter!.y) * 2  {
+                change = (screenSize.size.height - gesCenter!.y) * 2
+            }
+            if change > (((screenSize.width / 5) * 4) - gesCenter!.x) * 2{
+                change = (((screenSize.width / 5) * 4) - gesCenter!.x) * 2
+            }
             //MARK: TODO test this 
            
             frame.size.height = change
             frame.size.width = change
-//            if (frame.size.height > screenSize.size.height){
-//                frame.size.height = screenSize.size.height
-//                frame.size.width = frame.size.height
-//            }
             
             blur.frame.size.height = change
             blur.frame.size.width = change

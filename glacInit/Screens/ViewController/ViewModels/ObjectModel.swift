@@ -29,17 +29,17 @@ func createobjects(pictureID: Int, height: CGFloat, width: CGFloat) -> [CustomOb
 //        print(newt1)
 //        print(newt2)
     if (pictureID == 1) {
-    customObjectList = [CustomObject(imageName: "doggo", xPos: ((413 / 819.2) * width), yPos: ((413 / 768) * width), sideSize: ((90 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "trashcan", xPos: ((-21 / 819.2) * width), yPos: ((366 / 768) * width), sideSize: ((130 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "cone", xPos: ((122 / 819.2) * width), yPos: ((361 / 768) * width), sideSize: ((60 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "cone", xPos: ((185 / 819.2) * width), yPos: ((325.5 / 768) * width), sideSize: ((60 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "ball", xPos: ((575.5 / 819.2) * width), yPos: ((385 / 768) * width), sideSize: ((50 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "kid1", xPos: ((380 / 819.2) * width), yPos: ((279.5 / 768) * width), sideSize: ((50 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "kid2", xPos: ((423.5 / 819.2) * width), yPos: ((271 / 768) * width), sideSize: ((50 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "peel", xPos: ((55.5 / 819.2) * width), yPos: ((460.5 / 768) * width), sideSize: ((56 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "helmet", xPos: ((176.5 / 819.2) * width), yPos: ((387 / 768) * width), sideSize: ((50 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "girl", xPos: ((735.0 / 819.2) * width), yPos: ((237.6 / 768) * width), sideSize: ((230 / 819.2) * width), alphaValue: 1),
-                    CustomObject(imageName: "hydrant", xPos: ((606 / 819.2) * width), yPos: ((300 / 768) * width), sideSize: ((70 / 819.2) * width), alphaValue: 1)]
+    customObjectList = [CustomObject(imageName: "doggo", xPos: ((413 / 819.2) * width), yPos: ((413 / 768) * height), sideSize: ((90 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "trashcan", xPos: ((-21 / 819.2) * width), yPos: ((366 / 768) * height), sideSize: ((130 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "cone", xPos: ((122 / 819.2) * width), yPos: ((361 / 768) * height), sideSize: ((60 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "cone", xPos: ((185 / 819.2) * width), yPos: ((325.5 / 768) * height), sideSize: ((60 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "ball", xPos: ((575.5 / 819.2) * width), yPos: ((385 / 768) * height), sideSize: ((50 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "kid1", xPos: ((380 / 819.2) * width), yPos: ((279.5 / 768) * height), sideSize: ((50 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "kid2", xPos: ((423.5 / 819.2) * width), yPos: ((271 / 768) * height), sideSize: ((50 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "peel", xPos: ((55.5 / 819.2) * width), yPos: ((460.5 / 768) * height), sideSize: ((56 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "helmet", xPos: ((176.5 / 819.2) * width), yPos: ((387 / 768) * height), sideSize: ((50 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "girl", xPos: ((735.0 / 819.2) * width), yPos: ((237.6 / 768) * height), sideSize: ((230 / 819.2) * width), alphaValue: 1),
+                    CustomObject(imageName: "hydrant", xPos: ((606 / 819.2) * width), yPos: ((300 / 768) * height), sideSize: ((70 / 819.2) * width), alphaValue: 1)]
     return customObjectList
     }
     else {

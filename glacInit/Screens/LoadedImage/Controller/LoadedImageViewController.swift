@@ -236,9 +236,13 @@ class LoadedImageViewController: UIViewController {
                 var rectHeight = 15.0
                 if (county != distances.count && county != 1){
                 rectWidth = ((distances[county] - distances[county - 1]) * Double(width))/2
+                } else if county == 1 {
+                   rectWidth = (distances[1] - distances[0]) * Double(width)/2
                 }
                 if (countx != distances.count && countx != 1){
                 rectHeight = ((distances[countx] - distances[countx - 1]) * Double(height))/2
+                }else if countx == 1 {
+                    rectHeight = (distances[1] - distances[0]) * Double(height)/2
                 }
                 
                 let x = ((numb/2) * Double(height) + Double(midy))
@@ -606,6 +610,7 @@ class LoadedImageViewController: UIViewController {
                 group.notify(queue: .main) {
                 var content = String()
                 do{
+                    if (fileIntValue <= 4){
                     content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
                     let data = self.cleanRows(file: content)
                     let currentData = self.csv(data: data)
@@ -613,6 +618,17 @@ class LoadedImageViewController: UIViewController {
                         self.addblur(currentFileType: fileIntValue, currentData: currentData)
                     }
                     self.turnOnGrid(filetype: fileIntValue)
+                    }
+                    else if fileIntValue == 5{
+                        if let data = try? Data(contentsOf: newfile) {
+                            if let image = UIImage(data: data) {
+                                self.mainImageView.image = image
+                                self.mainImageView.clipsToBounds = false
+                                self.mainImageView.contentMode = .scaleToFill
+                                self.mainImageView.reloadInputViews()
+                            }
+                        }
+                    }
                 }
                 catch {
                     
@@ -654,6 +670,9 @@ class LoadedImageViewController: UIViewController {
             }
             if (word == "hiddenPoints"){
                 return 4
+            }
+            if (word == "screenshot"){
+                return 5
             }
         }
         return 0
