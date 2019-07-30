@@ -134,6 +134,11 @@ class LoadedImageViewController: UIViewController {
         temp.addTarget(self, action: #selector(getNewFile), for: .touchUpInside)
         return temp
     }()
+    var blurImageIndicator : UIImageView = {
+       let temp = UIImageView()
+        
+        return temp
+    }()
     
     var reach: Reachability?
     var backGroundImages = ["mainTes", "tes-1"]
@@ -197,6 +202,8 @@ class LoadedImageViewController: UIViewController {
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         let size = image.size
         
+        
+        
         let widthRatio  = width  / size.width
         let heightRatio = height / size.height
         
@@ -225,11 +232,19 @@ class LoadedImageViewController: UIViewController {
         
         for number in distances {
             for numb in distances {
+                var rectWidth = 15.0
+                var rectHeight = 15.0
+                if (county != distances.count && county != 1){
+                rectWidth = ((distances[county] - distances[county - 1]) * Double(width))/2
+                }
+                if (countx != distances.count && countx != 1){
+                rectHeight = ((distances[countx] - distances[countx - 1]) * Double(height))/2
+                }
                 
                 let x = ((numb/2) * Double(height) + Double(midy))
                 let y = ((number/2) * Double(width) + Double(midx))
                 _ = (numb.nextUp * Double(width) + Double(midx))/2 - x
-                let frame = CGRect(x: y, y:x, width: 15, height: 15)
+                let frame = CGRect(x: y, y:x, width: rectWidth, height: rectHeight)
 
                 let value = currentData[countx][county]
                 

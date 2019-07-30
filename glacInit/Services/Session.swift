@@ -49,7 +49,7 @@ class Session {
                 for o in customViewList{
                     if o.frame.contains(CGPoint(x: x, y: y)){
                         
-                        if(o.blur.blurRadius > 0) {
+                        if(o.blur.blurRadius > 0 && o.image.image == nil) {
                             blurValue += o.viewValue
                         }
                         
