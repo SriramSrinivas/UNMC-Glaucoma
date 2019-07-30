@@ -86,6 +86,12 @@ class LoadedImageViewController: UIViewController {
         origSwitch.addTarget(self, action: #selector(toggleGrid(mySwitch:)), for: UIControl.Event.valueChanged)
         return origSwitch
     }()
+    var importBackgroundSwitch : UISwitch = {
+        let origSwitch = UISwitch()
+        origSwitch.isOn = false
+        origSwitch.addTarget(self, action: #selector(importBackgroundSwitch(_sender:)), for: UIControl.Event.valueChanged)
+        return origSwitch
+    }()
     
     var blurLabel : UIImageView = {
         let image = UIImage(named: "BlurOn")
@@ -116,6 +122,13 @@ class LoadedImageViewController: UIViewController {
         nonEditableTextView(&temp, text: "All", fontSize: 15)
         return temp
     }()
+    
+    var importedImageLabel : UITextView = {
+        var temp = UITextView()
+        nonEditableTextView(&temp, text: "Image", fontSize: 15)
+        return temp
+    }()
+    
     var gridLabel : UITextView = {
         var temp = UITextView()
         nonEditableTextView(&temp, text: "Grid", fontSize: 15)
@@ -151,6 +164,8 @@ class LoadedImageViewController: UIViewController {
     var constImage = UIImage(named: "mainTes")
     let file = importFile.init()
     var pickerView = PickerView()
+    var LoadedImage = UIImage()
+    var loadedIMageBackground = false
     
     var gridViews = [UIView]()
     let distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
@@ -188,7 +203,7 @@ class LoadedImageViewController: UIViewController {
         view.backgroundColor = UIColor.darkGray
 
         //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
-        [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton].forEach {view.addSubview($0)}
+        [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch].forEach {view.addSubview($0)}
         initCustomObjects(h: 0, w: 0)
         //checkAountOfFilesDownlaodinf()
         setUpView()
@@ -283,14 +298,16 @@ class LoadedImageViewController: UIViewController {
                     mainImageView.addSubview(c)
                 }
                if (currentFileType == 3 && value != "0"){
-                    let c = CustomViewUpdate(frame: frame)
-                    var cropImage = constImage
-                    c.setImageConst(images: constImage!)
-                    c.blur.layer.borderWidth = 5
-                    c.layer.borderColor = UIColor.red.cgColor
-                    c.blur.backgroundColor = UIColor.black
-                    c.blur.alpha = CGFloat(a!/10)
-                    c.blur.blurRadius = 0
+                let c = CustomViewUpdate(frame: frame)
+                c.layer.zPosition = 2
+                c.isActive = false
+                c.layer.borderWidth = 5
+                c.layer.borderColor = UIColor.red.cgColor
+                c.blur.backgroundColor = UIColor.black
+                c.blur.alpha = CGFloat(a!/10)
+                c.blur.blurRadius = 0
+                colorCustomViewUpdateList.append(c)
+                mainImageView.addSubview(c)
                     //cropImage = cropImage!.crop(rect: c.frame)
                     //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
                 
@@ -299,8 +316,8 @@ class LoadedImageViewController: UIViewController {
 //                    }
                 
                    // c.blur.backgroundColor = nil
-                    colorCustomViewUpdateList.append(c)
-                    mainImageView.addSubview(c)
+//                    colorCustomViewUpdateList.append(c)
+//                    mainImageView.addSubview(c)
                 }
                 if (currentFileType == 4 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
@@ -384,6 +401,10 @@ class LoadedImageViewController: UIViewController {
         
         backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((30 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
         importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((30 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        
+        importedImageLabel.anchor(top: importButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init( top: ((35 / OH) * height), left: ((20 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        importBackgroundSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((555 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+        
     }
     
     func initCustomObjects(h:CGFloat, w:CGFloat){
@@ -431,6 +452,24 @@ class LoadedImageViewController: UIViewController {
             mainImageView.bringSubviewToFront(i)
         }
        
+    }
+    
+    @objc func importBackgroundSwitch(_sender: UISwitch){
+        if (importBackgroundSwitch.isOn == false)
+        {
+            self.mainImageView.image = constImage
+            self.mainImageView.reloadInputViews()
+        }
+        else{
+            let image = LoadedImage
+            if !loadedIMageBackground {
+                importBackgroundSwitch.setOn(false, animated: true)
+            } else {
+                self.mainImageView.image = image
+                self.mainImageView.reloadInputViews()
+            }
+        }
+        
     }
     
     @objc func grewSwitch(_sender: UISwitch){
@@ -592,6 +631,7 @@ class LoadedImageViewController: UIViewController {
                 let back = checkForBackGround(name: names)
                 //back = "MainTes"
                 mainImageView.image = UIImage(named: back)
+                constImage = UIImage(named: back)
                 mainImageView.reloadInputViews()
                 //if returns 0 it failed
                 let fileIntValue = checkForKindOfFile(name: names)
@@ -622,10 +662,11 @@ class LoadedImageViewController: UIViewController {
                     else if fileIntValue == 5{
                         if let data = try? Data(contentsOf: newfile) {
                             if let image = UIImage(data: data) {
+                                self.LoadedImage = image
                                 self.mainImageView.image = image
-                                self.mainImageView.clipsToBounds = false
-                                self.mainImageView.contentMode = .scaleToFill
                                 self.mainImageView.reloadInputViews()
+                                self.importBackgroundSwitch.setOn(true, animated: true)
+                                self.loadedIMageBackground = true
                             }
                         }
                     }

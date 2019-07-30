@@ -111,12 +111,12 @@ class PickerView: UITableViewController, PickerViewdelegate {
         if isSelectedCount == 0 {
             let cancel = (UIImage(named: "cancel"))
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))
-            navigationItem.rightBarButtonItem?.tintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         }
         else{
             let downloads = (UIImage(named: "downloads"))
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: downloads, style: .plain, target: self, action: #selector(handleShowIndexPath))
-            navigationItem.rightBarButtonItem?.tintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         }
     }
     
@@ -159,7 +159,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         if (titlePathCount == 0){
             let home = UIImage(named: "home-page")
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
-            navigationItem.leftBarButtonItem?.tintColor = .black
+            navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         }
         isSelectedCount = 0
         changeRightNav()
@@ -199,16 +199,23 @@ class PickerView: UITableViewController, PickerViewdelegate {
         
         let cancel = (UIImage(named: "cancel"))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))
-        navigationItem.rightBarButtonItem?.tintColor = .black
+       
         let home = UIImage(named: "home-page")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        
         //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(BackTapped))
         
         navigationItem.title = "Box - Home Directory"
+        navigationItem.titleView?.backgroundColor = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.register(PickerCell.self, forCellReuseIdentifier: cellID)
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
+        navigationController?.navigationBar.barTintColor = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
+        tableView.backgroundColor = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
+        
+            //UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -235,39 +242,47 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let button = UIButton(type: .system)
         let image = UIImage(named: "chevron-down")
         let innerSt = UIStackView()
-        
+        //UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
         let OH: CGFloat = 768.0
-        let height = (30 / OH) * view.frame.height
+        let height = (35 / OH) * view.frame.height
         
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.imageView?.tintColor = .black
-        button.setTitleColor(.black, for: .normal)
+        button.imageView?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
+        button.setTitleColor(UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: (14 / OH) * view.frame.height)
         button.frame = CGRect(x: 0, y: 0, width: height, height: height)
-        button.backgroundColor = .gray
+        button.backgroundColor = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
         
         button.addTarget(self, action: #selector(closeSection), for: .touchUpInside)
         button.tag = section
         
         let headerName = UILabel()
-        let headernamestext = (section == 0) ? "Folders" : "Files     "
-        headerName.backgroundColor = .gray
+        let headernamestext = (section == 0) ? "  Folders" : "  Files     "
+        headerName.backgroundColor = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
         headerName.text = headernamestext
+        headerName.textColor = UIColor(red:0.77, green:0.78, blue:0.78, alpha:1.0)
+        //headerName.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         
         let fileNameImage = (section == 0) ? "folder-invoices" : "file"
         let fileImage = UIImage(named: fileNameImage)
         let fileimageView = UIImageView()
         fileimageView.image = fileImage
         fileimageView.contentMode = .scaleAspectFit
-        fileimageView.backgroundColor = .gray
+        fileimageView.layer.cornerRadius = 12
+        fileimageView.layer.borderColor = UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0).cgColor
+        fileimageView.layer.borderWidth = 3
+        fileimageView.backgroundColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
+        fileimageView.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         
         //stackview.spacing = 10
         innerSt.addArrangedSubview(fileimageView)
         innerSt.addArrangedSubview(headerName)
         stackview.addArrangedSubview(innerSt)
+        //stackview.spacing = 5
         stackview.addArrangedSubview(button)
-        stackview.backgroundColor = .gray
+        stackview.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
+        stackview.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
         return stackview
     }
     
@@ -285,6 +300,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let name = isExpanded ? "chevron-up" : "chevron-down"
         let image = UIImage(named: name)
         button.setImage(image, for: .normal)
+        button.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         
         if !isExpanded{
             tableView.insertRows(at: indexPaths, with: .fade)
@@ -297,6 +313,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let OH: CGFloat = 768.0
         let height = view.frame.height
+        
         return ((35 / OH) * height)
     }
     
@@ -322,8 +339,9 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let darkBlue = UIColor(red: 66/255, green: 167/255, blue: 198/255, alpha: 1.0)
         let lightBlue = UIColor(red: 107/255, green: 185/255, blue: 210/255, alpha: 1.0)
         
-        cell.backgroundColor = boxitem.isSelected ? darkBlue : .white
-        cell.accessoryView?.backgroundColor = boxitem.isSelected ? lightBlue : darkBlue
+        cell.backgroundColor = boxitem.isSelected ? UIColor(red:0.27, green:0.64, blue:0.62, alpha:1.0) : UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
+        cell.textLabel?.textColor = boxitem.isSelected ? .black : UIColor(red:0.77, green:0.78, blue:0.78, alpha:1.0)
+        cell.accessoryView?.backgroundColor = boxitem.isSelected ?  UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0) : UIColor(red:0.27, green:0.64, blue:0.62, alpha:1.0)
         if checkingForFiles {
             cell.accessoryView?.isHidden = boxitem.isFolder
             cell.selectionStyle = .none
@@ -333,6 +351,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
             cell.selectionStyle = .none
         }
         cell.textLabel?.text = boxitem.name
+        //cell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
+        //ell.textLabel?.textColor = UIColor(red:0.77, green:0.78, blue:0.78, alpha:1.0)
         return cell
     }
     
@@ -407,7 +427,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     func changeLeftNavitem(){
         let back = UIImage(named: "circled-left")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: back, style: .plain, target: self, action: #selector(self.BackTapped))
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
     }
     func getData(boxitems: [ExpandableNames]){
         if alltwodimArray.count == 0 {

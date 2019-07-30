@@ -17,6 +17,7 @@ class CustomViewUpdate : UIView{
     var linkedImage = UIView()
     var alphaValue = CGFloat(1)
     var greyValue = CGFloat(0)
+    var colorValue = CGFloat(0)
     var valueLabel = UILabel()
     var image = UIImageView()
     var constImage = UIImage()

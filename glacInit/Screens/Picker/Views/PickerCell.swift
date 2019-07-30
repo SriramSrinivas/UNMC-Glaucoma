@@ -19,7 +19,7 @@ class PickerCell: UITableViewCell {
         selectButton.setTitle("Select", for: .normal)
         selectButton.setTitleColor(UIColor.darkGray, for: .normal)
         selectButton.frame = CGRect(x: 0, y: 0, width: 75, height: 50)
-        selectButton.backgroundColor = UIColor(red: 68, green: 166, blue: 198, alpha: 0.9)
+        selectButton.backgroundColor = UIColor(red:0.27, green:0.64, blue:0.62, alpha:1.0)
         selectButton.addTarget(self, action: #selector(handleSelect), for: .touchUpInside)
         selectButton.layer.cornerRadius = 10
         

@@ -692,20 +692,25 @@ class ViewController: UIViewController{
                 i.isActive(value: false)
             }
             else {
+                
+                //This handles sliders settings when you click on a custom object on the screen
+                
                 i.isActive(value: true)
                 if ( i.blur.backgroundColor == UIColor.clear){
-                    blackSlider.setValue(Float(i.viewValue), animated: false)
-                }
-                else{
-                    blackSlider.setValue(0, animated: false)
+                    intSlider.setValue(Float(i.viewValue), animated: false)
+                } else{
+                    intSlider.setValue(0, animated: false)
                 }
                 if(i.blur.backgroundColor == UIColor.black){
                     greySlider.setValue(Float(i.viewValue), animated: false)
                 } else {
                     greySlider.setValue(0, animated: false)
                 }
-                
-                intSlider.setValue(Float(i.blur.blurRadius), animated: false)
+                if i.image.image != nil {
+                    blackSlider.setValue(Float(i.viewValue), animated: false)
+                } else {
+                    blackSlider.setValue(0, animated: false)
+                }
                 
 
                 if i.isLinkedToImage{
@@ -904,7 +909,7 @@ class ViewController: UIViewController{
         
         
         tempImageView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
+        //TODO not allo creating off sreen would be nice
         if !customViewActive() {
             createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
         }
@@ -1049,6 +1054,8 @@ class ViewController: UIViewController{
             
             blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
             blackSlider.tintColor = UIColor(hexString: "EEEEEE")
+            
+            
             blackSlider.alpha = 1
             blackSlider.isEnabled = true
             
