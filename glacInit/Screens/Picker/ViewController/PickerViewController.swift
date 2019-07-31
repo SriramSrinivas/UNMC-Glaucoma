@@ -314,7 +314,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let OH: CGFloat = 768.0
         let height = view.frame.height
         
-        return ((35 / OH) * height)
+        return ((50 / OH) * height)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
