@@ -58,7 +58,7 @@ class ViewController: UIViewController{
     var customViewUpdateList = [CustomViewUpdate]()
     
     let delete = UIButton()
-    let download = UIButton()
+    //let download = UIButton()
     var subjectID = ""
     let tempBlur = VisualEffectView()
     let realm = try! Realm()
@@ -135,7 +135,7 @@ class ViewController: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        enterNameDialog()
+        //enterNameDialog()
     }
     override func viewWillAppear(_ animated: Bool) {
        // enterNameDialog()
@@ -275,11 +275,11 @@ class ViewController: UIViewController{
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
         
-        download.setTitle("Import", for: UIControl.State.normal)
-        download.heightAnchor.constraint(equalToConstant: ((40 / OH) * height)).isActive = true
-        download.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
-        download.backgroundColor = UIColor(hexString: "#1B5E20")
-        download.addTarget(self, action: #selector(ImportTap), for: .touchUpInside)
+//        download.setTitle("Import", for: UIControl.State.normal)
+//        download.heightAnchor.constraint(equalToConstant: ((40 / OH) * height)).isActive = true
+//        download.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
+//        download.backgroundColor = UIColor(hexString: "#1B5E20")
+//        download.addTarget(self, action: #selector(ImportTap), for: .touchUpInside)
         
         let tempView = UIButton()
         tempView.heightAnchor.constraint(equalToConstant: ((10 / OH) * height)).isActive = true
@@ -342,7 +342,7 @@ class ViewController: UIViewController{
         sliderStack.addArrangedSubview(alphaToggle)
         sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
-        sliderStack.addArrangedSubview(download)
+        //sliderStack.addArrangedSubview(download)
     
 
         view.addSubview(sliderStack)
@@ -357,7 +357,7 @@ class ViewController: UIViewController{
         let stack = UIStackView()
         
         let clear = UIButton()
-        let newBackground = UIButton()
+        let menuButton = UIButton()
         let OH: CGFloat = 768.0
         let OW: CGFloat = 204.8
         let width = view.frame.width
@@ -375,11 +375,11 @@ class ViewController: UIViewController{
         clear.backgroundColor = UIColor(hexString: "#1B5E20")
         clear.addTarget(self, action: #selector(clearTap), for: .touchUpInside)
         
-        newBackground.setTitle("Switch", for: UIControl.State.normal)
-        newBackground.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
-        newBackground.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
-        newBackground.backgroundColor = UIColor(hexString: "#1B5E20")
-        newBackground.addTarget(self, action: #selector(setNewBackground), for: .touchUpInside)
+        menuButton.setTitle("Menu", for: UIControl.State.normal)
+        menuButton.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        menuButton.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
+        menuButton.backgroundColor = UIColor(hexString: "#1B5E20")
+        menuButton.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
         
         stack.axis = NSLayoutConstraint.Axis.vertical
         stack.distribution = UIStackView.Distribution.equalSpacing
@@ -391,7 +391,7 @@ class ViewController: UIViewController{
         
         stack.addArrangedSubview(export)
         stack.addArrangedSubview(clear)
-        stack.addArrangedSubview(newBackground)
+        stack.addArrangedSubview(menuButton)
         view.addSubview(stack)
         
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -469,11 +469,11 @@ class ViewController: UIViewController{
         let image = mainImgView.asImage()
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
-    @objc func setNewBackground(_sender: UIButton){
+    @objc func MenuTapped(_sender: UIButton){
         //warn user that this will delete self
-        let layout = UICollectionViewFlowLayout()
-        let vc = BackgroundChangeController(collectionViewLayout: layout)
-        vc.modalPresentationStyle = .overCurrentContext
+        //let layout = UICollectionViewFlowLayout()
+        let vc = MainMenuViewController()
+        //vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
         //self.dismiss(animated: true, completion: nil)
     }
@@ -729,10 +729,10 @@ class ViewController: UIViewController{
             }
         }
     }
-    @objc func ImportTap(sender: UIButton){
-        let vc = LoadedImageViewController()
-        self.present(vc,animated: true, completion: nil)
-    }
+//    @objc func ImportTap(sender: UIButton){
+//        let vc = LoadedImageViewController()
+//        self.present(vc,animated: true, completion: nil)
+//    }
     @objc func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()

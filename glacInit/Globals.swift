@@ -28,5 +28,7 @@ class Globals {
     
     var effectTypes = ["",""]
     
+    var currentBackGround = "mainTes"
+    
     
 }

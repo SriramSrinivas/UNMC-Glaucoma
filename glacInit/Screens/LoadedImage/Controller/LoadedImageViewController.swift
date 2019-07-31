@@ -590,7 +590,7 @@ class LoadedImageViewController: UIViewController {
             }
         }
     @objc func backButtonPressed(sender: UIButton){
-        let vc = ViewController()
+        let vc = MainMenuViewController()
         self.present(vc,animated: true, completion: nil)
     }
     

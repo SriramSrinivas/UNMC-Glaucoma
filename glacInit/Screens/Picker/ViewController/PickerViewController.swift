@@ -120,6 +120,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
     }
     
+    //MARK: Button Handlers
+    
     @objc func handleShowIndexPath(){
         prepareFilesFortransfer(completion: { (importReady:Bool, error:Error?) in
             if importReady {
@@ -183,6 +185,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
         changeNavTitle()
     }
     
+    //MARK: View Management
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -236,6 +240,9 @@ class PickerView: UITableViewController, PickerViewdelegate {
             }
         })
     }
+    
+    //MARK: TABLE VIEW HANDLERS
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let stackview = UIStackView()
