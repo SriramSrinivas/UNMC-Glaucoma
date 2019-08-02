@@ -11,6 +11,7 @@
 
 //BUG: when not expanded
 
+
 import Foundation
 import UIKit
 import BoxContentSDK
@@ -41,16 +42,34 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     func someMethodCall(cell: UITableViewCell){
         guard let indexPathclickedon = tableView.indexPath(for: cell) else {return}
+        var changeoccured = false
         let boxItem = twodimArray[(indexPathclickedon.section)].items[(indexPathclickedon.row)]
         let selected = boxItem.isSelected
-        if boxItem.isSelected{
-            isSelectedCount = isSelectedCount + 1
+        
+        if !checkingForFiles {
+            if !boxItem.isSelected && isSelectedCount == 0{
+                isSelectedCount = isSelectedCount + 1
+                changeoccured = true
         }
-        else{
-            isSelectedCount = isSelectedCount - 1
+            else if boxItem.isSelected && isSelectedCount > 0{
+                isSelectedCount = isSelectedCount - 1
+                changeoccured = true
+            }
+            
+        } else {
+                if !boxItem.isSelected {
+                    isSelectedCount = isSelectedCount + 1
+                    changeoccured = true
+                }
+                else if boxItem.isSelected && isSelectedCount > 0{
+                    isSelectedCount = isSelectedCount - 1
+                    changeoccured = true
+                }
         }
         changeRightNav()
-        twodimArray[(indexPathclickedon.section)].items[(indexPathclickedon.row)].isSelected = !selected
+        if changeoccured {
+            twodimArray[(indexPathclickedon.section)].items[(indexPathclickedon.row)].isSelected = !selected
+        }
         tableView.reloadRows(at: [indexPathclickedon], with: .fade)
     }
     
@@ -59,7 +78,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     func prepareFilesFortransfer(completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void) -> Bool{
         var flag = true
-        if (isSelectedCount < 0){
+        if (isSelectedCount > 0){
         var files : [FilesToDownload] = []
         for section in twodimArray.indices{
             //if twodimArray[section].isExpanded{
@@ -75,11 +94,14 @@ class PickerView: UITableViewController, PickerViewdelegate {
            // }
         }
         var title = ""
-        if files.count == 1{
+        if files.count == 1 && checkingForFiles{
             title = "Are you sure you want to import this files"
         }
-        else {
+        else if checkingForFiles {
             title = "Are you sure you want to import thesee file"
+        }
+        else if !checkingForFiles {
+            title = "Are you sure You want to Export to this Folder?"
         }
         var message = ""
         for file in files {
@@ -148,7 +170,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     @objc func BackTapped(){
         if (alltwodimArray.count > 1){
-            isSelectedCount = 0
+            
             twodimArray.removeAll()
             let last = alltwodimArray.last!
             alltwodimArray.remove(at: (alltwodimArray.count - 1))
@@ -157,13 +179,14 @@ class PickerView: UITableViewController, PickerViewdelegate {
             twodimArray.append(secondlast)
             twodimArray.append(last)
             removeLastPath()
+
         }
         if (titlePathCount == 0){
             let home = UIImage(named: "home-page")
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
             navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         }
-        isSelectedCount = 0
+        isSelectedCount = checkForIsSelectedCount()
         changeRightNav()
         tableView.reloadData()
     }
@@ -391,6 +414,22 @@ class PickerView: UITableViewController, PickerViewdelegate {
             file.delegate = self
         }
     }
+    func checkForIsSelectedCount() -> Int {
+        var count = 0
+        for section in twodimArray.indices{
+            //if twodimArray[section].isExpanded{
+            for index in twodimArray[section].items.indices{
+                if twodimArray[section].items[index].isSelected{
+                    count = count + 1
+                
+                }
+                
+            }
+            // }
+        }
+        return count
+    }
+    
     func createSpinnerView() {
         child = SpinnerViewController()
         // add the spinner view controller

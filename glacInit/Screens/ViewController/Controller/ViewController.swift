@@ -14,7 +14,7 @@ class ViewController: UIViewController{
     
     //image heght 1024.0
     //image width 1366.0
-    var backImageName = "mainTes"
+    var backImageName = Globals.shared.currentBackGround
     var constimage = UIImage()
     var height: CGFloat = 0
     var width: CGFloat = 0
@@ -65,6 +65,8 @@ class ViewController: UIViewController{
     var exportCount = 0
     var testPoint: CustomPoint!
     var reach: Reachability!
+    let file = importFile.init()
+    var pickerView = PickerView()
     
     //amount of csv and png files uploaded
     
@@ -81,13 +83,15 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        
+        pickerView.delegate = self
+        file.delegate = self
         self.navigationController?.isNavigationBarHidden = true
         height = view.frame.height
         width = view.frame.width
         print(view.bounds.size.width)
         print(view.bounds.size.height)
-        distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
+        
+        distances = Globals.shared.getdistancesINCGFloat()
 
         mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
         mainImgView.isUserInteractionEnabled = true
@@ -135,7 +139,9 @@ class ViewController: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //enterNameDialog()
+        if subjectID == "" {
+            enterNameDialog()
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
        // enterNameDialog()
@@ -367,7 +373,7 @@ class ViewController: UIViewController{
         export.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
         export.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         export.backgroundColor = UIColor(hexString: "#0D47A1")
-        export.addTarget(self, action: #selector(exportTap), for: .touchUpInside)
+        export.addTarget(self, action: #selector(getReadyForPickerView), for: .touchUpInside)
         
         clear.setTitle("Start Over", for: UIControl.State.normal)
         clear.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
@@ -473,6 +479,7 @@ class ViewController: UIViewController{
         //warn user that this will delete self
         //let layout = UICollectionViewFlowLayout()
         let vc = MainMenuViewController()
+        vc.imageName = backImageName
         //vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
         //self.dismiss(animated: true, completion: nil)
@@ -806,15 +813,40 @@ class ViewController: UIViewController{
         bottomMessageView.show(config:config,view:view)
     }
 
+    @objc func getReadyForPickerView(){
+        let FolderId = Globals.shared.getcurrentFolderExport()
+        if !(FolderId == "")
+        {
+            exportTap(FolderID: FolderId)
+        } else {
+        if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
+            
+            file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
+                if let fileError = error {
+                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                }
+                else {
+                    
+                }
+            })
+            pickerView = PickerView()
+            pickerView.checkingForFiles = false
+            pickerView.delegate = self
+        }
+        else{
+            showToast(message: "No Internet Connection", theme: .error)
+        }
+        }
+        
+    }
     
-    @objc func exportTap(sender: UIButton!){
+    func exportTap(FolderID: String){
         bottomMessage("Uploading Files")
-        exportCount = exportCount + 1
         
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList)
 
         _ = currentSession.savedFiles.map { (savedFile:FileObject) in
-            currentSession.uploadFile(file: savedFile, completion: { (uploaded:Bool, error:Error?) in
+            currentSession.uploadFile(file: savedFile, FolderID: FolderID, completion: { (uploaded:Bool, error:Error?) in
                 self.uploadAttempt = self.uploadAttempt + 1
                 if let fileError = error {
                     //self.currentSession = Session(currentSubjectId: self.subjectID)
@@ -1039,6 +1071,40 @@ class ViewController: UIViewController{
         return image
     }
     
+    func getImportedData(boxitems: [BOXItem]){
+        //let vc = PickerView()
+        var twoDArray : [ExpandableNames] = []
+        var fileItems: [BoxItemsData] = []
+        var folderItems: [BoxItemsData] = []
+        for items in boxitems {
+            let changedata = BoxItemsData(boxItem: items)
+            if changedata.isFolder {
+                folderItems.append(changedata)
+            } else {
+                fileItems.append(changedata)
+            }
+        }
+        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
+        twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
+        twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+        
+        pickerView.twodimArray = twoDArray
+        let nav = UINavigationController(rootViewController: pickerView)
+        nav.modalPresentationStyle = .overCurrentContext
+        
+        //vc.twodimArray = twoDArray
+        self.present(nav,animated: true, completion: nil)
+    }
+    
+    func checkFilesToDownLoad(Files: [FilesToDownload]){
+        if !Files.isEmpty{
+            let id = Files.first?.id
+            Globals.shared.setcurrentFolderExport(newFolder: id ?? "0")
+            exportTap(FolderID: id ?? "0")
+        }
+        
+    }
+    
     func enableControl(value: ControlState){
         switch value {
         case .BlurAndAlpha:
@@ -1181,6 +1247,19 @@ class ViewController: UIViewController{
 
 enum ControlState {
     case Disable, OnlyBlur, BlurAndAlpha, Black
+}
+extension ViewController : PickerViewdelegate{
+    func getFilestoDownload(files: [FilesToDownload]) {
+        checkFilesToDownLoad(Files: files)
+    }
+}
+extension ViewController : ImportDelegate{
+    func didReceiveData(boxItems: [BOXItem]) {
+       getImportedData(boxitems: boxItems)
+    }
+    func FileInfoReceived(){
+        
+    }
 }
 
 

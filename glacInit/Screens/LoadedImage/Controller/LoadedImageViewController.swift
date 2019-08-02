@@ -168,7 +168,7 @@ class LoadedImageViewController: UIViewController {
     var loadedIMageBackground = false
     
     var gridViews = [UIView]()
-    let distances =  [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
+    let distances = Globals.shared.getdistances()
     
     func getImportedData(boxitems: [BOXItem]){
         //let vc = PickerView()

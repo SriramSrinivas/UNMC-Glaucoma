@@ -91,7 +91,7 @@ class Session {
         savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile]
     }
     
-    func uploadFile(file:FileObject,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
+    func uploadFile(file:FileObject, FolderID: String ,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
         let contentClient : BOXContentClient = BOXContentClient.default()
         let fileData : Data
         
@@ -101,7 +101,7 @@ class Session {
             //contentClient.search
             //MARK: noteworthy
             //folder ID is where the files will be loaded and I got it from the inspect of the box profile and get the ID folder
-            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: "81480776750", from: fileData, fileName: file.name)
+            let uploadRequest  : BOXFileUploadRequest = contentClient.fileUploadRequestToFolder(withID: FolderID, from: fileData, fileName: file.name)
             //contentClient.fileu
             //41017077987
             uploadRequest.perform(progress: { (_ totalBytesTransferred:Int64, _ totalBytesExpectedToTransfer:Int64) in

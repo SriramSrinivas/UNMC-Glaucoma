@@ -52,12 +52,12 @@ class BackgroundChangeController : UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let imageName = images[indexPath.item].BackgroundimageName!
+        let image = UIImage(named: imageName)
+        Globals.shared.setCurrentBackGround(newBack: imageName)
+
         let viewController = MainMenuViewController()
-        //viewController.backImageName = images[indexPath.item].BackgroundimageName!
-        let image = UIImage(named: images[indexPath.item].BackgroundimageName!)
-        viewController.background.image = image
-        viewController.imageName = images[indexPath.item].BackgroundimageName!
-        //self.dismiss(animated: true, completion: nil)
         self.present(viewController, animated: true, completion: nil)
         //self.dismiss(animated: true, completion: nil)
     }

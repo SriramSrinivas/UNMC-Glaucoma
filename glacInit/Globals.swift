@@ -20,15 +20,62 @@ import Foundation
 
 
 
-class Globals {
+@objc class Globals : NSObject {
+//    if (word == "blurPoints")
+//    {
+//    return 1
+//    }
+//    if (word == "greyPoints"){
+//    return 2
+//    }
+//    if (word == "colorPoints"){
+//    return 3
+//    }
+//    if (word == "hiddenPoints"){
+//    return 4
+//    }
+//    if (word == "screenshot"){
+//    return 5
     
-    let global = Globals()
-    
-    var backgroundImages = ["",""]
-    
-    var effectTypes = ["",""]
-    
+    var backGrounds = ["mainTes", "tes-1", "tes"]
+    var fileTypes = ["blurPoints","greyPoints", "colorPoints", "hiddenPoints","screenshot" ]
     var currentBackGround = "mainTes"
+    var currentFolderExport = ""
+    let distances = [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
+    var distancesInCGFLOAT = CGFloat()
+    var cameraImage : UIImage?
     
+    static let shared = Globals()
     
+    @objc class func sharedInstance() -> Globals {
+        return Globals.shared
+    }
+    override init() {
+        currentBackGround = "mainTes"
+    }
+    
+    func getCurrentBackGround() -> String{
+        return currentBackGround
+    }
+    func setCurrentBackGround(newBack: String){
+        currentBackGround = newBack
+    }
+    func getdistances() -> [Double] {
+        return distances
+    }
+    func getdistancesINCGFloat() -> [CGFloat] {
+        return [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
+    }
+    func setcurrentFolderExport(newFolder: String) {
+        currentFolderExport = newFolder
+    }
+    func getcurrentFolderExport() -> String {
+        return currentFolderExport
+    }
+    func getCameraImage() -> UIImage {
+        return cameraImage ?? UIImage(named: currentBackGround)!
+    }
+    func setCameraImage(image: UIImage) {
+        cameraImage = image
+    }
 }
