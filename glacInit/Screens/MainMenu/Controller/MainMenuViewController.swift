@@ -155,10 +155,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
     }
-    enum ImageSource {
-        case photoLibrary
-        case camera
-    }
+   
 
     @objc func cameraMenuButtonTapped(){
        
