@@ -9,6 +9,13 @@
 import VisualEffectView
 import UIKit
 
+enum effectType {
+    case blur
+    case grey
+    case isHidden
+    case color
+}
+
 class CustomViewUpdate : UIView{
     
     let blur = VisualEffectView()
@@ -22,6 +29,7 @@ class CustomViewUpdate : UIView{
     var image = UIImageView()
     var constImage = UIImage()
     var viewValue = 5
+    var effect = effectType.blur
     
      let screenSize: CGRect = UIScreen.main.bounds
     override init(frame: CGRect) {
@@ -34,7 +42,7 @@ class CustomViewUpdate : UIView{
         blur.layer.borderWidth = 5
         isActive(value: true)
         
-
+        effect = effectType.blur
         valueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         valueLabel.textAlignment = .center
         valueLabel.text = "5"

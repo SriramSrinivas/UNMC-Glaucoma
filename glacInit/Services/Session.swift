@@ -38,6 +38,11 @@ class Session {
         var greyGrid = Matrix(rows:17,columns:17)
         var hiddenGrid = Matrix(rows: 17, columns: 17)
         var colorGrid = Matrix(rows: 17, columns: 17)
+        var csvText = ""
+        
+        for view in customViewList{
+            csvText.append("\(view.effect),\(view.frame.height),\(view.frame.width),\(view.frame.midX),\(view.frame.minY),\(view.viewValue)\n")
+        }
         
         for (row,i) in distances.enumerated() {
             for (column,j) in distances.enumerated() {

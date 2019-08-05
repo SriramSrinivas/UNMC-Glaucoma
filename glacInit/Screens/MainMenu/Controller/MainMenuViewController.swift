@@ -16,6 +16,14 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     //MARK: CLASS VARIABLES
     var imagePicker: UIImagePickerController!
+    
+    var versionNumber : UITextView = {
+        var temp = UITextView()
+        nonEditableTextView(&temp, text: "-v 2.0.1", fontSize: 12)
+        temp.backgroundColor = .black
+        temp.textAlignment = .center
+        return temp
+    }()
 
     var mainMenuTitleLabel : UIButton = {
         var temp = UIButton(type: .system)
@@ -130,7 +138,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         }
     
         navigationController?.navigationBar.isHidden = true
-        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton].forEach {view.addSubview($0)}
+        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton, versionNumber].forEach {view.addSubview($0)}
         setUpView()
     }
     
@@ -239,6 +247,10 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         switchMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         cameraMenuButton.anchor(top: switchMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         logoutMenuButton.anchor(top: cameraMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        
+        
+        versionNumber.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.rightAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 35), size: .init(width: 75, height: 22))
+        
     }
     
     

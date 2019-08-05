@@ -560,7 +560,7 @@ class ViewController: UIViewController{
     @objc func sliderIntensity(slider: UISlider){
         let value = slider.value
         let temp = getCurrentActiveView()
-        
+        temp.effect = effectType.blur
         for i in customViewUpdateList {
             if i.isActive {
                 i.blur.blurRadius = CGFloat(value)
@@ -598,6 +598,7 @@ class ViewController: UIViewController{
         }
         mainImgView.layoutSubviews()
         temp.setValue(value: Int(value * 10))
+        temp.effect = effectType.color
         
         temp.blur.backgroundColor = nil
         intSlider.setValue(0, animated: false)
@@ -612,7 +613,7 @@ class ViewController: UIViewController{
         temp.blur.alpha = CGFloat(value)
         temp.blur.blurRadius = 0
         temp.setValue(value: Int(value * 10))
-        
+        temp.effect = effectType.grey
         intSlider.setValue(0, animated: false)
         blackSlider.setValue(0, animated: false)
         temp.resetImage()
@@ -639,6 +640,7 @@ class ViewController: UIViewController{
                         i.blur.backgroundColor = UIColor.clear
                         i.blur.alpha = 1
                         i.setValue(value: Int(0))
+                        i.effect = effectType.isHidden
                     }
                 }
         }
