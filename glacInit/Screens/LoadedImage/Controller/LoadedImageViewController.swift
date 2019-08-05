@@ -169,6 +169,7 @@ class LoadedImageViewController: UIViewController {
     
     var gridViews = [UIView]()
     let distances = Globals.shared.getdistances()
+    var currentSession: Session!
     
     func getImportedData(boxitems: [BOXItem]){
         //let vc = PickerView()
@@ -611,6 +612,9 @@ class LoadedImageViewController: UIViewController {
             file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                    //let box = BOXContentClient
+                    self.currentSession = Session(currentSubjectId: ("import"))
+                    self.currentSession.boxAuthorize()
                 }
                 else {
         

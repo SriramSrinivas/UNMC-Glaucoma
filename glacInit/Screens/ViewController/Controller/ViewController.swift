@@ -848,7 +848,7 @@ class ViewController: UIViewController{
     func exportTap(FolderID: String){
         bottomMessage("Uploading Files")
         
-        currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList)
+        currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList, hasBox: false)
 
         _ = currentSession.savedFiles.map { (savedFile:FileObject) in
             currentSession.uploadFile(file: savedFile, FolderID: FolderID, completion: { (uploaded:Bool, error:Error?) in

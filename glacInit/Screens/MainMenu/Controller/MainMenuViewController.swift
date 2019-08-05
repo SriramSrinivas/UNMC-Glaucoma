@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import AVFoundation
+import BoxContentSDK
+import PopupDialog
 
 class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -32,11 +34,21 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         var temp = UIButton(type: .system)
         let image = UIImage(named: "greyImage")
         temp.setBackgroundImage(image, for: .normal)
-        //temp.setImage(image, for: .normal)
-        temp.titleLabel?.text = "Back"
+
         setUpButton(&temp, title: "Back to Previous", cornerRadius: 0, borderWidth: 5, color: "")
         temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
         temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
+        return temp
+    }()
+    
+    var logoutMenuButton : UIButton = {
+        var temp = UIButton(type: .system)
+        let image = UIImage(named: "greyImage")
+        temp.setBackgroundImage(image, for: .normal)
+
+        setUpButton(&temp, title: "Logout", cornerRadius: 0, borderWidth: 5, color: "")
+        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        temp.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
         return temp
     }()
     
@@ -118,7 +130,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         }
     
         navigationController?.navigationBar.isHidden = true
-        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton].forEach {view.addSubview($0)}
+        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton].forEach {view.addSubview($0)}
         setUpView()
     }
     
@@ -150,7 +162,33 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         self.present(vc, animated: true, completion: nil)
     }
    
-
+    @objc func logoutTapped(){
+        
+        
+        var title = "Are you sure you want to Logout?"
+       
+        var message = "This is a very important message about logging out and how it is good to do so when the app is no longer in use"
+        
+        //let image = UIImage(named: "pexels-photo-103290")
+        
+        let popup = PopupDialog(title: title, message: message, tapGestureDismissal: true, panGestureDismissal: false)
+        // flag = true
+        let buttonOne = CancelButton(title: "CANCEL", dismissOnTap: true) {
+            
+        }
+        let buttonTwo = DefaultButton(title: "LOGOUT", dismissOnTap: true) {
+            let boxClient = BOXContentClient.self
+            BOXContentClient.logOutAll()
+        }
+        
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        self.present(popup, animated: true, completion: nil)
+        // delegate!.getFilestoDownload(files: files)
+        
+        
+    }
+    
     @objc func cameraMenuButtonTapped(){
         
         imagePicker =  UIImagePickerController()
@@ -200,6 +238,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
 //        startOverMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         switchMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         cameraMenuButton.anchor(top: switchMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        logoutMenuButton.anchor(top: cameraMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
     }
     
     

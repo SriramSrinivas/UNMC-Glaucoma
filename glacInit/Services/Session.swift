@@ -19,13 +19,15 @@ class Session {
     var uploadAttempt = 0
     var csvFilesUploadedCount = 0
     var pngFilesUploadedCount = 0
+    var fileURL : URL?
+    var csvText = ""
     
     init(currentSubjectId: String) {
         distances = [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
         subjectId = currentSubjectId
     }
     
-    func saveGridData(mainView:UIView,customViewList:[CustomViewUpdate]){
+    func saveGridData(mainView:UIView,customViewList:[CustomViewUpdate], hasBox: Bool){
         exportCount = exportCount + 1
         let width = mainView.frame.width
         let height = mainView.frame.height
@@ -76,10 +78,10 @@ class Session {
         }
         
         let screenShotFile = FileObject(name: "\(subjectId)_screenshot_\(self.getTodayString())_\(exportCount)", type: FileType.PNG)
-        let blurPointsFile = FileObject(name:"\(subjectId)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        let greyPointsFile = FileObject(name:"\(subjectId)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        let hiddenPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        let ColorPointsFile = FileObject(name:"\(subjectId)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var blurPointsFile = FileObject(name:"\(subjectId)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var greyPointsFile = FileObject(name:"\(subjectId)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var hiddenPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var ColorPointsFile = FileObject(name:"\(subjectId)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
         
         screenShotFile.savePNG(view: mainView)
@@ -87,6 +89,13 @@ class Session {
         greyPointsFile.saveCSV(grid:greyGrid)
         hiddenPointsFile.saveCSV(grid:hiddenGrid)
         ColorPointsFile.saveCSV(grid: colorGrid)
+        
+        if !hasBox {
+            saveDataToFile(fileName: blurPointsFile)
+            saveDataToFile(fileName: greyPointsFile)
+            saveDataToFile(fileName: hiddenPointsFile)
+            saveDataToFile(fileName: ColorPointsFile)
+        }
         
         savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile]
     }
@@ -148,6 +157,34 @@ class Session {
         
         return today_string
         
+    }
+    
+    
+    func saveDataToFile(fileName: FileObject){
+        let newfile = fileName
+        let path = "/\(Globals.shared.getDate())/"
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            var fileURL = dir.appendingPathComponent(path)
+            do{
+                try FileManager.default.createDirectory(atPath: fileURL.path, withIntermediateDirectories: true, attributes: nil)
+                fileURL = dir.appendingPathComponent(path + "fileName.name")
+            }
+            catch{
+                print("Unable to create directory \(Error.self)")
+            }
+            self.fileURL = fileURL
+            
+            do {
+                
+                try newfile.Matrix?.write(to: fileURL, atomically: true, encoding: .utf8)
+                
+            } catch {
+                
+                print("\(error)")
+                
+            }
+            
+        }
     }
     
 }

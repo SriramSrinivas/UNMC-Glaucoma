@@ -44,6 +44,7 @@ import Foundation
     let distances = [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
     var distancesInCGFLOAT = CGFloat()
     var cameraImage : UIImage?
+    var isLoggedIntoBox : Bool = false
     
     static let shared = Globals()
     
@@ -77,5 +78,12 @@ import Foundation
     }
     func setCameraImage(image: UIImage) {
         cameraImage = image
+    }
+    func getDate() -> String{
+        let date = Date()
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd"
+        let formattedDate = format.string(from: date)
+        return formattedDate
     }
 }
