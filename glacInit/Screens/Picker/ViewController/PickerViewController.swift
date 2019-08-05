@@ -272,9 +272,17 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let button = UIButton(type: .system)
         let image = UIImage(named: "chevron-down")
         let innerSt = UIStackView()
+        let rightStack = UIStackView()
         //UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
         let OH: CGFloat = 768.0
         let height = (35 / OH) * view.frame.height
+        let addFolderButton = UIButton(type: .system)
+        
+        addFolderButton.titleLabel?.text = "Add Folder"
+        addFolderButton.translatesAutoresizingMaskIntoConstraints = false
+        addFolderButton.widthAnchor.constraint(equalToConstant: height).isActive = true
+        addFolderButton.addTarget(self, action: #selector(addFolderBox), for: .touchUpInside)
+        addFolderButton.backgroundColor = .red
         
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
@@ -311,9 +319,19 @@ class PickerView: UITableViewController, PickerViewdelegate {
         stackview.addArrangedSubview(innerSt)
         //stackview.spacing = 5
         stackview.addArrangedSubview(button)
+        //rightStack.addSubview(addFolderButton)
+        stackview.addArrangedSubview(addFolderButton)
         stackview.tintColor = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
         stackview.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
+        //stackview.distribution = .fill
+        stackview.distribution = .equalSpacing
         return stackview
+    }
+    
+    @objc func addFolderBox(){
+        let file = importFile.init()
+        //file.createBoxFoler(withName: "hello", parentFolderID: "0")
+        print("file")
     }
     
     @objc func closeSection(button: UIButton){

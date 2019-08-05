@@ -112,5 +112,17 @@ class importFile {
         })
         return fileURL!
     }
+    
+//    func createBoxFoler(withName: String, parentFolderID: String){
+//        let contentClient = BOXContentClient.default()
+//        contentClient?.folderCreateRequest(withName: "NewFolder", parentFolderID: "0")
+//        contentClient?.perform(completion: {(boxFolder: BOXFolder, error: Error) in
+//            
+//        })
+//    }
+//    [folderCreateRequest performRequestWithCompletion:^(BOXFolder *folder, NSError *error) {
+//    // If successful, folder will be non-nil and represent the newly created folder on Box; otherwise, error will be non-nil.
+//    }];
+    
    
 }

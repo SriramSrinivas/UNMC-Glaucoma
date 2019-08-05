@@ -33,6 +33,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Need access to use camera </string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Ples let</string>
 	<key>UIInterfaceOrientation</key>

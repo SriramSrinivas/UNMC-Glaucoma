@@ -25,7 +25,7 @@ import Reachability
 //protocol PickerViewdelegate: class {
 //    func getFilestoDownload(files: [FilesToDownload])
 //}
-
+//add a way to import and download to Ipad?
 
 class LoadedImageViewController: UIViewController {
     
@@ -204,7 +204,9 @@ class LoadedImageViewController: UIViewController {
 
         //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
         [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch].forEach {view.addSubview($0)}
-        initCustomObjects(h: 0, w: 0)
+        if (Globals.shared.currentBackGround == Globals.shared.backGrounds.first){
+            initCustomObjects(h: 0, w: 0)
+        }
         //checkAountOfFilesDownlaodinf()
         setUpView()
        // file.getFolderItems(withID: "0")
@@ -282,18 +284,19 @@ class LoadedImageViewController: UIViewController {
                     c.blur.blurRadius = CGFloat(a!/10)
                     c.isActive = false
                     c.includesEffect()
+                    c.setValue(value: a!)
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 if (currentFileType == 2 && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
-                    c.layer.zPosition = 2
                     c.isActive = false
-                    c.layer.borderWidth = 5
-                    c.layer.borderColor = UIColor.red.cgColor
-                    c.blur.backgroundColor = UIColor.black
-                    c.blur.alpha = CGFloat(a!/10)
-                    c.blur.blurRadius = 0
+                    c.blur.layer.borderWidth = 5
+                    c.layer.zPosition = 2
+                    c.blur.blurRadius = CGFloat(a!/10)
+                    c.isActive = false
+                    c.includesEffect()
+                    c.setValue(value: a!)
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
@@ -304,8 +307,9 @@ class LoadedImageViewController: UIViewController {
                 c.layer.borderWidth = 5
                 c.layer.borderColor = UIColor.red.cgColor
                 c.blur.backgroundColor = UIColor.black
-                c.blur.alpha = CGFloat(a!/10)
+               // c.blur.alpha = CGFloat(a!/10)
                 c.blur.blurRadius = 0
+                c.setValue(value: a!)
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
                     //cropImage = cropImage!.crop(rect: c.frame)
@@ -328,6 +332,7 @@ class LoadedImageViewController: UIViewController {
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
+                    c.setValue(value: a!)
                     isHiddenCustomUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }

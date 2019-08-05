@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -120,14 +121,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton].forEach {view.addSubview($0)}
         setUpView()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        if (imageName == "camera"){
-            background.image = Globals.shared.getCameraImage()
-        } else {
-            let image = UIImage(named: imageName)
-            background.image = image
-        }
-    }
+    
     //MARK: BUTTON ACTIONS
     
     @objc func MenuTapped(_sender: UIButton){
@@ -158,10 +152,33 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
    
 
     @objc func cameraMenuButtonTapped(){
-       
+        
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .camera
+        
+        present(imagePicker, animated: true, completion: nil)
+        
     }
    
-
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = (info[.originalImage] as? UIImage)
+        background.image = image
+        Globals.shared.setCameraImage(image: image!)
+        Globals.shared.setCurrentBackGround(newBack: "camera")
+        updateBackground(image: image!)
+        imagePicker.dismiss(animated: true, completion: nil)
+//        let image = (info[.originalImage] as? UIImage)!
+//        Globals.shared.setCameraImage(image: image)
+//        Globals.shared.setCurrentBackGround(newBack: "camera")
+//        updateBackground()
+    }
+    
+    func updateBackground(image: UIImage){
+        
+            background.image = image
+       
+    }
     
     //MARK: SETUPVIEW
     private func setUpView() {

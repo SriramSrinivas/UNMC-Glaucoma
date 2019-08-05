@@ -113,7 +113,9 @@ class ViewController: UIViewController{
         addExportButton(view: sideView)
         addControlIcons()
         addSlider(view: sideView)
+        if (backImageName == Globals.shared.backGrounds.first){
         initCustomObjects()
+        }
         addGridLineUpdate(mainView: mainImgView)
         
         reach = Reachability.forInternetConnection()
@@ -193,15 +195,18 @@ class ViewController: UIViewController{
     //idea - present defualt picture but allow for change. grays out picrure and presents available picture on top of view
     func loadImage(mainImgView: UIView){
         
-        
-
-        var image = UIImage(named: backImageName)
-       
+        var image : UIImage
+        if backImageName == "camera"
+        {
+            image = Globals.shared.getCameraImage()
+        } else {
+            image = UIImage(named: backImageName)!
+        }
         //epiaFilter(image, intensity: 2)
         //this will change the image color
         //image = image?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.7), blendMode: .luminosity)
         
-        bckImage = image!
+        bckImage = image
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
         
@@ -210,7 +215,7 @@ class ViewController: UIViewController{
 //        image = UIGraphicsGetImageFromCurrentImageContext()
         //constimage = imageView.image!
         //constimage = image!
-        constimage = resizeImage(image: image!, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         print("know these")
 //        print(mainImgView.frame.size.height)
 //        print(mainImgView.frame.size.width)
@@ -581,7 +586,7 @@ class ViewController: UIViewController{
         temp.setImageConst(images: constimage)
         cropImage = cropImage.crop(rect: temp.frame)
         cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
-        mainImgView.insertSubview(temp, belowSubview: customObjectList.first!)
+        mainImgView.insertSubview(temp, belowSubview: customObjectList.first ?? mainImgView)
 //        self.view.layer.zPosition = 1;
         //temp.layer.zPosition = 100;
         if (value < 0.1){
