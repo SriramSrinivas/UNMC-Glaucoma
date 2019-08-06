@@ -345,9 +345,10 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
                     self.showToast(message: "Did not load Data from \(file!.name), Incorrect: FileType/Data", theme: .error)
                 }
                 let vc = ViewController()
-                vc.loadDatafromFile(linesOfData: currentData!)
+//                vc.loadDatafromFile(linesOfData: currentData!)
                 //vc.backImageName = imageName
                 self.present(vc, animated: true, completion: nil)
+                vc.loadDatafromFile(linesOfData: currentData!)
                 }
                 
         }

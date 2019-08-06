@@ -1078,6 +1078,8 @@ class ViewController: UIViewController {
         return today_string
         
     }
+    
+    //Need to work on ishidden files 
 
     func loadDatafromFile(linesOfData: [String]){
         var models : [SaveModel]? = []
@@ -1086,60 +1088,69 @@ class ViewController: UIViewController {
             models?.append(model)
         }
         for model in models! {
-            let width = Double((view.frame.size.width/5) * 4)
-            let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: model.height * Double(view.frame.size.height), height: model.width * Double(view.frame.size.height))
-            let c = CustomViewUpdate(frame: frame)
-            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
-            c.addGestureRecognizer(gestureTap)
-            c.layer.zPosition = 2
-            c.blur.blurRadius = 5
-            let value = Float(model.viewValue)/10
-            if model.effect == .blur {
-                c.blur.blurRadius = CGFloat(value * 10)
-                c.setValue(value: model.viewValue)
-                c.blur.backgroundColor = UIColor.clear
-                c.blur.alpha = 1
-                 //c.blur.blurRadius = 5
-                c.setValue(value: Int(value * 10))
-                c.reloadInputViews()
-            } else if model.effect == .grey {
-                c.blur.backgroundColor = UIColor.black
-                c.setValue(value: model.viewValue)
-                c.blur.alpha = CGFloat(value)
-                c.blur.blurRadius = 0
+            
+            if !(model.effect == .isHidden) {
                 
-                c.setValue(value: Int(value * 10))
-                c.effect = effectType.grey
-            } else if model.effect == .color {
-                var cropImage = constimage
-                c.setImageConst(images: constimage)
-                c.setValue(value: model.viewValue)
-                cropImage = cropImage.crop(rect: c.frame)
-                cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
-                view.insertSubview(c, belowSubview: customObjectList.first ?? mainImgView)
-
-                view.layoutSubviews()
-                c.setValue(value: Int(value * 10))
-                c.effect = effectType.color
-                c.blur.alpha = CGFloat(value)
-                c.blur.blurRadius = 0
-                c.effect = effectType.color
-                c.resetImage()
-                c.addImage(images: cropImage)
+                let width = Double((view.frame.size.width/5) * 4)
+                let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(view.frame.size.height)) + 3, height: model.height * Double(view.frame.size.height))
+                let c = CustomViewUpdate(frame: frame)
+                let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
+                c.addGestureRecognizer(gestureTap)
+                c.layer.zPosition = 2
+                c.blur.blurRadius = 5
+                let value = Float(model.viewValue)/10
+                if model.effect == .blur {
+                    c.blur.blurRadius = CGFloat(value * 10)
+                    c.setValue(value: model.viewValue)
+                    c.blur.backgroundColor = UIColor.clear
+                    c.blur.alpha = 1
+                    //c.blur.blurRadius = 5
+                    c.setValue(value: Int(value * 10))
+                    c.reloadInputViews()
+                } else if model.effect == .grey {
+                    c.blur.backgroundColor = UIColor.black
+                    c.setValue(value: model.viewValue)
+                    c.blur.alpha = CGFloat(value)
+                    c.blur.blurRadius = 0
+                    
+                    c.setValue(value: Int(value * 10))
+                    c.effect = effectType.grey
+                } else if model.effect == .color {
+                    var cropImage = constimage
+                    c.setImageConst(images: constimage)
+                    c.setValue(value: model.viewValue)
+                    cropImage = cropImage.crop(rect: c.frame)
+                    cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+                    mainImgView.insertSubview(c, belowSubview: customObjectList.first ?? mainImgView)
+                    
+                    mainImgView.layoutSubviews()
+                    c.setValue(value: Int(value * 10))
+                    c.effect = effectType.color
+                    c.blur.alpha = CGFloat(value)
+                    c.blur.blurRadius = 0
+                    c.effect = effectType.color
+                    c.resetImage()
+                    c.addImage(images: cropImage)
+                }
+                
+                
+                //mainImgView.addSubview(c)
+                mainImgView.insertSubview(c, aboveSubview: mainImgView)
+                customViewUpdateList.append(c)
+                
+                if isGridHidden {
+                    c.valueLabel.alpha = 0
+                }
+                
+                c.includesEffect()
             } else {
-                
+                for i in self.customObjectList{
+                    if i.frame.contains(CGPoint(x: model.midx * Double(mainImgView.frame.width), y: model.midy * Double(mainImgView.frame.height))){
+                        i.isHidden = true
+                    }
+                }
             }
-        
-        //mainImgView.addSubview(c)
-            mainImgView.insertSubview(c, aboveSubview: mainImgView)
-            customViewUpdateList.append(c)
-        
-            if isGridHidden {
-                c.valueLabel.alpha = 0
-            }
-        
-            c.includesEffect()
-            }
+        }
 
     }
 

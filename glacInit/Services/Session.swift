@@ -42,10 +42,10 @@ class Session {
         
         for view in customViewList{
             let height = view.frame.height / mainView.frame.height
-          //  let width = view.frame.width / mainView.frame.width
+            let width = view.frame.width / mainView.frame.width
             let midX = view.frame.midX / mainView.frame.width
             let midY = view.frame.minY / mainView.frame.height
-            csvText.append("\(view.effect),\(height),\(height),\(midX),\(midY),\(view.viewValue)\n")
+            csvText.append("\(view.effect),\(height),\(width),\(midX),\(midY),\(view.viewValue)\n")
         }
         
         
