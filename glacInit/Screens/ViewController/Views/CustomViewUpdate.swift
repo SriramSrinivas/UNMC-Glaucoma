@@ -15,6 +15,21 @@ enum effectType {
     case isHidden
     case color
 }
+extension effectType {
+    init?(effect: String) {
+        if effect == "blur"{
+            self = .blur
+        } else if effect == "grey" {
+            self = .grey
+        } else if effect == "isHidden" {
+            self = .isHidden
+        } else if effect == "color" {
+            self = .color
+        } else {
+         return nil
+        }
+    }
+}
 
 class CustomViewUpdate : UIView{
     

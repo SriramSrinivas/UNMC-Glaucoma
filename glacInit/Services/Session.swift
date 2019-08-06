@@ -41,8 +41,13 @@ class Session {
         var csvText = ""
         
         for view in customViewList{
-            csvText.append("\(view.effect),\(view.frame.height),\(view.frame.width),\(view.frame.midX),\(view.frame.minY),\(view.viewValue)\n")
+            let height = view.frame.height / mainView.frame.height
+          //  let width = view.frame.width / mainView.frame.width
+            let midX = view.frame.midX / mainView.frame.width
+            let midY = view.frame.minY / mainView.frame.height
+            csvText.append("\(view.effect),\(height),\(height),\(midX),\(midY),\(view.viewValue)\n")
         }
+        
         
         for (row,i) in distances.enumerated() {
             for (column,j) in distances.enumerated() {
@@ -82,27 +87,29 @@ class Session {
             }
         }
         
+        var saveFile = FileObject(name: "\(subjectId)_saveFile_\(self.getTodayString())_\(exportCount)", type: FileType.CSV)
         let screenShotFile = FileObject(name: "\(subjectId)_screenshot_\(self.getTodayString())_\(exportCount)", type: FileType.PNG)
         var blurPointsFile = FileObject(name:"\(subjectId)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         var greyPointsFile = FileObject(name:"\(subjectId)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         var hiddenPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         var ColorPointsFile = FileObject(name:"\(subjectId)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
-        
+        saveDataToFile(file: csvText, fileName: "\(subjectId)_saveFile_\(self.getTodayString())_\(exportCount)")
+        saveFile.path = fileURL!
         screenShotFile.savePNG(view: mainView)
         blurPointsFile.saveCSV(grid:blurGrid)
         greyPointsFile.saveCSV(grid:greyGrid)
         hiddenPointsFile.saveCSV(grid:hiddenGrid)
         ColorPointsFile.saveCSV(grid: colorGrid)
         
-        if !hasBox {
-            saveDataToFile(fileName: blurPointsFile)
-            saveDataToFile(fileName: greyPointsFile)
-            saveDataToFile(fileName: hiddenPointsFile)
-            saveDataToFile(fileName: ColorPointsFile)
-        }
+//        if !hasBox {
+//            saveDataToFile(fileName: blurPointsFile)
+//            saveDataToFile(fileName: greyPointsFile)
+//            saveDataToFile(fileName: hiddenPointsFile)
+//            saveDataToFile(fileName: ColorPointsFile)
+//        }
         
-        savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile]
+        savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile, saveFile]
     }
     
     func uploadFile(file:FileObject, FolderID: String ,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
@@ -165,7 +172,7 @@ class Session {
     }
     
     
-    func saveDataToFile(fileName: FileObject){
+    func saveDataToFile(fileName: FileObject, isSaveFile: Bool){
         let newfile = fileName
         let path = "/\(Globals.shared.getDate())/"
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
@@ -182,6 +189,32 @@ class Session {
             do {
                 
                 try newfile.Matrix?.write(to: fileURL, atomically: true, encoding: .utf8)
+                
+            } catch {
+                
+                print("\(error)")
+                
+            }
+            
+        }
+    }
+    func saveDataToFile(file: String, fileName: String){
+        let newfile = fileName
+        let path = "/\(Globals.shared.getDate())/"
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            var fileURL = dir.appendingPathComponent(path)
+            do{
+                try FileManager.default.createDirectory(atPath: fileURL.path, withIntermediateDirectories: true, attributes: nil)
+                fileURL = dir.appendingPathComponent(path + fileName)
+            }
+            catch{
+                print("Unable to create directory \(Error.self)")
+            }
+            self.fileURL = fileURL
+            
+            do {
+                
+                try file.write(to: fileURL, atomically: true, encoding: .utf8)
                 
             } catch {
                 

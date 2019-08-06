@@ -10,8 +10,10 @@ import CoreGraphics
 
 // YO grid is appearing in the images, when grid gets turn on and off we might need to update somehow,
 
-class ViewController: UIViewController{
-    
+
+
+class ViewController: UIViewController {
+   
     //image heght 1024.0
     //image width 1366.0
     var backImageName = Globals.shared.currentBackGround
@@ -438,6 +440,7 @@ class ViewController: UIViewController{
             mainImgView.insertSubview(i, aboveSubview: mainImgView)
             mainImgView.bringSubviewToFront(i)
         }
+         deSelectAll()
         let image = mainImgView.asImage()
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
@@ -477,6 +480,7 @@ class ViewController: UIViewController{
             mainImgView.addSubview(i)
             mainImgView.bringSubviewToFront(i)
         }
+         deSelectAll()
         let image = mainImgView.asImage()
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
@@ -605,6 +609,7 @@ class ViewController: UIViewController{
         greySlider.setValue(0, animated: false)
       
     }
+   
     @objc func sliderGrey(slider: UISlider){
         var value = slider.value
         value = value/10
@@ -618,6 +623,7 @@ class ViewController: UIViewController{
         blackSlider.setValue(0, animated: false)
         temp.resetImage()
     }
+    
     
     @objc func switchAlpha(sender: UISwitch!){
         
@@ -693,9 +699,15 @@ class ViewController: UIViewController{
         return activatedViews
         
     }
+    func deSelectAll(){
+        for i in customViewUpdateList {
+            i.isActive(value: false)
+        }
+    }
     
     @objc func handleTapUpdate(sender: UITapGestureRecognizer){
         
+        deSelectAll()
         let image = mainImgView.asImage()
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
@@ -941,6 +953,7 @@ class ViewController: UIViewController{
 
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         print("Image Tapped")
+         deSelectAll()
         let image = mainImgView.asImage()
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
@@ -1065,8 +1078,70 @@ class ViewController: UIViewController{
         return today_string
         
     }
-    
-   
+
+    func loadDatafromFile(linesOfData: [String]){
+        var models : [SaveModel]? = []
+        for line in linesOfData {
+            let model = SaveModel(line: line)
+            models?.append(model)
+        }
+        for model in models! {
+            let width = Double((view.frame.size.width/5) * 4)
+            let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: model.height * Double(view.frame.size.height), height: model.width * Double(view.frame.size.height))
+            let c = CustomViewUpdate(frame: frame)
+            let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
+            c.addGestureRecognizer(gestureTap)
+            c.layer.zPosition = 2
+            c.blur.blurRadius = 5
+            let value = Float(model.viewValue)/10
+            if model.effect == .blur {
+                c.blur.blurRadius = CGFloat(value * 10)
+                c.setValue(value: model.viewValue)
+                c.blur.backgroundColor = UIColor.clear
+                c.blur.alpha = 1
+                 //c.blur.blurRadius = 5
+                c.setValue(value: Int(value * 10))
+                c.reloadInputViews()
+            } else if model.effect == .grey {
+                c.blur.backgroundColor = UIColor.black
+                c.setValue(value: model.viewValue)
+                c.blur.alpha = CGFloat(value)
+                c.blur.blurRadius = 0
+                
+                c.setValue(value: Int(value * 10))
+                c.effect = effectType.grey
+            } else if model.effect == .color {
+                var cropImage = constimage
+                c.setImageConst(images: constimage)
+                c.setValue(value: model.viewValue)
+                cropImage = cropImage.crop(rect: c.frame)
+                cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+                view.insertSubview(c, belowSubview: customObjectList.first ?? mainImgView)
+
+                view.layoutSubviews()
+                c.setValue(value: Int(value * 10))
+                c.effect = effectType.color
+                c.blur.alpha = CGFloat(value)
+                c.blur.blurRadius = 0
+                c.effect = effectType.color
+                c.resetImage()
+                c.addImage(images: cropImage)
+            } else {
+                
+            }
+        
+        //mainImgView.addSubview(c)
+            mainImgView.insertSubview(c, aboveSubview: mainImgView)
+            customViewUpdateList.append(c)
+        
+            if isGridHidden {
+                c.valueLabel.alpha = 0
+            }
+        
+            c.includesEffect()
+            }
+
+    }
 
     
     func captureScreen() -> UIImage? {
