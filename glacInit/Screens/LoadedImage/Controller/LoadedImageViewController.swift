@@ -166,6 +166,7 @@ class LoadedImageViewController: UIViewController {
     var pickerView = PickerView()
     var LoadedImage = UIImage()
     var loadedIMageBackground = false
+    //var constimage = UIImage()
     
     var gridViews = [UIView]()
     let distances = Globals.shared.getdistances()
@@ -212,6 +213,8 @@ class LoadedImageViewController: UIViewController {
         setUpView()
        // file.getFolderItems(withID: "0")
         addGridLineUpdate(mainView: mainImageView)
+      //  let image = mainImageView.asImage()
+       // constimage = resizeImage(image: image, width: mainImageView.frame.size.width, height: mainImageView.frame.size.height)
         //throw err0r
         //addblur(currentFileType: 1, currentData: [[]])
     }
@@ -270,47 +273,34 @@ class LoadedImageViewController: UIViewController {
 
                 let value = currentData[countx][county]
                 
-                //var current = 1
-                //var value = "10"
+               
                 let a:Int? = Int(value)
-                //test
-                
-                //value = "10"
+               
                 if (currentFileType == 1 && value != "0"){
-                    let c = CustomViewUpdate(frame: frame)
-                    
+                    var c = CustomViewUpdate(frame: frame)
+                    changeCustomViewUpdate(customView: &c, value: a!, effect: .blur, constimage: nil, mainImgView: nil)
                     c.isActive = false
                     c.blur.layer.borderWidth = 5
-                    c.layer.zPosition = 2
-                    c.blur.blurRadius = CGFloat(a!/10)
-                    c.isActive = false
-                    c.includesEffect()
-                    c.setValue(value: a!)
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 if (currentFileType == 2 && value != "0"){
-                    let c = CustomViewUpdate(frame: frame)
+                    var c = CustomViewUpdate(frame: frame)
                     c.isActive = false
                     c.blur.layer.borderWidth = 5
-                    c.layer.zPosition = 2
-                    c.blur.blurRadius = CGFloat(a!/10)
-                    c.isActive = false
-                    c.includesEffect()
-                    c.setValue(value: a!)
+                    changeCustomViewUpdate(customView: &c, value: a!, effect: .grey, constimage: nil, mainImgView: nil)
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                if (currentFileType == 3 && value != "0"){
-                let c = CustomViewUpdate(frame: frame)
-                c.layer.zPosition = 2
+                var c = CustomViewUpdate(frame: frame)
                 c.isActive = false
                 c.layer.borderWidth = 5
                 c.layer.borderColor = UIColor.red.cgColor
-                c.blur.backgroundColor = UIColor.black
-               // c.blur.alpha = CGFloat(a!/10)
-                c.blur.blurRadius = 0
-                c.setValue(value: a!)
+//                let image = captureScreen(view: mainImageView)!
+//                let constimage = resizeImage(image: image, width: mainImageView.frame.size.width, height: mainImageView.frame.size.height)
+
+                changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: constImage, mainImgView: mainImageView)
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
                     //cropImage = cropImage!.crop(rect: c.frame)
@@ -609,6 +599,7 @@ class LoadedImageViewController: UIViewController {
         blurCustomViewUpdateList.removeAll()
         colorCustomViewUpdateList.removeAll()
         objectCustomViewUpdateList.removeAll()
+        isHiddenCustomUpdateList.removeAll()
             file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)

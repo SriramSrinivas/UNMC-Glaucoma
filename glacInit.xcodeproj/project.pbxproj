@@ -16,6 +16,7 @@
 		21182C9522E7415000712670 /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9422E7415000712670 /* PickerCell.swift */; };
 		21182C9722E7932100712670 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9622E7932100712670 /* Globals.swift */; };
 		211F7C3522F9BBB40001F584 /* SaveFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3422F9BBB40001F584 /* SaveFileModel.swift */; };
+		211F7C3922FB2B100001F584 /* CustomViewGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -80,6 +81,7 @@
 		21182C9422E7415000712670 /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		21182C9622E7932100712670 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		211F7C3422F9BBB40001F584 /* SaveFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFileModel.swift; sourceTree = "<group>"; };
+		211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewGenerics.swift; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				2132E48022D3FCD200734063 /* UIExtensions.swift */,
 				2132E48222D3FD1700734063 /* UIGenerics.swift */,
 				77D171D01EAFA0EC00B008B5 /* Extentions.swift */,
+				211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -734,6 +737,7 @@
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
 				2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */,
 				21182C8F22E62F9A00712670 /* ExpandableNames.swift in Sources */,
+				211F7C3922FB2B100001F584 /* CustomViewGenerics.swift in Sources */,
 				210898D322F1FC5A0007FD25 /* MainMenuViewController.swift in Sources */,
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,

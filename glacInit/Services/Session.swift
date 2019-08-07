@@ -61,20 +61,20 @@ class Session {
                 for o in customViewList{
                     if o.frame.contains(CGPoint(x: x, y: y)){
                         
-                        if(o.blur.blurRadius > 0 && o.image.image == nil) {
+                        if(o.blur.blurRadius > 0 && o.effect == effectType.blur) {
                             blurValue += o.viewValue
                         }
                         
-                        if(o.blur.backgroundColor == UIColor.black){
+                        if(o.effect == effectType.grey){
                             greyValue += o.viewValue
                         }
                         
-                        if(o.isLinkedToImage){
+                        if(o.effect == effectType.isHidden){
                             if(o.alphaValue == 0) {
                                 hiddenValue = hiddenValue + 10
                             }
                         }
-                        if(o.image.image != nil) {
+                        if(o.effect == effectType.color) {
                             colorValue += o.viewValue
                         }
                     }
@@ -83,7 +83,7 @@ class Session {
                 blurGrid[row,column] = blurValue + blurGrid[row,column]
                 greyGrid[row,column] = greyValue + greyGrid[row,column]
                 hiddenGrid[row,column] = hiddenValue + hiddenGrid[row,column]
-                colorGrid[row,column] = colorValue + hiddenGrid[row,column]
+                colorGrid[row,column] = colorValue + colorGrid[row,column]
             }
         }
         

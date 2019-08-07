@@ -567,11 +567,8 @@ class ViewController: UIViewController {
         temp.effect = effectType.blur
         for i in customViewUpdateList {
             if i.isActive {
-                i.blur.blurRadius = CGFloat(value)
-                i.blur.backgroundColor = UIColor.clear
-                i.blur.alpha = 1
-                i.setValue(value: Int(value))
-
+                var temp = i
+                changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.blur, constimage: constimage, mainImgView: mainImgView)
                 greySlider.setValue(0, animated: false)
                 blackSlider.setValue(0, animated: false)
                 temp.resetImage()
@@ -582,43 +579,17 @@ class ViewController: UIViewController {
     
     
     @objc func sliderBlack(slider: UISlider){
-        var value = slider.value
-        
-        value = value/10
-        var cropImage = constimage
-        let temp = getCurrentActiveView()
-        temp.setImageConst(images: constimage)
-        cropImage = cropImage.crop(rect: temp.frame)
-        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
-        mainImgView.insertSubview(temp, belowSubview: customObjectList.first ?? mainImgView)
-//        self.view.layer.zPosition = 1;
-        //temp.layer.zPosition = 100;
-        if (value < 0.1){
-            temp.resetImage()
-        }
-        else{
-            temp.resetImage()
-            temp.addImage(images: cropImage)
-        }
-        mainImgView.layoutSubviews()
-        temp.setValue(value: Int(value * 10))
-        temp.effect = effectType.color
-        
-        temp.blur.backgroundColor = nil
+        let value = slider.value
+        var temp = getCurrentActiveView()
+        changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.color, constimage: constimage, mainImgView: mainImgView)
         intSlider.setValue(0, animated: false)
         greySlider.setValue(0, animated: false)
       
     }
-   
     @objc func sliderGrey(slider: UISlider){
-        var value = slider.value
-        value = value/10
-        let temp = getCurrentActiveView()
-        temp.blur.backgroundColor = UIColor.black
-        temp.blur.alpha = CGFloat(value)
-        temp.blur.blurRadius = 0
-        temp.setValue(value: Int(value * 10))
-        temp.effect = effectType.grey
+        let value = slider.value
+        var temp = getCurrentActiveView()
+        changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.grey, constimage: constimage, mainImgView: mainImgView)
         intSlider.setValue(0, animated: false)
         blackSlider.setValue(0, animated: false)
         temp.resetImage()
@@ -1089,53 +1060,12 @@ class ViewController: UIViewController {
             models?.append(model)
         }
         for model in models! {
-            
             if !(model.effect == .isHidden) {
-                
-                
                 let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(mainImgView.frame.size.width)), height: model.height * Double(view.frame.size.height))
-                let c = CustomViewUpdate(frame: frame)
+                var c = CustomViewUpdate(frame: frame)
                 let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
                 c.addGestureRecognizer(gestureTap)
-                c.layer.zPosition = 2
-                c.blur.blurRadius = 5
-                let value = Float(model.viewValue)/10
-                if model.effect == .blur {
-                    c.blur.blurRadius = CGFloat(value * 10)
-                    c.setValue(value: model.viewValue)
-                    c.blur.backgroundColor = UIColor.clear
-                    c.blur.alpha = 1
-                    //c.blur.blurRadius = 5
-                    c.setValue(value: Int(value * 10))
-                    c.reloadInputViews()
-                } else if model.effect == .grey {
-                    c.blur.backgroundColor = UIColor.black
-                    c.setValue(value: model.viewValue)
-                    c.blur.alpha = CGFloat(value)
-                    c.blur.blurRadius = 0
-                    
-                    c.setValue(value: Int(value * 10))
-                    c.effect = effectType.grey
-                } else if model.effect == .color {
-                    var cropImage = constimage
-                    c.setImageConst(images: constimage)
-                    c.setValue(value: model.viewValue)
-                    cropImage = cropImage.crop(rect: c.frame)
-                    cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
-                    mainImgView.insertSubview(c, belowSubview: customObjectList.first ?? mainImgView)
-                    
-                    mainImgView.layoutSubviews()
-                    c.setValue(value: Int(value * 10))
-                    c.effect = effectType.color
-                    c.blur.alpha = CGFloat(value)
-                    c.blur.blurRadius = 0
-                    c.effect = effectType.color
-                    c.resetImage()
-                    c.addImage(images: cropImage)
-                }
-                
-                
-                //mainImgView.addSubview(c)
+                changeCustomViewUpdate(customView: &c, value: model.viewValue, effect: model.effect, constimage: constimage, mainImgView: mainImgView)
                 mainImgView.insertSubview(c, aboveSubview: mainImgView)
                 customViewUpdateList.append(c)
                 
@@ -1152,10 +1082,6 @@ class ViewController: UIViewController {
                         let temp = customViewUpdateList.last
                         temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
                         
-                        //                        var cropImage = constimage
-                        //                        cropImage = cropImage.crop(rect: temp!.frame)
-                        //                        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(i.alpha)), blendMode: .luminosity)
-                        
                         temp?.isLinkedToImage = true
                         temp?.linkedImage = i
                         temp?.setValue(value: 0)
@@ -1170,16 +1096,6 @@ class ViewController: UIViewController {
             }
         }
 
-    }
-
-    
-    func captureScreen() -> UIImage? {
-        guard let context = UIGraphicsGetCurrentContext() else { return .none }
-        UIGraphicsBeginImageContextWithOptions(mainImgView.bounds.size, false, UIScreen.main.scale)
-        mainImgView.layer.render(in: context)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
     }
     
     func getImportedData(boxitems: [BOXItem]){
