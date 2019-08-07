@@ -703,7 +703,7 @@ class LoadedImageViewController: UIViewController {
                 return .PNG
             }
         }
-        return .IncorrectFileType
+        return .incorrectEffectType
     }
     
     

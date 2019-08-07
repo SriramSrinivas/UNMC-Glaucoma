@@ -16,7 +16,7 @@ enum effectType {
     case color
     case PNG
     case saveFile
-    case IncorrectFileType
+    case incorrectEffectType
 }
 extension effectType {
     init?(effect: String) {
@@ -33,7 +33,7 @@ extension effectType {
         } else if effect == "PNG"{
             self = .PNG
         } else {
-            self = .IncorrectFileType
+            self = .incorrectEffectType
         }
     }
 }
