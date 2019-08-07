@@ -316,6 +316,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         //stackview.spacing = 10
         innerSt.addArrangedSubview(fileimageView)
         innerSt.addArrangedSubview(headerName)
+        innerSt.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
         stackview.addArrangedSubview(innerSt)
         //stackview.spacing = 5
         stackview.addArrangedSubview(button)

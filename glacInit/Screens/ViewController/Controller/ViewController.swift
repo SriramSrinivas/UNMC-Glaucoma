@@ -1082,6 +1082,7 @@ class ViewController: UIViewController {
     //Need to work on ishidden files 
 
     func loadDatafromFile(linesOfData: [String]){
+        let width = Double((view.frame.size.width/5) * 4)
         var models : [SaveModel]? = []
         for line in linesOfData {
             let model = SaveModel(line: line)
@@ -1091,7 +1092,7 @@ class ViewController: UIViewController {
             
             if !(model.effect == .isHidden) {
                 
-                let width = Double((view.frame.size.width/5) * 4)
+                
                 let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(mainImgView.frame.size.width)), height: model.height * Double(view.frame.size.height))
                 let c = CustomViewUpdate(frame: frame)
                 let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
@@ -1146,7 +1147,24 @@ class ViewController: UIViewController {
             } else {
                 for i in self.customObjectList{
                     if i.frame.contains(CGPoint(x: model.midx * Double(mainImgView.frame.width), y: model.midy * Double(mainImgView.frame.height))){
-                        i.isHidden = true
+                        
+                        createCustomViewUpdate(frame: CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(mainImgView.frame.size.width)), height: model.height * Double(view.frame.size.height)))
+                        let temp = customViewUpdateList.last
+                        temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+                        
+                        //                        var cropImage = constimage
+                        //                        cropImage = cropImage.crop(rect: temp!.frame)
+                        //                        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(i.alpha)), blendMode: .luminosity)
+                        
+                        temp?.isLinkedToImage = true
+                        temp?.linkedImage = i
+                        temp?.setValue(value: 0)
+                        temp?.linkedImage.alpha = 0
+                        temp?.blur.blurRadius = 0
+                        //temp?.blur.alpha =  0
+                        temp?.effect = effectType.isHidden
+                        //temp?.alpha = 0
+                        enableControl(value: .BlurAndAlpha)
                     }
                 }
             }

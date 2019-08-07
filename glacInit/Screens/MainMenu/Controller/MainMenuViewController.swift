@@ -22,7 +22,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var versionNumber : UITextView = {
         var temp = UITextView()
-        nonEditableTextView(&temp, text: "-v 2.1.0", fontSize: 12)
+        nonEditableTextView(&temp, text: "-v 2.1.1", fontSize: 12)
         temp.backgroundColor = .black
         temp.textAlignment = .center
         return temp
