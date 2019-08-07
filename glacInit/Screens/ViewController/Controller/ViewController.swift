@@ -1092,7 +1092,7 @@ class ViewController: UIViewController {
             if !(model.effect == .isHidden) {
                 
                 let width = Double((view.frame.size.width/5) * 4)
-                let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(view.frame.size.height)) + 3, height: model.height * Double(view.frame.size.height))
+                let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(mainImgView.frame.size.width)), height: model.height * Double(view.frame.size.height))
                 let c = CustomViewUpdate(frame: frame)
                 let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
                 c.addGestureRecognizer(gestureTap)

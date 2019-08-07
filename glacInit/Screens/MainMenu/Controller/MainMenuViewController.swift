@@ -147,16 +147,14 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         //view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         pickerView.delegate = self
         file.delegate = self
-        if (imageName == "camera"){
-            background.image = Globals.shared.getCameraImage()
-        } else {
-            let image = UIImage(named: imageName)
-            background.image = image
-        }
+        backgroundChanged()
     
         navigationController?.navigationBar.isHidden = true
         [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton, versionNumber, saveFileButton].forEach {view.addSubview($0)}
         setUpView()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        backgroundChanged()
     }
     
     //MARK: BUTTON ACTIONS
@@ -183,6 +181,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         self.parent?.dismiss(animated: true, completion: nil)
         let layout = UICollectionViewFlowLayout()
         let vc = BackgroundChangeController(collectionViewLayout: layout)
+        vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
     }
@@ -380,6 +379,16 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         }
         return false
     }
+    
+    func backgroundChanged() {
+        imageName = Globals.shared.getCurrentBackGround()
+        if (imageName == "camera"){
+            background.image = Globals.shared.getCameraImage()
+        } else {
+            let image = UIImage(named: imageName)
+            background.image = image
+        }
+    }
 
 }
 
@@ -397,4 +406,11 @@ extension MainMenuViewController : ImportDelegate{
     func FileInfoReceived(){
         
     }
+}
+extension MainMenuViewController : BackgroundChangeDelegate {
+    func backgorundDidChange() {
+        backgroundChanged()
+    }
+    
+    
 }

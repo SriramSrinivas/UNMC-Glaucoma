@@ -9,7 +9,18 @@
 import Foundation
 import UIKit
 
-class BackgroundChangeController : UICollectionViewController {
+protocol BackgroundChangeDelegate : class {
+    func backgorundDidChange()
+}
+
+class BackgroundChangeController : UICollectionViewController, BackgroundChangeDelegate {
+    
+    weak var delegate : BackgroundChangeDelegate?
+    
+    func backgorundDidChange() {
+        
+    }
+    
     
     var images: [BackgroundImage] = {
         var temp = BackgroundImage()
@@ -56,9 +67,11 @@ class BackgroundChangeController : UICollectionViewController {
         let imageName = images[indexPath.item].BackgroundimageName!
         let image = UIImage(named: imageName)
         Globals.shared.setCurrentBackGround(newBack: imageName)
-
-        let viewController = MainMenuViewController()
-        self.present(viewController, animated: true, completion: nil)
+        delegate?.backgorundDidChange()
+//        let viewController = MainMenuViewController()
+//        self.present(viewController, animated: true, completion: nil)
+        self.dismiss(animated: false,
+                     completion: nil)
         //self.dismiss(animated: true, completion: nil)
     }
     
