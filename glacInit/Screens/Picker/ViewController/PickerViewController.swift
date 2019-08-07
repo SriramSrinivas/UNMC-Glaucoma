@@ -92,7 +92,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
                     if twodimArray[section].items[index].isSelected{
                         let name = twodimArray[section].items[index].name
                         let id = twodimArray[section].items[index].ID
-                        let file = FilesToDownload(name: name, id: id)
+                        let isfolder = twodimArray[section].items[index].isFolder
+                        let file = FilesToDownload(name: name, id: id, isFolder: isfolder)
                         files.append(file)
                     }
                     

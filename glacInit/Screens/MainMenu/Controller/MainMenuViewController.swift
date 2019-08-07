@@ -123,7 +123,19 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         var temp = UIButton(type: .system)
         let image = UIImage(named: "greyImage")
         temp.setBackgroundImage(image, for: .normal)
+        temp.tag = 2
         setUpButton(&temp, title: "Get Saved File", cornerRadius: 0, borderWidth: 5, color: "")
+        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        temp.addTarget(self, action: #selector(importSavedFile), for: .touchUpInside)
+        return temp
+    }()
+    
+    var changeExportFolderButton : UIButton = {
+        var temp = UIButton(type: .system)
+        let image = UIImage(named: "greyImage")
+        temp.setBackgroundImage(image, for: .normal)
+        temp.tag = 1
+        setUpButton(&temp, title: "Change", cornerRadius: 0, borderWidth: 5, color: "")
         temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
         temp.addTarget(self, action: #selector(importSavedFile), for: .touchUpInside)
         return temp
@@ -150,7 +162,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         backgroundChanged()
     
         navigationController?.navigationBar.isHidden = true
-        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton, versionNumber, saveFileButton].forEach {view.addSubview($0)}
+        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton, versionNumber, saveFileButton, changeExportFolderButton].forEach {view.addSubview($0)}
         setUpView()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -223,7 +235,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         
     }
     
-    @objc func importSavedFile(){
+    @objc func importSavedFile(_ sender: UIButton){
+        
          reach = Reachability.forInternetConnection()
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
             
@@ -238,7 +251,9 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
                 }
             })
             pickerView = PickerView()
-            //pickerView.checkingForFiles = false
+            if sender.tag == 1{
+                pickerView.checkingForFiles = false
+            }
             pickerView.delegate = self
         }
     }
@@ -287,6 +302,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         
         versionNumber.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.rightAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 35), size: .init(width: 75, height: 22))
         saveFileButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 50, height: 50))
+        changeExportFolderButton.anchor(top: saveFileButton.bottomAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 50, height: 50))
         
     }
     
@@ -316,6 +332,10 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     }
     
     func checkFilesToDownLoad(Files: [FilesToDownload]){
+        if Files.first?.isFolder ?? false {
+            Globals.shared.currentFolderExport = Files.first!.id
+        }
+        else {
         var currentData : [String]?
         if !Files.isEmpty{
             let filename = Files.first?.name.components(separatedBy: "_")
@@ -364,6 +384,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
             
         
     }
+        }
     }
     func csv(data: String) -> [String] {
         var result: [String]?

@@ -19,5 +19,6 @@ struct ExpandableNames {
 struct FilesToDownload {
     let name: String
     let id: String
+    let isFolder : Bool
 
 }
