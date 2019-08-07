@@ -13,6 +13,7 @@ import UIKit
 enum FileType : String {
     case PNG = "png"
     case CSV = "csv"
+    
 }
 
 struct FileObject {

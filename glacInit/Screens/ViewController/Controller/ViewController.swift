@@ -30,6 +30,8 @@ class ViewController: UIViewController {
     
     var blurOnIcon = UIImageView()
     var blurOffIcon = UIImageView()
+    var colorOnIcon = UIImageView()
+    var colorOffIcon = UIImageView()
     var sightOnIcon = UIImageView()
     var sightOffIcon = UIImageView()
     var sunIcon = UIImageView()
@@ -261,6 +263,14 @@ class ViewController: UIViewController {
         blurOffIcon.heightAnchor.constraint(equalToConstant: ((45 / OH) * height)).isActive = true
         blurOffIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
         
+        colorOnIcon.heightAnchor.constraint(equalToConstant: ((45 / OH) * height)).isActive = true
+        colorOnIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
+        colorOnIcon.transform = colorOnIcon.transform.rotated(by: .pi / 2)
+        
+        colorOffIcon.heightAnchor.constraint(equalToConstant: ((45 / OH) * height)).isActive = true
+        colorOffIcon.widthAnchor.constraint(equalToConstant: ((45 / OW) * width)).isActive = true
+        colorOffIcon.transform = colorOffIcon.transform.rotated(by:.pi / 2)
+        
         sightOnIcon.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
         sightOnIcon.widthAnchor.constraint(equalToConstant: ((50 / OW) * width)).isActive = true
         
@@ -340,7 +350,9 @@ class ViewController: UIViewController {
         sliderStack.alignment = UIStackView.Alignment.center
         sliderStack.spacing = 4.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        sliderStack.addArrangedSubview(colorOnIcon)
+        sliderStack.addArrangedSubview(colorOffIcon)
         sliderStack.addArrangedSubview(blackSlider)
         sliderStack.addArrangedSubview(blurOnIcon)
         sliderStack.addArrangedSubview(blurOffIcon)
@@ -360,6 +372,7 @@ class ViewController: UIViewController {
 
         view.addSubview(sliderStack)
 
+        sliderStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
         
@@ -458,6 +471,8 @@ class ViewController: UIViewController {
         
         blurOnIcon = tempImage("BlurOn",blurOnIcon)
         blurOffIcon = tempImage("BlurOff", blurOffIcon)
+        colorOnIcon = tempImage("lumin", colorOnIcon)
+        colorOffIcon = tempImage("luminOff", colorOffIcon)
         sightOnIcon = tempImage("SightOn", sightOnIcon)
         sightOffIcon = tempImage("SightOff", sightOffIcon)
         sunIcon = tempImage("lumin", sunIcon)
@@ -1149,7 +1164,12 @@ class ViewController: UIViewController {
             alphSlider.isEnabled = true
             
             blurOnIcon.isHidden = false
+            
+            colorOffIcon.isHidden = true
+            colorOnIcon.isHidden = false
+            
             blurOffIcon.isHidden = true
+            
             sightOnIcon.isHidden = false
             sightOffIcon.isHidden = true
             
@@ -1185,6 +1205,10 @@ class ViewController: UIViewController {
             blurOnIcon.isHidden = true
             blurOffIcon.isHidden = false
             blurOffIcon.alpha = 0.4
+            
+            colorOnIcon.isHidden = true
+            colorOffIcon.isHidden = false
+            colorOffIcon.alpha = 0.4
             
             sightOnIcon.isHidden = true
             sightOffIcon.isHidden = false
@@ -1225,6 +1249,10 @@ class ViewController: UIViewController {
             
             blurOnIcon.isHidden = false
             blurOffIcon.isHidden = true
+            
+            colorOnIcon.isHidden = false
+            colorOffIcon.isHidden = true
+            
             sightOnIcon.isHidden = true
             sightOffIcon.isHidden = false
             

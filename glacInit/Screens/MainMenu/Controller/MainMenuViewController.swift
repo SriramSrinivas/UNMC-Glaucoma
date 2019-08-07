@@ -140,7 +140,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
      let file = importFile.init()
     var imageName = Globals.shared.getCurrentBackGround()
      var reach: Reachability!
-    
+    var currentSession: Session!
     //MARK: VIEW MANAGEMENT
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -230,6 +230,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
             file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                    self.currentSession = Session(currentSubjectId: ("import"))
+                    self.currentSession.boxAuthorize()
                 }
                 else {
                     
@@ -344,13 +346,21 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
                     self.showToast(message: "Did not load Data from \(file!.name), Incorrect: FileType/Data", theme: .error)
                 }
                 let vc = ViewController()
+                    
 //                vc.loadDatafromFile(linesOfData: currentData!)
                 //vc.backImageName = imageName
                 self.present(vc, animated: true, completion: nil)
+                    vc.subjectID = filename?.first ?? ""
+                    vc.addWaterMark(name: filename?.first ?? "")
+                    vc.currentSession = Session(currentSubjectId: vc.subjectID)
+                    vc.nameLabel.textAlignment = .center
+                    vc.nameLabel.center.x = vc.nameLabel.frame.maxX
                 vc.loadDatafromFile(linesOfData: currentData!)
                 }
                 
         }
+            
+            
             
         
     }
