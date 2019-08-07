@@ -26,14 +26,11 @@
 		21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */; };
 		21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1B22CAB714009CDAD3 /* imageCell.swift */; };
 		21BA7FB322CCE6AF003DC229 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */; };
-		21E13B0022CC0FB300429F58 /* SubImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E13AFF22CC0FB300429F58 /* SubImage.swift */; };
 		21E14243228CBF1A004657BA /* FileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14242228CBF1A004657BA /* FileObject.swift */; };
 		21E14245228CBF23004657BA /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E14244228CBF22004657BA /* Session.swift */; };
 		21E2B20022DE6683009FD72D /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E2B1FF22DE6683009FD72D /* Networking.swift */; };
 		21FD3B3222E891F900D4EDE8 /* BoxItemsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FD3B3122E891F900D4EDE8 /* BoxItemsData.swift */; };
 		5696CD6191607995A82541AE /* Pods_glacInitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0151011F6BA4748A52A21922 /* Pods_glacInitUITests.framework */; };
-		743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */; };
-		743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */; };
 		74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907C1EDDDC2500628B38 /* CustomObject.swift */; };
 		74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */; };
 		74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */; };
@@ -90,7 +87,6 @@
 		21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundImage.swift; sourceTree = "<group>"; };
 		21A6BB1B22CAB714009CDAD3 /* imageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageCell.swift; sourceTree = "<group>"; };
 		21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		21E13AFF22CC0FB300429F58 /* SubImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImage.swift; sourceTree = "<group>"; };
 		21E14242228CBF1A004657BA /* FileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileObject.swift; sourceTree = "<group>"; };
 		21E14244228CBF22004657BA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "glacInit-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -98,8 +94,6 @@
 		21FD3B3122E891F900D4EDE8 /* BoxItemsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxItemsData.swift; sourceTree = "<group>"; };
 		37534B410C1DBBA9C2E87CE9 /* Pods-glacInitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.debug.xcconfig"; path = "Target Support Files/Pods-glacInitTests/Pods-glacInitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		73D8E5FB2E9605D676C38834 /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.release.xcconfig"; path = "Target Support Files/Pods-glacInitTests/Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
-		743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToggle.swift; sourceTree = "<group>"; };
-		743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomGreyView.swift; sourceTree = "<group>"; };
 		74BB907C1EDDDC2500628B38 /* CustomObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomObject.swift; sourceTree = "<group>"; };
 		74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientData.swift; sourceTree = "<group>"; };
 		74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewUpdate.swift; sourceTree = "<group>"; };
@@ -348,10 +342,7 @@
 		21E13AFD22CC0D2800429F58 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				743AAF1F1EF2F33700EF1745 /* CustomGreyView.swift */,
-				21E13AFF22CC0FB300429F58 /* SubImage.swift */,
 				74D4067C1EEB5235004F5901 /* CustomViewUpdate.swift */,
-				743AAF1D1EF17AFB00EF1745 /* CustomToggle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -711,7 +702,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				743AAF1E1EF17AFB00EF1745 /* CustomToggle.swift in Sources */,
 				2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */,
 				21182C8C22E6117400712670 /* PickerViewController.swift in Sources */,
 				030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */,
@@ -720,7 +710,6 @@
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */,
 				21A6BB1022CA837D009CDAD3 /* ObjectModel.swift in Sources */,
-				21E13B0022CC0FB300429F58 /* SubImage.swift in Sources */,
 				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
 				030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */,
 				21E14243228CBF1A004657BA /* FileObject.swift in Sources */,
@@ -737,7 +726,6 @@
 				210898D322F1FC5A0007FD25 /* MainMenuViewController.swift in Sources */,
 				77D171D11EAFA0EC00B008B5 /* Extentions.swift in Sources */,
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,
-				743AAF201EF2F33700EF1745 /* CustomGreyView.swift in Sources */,
 				21182C9722E7932100712670 /* Globals.swift in Sources */,
 				74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */,
 				21E2B20022DE6683009FD72D /* Networking.swift in Sources */,

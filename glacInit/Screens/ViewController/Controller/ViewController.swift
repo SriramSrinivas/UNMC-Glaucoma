@@ -936,16 +936,7 @@ class ViewController: UIViewController {
         if !customViewActive() {
             createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
         }
-        //createGreyView(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
     }
-    
-    func createGreyView(frame: CGRect){
-        
-        let c = CustomGreyView(frame: frame)
-        
-        mainImgView.addSubview(c)
-    }
-    
     func createCustomViewUpdate(frame: CGRect){
 
         intSlider.setValue(5, animated: false)
