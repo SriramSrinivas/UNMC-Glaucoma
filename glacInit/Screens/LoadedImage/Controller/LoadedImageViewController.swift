@@ -242,7 +242,7 @@ class LoadedImageViewController: UIViewController {
         
     }
   //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
-    func addblur(currentFileType: Int, currentData: [[String]]){
+    func addblur(currentFileType: effectType, currentData: [[String]]){
         let midx = ((view.frame.width/5)*4)/2
         let midy = view.frame.height/2
         let width = (view.frame.width/5)*4
@@ -276,7 +276,7 @@ class LoadedImageViewController: UIViewController {
                
                 let a:Int? = Int(value)
                
-                if (currentFileType == 1 && value != "0"){
+                if (currentFileType == .blur && value != "0"){
                     var c = CustomViewUpdate(frame: frame)
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .blur, constimage: nil, mainImgView: nil)
                     c.isActive = false
@@ -284,7 +284,7 @@ class LoadedImageViewController: UIViewController {
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
-                if (currentFileType == 2 && value != "0"){
+                if (currentFileType == .grey && value != "0"){
                     var c = CustomViewUpdate(frame: frame)
                     c.isActive = false
                     c.blur.layer.borderWidth = 5
@@ -292,29 +292,16 @@ class LoadedImageViewController: UIViewController {
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
-               if (currentFileType == 3 && value != "0"){
+               if (currentFileType == .color && value != "0"){
                 var c = CustomViewUpdate(frame: frame)
                 c.isActive = false
                 c.layer.borderWidth = 5
                 c.layer.borderColor = UIColor.red.cgColor
-//                let image = captureScreen(view: mainImageView)!
-//                let constimage = resizeImage(image: image, width: mainImageView.frame.size.width, height: mainImageView.frame.size.height)
-
                 changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: constImage, mainImgView: mainImageView)
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
-                    //cropImage = cropImage!.crop(rect: c.frame)
-                    //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(a!/10)), blendMode: .luminosity)
-                
-//                    if ((cropImage) != nil){
-//                        c.addImage(images: cropImage!)
-//                    }
-                
-                   // c.blur.backgroundColor = nil
-//                    colorCustomViewUpdateList.append(c)
-//                    mainImageView.addSubview(c)
                 }
-                if (currentFileType == 4 && value != "0"){
+                if (currentFileType == .isHidden && value != "0"){
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
@@ -650,7 +637,7 @@ class LoadedImageViewController: UIViewController {
                 group.notify(queue: .main) {
                 var content = String()
                 do{
-                    if (fileIntValue <= 4){
+                    if (fileIntValue == .blur || fileIntValue == .grey || fileIntValue == .color || fileIntValue == .isHidden){
                     content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
                     let data = self.cleanRows(file: content)
                     let currentData = self.csv(data: data)
@@ -659,7 +646,7 @@ class LoadedImageViewController: UIViewController {
                     }
                     self.turnOnGrid(filetype: fileIntValue)
                     }
-                    else if fileIntValue == 5{
+                    else if fileIntValue == .PNG{
                         if let data = try? Data(contentsOf: newfile) {
                             if let image = UIImage(data: data) {
                                 self.LoadedImage = image
@@ -680,43 +667,43 @@ class LoadedImageViewController: UIViewController {
             }
         }
     }
-    func turnOnGrid(filetype: Int){
-        if filetype == 1 {
+    func turnOnGrid(filetype: effectType){
+        if filetype == .blur {
             blurSwitch.setOn(true, animated: true)
         }
-        else if filetype == 2 {
+        else if filetype == .grey {
             blackSwitch.setOn(true, animated: true)
         }
-        else if filetype == 3 {
+        else if filetype == .color {
             colorSwitch.setOn(true, animated: true)
         }
-        else if filetype == 4 {
+        else if filetype == .isHidden {
             isHiddenSwitch.setOn(true, animated: true)
         }
     }
     
     // TODO put these into a global variable
     //maybe add a switch turning on call here (maybe later with some error checking
-    func checkForKindOfFile(name: [String]) -> Int{
+    func checkForKindOfFile(name: [String]) -> effectType{
         for word in name {
             if (word == "blurPoints")
             {
-                return 1
+                return .blur
             }
             if (word == "greyPoints"){
-                return 2
+                return .grey
             }
             if (word == "colorPoints"){
-                return 3
+                return .color
             }
             if (word == "hiddenPoints"){
-                return 4
+                return .isHidden
             }
             if (word == "screenshot"){
-                return 5
+                return .PNG
             }
         }
-        return 0
+        return .IncorrectFileType
     }
     
     

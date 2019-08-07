@@ -14,6 +14,9 @@ enum effectType {
     case grey
     case isHidden
     case color
+    case PNG
+    case saveFile
+    case IncorrectFileType
 }
 extension effectType {
     init?(effect: String) {
@@ -25,8 +28,12 @@ extension effectType {
             self = .isHidden
         } else if effect == "color" {
             self = .color
+        } else if effect == "saveFile"{
+            self = .saveFile
+        } else if effect == "PNG"{
+            self = .PNG
         } else {
-         return nil
+            self = .IncorrectFileType
         }
     }
 }
