@@ -55,14 +55,12 @@ class ViewController: UIViewController {
     let alphaToggle = UISwitch()
     let luminText = UILabel()
     var customObjectList = [CustomObject]()
-    //var customBlackObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
     
     var customViewUpdateList = [CustomViewUpdate]()
     
     let delete = UIButton()
-    //let download = UIButton()
     var subjectID = ""
     let tempBlur = VisualEffectView()
     let realm = try! Realm()
@@ -138,10 +136,7 @@ class ViewController: UIViewController {
         } catch {
             self.showToast(message: "\(error)", theme: .error)
         }
-
         let newFile = importFile.init()
-//        newFile.downLoadFile()
-        //addGridPoints(view: mainImgView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -149,16 +144,7 @@ class ViewController: UIViewController {
             enterNameDialog()
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-       // enterNameDialog()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
+   
     func initToggle(sideView: UIView){
         let OH: CGFloat = 768.0
         let OW: CGFloat = 204.8
@@ -206,27 +192,12 @@ class ViewController: UIViewController {
         } else {
             image = UIImage(named: backImageName)!
         }
-        //epiaFilter(image, intensity: 2)
-        //this will change the image color
-        //image = image?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.7), blendMode: .luminosity)
-        
         bckImage = image
         
         let imageView = UIImageView(frame: CGRect(x : 0, y: 0, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height))
-        
         imageView.image = image
-//        UIGraphicsBeginImageContext(mainImgView.frame.size)
-//        image = UIGraphicsGetImageFromCurrentImageContext()
-        //constimage = imageView.image!
-        //constimage = image!
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
-        print("know these")
-//        print(mainImgView.frame.size.height)
-//        print(mainImgView.frame.size.width)
-        
         mainImgView.addSubview(imageView)
-        
-        
     }
     
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
@@ -298,12 +269,6 @@ class ViewController: UIViewController {
         delete.backgroundColor = UIColor(hexString: "#f44336")
         delete.addTarget(self, action: #selector(resetTap), for: .touchUpInside)
         
-//        download.setTitle("Import", for: UIControl.State.normal)
-//        download.heightAnchor.constraint(equalToConstant: ((40 / OH) * height)).isActive = true
-//        download.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
-//        download.backgroundColor = UIColor(hexString: "#1B5E20")
-//        download.addTarget(self, action: #selector(ImportTap), for: .touchUpInside)
-        
         let tempView = UIButton()
         tempView.heightAnchor.constraint(equalToConstant: ((10 / OH) * height)).isActive = true
         tempView.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
@@ -367,9 +332,7 @@ class ViewController: UIViewController {
         sliderStack.addArrangedSubview(alphaToggle)
         sliderStack.addArrangedSubview(tempView2)
         sliderStack.addArrangedSubview(delete)
-        //sliderStack.addArrangedSubview(download)
     
-
         view.addSubview(sliderStack)
 
         sliderStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -423,12 +386,9 @@ class ViewController: UIViewController {
         stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stack.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        //addWaterMark(name: "suh dude")
     }
 
     func addGridLineUpdate(mainView: UIView){
-        
-
         let line1 = UIButton()
         line1.frame = CGRect(x: mainImgView.frame.width*0.3, y: 0, width: 5, height: mainImgView.frame.height)
         line1.layer.borderWidth = 5
@@ -500,13 +460,9 @@ class ViewController: UIViewController {
         constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     @objc func MenuTapped(_sender: UIButton){
-        //warn user that this will delete self
-        //let layout = UICollectionViewFlowLayout()
         let vc = MainMenuViewController()
         vc.imageName = backImageName
-        //vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
-        //self.dismiss(animated: true, completion: nil)
     }
 
     @objc func toggleGrid(mySwitch: UISwitch) {
@@ -640,8 +596,6 @@ class ViewController: UIViewController {
 
     @objc func handleCustomObjectTap(sender: UITapGestureRecognizer){
         print("Custom Object Tapped")
-        //alphSlider.setValue(10, animated: false)
-
         alphaToggle.isOn = true
 
         if !customViewActive() {
@@ -651,11 +605,6 @@ class ViewController: UIViewController {
                     createCustomViewUpdate(frame: CGRect(x: i.frame.origin.x, y: i.frame.origin.y, width: i.frame.width, height: i.frame.height))
                     let temp = customViewUpdateList.last
                     temp?.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
-                    
-//                        var cropImage = constimage
-//                        cropImage = cropImage.crop(rect: temp!.frame)
-//                        cropImage = cropImage.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(i.alpha)), blendMode: .luminosity)
-                    
                     temp?.isLinkedToImage = true
                     temp?.linkedImage = i
                     enableControl(value: .BlurAndAlpha)
@@ -704,9 +653,7 @@ class ViewController: UIViewController {
                 i.isActive(value: false)
             }
             else {
-                
                 //This handles sliders settings when you click on a custom object on the screen
-                
                 i.isActive(value: true)
                 if ( i.blur.backgroundColor == UIColor.clear){
                     intSlider.setValue(Float(i.viewValue), animated: false)
@@ -723,10 +670,7 @@ class ViewController: UIViewController {
                 } else {
                     blackSlider.setValue(0, animated: false)
                 }
-                
-
                 if i.isLinkedToImage{
-                    //alphSlider.setValue(Float(i.alphaValue), animated: false)
                     if (i.alphaValue == 0){
                         alphaToggle.setOn(false, animated: false)
                     } else {
@@ -737,14 +681,9 @@ class ViewController: UIViewController {
                 } else {
                     enableControl(value: .OnlyBlur)
                 }
-                //enableControl(value: .Black)
             }
         }
     }
-//    @objc func ImportTap(sender: UIButton){
-//        let vc = LoadedImageViewController()
-//        self.present(vc,animated: true, completion: nil)
-//    }
     @objc func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
@@ -765,12 +704,9 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "Screen will be cleared", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
-            
             self.clearScreen()
         }
-        
         let action2 = UIAlertAction(title: "Cancel", style: .default){ _ in
-            
         }
         
         alert.addAction(action)
@@ -795,9 +731,7 @@ class ViewController: UIViewController {
         enterNameDialog()
         
         let patients = realm.objects(PatientData.self)
-        //for i in patients {
-            //print("Stored Patient: \(i.name)")
-        //}
+       
     }
     
     func bottomMessage(_ message:String){
@@ -969,9 +903,7 @@ class ViewController: UIViewController {
         if isGridHidden {
             c.valueLabel.alpha = 0
         }
-
         c.includesEffect()
-
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
@@ -980,7 +912,6 @@ class ViewController: UIViewController {
         
         let widthRatio  = targetSize.width  / image.size.width
         let heightRatio = targetSize.height / image.size.height
-        
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         if(widthRatio > heightRatio) {
@@ -988,7 +919,6 @@ class ViewController: UIViewController {
         } else {
             newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
-        
         // This is the rect that we've calculated out and this is what is actually used below
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
@@ -1055,8 +985,6 @@ class ViewController: UIViewController {
         return today_string
         
     }
-    
-    //Need to work on ishidden files 
 
     func loadDatafromFile(linesOfData: [String]){
         let width = Double((view.frame.size.width/5) * 4)
@@ -1267,29 +1195,12 @@ class ViewController: UIViewController {
             sunIcon.alpha = 1
             
         case .Black:
-            
-           
             blackSlider.isEnabled = true
-           
-
         default:
             break
         }
     }
 }
-
-//MARK: work in progress
-
-
-//var changeBackgroundView : UIView = {
-//   let temp = UIView()
-//    temp.backgroundColor = .black
-//    temp.backgroundColor?.withAlphaComponent(0.5)
-//    
-//    
-//    
-//    return temp
-//}()
 
 enum ControlState {
     case Disable, OnlyBlur, BlurAndAlpha, Black
@@ -1307,5 +1218,3 @@ extension ViewController : ImportDelegate{
         
     }
 }
-
-

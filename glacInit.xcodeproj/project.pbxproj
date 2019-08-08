@@ -17,6 +17,8 @@
 		21182C9722E7932100712670 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21182C9622E7932100712670 /* Globals.swift */; };
 		211F7C3522F9BBB40001F584 /* SaveFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3422F9BBB40001F584 /* SaveFileModel.swift */; };
 		211F7C3922FB2B100001F584 /* CustomViewGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */; };
+		211F7C3C22FC708D0001F584 /* FileObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */; };
+		211F7C5622FC754C0001F584 /* LoadedDataChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -78,6 +80,8 @@
 		21182C9622E7932100712670 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		211F7C3422F9BBB40001F584 /* SaveFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFileModel.swift; sourceTree = "<group>"; };
 		211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewGenerics.swift; sourceTree = "<group>"; };
+		211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileObject.xcdatamodel; sourceTree = "<group>"; };
+		211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedDataChecker.swift; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				210898D222F1FC5A0007FD25 /* MainMenuViewController.swift */,
+				211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 		2132E47C22D3FABB00734063 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -713,6 +719,7 @@
 				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
 				030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */,
 				21E14243228CBF1A004657BA /* FileObject.swift in Sources */,
+				211F7C5622FC754C0001F584 /* LoadedDataChecker.swift in Sources */,
 				211F7C3522F9BBB40001F584 /* SaveFileModel.swift in Sources */,
 				21E14245228CBF23004657BA /* Session.swift in Sources */,
 				2132E47922D38E2600734063 /* importFile.swift in Sources */,
@@ -728,6 +735,7 @@
 				21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */,
 				21182C9722E7932100712670 /* Globals.swift in Sources */,
 				74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */,
+				211F7C3C22FC708D0001F584 /* FileObject.xcdatamodeld in Sources */,
 				21E2B20022DE6683009FD72D /* Networking.swift in Sources */,
 				74D4067D1EEB5235004F5901 /* CustomViewUpdate.swift in Sources */,
 				21182C9522E7415000712670 /* PickerCell.swift in Sources */,
@@ -1027,6 +1035,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */,
+			);
+			currentVersion = 211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */;
+			name = FileObject.xcdatamodeld;
+			path = ../../../FileObject.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7752F64F1E50020A003ACC5F /* Project object */;
 }

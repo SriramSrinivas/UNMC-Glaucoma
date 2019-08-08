@@ -187,7 +187,7 @@ class Session {
             self.fileURL = fileURL
             
             do {
-                
+                //newfile.Matrix
                 try newfile.Matrix?.write(to: fileURL, atomically: true, encoding: .utf8)
                 
             } catch {

@@ -301,8 +301,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         
         
         versionNumber.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.rightAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 35), size: .init(width: 75, height: 22))
-        saveFileButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 50, height: 50))
-        changeExportFolderButton.anchor(top: saveFileButton.bottomAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 50, height: 50))
+        saveFileButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 300, height: 50))
+        changeExportFolderButton.anchor(top: saveFileButton.bottomAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 300, height: 50))
         
     }
     

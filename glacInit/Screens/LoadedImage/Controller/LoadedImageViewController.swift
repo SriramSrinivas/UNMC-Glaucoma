@@ -641,10 +641,11 @@ class LoadedImageViewController: UIViewController {
                     content = try String.init(contentsOfFile: newfile.path, encoding: .utf8)
                     let data = self.cleanRows(file: content)
                     let currentData = self.csv(data: data)
-                    if (currentData.count > 10 ){
+                    if (checksDataForErrors(newData: currentData) ){
                         self.addblur(currentFileType: fileIntValue, currentData: currentData)
+                        self.turnOnGrid(filetype: fileIntValue)
                     }
-                    self.turnOnGrid(filetype: fileIntValue)
+                    //self.turnOnGrid(filetype: fileIntValue)
                     }
                     else if fileIntValue == .PNG{
                         if let data = try? Data(contentsOf: newfile) {
