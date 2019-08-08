@@ -19,15 +19,21 @@ struct SaveModel {
     let midx : Double
     let midy : Double
     let viewValue : Int
+    var anchored : effectAnchored = .NotAnchored
     init(line: String) {
         var nLine = line.components(separatedBy: ",")
-        if (nLine.count == 6){
+        if (nLine.count == 7){
             effect = effectType(effect: nLine[0])!
             height = Double(nLine[1])!
             width = Double(nLine[2])!
             midx = Double(nLine[3])!
             midy = Double(nLine[4])!
             viewValue = Int(nLine[5])!
+            if !nLine[6].isEmpty {
+                anchored = effectAnchored(flag: nLine[6])
+            } else {
+                anchored = .NotAnchored
+            }
         } else {
             effect = effectType.blur
             height = 0
@@ -35,6 +41,7 @@ struct SaveModel {
             midx = 0
             midy = 0
             viewValue = 0
+            anchored = .NotAnchored
         }
     }
 }

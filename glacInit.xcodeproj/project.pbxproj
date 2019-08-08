@@ -19,6 +19,9 @@
 		211F7C3922FB2B100001F584 /* CustomViewGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */; };
 		211F7C3C22FC708D0001F584 /* FileObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */; };
 		211F7C5622FC754C0001F584 /* LoadedDataChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */; };
+		211F7C5822FC9BC70001F584 /* SavingToLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5722FC9BC70001F584 /* SavingToLocal.swift */; };
+		211F7C5A22FC9C230001F584 /* PersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5922FC9C230001F584 /* PersistanceService.swift */; };
+		211F7C5C22FCC50D0001F584 /* BoxSettingsPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -82,6 +85,9 @@
 		211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewGenerics.swift; sourceTree = "<group>"; };
 		211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileObject.xcdatamodel; sourceTree = "<group>"; };
 		211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedDataChecker.swift; sourceTree = "<group>"; };
+		211F7C5722FC9BC70001F584 /* SavingToLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingToLocal.swift; sourceTree = "<group>"; };
+		211F7C5922FC9C230001F584 /* PersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceService.swift; sourceTree = "<group>"; };
+		211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxSettingsPageController.swift; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -162,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				210898D222F1FC5A0007FD25 /* MainMenuViewController.swift */,
-				211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 				21A6BB1122CA86FE009CDAD3 /* BackGroundChange */,
 				21182C8922E610D400712670 /* Picker */,
 				2132E47A22D3FA7B00734063 /* LoadedImage */,
+				211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -291,6 +297,8 @@
 				2132E47822D38E2600734063 /* importFile.swift */,
 				21E2B1FF22DE6683009FD72D /* Networking.swift */,
 				21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */,
+				211F7C5722FC9BC70001F584 /* SavingToLocal.swift */,
+				211F7C5922FC9C230001F584 /* PersistanceService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -390,6 +398,7 @@
 		7752F6591E50020A003ACC5F /* glacInit */ = {
 			isa = PBXGroup;
 			children = (
+				211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */,
 				7752F6661E50020A003ACC5F /* Info.plist */,
 				21182C9622E7932100712670 /* Globals.swift */,
 				21E13AF922CC0CC900429F58 /* App */,
@@ -712,17 +721,20 @@
 				21182C8C22E6117400712670 /* PickerViewController.swift in Sources */,
 				030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */,
 				21182C8822E5EBE100712670 /* DataProcessing.swift in Sources */,
+				211F7C5822FC9BC70001F584 /* SavingToLocal.swift in Sources */,
 				74E768561F2A2F8500F2FD9C /* CustomPoint.swift in Sources */,
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */,
 				21A6BB1022CA837D009CDAD3 /* ObjectModel.swift in Sources */,
 				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
 				030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */,
+				211F7C5C22FCC50D0001F584 /* BoxSettingsPageController.swift in Sources */,
 				21E14243228CBF1A004657BA /* FileObject.swift in Sources */,
 				211F7C5622FC754C0001F584 /* LoadedDataChecker.swift in Sources */,
 				211F7C3522F9BBB40001F584 /* SaveFileModel.swift in Sources */,
 				21E14245228CBF23004657BA /* Session.swift in Sources */,
 				2132E47922D38E2600734063 /* importFile.swift in Sources */,
+				211F7C5A22FC9C230001F584 /* PersistanceService.swift in Sources */,
 				2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */,
 				21FD3B3222E891F900D4EDE8 /* BoxItemsData.swift in Sources */,
 				21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */,
@@ -1043,8 +1055,7 @@
 				211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */,
 			);
 			currentVersion = 211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */;
-			name = FileObject.xcdatamodeld;
-			path = ../../../FileObject.xcdatamodeld;
+			path = FileObject.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

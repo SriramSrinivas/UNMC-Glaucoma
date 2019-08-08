@@ -137,13 +137,13 @@ class LoadedImageViewController: UIViewController {
     
     var backButton : UIButton = {
         var temp = UIButton()
-        setUpButton(&temp, title: "Back", cornerRadius: 10, borderWidth: 0, color: "red")
+        setUpButton(&temp, title: "Back", cornerRadius: 10, borderWidth: 0, color: UIColor.gray.cgColor)
         temp.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         return temp
     }()
     var importButton : UIButton = {
         var temp = UIButton()
-        setUpButton(&temp, title: "Import", cornerRadius: 10, borderWidth: 0, color: "red")
+        setUpButton(&temp, title: "Import", cornerRadius: 10, borderWidth: 0, color: UIColor.gray.cgColor)
         temp.addTarget(self, action: #selector(getNewFile), for: .touchUpInside)
         return temp
     }()

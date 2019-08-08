@@ -9,35 +9,17 @@
 import Foundation
 import UIKit
 
-enum colors {
-    case red
-    case darkGray
-}
-extension colors {
-    init?(color: String) {
-        if color == "red" {
-            self = .red
-        } else if color == "darkGray" {
-            self = .darkGray
-        } else {
-            self = .darkGray
-        }
-    }
-}
+
 func setUpButton<T:UIButton>(_ a: inout T, title: String){
     a.backgroundColor = .gray
     a.setTitleColor(.black, for: .init())
     a.setTitle(title, for: .init())
     a.translatesAutoresizingMaskIntoConstraints = false
 }
-func setUpButton<T:UIButton>(_ a: inout T, title: String, cornerRadius: Int, borderWidth: Int, color: String){
+func setUpButton<T:UIButton>(_ a: inout T, title: String, cornerRadius: Int, borderWidth: Int, color: CGColor){
     
-    switch colors(color: color) {
-    case .red?:
-        a.layer.borderColor = UIColor.red.cgColor
-    default:
-        a.layer.borderColor = UIColor.darkGray.cgColor
-    }
+    
+    a.layer.borderColor = color
     a.backgroundColor = .gray
     a.setTitleColor(.black, for: .init())
     a.setTitle(title, for: .init())

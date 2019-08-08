@@ -997,6 +997,15 @@ class ViewController: UIViewController {
             if !(model.effect == .isHidden) {
                 let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(mainImgView.frame.size.width)), height: model.height * Double(view.frame.size.height))
                 var c = CustomViewUpdate(frame: frame)
+                if (model.anchored == effectAnchored.isAnchored) {
+                    for i in self.customObjectList{
+                        if i.frame.contains(CGPoint(x: model.midx * Double(mainImgView.frame.width), y: model.midy * Double(mainImgView.frame.height))){
+                            c.isLinkedToImage = true
+                            c.linkedImage = i
+                            c.blur.layer.borderColor = UIColor(hexString: "2196F3").cgColor
+                        }
+                    }
+                }
                 let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
                 c.addGestureRecognizer(gestureTap)
                 changeCustomViewUpdate(customView: &c, value: model.viewValue, effect: model.effect, constimage: constimage, mainImgView: mainImgView)

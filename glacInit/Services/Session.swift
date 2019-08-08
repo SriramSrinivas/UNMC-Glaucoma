@@ -10,6 +10,27 @@ import Foundation
 import UIKit
 import BoxContentSDK
 
+enum effectAnchored {
+    case isAnchored
+    case NotAnchored
+}
+extension effectAnchored {
+    init(flag: Bool) {
+        if flag {
+            self = .isAnchored
+        } else {
+            self = .NotAnchored
+        }
+    }
+    init(flag: String) {
+        if flag == "isAnchored"{
+            self = .isAnchored
+        } else {
+            self = .NotAnchored
+        }
+    }
+}
+
 class Session {
     var subjectId: String
     var exportCount = 0
@@ -45,7 +66,8 @@ class Session {
             let width = view.frame.width / mainView.frame.width
             let midX = view.frame.midX / mainView.frame.width
             let midY = view.frame.minY / mainView.frame.height
-            csvText.append("\(view.effect),\(height),\(width),\(midX),\(midY),\(view.viewValue)\n")
+            let anchor = effectAnchored(flag: view.isLinkedToImage)
+            csvText.append("\(view.effect),\(height),\(width),\(midX),\(midY),\(view.viewValue),\(anchor)\n")
         }
         
         

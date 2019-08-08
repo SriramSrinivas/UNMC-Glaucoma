@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import AVFoundation
 import BoxContentSDK
-import PopupDialog
 import Reachability
+import PopupDialog
 
 class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -30,11 +30,13 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
 
     var mainMenuTitleLabel : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "redImage")
-        temp.setBackgroundImage(image, for: .normal)
-        setUpButton(&temp, title: "Menu", cornerRadius: 0, borderWidth: 0, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
-        temp.titleLabel?.textColor = .white
+        //temp.isOpaque = false
+        //temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5)
+        setUpButton(&temp, title: "Menu", cornerRadius: 0, borderWidth: 0, color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5).cgColor)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
         
         temp.isEnabled = false
@@ -43,103 +45,105 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var mainMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
-
-        setUpButton(&temp, title: "Back to Previous", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        setUpButton(&temp, title: "Back to Previous", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
         return temp
     }()
     
     var logoutMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
-
-        setUpButton(&temp, title: "Box Logout", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        setUpButton(&temp, title: "Box Logout", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
         return temp
     }()
     
     var importMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
-        setUpButton(&temp, title: "Import", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        setUpButton(&temp, title: "Import", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(importMenuButtonTapped), for: .touchUpInside)
         return temp
     }()
     
     var newMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
-        setUpButton(&temp, title: "New Session", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        setUpButton(&temp, title: "New Session", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(newMenuButtonTapped), for: .touchUpInside)
         return temp
     }()
-    // difference between new and this, is that new will ask for a new subject ID whereas this
-    // will continue with last subject ID
-//    var startOverMenuButton : UIButton = {
-//        var temp = UIButton(type: .system)
-//        let image = UIImage(named: "Start over")
-//        setUpButton(&temp, title: "Start over", cornerRadius: 25, borderWidth: 0, color: "")
-//        temp.setImage(image, for: .normal)
-//        temp.backgroundColor = .red
-//        temp.addTarget(self, action: #selector(startOverMenuButtonTapped), for: .touchUpInside)
-//        return temp
-//    }()
+ 
     
     var switchMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-         temp.setBackgroundImage(image, for: .normal)
-//        temp.imageView?.image = image
-//        temp.imageView?.clipsToBounds = true
-//        temp.imageView?.contentMode = .scaleAspectFit
-
-        setUpButton(&temp, title: "switch", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
-        //temp.setImage(image, for: .normal)
-        //temp.setBackgroundImage(image, for: .normal)
-        //temp.backgroundColor = .red
+      
+        setUpButton(&temp, title: "switch", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(switchMenuButtonTapped), for: .touchUpInside)
         return temp
     }()
     var cameraMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
-        setUpButton(&temp, title: "Camera", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+       
+        setUpButton(&temp, title: "Camera", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(cameraMenuButtonTapped), for: .touchUpInside)
         return temp
     }()
     var saveFileButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
         temp.tag = 2
-        setUpButton(&temp, title: "Get Saved File", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        setUpButton(&temp, title: "Get Saved File", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(importSavedFile), for: .touchUpInside)
         return temp
     }()
     
     var changeExportFolderButton : UIButton = {
         var temp = UIButton(type: .system)
-        let image = UIImage(named: "greyImage")
-        temp.setBackgroundImage(image, for: .normal)
         temp.tag = 1
-        setUpButton(&temp, title: "Change", cornerRadius: 0, borderWidth: 5, color: "")
-        temp.titleLabel?.font = UIFont(name: "Optima-ExtraBlack", size: 30)
+        setUpButton(&temp, title: "Change", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(importSavedFile), for: .touchUpInside)
         return temp
     }()
+    
+//    var blurObject : CustomViewUpdate = {
+//        let frame = CGRect(x: 0, y:0, width: 0, height: 0)
+//        var c = CustomViewUpdate(frame: frame)
+//        changeCustomViewUpdate(customView: &c, value: 5, effect: .blur, constimage: nil, mainImgView: nil)
+//        c.isActive = false
+//        c.blur.layer.borderWidth = 0
+//        c.setValue(value: 0)
+//        return c
+//    }()
     
     var background : UIImageView = {
         var temp = UIImageView()
@@ -213,7 +217,6 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
             
         }
         let buttonTwo = DefaultButton(title: "BOX LOGOUT", dismissOnTap: true) {
-            let boxClient = BOXContentClient.self
             BOXContentClient.logOutAll()
         }
         
@@ -280,17 +283,19 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     //MARK: SETUPVIEW
     private func setUpView() {
         
+       
+        
         let height = view.bounds.size.height
         let width = view.bounds.size.width
         let space = 0.05 * height
-        let buttonHeight = 0.09 * height
+        let buttonHeight = 0.06 * height
         
         background.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         background.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         background.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         background.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
-        mainMenuTitleLabel.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        mainMenuTitleLabel.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 3.5, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         mainMenuButton.anchor(top: mainMenuTitleLabel.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height:buttonHeight))
         importMenuButton.anchor(top: mainMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         newMenuButton.anchor(top: importMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
@@ -301,8 +306,19 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         
         
         versionNumber.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.rightAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 35), size: .init(width: 75, height: 22))
-        saveFileButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 300, height: 50))
-        changeExportFolderButton.anchor(top: saveFileButton.bottomAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 0), size: .init(width: 300, height: 50))
+        
+        
+        saveFileButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 20, bottom: 0, right: 0), size: .init(width: (0.33 * width)/2, height: buttonHeight/3 * 2))
+        changeExportFolderButton.anchor(top: saveFileButton.bottomAnchor, leading: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 5, left: 20, bottom: 0, right: 0), size: .init(width: (0.33 * width)/2, height: buttonHeight/3 * 2))
+       
+        let frame = CGRect(x: 0, y:0, width: view.frame.width, height: view.frame.height)
+        var c = CustomViewUpdate(frame: frame)
+        changeCustomViewUpdate(customView: &c, value: 5, effect: .blur, constimage: nil, mainImgView: nil)
+        c.isActive = false
+        c.valueLabel.text = ""
+        c.blur.layer.borderWidth = 0
+    
+        background.addSubview(c)
         
     }
     
