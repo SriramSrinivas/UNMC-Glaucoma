@@ -22,6 +22,7 @@
 		211F7C5822FC9BC70001F584 /* SavingToLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5722FC9BC70001F584 /* SavingToLocal.swift */; };
 		211F7C5A22FC9C230001F584 /* PersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5922FC9C230001F584 /* PersistanceService.swift */; };
 		211F7C5C22FCC50D0001F584 /* BoxSettingsPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */; };
+		211F7C5E22FDB21E0001F584 /* ImportDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */; };
 		2132E47922D38E2600734063 /* importFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47822D38E2600734063 /* importFile.swift */; };
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
@@ -88,6 +89,7 @@
 		211F7C5722FC9BC70001F584 /* SavingToLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingToLocal.swift; sourceTree = "<group>"; };
 		211F7C5922FC9C230001F584 /* PersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceService.swift; sourceTree = "<group>"; };
 		211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxSettingsPageController.swift; sourceTree = "<group>"; };
+		211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDataViewController.swift; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				21182C8922E610D400712670 /* Picker */,
 				2132E47A22D3FA7B00734063 /* LoadedImage */,
 				211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */,
+				211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */,
 				21FD3B3222E891F900D4EDE8 /* BoxItemsData.swift in Sources */,
 				21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */,
+				211F7C5E22FDB21E0001F584 /* ImportDataViewController.swift in Sources */,
 				7752F65B1E50020A003ACC5F /* AppDelegate.swift in Sources */,
 				2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */,
 				21182C8F22E62F9A00712670 /* ExpandableNames.swift in Sources */,
