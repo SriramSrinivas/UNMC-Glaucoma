@@ -42,6 +42,7 @@ class Session {
     var pngFilesUploadedCount = 0
     var fileURL : URL?
     var csvText = ""
+    private let context = (PersistanceService.shared.context)
     
     init(currentSubjectId: String) {
         distances = [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
@@ -117,21 +118,23 @@ class Session {
         var ColorPointsFile = FileObject(name:"\(subjectId)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
         saveDataToFile(file: csvText, fileName: "\(subjectId)_saveFile_\(self.getTodayString())_\(exportCount)")
+        
+        
+        
         saveFile.path = fileURL!
         screenShotFile.savePNG(view: mainView)
         blurPointsFile.saveCSV(grid:blurGrid)
         greyPointsFile.saveCSV(grid:greyGrid)
         hiddenPointsFile.saveCSV(grid:hiddenGrid)
         ColorPointsFile.saveCSV(grid: colorGrid)
-        
-//        if !hasBox {
-//            saveDataToFile(fileName: blurPointsFile)
-//            saveDataToFile(fileName: greyPointsFile)
-//            saveDataToFile(fileName: hiddenPointsFile)
-//            saveDataToFile(fileName: ColorPointsFile)
-//        }
-        
+                
         savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile, saveFile]
+    }
+    
+    func SaveFile(name: String, blurdata: String, colordata: String, greydata: String, savedata: String, image: NSData){
+      var data = LocalFileModel.init(name: name, blurdata: blurdata, colordata: colordata, greydata: greydata, savedata: savedata, image: image)
+       let saveData = VisaulFieldData(entity: VisaulFieldData.entity(), insertInto: context)
+        
     }
     
     func uploadFile(file:FileObject, FolderID: String ,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){

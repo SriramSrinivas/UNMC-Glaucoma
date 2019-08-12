@@ -7,34 +7,23 @@
 //
 
 //import Foundation
-//
-//
-//
-//class DataProcessing {
-//    
-//   // weak var delegate = TransferDataDelegate?()
-//    func transferData(folderitems: Array<BOXItem>) -> [[BOXItem]]{
-//        
-//        var twoDimArray = [[BOXItem]].self
-//        var folders = [BOXItem].self
-//        var files = [BOXItem].self
-//        
-//
-////        for item in folderitems {
-////           if item.isFolder {
-////                folders.append(&item)
-////            }
-////           else {
-////            
-////            }
-////        }
-//        
-//    }
-//    
-//    
-//    
-//    
-//    
-//    
-//}
 
+class LocalFileModel {
+    var name : String?
+    var blurdata: String?
+    var colordata: String?
+    var greydata: String?
+    var savedata: String?
+    var image: UIImage?
+    
+    
+    init(name: String, blurdata: String, colordata: String, greydata: String, savedata: String, image: NSData) {
+        self.name = name
+        self.blurdata = blurdata
+        self.colordata = colordata
+        self.greydata = greydata
+        self.savedata = savedata
+        let nImage : Data = Data(image)
+        self.image = UIImage(data: nImage)
+    }
+}

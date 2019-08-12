@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="VisaulFieldData" representedClassName="VisaulFieldData" syncable="YES" codeGenerationType="class">
+    <entity name="VisaulFieldData" representedClassName="VisaulFieldData" syncable="YES">
         <attribute name="blurdata" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="colordata" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="greydata" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="savedata" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

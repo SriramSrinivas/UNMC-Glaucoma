@@ -38,6 +38,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     var titlePathCount = 0
     var child : SpinnerViewController?
     
+    
     let brightLightBlue = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
     let deepLightBlue = UIColor(red:0.27, green:0.64, blue:0.62, alpha:1.0)
     let darkDeepBlue = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
@@ -138,9 +139,11 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     func changeRightNav() {
         if isSelectedCount == 0 {
+            
             let cancel = (UIImage(named: "cancel"))
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(self.handleShowIndexPath))
             navigationItem.rightBarButtonItem?.tintColor = brightLightBlue
+            
         }
         else{
             let downloads = (UIImage(named: "downloads"))
@@ -320,19 +323,18 @@ class PickerView: UITableViewController, PickerViewdelegate {
         fileimageView.backgroundColor = brightLightBlue
         fileimageView.tintColor = brightLightBlue
         
-        //stackview.spacing = 10
         innerSt.addArrangedSubview(fileimageView)
         innerSt.addArrangedSubview(headerName)
         innerSt.backgroundColor = headerBackgroundColor
         stackview.addArrangedSubview(innerSt)
-        //stackview.spacing = 5
         stackview.addArrangedSubview(button)
         //rightStack.addSubview(addFolderButton)
         stackview.addArrangedSubview(addFolderButton)
         stackview.tintColor = brightLightBlue
         stackview.backgroundColor = headerBackgroundColor
         //stackview.distribution = .fill
-        stackview.distribution = .equalSpacing
+        //stackview.distribution = .equalSpacing
+        //stackview.tintColor = headerBackgroundColor
         return stackview
     }
     
