@@ -17,9 +17,13 @@ final class PersistanceService {
     private init() {}
     static let shared = PersistanceService()
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    static var context: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    static var persistentContainer: NSPersistentContainer = {
         
-        let container = NSPersistentContainer(name: "PhotoData")
+        let container = NSPersistentContainer(name: "glacInit")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 
@@ -30,10 +34,10 @@ final class PersistanceService {
     }()
     
     
-    lazy var context = persistentContainer.viewContext
+    //lazy var context = persistentContainer.viewContext
     // MARK: - Core Data Saving support
     
-    func save() {
+    static func save() {
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
@@ -48,7 +52,7 @@ final class PersistanceService {
     }
     
     
-    func fetch<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
+    static func fetch<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
         let entityName = String(describing: objectType)
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)

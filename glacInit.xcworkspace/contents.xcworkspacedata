@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/glacInit/App/VisaulFieldData+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/glacInit/App/VisaulFieldData+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
       location = "group:glacInit.xcodeproj">
    </FileRef>
    <FileRef

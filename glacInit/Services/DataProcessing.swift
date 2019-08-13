@@ -14,7 +14,7 @@ class LocalFileModel {
     var colordata: String?
     var greydata: String?
     var savedata: String?
-    var image: UIImage?
+    var image: NSData?
     
     
     init(name: String, blurdata: String, colordata: String, greydata: String, savedata: String, image: NSData) {
@@ -23,7 +23,7 @@ class LocalFileModel {
         self.colordata = colordata
         self.greydata = greydata
         self.savedata = savedata
-        let nImage : Data = Data(image)
-        self.image = UIImage(data: nImage)
+       // let nImage : Data = Data(image)
+        self.image = image
     }
 }

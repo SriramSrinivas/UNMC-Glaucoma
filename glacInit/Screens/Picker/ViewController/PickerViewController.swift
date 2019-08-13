@@ -146,7 +146,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
             
         }
         else{
-            let downloads = (UIImage(named: "downloads"))
+            let downloads = checkingForFiles ? (UIImage(named: "downloads")) : (UIImage(named: "upload"))
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: downloads, style: .plain, target: self, action: #selector(handleShowIndexPath))
             navigationItem.rightBarButtonItem?.tintColor = brightLightBlue
         }

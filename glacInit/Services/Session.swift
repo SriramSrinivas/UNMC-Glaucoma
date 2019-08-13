@@ -42,7 +42,7 @@ class Session {
     var pngFilesUploadedCount = 0
     var fileURL : URL?
     var csvText = ""
-    private let context = (PersistanceService.shared.context)
+//    private let context = (PersistanceService.shared.context)
     
     init(currentSubjectId: String) {
         distances = [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
@@ -119,22 +119,50 @@ class Session {
         
         saveDataToFile(file: csvText, fileName: "\(subjectId)_saveFile_\(self.getTodayString())_\(exportCount)")
         
-        
-        
         saveFile.path = fileURL!
         screenShotFile.savePNG(view: mainView)
         blurPointsFile.saveCSV(grid:blurGrid)
         greyPointsFile.saveCSV(grid:greyGrid)
         hiddenPointsFile.saveCSV(grid:hiddenGrid)
         ColorPointsFile.saveCSV(grid: colorGrid)
-                
+        
+        let data = NSData(contentsOf: screenShotFile.path)!
+        
+        SaveFileToLocal(name: saveFile.name, blurdata: blurPointsFile.Matrix!, colordata: ColorPointsFile.Matrix!, greydata: greyPointsFile.Matrix!, savedata: csvText, image: data)
         savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile, saveFile]
     }
     
-    func SaveFile(name: String, blurdata: String, colordata: String, greydata: String, savedata: String, image: NSData){
-      var data = LocalFileModel.init(name: name, blurdata: blurdata, colordata: colordata, greydata: greydata, savedata: savedata, image: image)
-       let saveData = VisaulFieldData(entity: VisaulFieldData.entity(), insertInto: context)
+    func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata: String, savedata: String, image: NSData){
+        //let data = LocalFileModel.init(name: name, blurdata: blurdata, colordata: colordata, greydata: greydata, savedata: savedata, image: image)
+        let saveData = VisaulFieldData(context: PersistanceService.context)
+       //let saveData = VisaulFieldData(entity: VisaulFieldData.entity(), insertInto: PersistanceService.shared.context)
+        saveData.blurdata = blurdata
+        saveData.colordata = colordata
+        saveData.greydata = greydata
+        saveData.image = image
+        saveData.name = name
+        saveData.savedata = savedata
+        PersistanceService.save()
+//        //PersistanceService.shared.save()
+//        do {
+//            try context.save()
+//        }
+//        catch {
+//
+//        }
         
+    }
+    
+    func loadData() -> [LocalFileModel] {
+        let LocalFileModels = PersistanceService.fetch(VisaulFieldData.self)  //hared.fetch(VisaulFieldData.self)
+        var data: [LocalFileModel] = []
+      
+        for file in LocalFileModels {
+            let ehy  = LocalFileModel.init(name: file.name!, blurdata: file.blurdata!, colordata: file.colordata!, greydata: file.greydata!, savedata: file.savedata!, image: file.image!)
+            data.append(ehy)
+        }
+        
+        return data
     }
     
     func uploadFile(file:FileObject, FolderID: String ,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
