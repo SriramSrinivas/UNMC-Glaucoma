@@ -71,6 +71,7 @@ class ImportDataViewController: UIViewController {
     var imageName = Globals.shared.getCurrentBackGround()
     var reach: Reachability!
     var currentSession: Session!
+    var currentLocalData : [LocalFileModel]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,6 +128,7 @@ class ImportDataViewController: UIViewController {
     //checks for interent connection
     // diplays pickerview at box root level
     @objc func continueFormSavedTapped() {
+        if (Globals.shared.importAndExportLoaction == dataSource.box) {
         reach = Reachability.forInternetConnection()
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
             
@@ -144,7 +146,32 @@ class ImportDataViewController: UIViewController {
             
             pickerView.delegate = self
         }
-        
+        } else {
+            currentSession = Session(currentSubjectId: "hello")
+            let hello = currentSession.loadData()
+            currentLocalData = hello
+            var twoDArray : [ExpandableNames] = []
+            var fileItems: [BoxItemsData] = []
+            var folderItems: [BoxItemsData] = []
+            var count = 0;
+            for items in hello {
+                let changedata = BoxItemsData(name: items.name!, id: String(count))
+                count = count + 1
+                fileItems.append(changedata)
+            }
+            //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
+            folderItems = fileItems
+            twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
+            twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+            
+            pickerView.twodimArray = twoDArray
+            pickerView.Source = dataSource.local
+            let nav = UINavigationController(rootViewController: pickerView)
+            nav.modalPresentationStyle = .overCurrentContext
+            
+            //vc.twodimArray = twoDArray
+            self.present(nav,animated: true, completion: nil)
+        }
         
     }
     @objc func backTapped() {
@@ -152,6 +179,7 @@ class ImportDataViewController: UIViewController {
     }
     
     func checkFilesToDownLoad(Files: [FilesToDownload]){
+        if (Globals.shared.importAndExportLoaction == dataSource.box) {
         var currentData : [String]?
         if !Files.isEmpty{
             let filename = Files.first?.name.components(separatedBy: "_")
@@ -195,6 +223,29 @@ class ImportDataViewController: UIViewController {
                 }
                 
             }
+        }
+        } else {
+            let id = Int(Files.first!.id)!
+            let filename = Files.first?.name.components(separatedBy: "_")
+            let filesToLoad = currentLocalData![id]
+            do{
+                //filesToLoad.blurdata
+                let currentData = self.csv(data: filesToLoad.savedata!)
+                //if (checksDataForErrors(newData: currentData) ){
+                let vc = ViewController()
+                let backgrounds = self.checkForBackGround(name: filename!)
+                //Globals.shared.setCurrentBackGround(newBack: background)
+                vc.backImageName = backgrounds
+                self.dismiss(animated: false, completion: nil)
+                self.present(vc, animated: true, completion: nil)
+                vc.subjectID = filename?.first ?? ""
+                vc.addWaterMark(name: filename?.first ?? "")
+                vc.currentSession = Session(currentSubjectId: vc.subjectID)
+                vc.nameLabel.textAlignment = .center
+                vc.nameLabel.center.x = vc.nameLabel.frame.maxX
+                vc.loadDatafromFile(linesOfData: currentData)
+                
+        }
         }
         
     }

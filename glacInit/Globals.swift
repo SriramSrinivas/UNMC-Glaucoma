@@ -45,6 +45,7 @@ import Foundation
     var distancesInCGFLOAT = CGFloat()
     var cameraImage : UIImage?
     var isLoggedIntoBox : Bool = false
+    var importAndExportLoaction = dataSource.local
     
     static let shared = Globals()
     

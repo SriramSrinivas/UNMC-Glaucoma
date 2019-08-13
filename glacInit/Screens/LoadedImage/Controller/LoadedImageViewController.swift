@@ -167,7 +167,7 @@ class LoadedImageViewController: UIViewController {
     var LoadedImage = UIImage()
     var loadedIMageBackground = false
     //var constimage = UIImage()
-    
+    var currentLocalData : [LocalFileModel]?
     var gridViews = [UIView]()
     let distances = Globals.shared.getdistances()
     var currentSession: Session!
@@ -578,6 +578,8 @@ class LoadedImageViewController: UIViewController {
     }
     
     @objc func getNewFile(){
+        let count = 1
+        if (count == 2){
         self.reach = Reachability.forInternetConnection()
         //TODO perform internet check 
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
@@ -604,9 +606,37 @@ class LoadedImageViewController: UIViewController {
         else{
            showToast(message: "No Internet Connection", theme: .error)
         }
+        } else {
+            currentSession = Session(currentSubjectId: "hello")
+            let hello = currentSession.loadData()
+            currentLocalData = hello
+            var twoDArray : [ExpandableNames] = []
+            var fileItems: [BoxItemsData] = []
+            var folderItems: [BoxItemsData] = []
+            var count = 0;
+            for items in hello {
+                let changedata = BoxItemsData(name: items.name!, id: String(count))
+                count = count + 1
+                fileItems.append(changedata)
+            }
+            //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
+            folderItems = fileItems
+            twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
+            twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+            
+            pickerView.twodimArray = twoDArray
+            pickerView.Source = dataSource.local
+            let nav = UINavigationController(rootViewController: pickerView)
+            nav.modalPresentationStyle = .overCurrentContext
+            
+            //vc.twodimArray = twoDArray
+            self.present(nav,animated: true, completion: nil)
+        }
     }
     //name then id
     func checkFilesToDownLoad(Files: [FilesToDownload]){
+        //let source = dataSource.local
+        if (Globals.shared.importAndExportLoaction == dataSource.box) {
         if Files.isEmpty{
             //do nothing
         }
@@ -667,6 +697,44 @@ class LoadedImageViewController: UIViewController {
             }
             }
         }
+        } else {
+            let id = Int(Files.first!.id)!
+            var filesToLoad = currentLocalData![id]
+            do{
+                //filesToLoad.blurdata
+                var currentData = self.csv(data: filesToLoad.blurdata!)
+                if (checksDataForErrors(newData: currentData) ){
+                        self.addblur(currentFileType: .blur, currentData: currentData)
+                        self.turnOnGrid(filetype: effectType.blur)
+                }
+                currentData = self.csv(data: filesToLoad.colordata!)
+                if (checksDataForErrors(newData: currentData) ){
+                    self.addblur(currentFileType: .color, currentData: currentData)
+                    self.turnOnGrid(filetype: effectType.color)
+                }
+                currentData = self.csv(data: filesToLoad.greydata!)
+                if (checksDataForErrors(newData: currentData) ){
+                    self.addblur(currentFileType: .grey, currentData: currentData)
+                    self.turnOnGrid(filetype: effectType.grey)
+                }
+                currentData = self.csv(data: filesToLoad.ishiddendata!)
+                if (checksDataForErrors(newData: currentData) ){
+                    self.addblur(currentFileType: .isHidden, currentData: currentData)
+                    self.turnOnGrid(filetype: effectType.isHidden)
+                }
+                    //self.turnOnGrid(filetype: fileIntValue)
+                   // if let data = try? Data(contentsOf: filesToLoad.image) {
+                if let image = UIImage(data: filesToLoad.image! as Data) {
+                            self.LoadedImage = image
+                            self.mainImageView.image = image
+                            self.mainImageView.reloadInputViews()
+                            self.importBackgroundSwitch.setOn(true, animated: true)
+                            self.loadedIMageBackground = true
+                    //}
+                }
+        }
+                
+    }
     }
     func turnOnGrid(filetype: effectType){
         if filetype == .blur {

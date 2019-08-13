@@ -19,7 +19,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var versionNumber : UITextView = {
         var temp = UITextView()
-        nonEditableTextView(&temp, text: "-v 2.2.0", fontSize: 15)
+        nonEditableTextView(&temp, text: "-v 2.3.0", fontSize: 15)
         temp.textColor = .black
         temp.backgroundColor = .clear
         temp.textAlignment = .center
@@ -110,6 +110,19 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         return temp
     }()
     
+    var saveLocationButton : UIButton = {
+        var temp = UIButton(type: .system)
+        
+        setUpButton(&temp, title: "Export", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+        temp.isOpaque = false
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        
+        temp.setTitleColor(.white, for: .normal)
+        temp.addTarget(self, action: #selector(chooseLocationToSave), for: .touchUpInside)
+        return temp
+    }()
+    
     var background : UIImageView = {
         var temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +141,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         backgroundChanged()
     
         navigationController?.navigationBar.isHidden = true
-        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton, versionNumber].forEach {view.addSubview($0)}
+        [background, mainMenuButton, mainMenuTitleLabel, importMenuButton, newMenuButton, switchMenuButton, cameraMenuButton, logoutMenuButton, versionNumber, saveLocationButton].forEach {view.addSubview($0)}
         setUpView()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -185,6 +198,11 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     func updateBackground(image: UIImage){
             background.image = image
     }
+    @objc func chooseLocationToSave() {
+        let vc = LocationToSaveFilesController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false, completion: nil)
+    }
     
     //MARK: SETUPVIEW
     private func setUpView() {
@@ -206,6 +224,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         switchMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         cameraMenuButton.anchor(top: switchMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         logoutMenuButton.anchor(top: cameraMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        saveLocationButton.anchor(top: logoutMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         
         
         versionNumber.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.rightAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 35), size: .init(width: 75, height: 22))

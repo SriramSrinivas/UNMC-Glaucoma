@@ -5,10 +5,11 @@
         <attribute name="colordata" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="greydata" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="isHiddendata" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="savedata" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="VisaulFieldData" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="VisaulFieldData" positionX="-63" positionY="-18" width="128" height="150"/>
     </elements>
 </model>

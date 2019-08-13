@@ -10,6 +10,11 @@
 import Foundation
 import CoreData
 
+enum dataSource {
+    case box
+    case local
+}
+
 final class PersistanceService {
     
     // MARK: - Core Data stack

@@ -37,6 +37,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     var titlePathString = "Home"
     var titlePathCount = 0
     var child : SpinnerViewController?
+    var Source = Globals.shared.importAndExportLoaction
     
     
     let brightLightBlue = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
@@ -304,15 +305,23 @@ class PickerView: UITableViewController, PickerViewdelegate {
         
         button.addTarget(self, action: #selector(closeSection), for: .touchUpInside)
         button.tag = section
-        
+        var headernamestext : String
         let headerName = UILabel()
-        let headernamestext = (section == 0) ? "  Folders" : "  Files     "
+        if (Source == dataSource.local) {
+            headernamestext = "Subject Files"
+        } else {
+            headernamestext = (section == 0) ? "  Folders" : "  Files     "
+        }
         headerName.backgroundColor = darkDeepBlue
         headerName.text = headernamestext
         headerName.textColor = textColor
         //headerName.tintColor = brightLightBlue
-        
-        let fileNameImage = (section == 0) ? "folder-invoices" : "file"
+        var fileNameImage : String
+        if (Source == dataSource.local){
+            fileNameImage = "user"
+        } else {
+            fileNameImage = (section == 0) ? "folder-invoices" : "file"
+        }
         let fileImage = UIImage(named: fileNameImage)
         let fileimageView = UIImageView()
         fileimageView.image = fileImage
@@ -376,7 +385,11 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return twodimArray.count
+        if (Source == dataSource.local) {
+            return 1
+        } else {
+            return twodimArray.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -414,6 +427,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (Source == dataSource.box) {
         if twodimArray[indexPath.section].items[indexPath.row].isFolder{
             
             let file = importFile.init()
@@ -439,6 +453,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
             })
             //activityIndicator.stopAnimating()
             file.delegate = self
+        }
         }
     }
     func checkForIsSelectedCount() -> Int {

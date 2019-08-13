@@ -29,6 +29,7 @@
 		2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48222D3FD1700734063 /* UIGenerics.swift */; };
 		2191E49A23030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2191E49923030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift */; };
 		2191E49C23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2191E49B23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift */; };
+		2191E49E23033C4F001B5FE5 /* LocationToSaveFilesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2191E49D23033C4F001B5FE5 /* LocationToSaveFilesController.swift */; };
 		21A6BB1022CA837D009CDAD3 /* ObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB0F22CA837D009CDAD3 /* ObjectModel.swift */; };
 		21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */; };
 		21A6BB1A22CAB19D009CDAD3 /* backgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */; };
@@ -98,6 +99,7 @@
 		2132E48222D3FD1700734063 /* UIGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGenerics.swift; sourceTree = "<group>"; };
 		2191E49923030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VisaulFieldData+CoreDataProperties.swift"; path = "glacInit/VisaulFieldData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2191E49B23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VisaulFieldData+CoreDataClass.swift"; path = "glacInit/VisaulFieldData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2191E49D23033C4F001B5FE5 /* LocationToSaveFilesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToSaveFilesController.swift; sourceTree = "<group>"; };
 		21A6BB0F22CA837D009CDAD3 /* ObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModel.swift; sourceTree = "<group>"; };
 		21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundChangeController.swift; sourceTree = "<group>"; };
 		21A6BB1922CAB19D009CDAD3 /* backgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundImage.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				210898D222F1FC5A0007FD25 /* MainMenuViewController.swift */,
 				211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */,
 				211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */,
+				2191E49D23033C4F001B5FE5 /* LocationToSaveFilesController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -728,6 +731,7 @@
 			files = (
 				2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */,
 				21182C8C22E6117400712670 /* PickerViewController.swift in Sources */,
+				2191E49E23033C4F001B5FE5 /* LocationToSaveFilesController.swift in Sources */,
 				030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */,
 				21182C8822E5EBE100712670 /* DataProcessing.swift in Sources */,
 				211F7C5822FC9BC70001F584 /* SavingToLocal.swift in Sources */,

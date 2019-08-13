@@ -784,11 +784,8 @@ class ViewController: UIViewController {
         
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList, hasBox: false)
         //currentSession.SaveFileToLocal(name: <#T##String#>, blurdata: <#T##String#>, colordata: <#T##String#>, greydata: <#T##String#>, savedata: <#T##String#>, image: <#T##NSData#>)
-        let hello = currentSession.loadData()
-        print(hello.first?.name!)
-        print(hello.first?.blurdata!)
-        print(hello.first?.savedata!)
-        print(hello.first?.colordata!)
+        
+        if (Globals.shared.importAndExportLoaction == dataSource.box) {
         _ = currentSession.savedFiles.map { (savedFile:FileObject) in
             currentSession.uploadFile(file: savedFile, FolderID: FolderID, completion: { (uploaded:Bool, error:Error?) in
                 self.uploadAttempt = self.uploadAttempt + 1
@@ -811,6 +808,7 @@ class ViewController: UIViewController {
         }
 
         export.loadingIndicator(true)
+        }
     }
     
     //MARK: box autho

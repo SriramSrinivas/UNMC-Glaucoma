@@ -128,11 +128,14 @@ class Session {
         
         let data = NSData(contentsOf: screenShotFile.path)!
         
-        SaveFileToLocal(name: saveFile.name, blurdata: blurPointsFile.Matrix!, colordata: ColorPointsFile.Matrix!, greydata: greyPointsFile.Matrix!, savedata: csvText, image: data)
+        if Globals.shared.importAndExportLoaction == dataSource.local {
+            SaveFileToLocal(name: saveFile.name, blurdata: blurPointsFile.Matrix!, colordata: ColorPointsFile.Matrix!, greydata: greyPointsFile.Matrix!, hiddendata: hiddenPointsFile.Matrix!, savedata: csvText, image: data)
+        }
+        
         savedFiles = [screenShotFile,blurPointsFile,greyPointsFile,hiddenPointsFile, ColorPointsFile, saveFile]
     }
     
-    func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata: String, savedata: String, image: NSData){
+    func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata: String, hiddendata: String, savedata: String, image: NSData){
         //let data = LocalFileModel.init(name: name, blurdata: blurdata, colordata: colordata, greydata: greydata, savedata: savedata, image: image)
         let saveData = VisaulFieldData(context: PersistanceService.context)
        //let saveData = VisaulFieldData(entity: VisaulFieldData.entity(), insertInto: PersistanceService.shared.context)
@@ -142,6 +145,7 @@ class Session {
         saveData.image = image
         saveData.name = name
         saveData.savedata = savedata
+        saveData.isHiddendata = hiddendata
         PersistanceService.save()
 //        //PersistanceService.shared.save()
 //        do {
@@ -158,7 +162,7 @@ class Session {
         var data: [LocalFileModel] = []
       
         for file in LocalFileModels {
-            let ehy  = LocalFileModel.init(name: file.name!, blurdata: file.blurdata!, colordata: file.colordata!, greydata: file.greydata!, savedata: file.savedata!, image: file.image!)
+            let ehy  = LocalFileModel.init(name: file.name!, blurdata: file.blurdata!, colordata: file.colordata!, greydata: file.greydata!, ishiddendata: file.isHiddendata ?? "", savedata: file.savedata!, image: file.image!)
             data.append(ehy)
         }
         

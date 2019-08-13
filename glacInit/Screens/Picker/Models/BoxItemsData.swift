@@ -23,4 +23,10 @@ struct BoxItemsData {
         self.ID = boxItem.modelID
         self.isFolder = boxItem.isFolder
     }
+    init(name: String, id: String){
+        self.name = name
+        self.ID = id
+        self.isFolder = false
+        self.isSelected = false
+    }
 }
