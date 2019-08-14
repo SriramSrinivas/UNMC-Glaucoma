@@ -116,27 +116,28 @@ class ViewController: UIViewController {
         addControlIcons()
         addSlider(view: sideView)
         if (backImageName == Globals.shared.backGrounds.first){
-        initCustomObjects()
+            initCustomObjects()
         }
         addGridLineUpdate(mainView: mainImgView)
-        
-        reach = Reachability.forInternetConnection()
-
-        reach.reachableBlock = {
-            ( reach: Reachability!) -> Void in
-            self.reachibiltyChanged(online:true)
+        if (Globals.shared.importAndExportLoaction == .box) {
+            reach = Reachability.forInternetConnection()
+            
+            reach.reachableBlock = {
+                ( reach: Reachability!) -> Void in
+                self.reachibiltyChanged(online:true)
+            }
+            
+            reach.unreachableBlock = {
+                ( reach: Reachability!) -> Void in
+                self.reachibiltyChanged(online:false)
+            }
+            do {
+                try self.reach.startNotifier()
+            } catch {
+                self.showToast(message: "\(error)", theme: .error)
+            }
         }
         
-        reach.unreachableBlock = {
-            ( reach: Reachability!) -> Void in
-            self.reachibiltyChanged(online:false)
-        }
-        do {
-            try self.reach.startNotifier()
-        } catch {
-            self.showToast(message: "\(error)", theme: .error)
-        }
-        let newFile = importFile.init()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -829,14 +830,16 @@ class ViewController: UIViewController {
             inputTextField = textField
             textField.addTarget(alert, action: #selector(alert.textDidChangeInLoginAlert), for: .editingChanged)
         }
-        
+       
         let action = UIAlertAction(title: "Ok", style: .default){ _ in
             self.addWaterMark(name: (inputTextField?.text)!)
             self.nameLabel.textAlignment = .center
             self.nameLabel.center.x = self.nameLabel.frame.maxX
             self.subjectID = (inputTextField?.text)!
             self.currentSession = Session(currentSubjectId: (self.subjectID + "_" + self.backImageName))
-            self.currentSession.boxAuthorize()
+            if (Globals.shared.importAndExportLoaction == .box){
+                self.currentSession.boxAuthorize()
+            }
         }
         
         action.isEnabled = false

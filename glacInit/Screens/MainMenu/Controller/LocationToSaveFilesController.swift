@@ -12,20 +12,20 @@ import Reachability
 
 class LocationToSaveFilesController: UIViewController {
     
-    var mainMenuTitleLabel : UIButton = {
-        var temp = UIButton(type: .system)
-        //temp.isOpaque = false
-        //temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5)
-        setUpButton(&temp, title: "Where to Save Files", cornerRadius: 0, borderWidth: 0, color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5).cgColor)
-        temp.isOpaque = false
-        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
-        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
-        temp.setTitleColor(.red, for: .normal)
-        //temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
-        
-        temp.isEnabled = false
-        return temp
-    }()
+//    var mainMenuTitleLabel : UIButton = {
+//        var temp = UIButton(type: .system)
+//        //temp.isOpaque = false
+//        //temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5)
+//        setUpButton(&temp, title: "Where to Save Files", cornerRadius: 0, borderWidth: 0, color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5).cgColor)
+//        temp.isOpaque = false
+//        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+//        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
+//        temp.setTitleColor(.red, for: .normal)
+//        //temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
+//
+//        temp.isEnabled = false
+//        return temp
+//    }()
     
     var loginMenuButton : UIButton = {
         var temp = UIButton(type: .system)
@@ -76,7 +76,7 @@ class LocationToSaveFilesController: UIViewController {
         super.viewDidLoad()
         //view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         backgroundChanged()
-        [background, backMenuButton, logoutMenuButton, loginMenuButton, mainMenuTitleLabel].forEach {view.addSubview($0)}
+        [background, backMenuButton, logoutMenuButton, loginMenuButton].forEach {view.addSubview($0)}
         layout()
     }
     
@@ -91,8 +91,8 @@ class LocationToSaveFilesController: UIViewController {
         background.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         background.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
-        mainMenuTitleLabel.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 3.5, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
-        loginMenuButton.anchor(top: mainMenuTitleLabel.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height:buttonHeight))
+       // mainMenuTitleLabel.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 3.5, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        loginMenuButton.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 7, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height:buttonHeight))
         logoutMenuButton.anchor(top: loginMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         backMenuButton.anchor(top: logoutMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         
