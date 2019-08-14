@@ -753,6 +753,7 @@ class ViewController: UIViewController {
     }
 
     @objc func getReadyForPickerView(){
+        if (Globals.shared.importAndExportLoaction == .box){
         let FolderId = Globals.shared.getcurrentFolderExport()
         if !(FolderId == "")
         {
@@ -776,16 +777,22 @@ class ViewController: UIViewController {
             showToast(message: "No Internet Connection", theme: .error)
         }
         }
+        } else {
+            exportTap(FolderID: "0")
+        }
         
     }
     
     func exportTap(FolderID: String){
-        bottomMessage("Uploading Files")
+       // bottomMessage("Uploading Files")
         
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList, hasBox: false)
         //currentSession.SaveFileToLocal(name: <#T##String#>, blurdata: <#T##String#>, colordata: <#T##String#>, greydata: <#T##String#>, savedata: <#T##String#>, image: <#T##NSData#>)
-        
+        if (Globals.shared.importAndExportLoaction == dataSource.local) {
+            showToast(message: "Files saved to local was a success", theme: .success)
+        }
         if (Globals.shared.importAndExportLoaction == dataSource.box) {
+            bottomMessage("Uploading Files")
         _ = currentSession.savedFiles.map { (savedFile:FileObject) in
             currentSession.uploadFile(file: savedFile, FolderID: FolderID, completion: { (uploaded:Bool, error:Error?) in
                 self.uploadAttempt = self.uploadAttempt + 1
@@ -806,9 +813,10 @@ class ViewController: UIViewController {
                 }
             })
         }
-
+        
         export.loadingIndicator(true)
         }
+        //addWaterMark(name: subjectID)
     }
     
     //MARK: box autho

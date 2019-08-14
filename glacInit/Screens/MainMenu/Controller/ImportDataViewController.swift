@@ -148,7 +148,13 @@ class ImportDataViewController: UIViewController {
         }
         } else {
             currentSession = Session(currentSubjectId: "hello")
-            let hello = currentSession.loadData()
+            var hello : [LocalFileModel] = []
+            do {
+                try hello = currentSession.loadData()
+            } catch {
+                showToast(message: "Error In loading Data", theme: .error)
+                hello = currentSession.getDataThatDidLoad()
+            }
             currentLocalData = hello
             var twoDArray : [ExpandableNames] = []
             var fileItems: [BoxItemsData] = []

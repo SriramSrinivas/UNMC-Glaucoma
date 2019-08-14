@@ -154,7 +154,7 @@ class LoadedImageViewController: UIViewController {
     }()
     
     var reach: Reachability?
-    var backGroundImages = ["mainTes", "tes-1"]
+    var backGroundImages = Globals.shared.backGrounds
     var greyCustomViewUpdateList = [CustomViewUpdate]()
     var blurCustomViewUpdateList = [CustomViewUpdate]()
     var colorCustomViewUpdateList = [CustomViewUpdate]()
@@ -203,7 +203,7 @@ class LoadedImageViewController: UIViewController {
         file.delegate = self
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor.darkGray
-
+        constImage = mainImageView.image
         //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
         [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch].forEach {view.addSubview($0)}
         if (Globals.shared.currentBackGround == Globals.shared.backGrounds.first){
@@ -608,7 +608,13 @@ class LoadedImageViewController: UIViewController {
         }
         } else {
             currentSession = Session(currentSubjectId: "hello")
-            let hello = currentSession.loadData()
+            var hello : [LocalFileModel] = []
+            do {
+                try hello = currentSession.loadData()
+            } catch {
+                showToast(message: "Error In loading Data", theme: .error)
+                hello = currentSession.getDataThatDidLoad()
+            }
             currentLocalData = hello
             var twoDArray : [ExpandableNames] = []
             var fileItems: [BoxItemsData] = []
@@ -643,12 +649,13 @@ class LoadedImageViewController: UIViewController {
         else{
             for file in Files {
                 let names = file.name.components(separatedBy: "_")
-                
-                
-                let back = checkForBackGround(name: names)
-                //back = "MainTes"
+                checkNameForBackGrounds(name: names)
+                //let back = backgroundChanged()
+                let back = Globals.shared.currentBackGround
+                Globals.shared.cameraImage = UIImage(named: back)
                 mainImageView.image = UIImage(named: back)
                 constImage = UIImage(named: back)
+                
                 mainImageView.reloadInputViews()
                 //if returns 0 it failed
                 let fileIntValue = checkForKindOfFile(name: names)
@@ -699,7 +706,23 @@ class LoadedImageViewController: UIViewController {
         }
         } else {
             let id = Int(Files.first!.id)!
-            var filesToLoad = currentLocalData![id]
+            let filesToLoad = currentLocalData![id]
+            let names = Files.first!.name.components(separatedBy: "_")
+            if let image = UIImage(data: filesToLoad.image! as Data) {
+                self.LoadedImage = image
+                self.mainImageView.image = image
+                self.mainImageView.reloadInputViews()
+                self.importBackgroundSwitch.setOn(true, animated: true)
+                self.loadedIMageBackground = true
+                //}
+            }
+            //sdafads
+            checkNameForBackGrounds(name: names)
+            //let back = backgroundChanged()
+            //back = "MainTes"
+            //mainImageView.image = image
+            constImage = mainImageView.image
+            mainImageView.reloadInputViews()
             do{
                 //filesToLoad.blurdata
                 var currentData = self.csv(data: filesToLoad.blurdata!)
@@ -724,14 +747,7 @@ class LoadedImageViewController: UIViewController {
                 }
                     //self.turnOnGrid(filetype: fileIntValue)
                    // if let data = try? Data(contentsOf: filesToLoad.image) {
-                if let image = UIImage(data: filesToLoad.image! as Data) {
-                            self.LoadedImage = image
-                            self.mainImageView.image = image
-                            self.mainImageView.reloadInputViews()
-                            self.importBackgroundSwitch.setOn(true, animated: true)
-                            self.loadedIMageBackground = true
-                    //}
-                }
+                
         }
                 
     }
@@ -774,18 +790,17 @@ class LoadedImageViewController: UIViewController {
         }
         return .incorrectEffectType
     }
-    
-    
-    func checkForBackGround(name: [String]) -> String{
-        for word in name{
-            for back in backGroundImages{
-                if word == back
-                {
-                    return word
+    func checkNameForBackGrounds(name: [String]){
+        for word in name {
+            for back in Globals.shared.backGrounds {
+                if word == back {
+                    Globals.shared.currentBackGround = back
                 }
             }
+            if word == "camera" {
+                Globals.shared.currentBackGround = word
+            }
         }
-        return "mainTes"
     }
 }
 extension LoadedImageViewController: ImportDelegate{

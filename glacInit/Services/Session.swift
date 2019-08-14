@@ -42,6 +42,7 @@ class Session {
     var pngFilesUploadedCount = 0
     var fileURL : URL?
     var csvText = ""
+    var data: [LocalFileModel] = []
 //    private let context = (PersistanceService.shared.context)
     
     init(currentSubjectId: String) {
@@ -157,17 +158,41 @@ class Session {
         
     }
     
-    func loadData() -> [LocalFileModel] {
+    func loadData() throws -> [LocalFileModel] {
         let LocalFileModels = PersistanceService.fetch(VisaulFieldData.self)  //hared.fetch(VisaulFieldData.self)
-        var data: [LocalFileModel] = []
-      
+        data = []
+        var flag : LocalFileLoadingError?
         for file in LocalFileModels {
-            let ehy  = LocalFileModel.init(name: file.name!, blurdata: file.blurdata!, colordata: file.colordata!, greydata: file.greydata!, ishiddendata: file.isHiddendata ?? "", savedata: file.savedata!, image: file.image!)
+            let ehy  = LocalFileModel.init(name: file.name, blurdata: file.blurdata, colordata: file.colordata, greydata: file.greydata, ishiddendata: file.isHiddendata, savedata: file.savedata, image: file.image)
+            do {
+                try ehy.CheckData()
+                //data.append(ehy)
+            } catch LocalFileLoadingError.errorInDataLoading {
+                flag = LocalFileLoadingError.errorInDataLoading
+            } catch LocalFileLoadingError.errorInImageLoading {
+                flag =  LocalFileLoadingError.errorInImageLoading
+            } catch  {
+                flag = LocalFileLoadingError.errorInNameLoading
+            }
             data.append(ehy)
         }
-        
+        if flag == LocalFileLoadingError.errorInDataLoading {
+            throw flag!
+        }
+        if flag == LocalFileLoadingError.errorInImageLoading {
+            throw flag!
+        }
+        if flag == LocalFileLoadingError.errorInNameLoading {
+            throw flag!
+        }
         return data
     }
+    func getDataThatDidLoad() -> [LocalFileModel] {
+        return data
+    }
+    
+    
+    
     
     func uploadFile(file:FileObject, FolderID: String ,completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void){
         let contentClient : BOXContentClient = BOXContentClient.default()
