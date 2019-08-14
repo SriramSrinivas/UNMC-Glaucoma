@@ -1,11 +1,23 @@
-//
-//  Session.swift
-//  glacInit
-//
-//  Created by Abdullahi Mahamed on 10/11/17.
-//  Copyright © 2017 Parshav Chauhan. All rights reserved.
-//
-
+/*************************************************************************
+ *
+ * UNIVERSITY OF NEBRASKA AT OMAHA CONFIDENTIAL
+ * __________________
+ *
+ *  [2018] - [2019] University of Nebraska at Omaha
+ *  All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of University of Nebraska at Omaha and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to University of Nebraska at Omaha
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from University of Nebraska at Omaha.
+ *
+ * Code written by Lyle Reinholz and Abdullahi Mahamed.
+ */
 import Foundation
 import UIKit
 import BoxContentSDK
@@ -111,14 +123,14 @@ class Session {
             }
         }
         
-        var saveFile = FileObject(name: "\(subjectId)_saveFile_\(self.getTodayString())_\(exportCount)", type: FileType.CSV)
-        let screenShotFile = FileObject(name: "\(subjectId)_screenshot_\(self.getTodayString())_\(exportCount)", type: FileType.PNG)
-        var blurPointsFile = FileObject(name:"\(subjectId)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        var greyPointsFile = FileObject(name:"\(subjectId)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        var hiddenPointsFile = FileObject(name:"\(subjectId)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        var ColorPointsFile = FileObject(name:"\(subjectId)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var saveFile = FileObject(name: "\(subjectId)_\(Globals.shared.currentBackGround)_saveFile_\(self.getTodayString())_\(exportCount)", type: FileType.CSV)
+        let screenShotFile = FileObject(name: "\(subjectId)_\(Globals.shared.currentBackGround)_screenshot_\(self.getTodayString())_\(exportCount)", type: FileType.PNG)
+        var blurPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var greyPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var hiddenPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var ColorPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
-        saveDataToFile(file: csvText, fileName: "\(subjectId)_saveFile_\(self.getTodayString())_\(exportCount)")
+        saveDataToFile(file: csvText, fileName: "\(subjectId)_\(Globals.shared.currentBackGround)_saveFile_\(self.getTodayString())_\(exportCount)")
         
         saveFile.path = fileURL!
         screenShotFile.savePNG(view: mainView)
