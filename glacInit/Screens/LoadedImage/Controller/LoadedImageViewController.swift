@@ -179,8 +179,10 @@ class LoadedImageViewController: UIViewController {
     let distances = Globals.shared.getdistances()
     var currentSession: Session!
     
+    
     func getImportedData(boxitems: [BOXItem]){
-        //let vc = PickerView()
+        pickerView = PickerView()
+        pickerView.delegate = self
         var twoDArray : [ExpandableNames] = []
         var fileItems: [BoxItemsData] = []
         var folderItems: [BoxItemsData] = []
@@ -585,8 +587,8 @@ class LoadedImageViewController: UIViewController {
     }
     
     @objc func getNewFile(){
-        let count = 1
-        if (count == 2){
+        let count = Globals.shared.importAndExportLoaction
+        if (count == .box){
         self.reach = Reachability.forInternetConnection()
         //TODO perform internet check 
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
@@ -614,6 +616,8 @@ class LoadedImageViewController: UIViewController {
            showToast(message: "No Internet Connection", theme: .error)
         }
         } else {
+            pickerView = PickerView()
+            pickerView.delegate = self
             currentSession = Session(currentSubjectId: "hello")
             var hello : [LocalFileModel] = []
             do {

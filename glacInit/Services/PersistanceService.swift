@@ -81,7 +81,6 @@ final class PersistanceService {
         let entityName = String(describing: objectType)
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        
         do {
             let fetchedObjects = try context.fetch(fetchRequest) as? [T]
             return fetchedObjects ?? [T]()

@@ -781,8 +781,9 @@ class ViewController: UIViewController {
         {
             exportTap(FolderID: FolderId)
         } else {
+            reach = Reachability.forInternetConnection()
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
-            
+            currentSession.boxAuthorize()
             file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)

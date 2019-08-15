@@ -21,10 +21,6 @@
 
 import Foundation
 
-
-
-
-
 struct SaveModel {
     let effect : effectType
     let height : Double

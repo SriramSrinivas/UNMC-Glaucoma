@@ -160,6 +160,9 @@ class ImportDataViewController: UIViewController {
             pickerView.delegate = self
         }
         } else {
+            pickerView = PickerView()
+            
+            pickerView.delegate = self
             currentSession = Session(currentSubjectId: "hello")
             var hello : [LocalFileModel] = []
             do {

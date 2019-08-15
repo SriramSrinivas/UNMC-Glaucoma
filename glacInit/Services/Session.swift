@@ -169,7 +169,17 @@ class Session {
 //        }
         
     }
-    
+    func deleteData(data: [FilesToDownload]) {
+         let LocalFileModels = PersistanceService.fetch(VisaulFieldData.self)
+        for datum in data {
+            for file in LocalFileModels{
+                if datum.name == file.name{
+                    PersistanceService.context.delete(file)
+                }
+            }
+        }
+        PersistanceService.save()
+    }
     func loadData() throws -> [LocalFileModel] {
         let LocalFileModels = PersistanceService.fetch(VisaulFieldData.self)  //hared.fetch(VisaulFieldData.self)
         data = []

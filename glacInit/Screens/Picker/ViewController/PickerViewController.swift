@@ -52,12 +52,12 @@ class PickerView: UITableViewController, PickerViewdelegate {
     var child : SpinnerViewController?
     var Source = Globals.shared.importAndExportLoaction
     
-    
+   // UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.0)
     let brightLightBlue = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
     let deepLightBlue = UIColor(red:0.27, green:0.64, blue:0.62, alpha:1.0)
-    let darkDeepBlue = UIColor(red:0.12, green:0.16, blue:0.20, alpha:1.0)
+    let darkDeepBlue = UIColor(red:0.30, green:0.30, blue:0.30, alpha:1.0)
     let textColor = UIColor(red:0.77, green:0.78, blue:0.78, alpha:1.0)
-    let headerBackgroundColor = UIColor(red:0.04, green:0.05, blue:0.06, alpha:1.0)
+    let headerBackgroundColor = UIColor(red:0.40, green:0.40, blue:0.40, alpha:1.0)
     
     var showindexPaths = false
     
@@ -155,14 +155,24 @@ class PickerView: UITableViewController, PickerViewdelegate {
         if isSelectedCount == 0 {
             
             let cancel = (UIImage(named: "cancel"))
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(self.handleShowIndexPath))
-            navigationItem.rightBarButtonItem?.tintColor = brightLightBlue
+            let trash = (UIImage(named: "trash"))
+            
+            navigationItem.rightBarButtonItems = [UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(self.handleShowIndexPath))]
+            navigationItem.rightBarButtonItems?.first?.tintColor = brightLightBlue
+            navigationItem.rightBarButtonItems?.last?.tintColor = brightLightBlue
             
         }
         else{
+            let trash = (UIImage(named: "trash"))
+            
             let downloads = checkingForFiles ? (UIImage(named: "downloads")) : (UIImage(named: "upload"))
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: downloads, style: .plain, target: self, action: #selector(handleShowIndexPath))
-            navigationItem.rightBarButtonItem?.tintColor = brightLightBlue
+            if Source == .local {
+                navigationItem.rightBarButtonItems = [UIBarButtonItem(image: downloads, style: .plain, target: self, action: #selector(handleShowIndexPath)), UIBarButtonItem(image: trash, style: .plain, target: self, action: #selector(rightHeaderClicked))]
+            } else {
+                navigationItem.rightBarButtonItems = [UIBarButtonItem(image: downloads, style: .plain, target: self, action: #selector(handleShowIndexPath))]
+            }
+            navigationItem.rightBarButtonItems?.first?.tintColor = brightLightBlue
+            navigationItem.rightBarButtonItems?.last?.tintColor = brightLightBlue
         }
     }
     
@@ -237,7 +247,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        if (Globals.shared.importAndExportLoaction == .box) {
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControll
         } else {
@@ -245,11 +255,12 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
         refreshControll.addTarget(self, action: #selector(getCurrentFolder(_:)), for: .valueChanged)
         refreshControll.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: .init())
+        }
         alltwodimArray = twodimArray
        self.navigationController?.isNavigationBarHidden = false
         
         let cancel = (UIImage(named: "cancel"))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))]
        
         let home = UIImage(named: "home-page")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
@@ -262,7 +273,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
         
         tableView.register(PickerCell.self, forCellReuseIdentifier: cellID)
         navigationItem.leftBarButtonItem?.tintColor = brightLightBlue
-        navigationItem.rightBarButtonItem?.tintColor = brightLightBlue
+        navigationItem.rightBarButtonItems?.first?.tintColor = brightLightBlue
+        navigationItem.rightBarButtonItems?.last?.tintColor = brightLightBlue
         navigationController?.navigationBar.barTintColor = darkDeepBlue
         tableView.backgroundColor = darkDeepBlue
         
@@ -271,6 +283,39 @@ class PickerView: UITableViewController, PickerViewdelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if (Globals.shared.importAndExportLoaction == .box) {
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControll
+        } else {
+            tableView.addSubview(refreshControll)
+        }
+        refreshControll.addTarget(self, action: #selector(getCurrentFolder(_:)), for: .valueChanged)
+        refreshControll.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: .init())
+        }
+        alltwodimArray = twodimArray
+        self.navigationController?.isNavigationBarHidden = false
+        
+        let cancel = (UIImage(named: "cancel"))
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(image: cancel, style: .plain, target: self, action: #selector(handleShowIndexPath))]
+        
+        let home = UIImage(named: "home-page")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: home, style: .plain, target: self, action: #selector(BackTapped))
+        
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(BackTapped))
+        
+        navigationItem.title = "Box - Home Directory"
+        navigationItem.titleView?.backgroundColor = darkDeepBlue
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        tableView.register(PickerCell.self, forCellReuseIdentifier: cellID)
+        navigationItem.leftBarButtonItem?.tintColor = brightLightBlue
+        navigationItem.rightBarButtonItems?.first?.tintColor = brightLightBlue
+        navigationItem.rightBarButtonItems?.last?.tintColor = brightLightBlue
+        navigationController?.navigationBar.barTintColor = darkDeepBlue
+        tableView.backgroundColor = darkDeepBlue
+        
     }
     @objc private func getCurrentFolder(_ sender: Any) {
         //self.refreshControl?.beginRefreshing()
@@ -303,10 +348,16 @@ class PickerView: UITableViewController, PickerViewdelegate {
         let addFolderButton = UIButton(type: .system)
         
         addFolderButton.titleLabel?.text = "Add Folder"
+//        if Source == dataSource.local{
+//            addFolderButton.setImage(UIImage(named: "trash"), for: .normal)
+//            addFolderButton.contentMode = .scaleAspectFit
+//        }
+        addFolderButton.frame = CGRect(x: view.frame.width - height, y: 0, width: height, height: height)
         addFolderButton.translatesAutoresizingMaskIntoConstraints = false
         addFolderButton.widthAnchor.constraint(equalToConstant: height).isActive = true
-        addFolderButton.addTarget(self, action: #selector(addFolderBox), for: .touchUpInside)
-        addFolderButton.backgroundColor = .red
+        
+//        addFolderButton.addTarget(self, action: #selector(rightHeaderClicked), for: .touchUpInside)
+        addFolderButton.backgroundColor = darkDeepBlue
         
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
@@ -360,10 +411,31 @@ class PickerView: UITableViewController, PickerViewdelegate {
         return stackview
     }
     
-    @objc func addFolderBox(){
+    @objc func rightHeaderClicked(){
+        if Source == .box {
         let file = importFile.init()
         //file.createBoxFoler(withName: "hello", parentFolderID: "0")
         print("file")
+        } else {
+            let session = Session(currentSubjectId: "")
+            var files : [FilesToDownload] = []
+            for section in twodimArray.indices{
+                //if twodimArray[section].isExpanded{
+                for index in twodimArray[section].items.indices{
+                    if twodimArray[section].items[index].isSelected{
+                        let name = twodimArray[section].items[index].name
+                        let id = twodimArray[section].items[index].ID
+                        let isfolder = twodimArray[section].items[index].isFolder
+                        let file = FilesToDownload(name: name, id: id, isFolder: isfolder)
+                        files.append(file)
+                    }
+                    
+                }
+                // }
+            }
+            session.deleteData(data: files)
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func closeSection(button: UIButton){

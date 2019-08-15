@@ -49,7 +49,8 @@ extension effectType {
         }
     }
 }
-
+// creates the boxes you see on the screen
+// 
 class CustomViewUpdate : UIView{
     
     let blur = VisualEffectView()
