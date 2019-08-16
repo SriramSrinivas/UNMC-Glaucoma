@@ -39,6 +39,7 @@ class ChangeCell : Basecell {
     var imageAt : BackgroundImage? {
         didSet {
             imageView.image  = UIImage(named: (imageAt?.BackgroundimageName)!)
+            
         }
     }
     
@@ -49,6 +50,7 @@ class ChangeCell : Basecell {
         temp.layer.borderColor = UIColor.gray.cgColor
         temp.layer.borderWidth = 5
         temp.clipsToBounds = true
+        temp.backgroundColor = UIColor.lightGray
         temp.translatesAutoresizingMaskIntoConstraints = false
         return temp
     }()

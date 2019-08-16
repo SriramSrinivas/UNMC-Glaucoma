@@ -37,28 +37,14 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var versionNumber : UITextView = {
         var temp = UITextView()
-        nonEditableTextView(&temp, text: "-v 2.3.0", fontSize: 15)
+        nonEditableTextView(&temp, text: "-v 2.4.0", fontSize: 15)
         temp.textColor = .black
         temp.backgroundColor = .clear
         temp.textAlignment = .center
         return temp
     }()
 
-//    var mainMenuTitleLabel : UIButton = {
-//        var temp = UIButton(type: .system)
-//        //temp.isOpaque = false
-//        //temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5)
-//        setUpButton(&temp, title: "Menu", cornerRadius: 0, borderWidth: 0, color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5).cgColor)
-//        temp.isOpaque = false
-//        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
-//        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
-//        temp.setTitleColor(.red, for: .normal)
-//        temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
-//
-//        temp.isEnabled = false
-//        return temp
-//    }()
-    
+
     var mainMenuButton : UIButton = {
         var temp = UIButton(type: .system)
         setUpButton(&temp, title: "Back to Previous", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)

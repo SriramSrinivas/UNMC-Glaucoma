@@ -51,6 +51,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
     var titlePathCount = 0
     var child : SpinnerViewController?
     var Source = Globals.shared.importAndExportLoaction
+    lazy var localStorage = LoaclStorage.init()
     
    // UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.0)
     let brightLightBlue = UIColor(red:0.40, green:0.99, blue:0.95, alpha:1.0)
@@ -433,7 +434,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
                 }
                 // }
             }
-            session.deleteData(data: files)
+            localStorage.deleteData(data: files)
             dismiss(animated: true, completion: nil)
         }
     }

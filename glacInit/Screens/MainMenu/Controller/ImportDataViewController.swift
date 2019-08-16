@@ -25,21 +25,6 @@ import Reachability
 
 class ImportDataViewController: UIViewController {
     
-//    var mainMenuTitleLabel : UIButton = {
-//        var temp = UIButton(type: .system)
-//        //temp.isOpaque = false
-//        //temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5)
-//        setUpButton(&temp, title: "Choose Import Type", cornerRadius: 0, borderWidth: 0, color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5).cgColor)
-//        temp.isOpaque = false
-//        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
-//        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
-//        temp.setTitleColor(.red, for: .normal)
-//        //temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
-//
-//        temp.isEnabled = false
-//        return temp
-//    }()
-    
     var ContinueFromSavedButton : UIButton = {
         var temp = UIButton(type: .system)
         setUpButton(&temp, title: "Continue From Saved", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
@@ -79,12 +64,13 @@ class ImportDataViewController: UIViewController {
         return temp
     }()
     
-    var pickerView = PickerView()
+    lazy var pickerView = PickerView()
     let file = importFile.init()
     var imageName = Globals.shared.getCurrentBackGround()
     var reach: Reachability!
     var currentSession: Session!
     var currentLocalData : [LocalFileModel]?
+    lazy var localStorage = LoaclStorage.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,10 +152,10 @@ class ImportDataViewController: UIViewController {
             currentSession = Session(currentSubjectId: "hello")
             var hello : [LocalFileModel] = []
             do {
-                try hello = currentSession.loadData()
+                try hello = localStorage.loadData()
             } catch {
                 showToast(message: "Error In loading Data", theme: .error)
-                hello = currentSession.getDataThatDidLoad()
+                hello = localStorage.getDataThatDidLoad()
             }
             currentLocalData = hello
             var twoDArray : [ExpandableNames] = []

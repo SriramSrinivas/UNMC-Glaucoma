@@ -169,7 +169,7 @@ class LoadedImageViewController: UIViewController {
     var isHiddenCustomUpdateList = [CustomViewUpdate]()
     //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
-    let file = importFile.init()
+    lazy var file = importFile.init()
     var pickerView = PickerView()
     var LoadedImage = UIImage()
     var loadedIMageBackground = false
@@ -178,7 +178,7 @@ class LoadedImageViewController: UIViewController {
     var gridViews = [UIView]()
     let distances = Globals.shared.getdistances()
     var currentSession: Session!
-    
+    lazy var localStorage = LoaclStorage.init()
     
     func getImportedData(boxitems: [BOXItem]){
         pickerView = PickerView()
@@ -621,10 +621,10 @@ class LoadedImageViewController: UIViewController {
             currentSession = Session(currentSubjectId: "hello")
             var hello : [LocalFileModel] = []
             do {
-                try hello = currentSession.loadData()
+                try hello = localStorage.loadData()
             } catch {
                 showToast(message: "Error In loading Data", theme: .error)
-                hello = currentSession.getDataThatDidLoad()
+                hello = localStorage.getDataThatDidLoad()
             }
             currentLocalData = hello
             var twoDArray : [ExpandableNames] = []

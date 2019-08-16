@@ -26,21 +26,6 @@ import Reachability
 
 class BoxSettingsPage: UIViewController {
     
-//    var mainMenuTitleLabel : UIButton = {
-//        var temp = UIButton(type: .system)
-//        //temp.isOpaque = false
-//        //temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5)
-//        setUpButton(&temp, title: "Box Settings", cornerRadius: 0, borderWidth: 0, color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.5).cgColor)
-//        temp.isOpaque = false
-//        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
-//        temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
-//        temp.setTitleColor(.red, for: .normal)
-//        //temp.addTarget(self, action: #selector(MenuTapped), for: .touchUpInside)
-//
-//        temp.isEnabled = false
-//        return temp
-//    }()
-    
     var loginMenuButton : UIButton = {
         var temp = UIButton(type: .system)
         setUpButton(&temp, title: "Login", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
