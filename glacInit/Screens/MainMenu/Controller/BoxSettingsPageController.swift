@@ -73,7 +73,8 @@ class BoxSettingsPage: UIViewController {
     var background : UIImageView = {
         var temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.image = UIImage(named: Globals.shared.getCurrentBackGround())
+        let image = Globals.shared.getCurrentBackGround()
+        temp.image = image.Backgroundimage
         return temp
     }()
     
@@ -125,10 +126,10 @@ class BoxSettingsPage: UIViewController {
     
     func backgroundChanged() {
     imageName = Globals.shared.getCurrentBackGround()
-    if (imageName == "camera"){
+    if (imageName.title == "camera"){
     background.image = Globals.shared.getCameraImage()
     } else {
-    let image = UIImage(named: imageName)
+    let image = imageName.Backgroundimage
     background.image = image
     }
     }

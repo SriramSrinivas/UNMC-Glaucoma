@@ -38,7 +38,7 @@ class ChangeCell : Basecell {
     
     var imageAt : BackgroundImage? {
         didSet {
-            imageView.image  = UIImage(named: (imageAt?.BackgroundimageName)!)
+            imageView.image  = (imageAt?.Backgroundimage)!
             
         }
     }

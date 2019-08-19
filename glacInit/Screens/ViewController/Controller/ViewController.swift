@@ -208,11 +208,11 @@ class ViewController: UIViewController {
     func loadImage(mainImgView: UIView){
         
         var image : UIImage
-        if backImageName == "camera"
+        if backImageName.title == "camera"
         {
             image = Globals.shared.getCameraImage()
         } else {
-            image = UIImage(named: backImageName)!
+            image = Globals.shared.currentBackGround.Backgroundimage!
         }
         bckImage = image
         

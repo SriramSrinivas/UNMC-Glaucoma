@@ -38,24 +38,24 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
     
     var images: [BackgroundImage] = {
         var temp = BackgroundImage()
-        temp.BackgroundimageName = "tes"
+        temp.Backgroundimage = UIImage(named: "tes")
         temp.ID = 21
-        temp.title = "Rocket League"
+        temp.title = "tes"
         
         var temp1 = BackgroundImage()
-        temp1.BackgroundimageName = "tes-1"
+        temp1.Backgroundimage = UIImage(named: "tes-1")
         temp1.ID = 3
-        temp1.title = "Forest"
+        temp1.title = "tes-1"
 
         var temp2 = BackgroundImage()
-        temp2.BackgroundimageName = "mainTes"
+        temp2.Backgroundimage = UIImage(named: "mainTes")
         temp2.ID = 2
-        temp2.title = "city"
+        temp2.title = "mainTes"
         
         var temp3 = BackgroundImage()
-        temp3.BackgroundimageName = "plus"
+        temp3.Backgroundimage = UIImage(named:"plus")
         temp3.ID = 4
-        temp3.title = "plus1"
+        temp3.title = "plus"
         return [temp, temp1, temp2, temp3]
    //     return [temp]
     }()
@@ -65,6 +65,8 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
     var fileObject = importFile()
     var reach: Reachability!
     var currentSession: Session!
+    let storage = LoaclStorage.init()
+    var didChangeStatus = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +77,17 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "cellID")
         fileObject.delegate = self
         pickerView.delegate = self
+        let imagesToBeAdded = PersistanceService.fetch(SaveImageData.self)
+        
+        for image in imagesToBeAdded {
+            let temp = BackgroundImage()
+            temp.Backgroundimage = UIImage(data: image.image!)
+            temp.ID = Int(image.id)
+            temp.title = "camera"
+            if !(temp.Backgroundimage == nil) {
+            images.insert(temp, at: images.count - 1)
+            }
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -93,14 +106,20 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let imageName = images[indexPath.item].BackgroundimageName!
+        let imageName = images[indexPath.item].Backgroundimage!
         if !(indexPath.item == images.count - 1) {
-        let image = UIImage(named: imageName)
-        Globals.shared.setCurrentBackGround(newBack: imageName)
+        let image = imageName
+            Globals.shared.setCurrentBackGround(newBack: images[indexPath.item])
+            if images[indexPath.item].title! == "camera"{
+                Globals.shared.cameraImage = images[indexPath.item].Backgroundimage
+            }
         delegate?.backgorundDidChange()
         
 //        let viewController = MainMenuViewController()
 //        self.present(viewController, animated: true, completion: nil)
+            if self.didChangeStatus == true {
+                Globals.shared.importAndExportLoaction = .local
+            }
         self.dismiss(animated: false,
                      completion: nil)
         } else {
@@ -114,9 +133,13 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                         self.currentSession.boxAuthorize()
                     }
                     else {
-                        
+            
                     }
                 })
+                if Globals.shared.importAndExportLoaction == .local {
+                    Globals.shared.importAndExportLoaction = .box
+                    self.didChangeStatus = true
+                }
                 pickerView = PickerView()
                 
                 pickerView.delegate = self
@@ -176,9 +199,22 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                         if let data = try? Data(contentsOf: newfile) {
                             let image = UIImage(data: data)
                             //ADD CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                            Globals.shared.currentBackGround = "camera"
-                            Globals.shared.cameraImage = image
+                            if !(image == nil){
+                            let temp = BackgroundImage()
+                            temp.Backgroundimage = image
+                            temp.ID = 1
+                            temp.title = "camera"
+                            Globals.shared.currentBackGround = temp
+                            Globals.shared.cameraImage = temp.Backgroundimage
+                            self.storage.SaveImageToLocal(name: file!.name, title: file!.name, id: 0, image: data)
+                            PersistanceService.save()
                             self.delegate?.backgorundDidChange()
+                            } else {
+                                self.showToast(message: "Did not load Data from \(file!.name), Incorrect: FileType/Data", theme: .error)
+                            }
+                            if self.didChangeStatus == true {
+                                Globals.shared.importAndExportLoaction = .local
+                            }
                             self.dismiss(animated: false, completion: nil)
                         //conte
                        // let data = self.cleanRows(file: content)

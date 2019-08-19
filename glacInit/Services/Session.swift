@@ -122,15 +122,15 @@ class Session {
                 colorGrid[row,column] = colorValue + colorGrid[row,column]
             }
         }
+        let name = Globals.shared.currentBackGround.title
+        var saveFile = FileObject(name: "\(subjectId)_\(name!)_saveFile_\(self.getTodayString())_\(exportCount)", type: FileType.CSV)
+        let screenShotFile = FileObject(name: "\(subjectId)_\(name!)_screenshot_\(self.getTodayString())_\(exportCount)", type: FileType.PNG)
+        var blurPointsFile = FileObject(name:"\(subjectId)_\(name!)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var greyPointsFile = FileObject(name:"\(subjectId)_\(name!)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var hiddenPointsFile = FileObject(name:"\(subjectId)_\(name!)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
+        var ColorPointsFile = FileObject(name:"\(subjectId)_\(name!)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
         
-        var saveFile = FileObject(name: "\(subjectId)_\(Globals.shared.currentBackGround)_saveFile_\(self.getTodayString())_\(exportCount)", type: FileType.CSV)
-        let screenShotFile = FileObject(name: "\(subjectId)_\(Globals.shared.currentBackGround)_screenshot_\(self.getTodayString())_\(exportCount)", type: FileType.PNG)
-        var blurPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_blurPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        var greyPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_greyPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        var hiddenPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_hiddenPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        var ColorPointsFile = FileObject(name:"\(subjectId)_\(Globals.shared.currentBackGround)_colorPoints_\(getTodayString())_\(exportCount)",type:FileType.CSV)
-        
-        saveDataToFile(file: csvText, fileName: "\(subjectId)_\(Globals.shared.currentBackGround)_saveFile_\(self.getTodayString())_\(exportCount)")
+        saveDataToFile(file: csvText, fileName: "\(subjectId)_\(name!)_saveFile_\(self.getTodayString())_\(exportCount)")
         
         saveFile.path = fileURL!
         screenShotFile.savePNG(view: mainView)

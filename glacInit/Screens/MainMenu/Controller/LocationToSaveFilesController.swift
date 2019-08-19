@@ -60,7 +60,8 @@ class LocationToSaveFilesController: UIViewController {
     var background : UIImageView = {
         var temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.image = UIImage(named: Globals.shared.getCurrentBackGround())
+        let image = Globals.shared.getCurrentBackGround()
+        temp.image = image.Backgroundimage
         return temp
     }()
     
@@ -108,11 +109,11 @@ class LocationToSaveFilesController: UIViewController {
     
     func backgroundChanged() {
         imageName = Globals.shared.getCurrentBackGround()
-        if (imageName == "camera"){
+        if (imageName.title == "camera"){
             background.image = Globals.shared.getCameraImage()
         } else {
-            let image = UIImage(named: imageName)
-            background.image = image
+            let image = imageName
+            background.image = image.Backgroundimage
         }
     }
     

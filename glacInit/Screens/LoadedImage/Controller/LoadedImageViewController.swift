@@ -663,9 +663,9 @@ class LoadedImageViewController: UIViewController {
                 checkNameForBackGrounds(name: names)
                 //let back = backgroundChanged()
                 let back = Globals.shared.currentBackGround
-                Globals.shared.cameraImage = UIImage(named: back)
-                mainImageView.image = UIImage(named: back)
-                constImage = UIImage(named: back)
+                Globals.shared.cameraImage = back.Backgroundimage
+                mainImageView.image = back.Backgroundimage
+                constImage = back.Backgroundimage
                 
                 mainImageView.reloadInputViews()
                 //if returns 0 it failed
@@ -804,12 +804,17 @@ class LoadedImageViewController: UIViewController {
     func checkNameForBackGrounds(name: [String]){
         for word in name {
             for back in Globals.shared.backGrounds {
-                if word == back {
+                if word == back.title {
                     Globals.shared.currentBackGround = back
                 }
             }
             if word == "camera" {
-                Globals.shared.currentBackGround = word
+                let temp = BackgroundImage()
+                temp.Backgroundimage = nil
+                temp.ID = 1
+                temp.title = "camera"
+
+                Globals.shared.currentBackGround = temp
             }
         }
     }

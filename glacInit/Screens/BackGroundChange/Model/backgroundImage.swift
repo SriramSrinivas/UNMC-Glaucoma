@@ -22,9 +22,10 @@ import UIKit
 
 class BackgroundImage: NSObject {
     
-    var BackgroundimageName: String?
-    var title: String?
-    var ID: Int?
+    var Backgroundimage: UIImage!
+    var title: String!
+    var ID: Int!
+    var Data: Data?
     
     
 }

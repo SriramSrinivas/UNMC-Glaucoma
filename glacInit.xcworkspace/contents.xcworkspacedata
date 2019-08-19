@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SaveImageData+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:SaveImageData+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:glacInit/VisaulFieldData+CoreDataProperties.swift">
    </FileRef>
    <FileRef

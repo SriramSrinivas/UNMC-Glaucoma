@@ -40,7 +40,6 @@
 		21E2B20022DE6683009FD72D /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E2B1FF22DE6683009FD72D /* Networking.swift */; };
 		21FD3B3222E891F900D4EDE8 /* BoxItemsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FD3B3122E891F900D4EDE8 /* BoxItemsData.swift */; };
 		21FF1D9D2306F43700F94D71 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FF1D9C2306F43700F94D71 /* LocalStorage.swift */; };
-		21FF1DA0230721EE00F94D71 /* BackGroundImages.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21FF1D9E230721EE00F94D71 /* BackGroundImages.xcdatamodeld */; };
 		5696CD6191607995A82541AE /* Pods_glacInitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0151011F6BA4748A52A21922 /* Pods_glacInitUITests.framework */; };
 		74BB907D1EDDDC2500628B38 /* CustomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB907C1EDDDC2500628B38 /* CustomObject.swift */; };
 		74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCAC3F1F2A41F000CBA0CF /* PatientData.swift */; };
@@ -113,7 +112,6 @@
 		21E2B1FF22DE6683009FD72D /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		21FD3B3122E891F900D4EDE8 /* BoxItemsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxItemsData.swift; sourceTree = "<group>"; };
 		21FF1D9C2306F43700F94D71 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
-		21FF1D9F230721EE00F94D71 /* BackGroundImages.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BackGroundImages.xcdatamodel; sourceTree = "<group>"; };
 		37534B410C1DBBA9C2E87CE9 /* Pods-glacInitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.debug.xcconfig"; path = "Target Support Files/Pods-glacInitTests/Pods-glacInitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		73D8E5FB2E9605D676C38834 /* Pods-glacInitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-glacInitTests.release.xcconfig"; path = "Target Support Files/Pods-glacInitTests/Pods-glacInitTests.release.xcconfig"; sourceTree = "<group>"; };
 		74BB907C1EDDDC2500628B38 /* CustomObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomObject.swift; sourceTree = "<group>"; };
@@ -281,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				21A6BB1722CA9422009CDAD3 /* BackgroundChangeController.swift */,
-				21FF1D9E230721EE00F94D71 /* BackGroundImages.xcdatamodeld */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -746,7 +743,6 @@
 				21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */,
 				21A6BB1022CA837D009CDAD3 /* ObjectModel.swift in Sources */,
 				74BCAC401F2A41F000CBA0CF /* PatientData.swift in Sources */,
-				21FF1DA0230721EE00F94D71 /* BackGroundImages.xcdatamodeld in Sources */,
 				030BE09F1F7C1E3000012B3C /* Matrix.swift in Sources */,
 				211F7C5C22FCC50D0001F584 /* BoxSettingsPageController.swift in Sources */,
 				21E14243228CBF1A004657BA /* FileObject.swift in Sources */,
@@ -1080,16 +1076,6 @@
 			);
 			currentVersion = 211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */;
 			path = FileObject.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		21FF1D9E230721EE00F94D71 /* BackGroundImages.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				21FF1D9F230721EE00F94D71 /* BackGroundImages.xcdatamodel */,
-			);
-			currentVersion = 21FF1D9F230721EE00F94D71 /* BackGroundImages.xcdatamodel */;
-			path = BackGroundImages.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

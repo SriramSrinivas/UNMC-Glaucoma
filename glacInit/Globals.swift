@@ -28,6 +28,8 @@
 // smaller view for the picker view would be nice
 // custom objects not being hardcoded into place.
 
+// broke loading in correct image
+// name save files
 
 import Foundation
 
@@ -50,9 +52,9 @@ import Foundation
 //    if (word == "screenshot"){
 //    return 5
     
-    var backGrounds = ["mainTes", "tes-1", "tes"]
+    var backGrounds : [BackgroundImage] 
     var fileTypes = ["blurPoints","greyPoints", "colorPoints", "hiddenPoints","screenshot" ]
-    var currentBackGround = "mainTes"
+    var currentBackGround : BackgroundImage
     var currentFolderExport = ""
     let distances = [ -1, -0.8098, -0.6494, -0.5095, -0.3839, -0.2679, -0.158, -0.05, 0, 0.05, 0.158, 0.2679, 0.3839, 0.5095, 0.6494, 0.8098, 1]
     var distancesInCGFLOAT = CGFloat()
@@ -66,13 +68,48 @@ import Foundation
         return Globals.shared
     }
     override init() {
-        currentBackGround = "mainTes"
+        backGrounds = {
+            let temp = BackgroundImage()
+            temp.Backgroundimage = UIImage(named: "tes")
+            temp.ID = 1
+            temp.title = "tes"
+            
+            let temp1 = BackgroundImage()
+            temp1.Backgroundimage = UIImage(named: "tes-1")
+            temp1.ID = 2
+            temp1.title = "tes-1"
+            
+            let temp2 = BackgroundImage()
+            temp2.Backgroundimage = UIImage(named: "mainTes")
+            temp2.ID = 3
+            temp2.title = "mainTes"
+            
+            let temp3 = BackgroundImage()
+            temp3.Backgroundimage = UIImage(named:"plus")
+            temp3.ID = 4
+            temp3.title = "plus"
+            return [temp, temp1, temp2, temp3]
+            //     return [temp]
+        }()
+        let imagesToBeAdded = PersistanceService.fetch(SaveImageData.self)
+        var count = 5
+        for image in imagesToBeAdded {
+            let temp = BackgroundImage()
+            temp.Backgroundimage = UIImage(data: image.image!)
+            temp.ID = count
+            temp.title = "camera"
+            count = count + 1
+            if !(temp.Backgroundimage == nil) {
+                backGrounds.insert(temp, at: backGrounds.count - 1)
+            }
+        }
+        currentBackGround = backGrounds[1]
     }
     
-    func getCurrentBackGround() -> String{
+    func getCurrentBackGround() -> BackgroundImage{
         return currentBackGround
     }
-    func setCurrentBackGround(newBack: String){
+    func setCurrentBackGround(newBack: BackgroundImage){
         currentBackGround = newBack
     }
     func getdistances() -> [Double] {
@@ -88,7 +125,7 @@ import Foundation
         return currentFolderExport
     }
     func getCameraImage() -> UIImage {
-        return cameraImage ?? UIImage(named: currentBackGround)!
+        return cameraImage ?? currentBackGround.Backgroundimage!
     }
     func setCameraImage(image: UIImage) {
         cameraImage = image

@@ -35,6 +35,18 @@ func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata
     //        }
     
 }
+    
+    func SaveImageToLocal(name: String, title: String, id: Int, image: Data){
+        let saveData = SaveImageData(context: PersistanceService.context)
+        
+        saveData.id = Int16(id)
+        saveData.name = name
+        saveData.title = title
+        saveData.image = image
+        
+        PersistanceService.save()
+    }
+    
 func deleteData(data: [FilesToDownload]) {
     let LocalFileModels = PersistanceService.fetch(VisaulFieldData.self)
     for datum in data {

@@ -128,7 +128,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     var background : UIImageView = {
         var temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.image = UIImage(named: Globals.shared.getCurrentBackGround())
+        let image = Globals.shared.currentBackGround
+        temp.image = image.Backgroundimage
         return temp
     }()
     
@@ -193,7 +194,12 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         let image = (info[.originalImage] as? UIImage)
         background.image = image
         Globals.shared.setCameraImage(image: image!)
-        Globals.shared.setCurrentBackGround(newBack: "camera")
+        let temp = BackgroundImage()
+        temp.Backgroundimage = nil
+        temp.ID = 1
+        temp.title = "camera"
+
+        Globals.shared.setCurrentBackGround(newBack: temp)
         updateBackground(image: image!)
         imagePicker.dismiss(animated: true, completion: nil)
     }
@@ -243,11 +249,11 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     }
     func backgroundChanged() {
         imageName = Globals.shared.getCurrentBackGround()
-        if (imageName == "camera"){
+        if (imageName.title == "camera"){
             background.image = Globals.shared.getCameraImage()
         } else {
-            let image = UIImage(named: imageName)
-            background.image = image
+            
+            background.image = imageName.Backgroundimage
         }
     }
 

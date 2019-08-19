@@ -60,7 +60,8 @@ class ImportDataViewController: UIViewController {
     var background : UIImageView = {
         var temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.image = UIImage(named: Globals.shared.getCurrentBackGround())
+        let image = Globals.shared.getCurrentBackGround()
+        temp.image = image.Backgroundimage
         return temp
     }()
     
@@ -111,11 +112,11 @@ class ImportDataViewController: UIViewController {
     //checks of background is camera image or not and displays it correctly
     func backgroundChanged() {
         imageName = Globals.shared.getCurrentBackGround()
-        if (imageName == "camera"){
+        if (imageName.title == "camera"){
             background.image = Globals.shared.getCameraImage()
         } else {
-            let image = UIImage(named: imageName)
-            background.image = image
+            let image = Globals.shared.getCurrentBackGround()
+            background.image = image.Backgroundimage
         }
     }
     
@@ -220,6 +221,7 @@ class ImportDataViewController: UIViewController {
                     let vc = ViewController()
                     let backgrounds = self.checkForBackGround(name: filename!)
                     //Globals.shared.setCurrentBackGround(newBack: background)
+                    Globals.shared.currentBackGround = backgrounds
                     vc.backImageName = backgrounds
                     self.present(vc, animated: true, completion: nil)
                     vc.subjectID = filename?.first ?? ""
@@ -243,6 +245,7 @@ class ImportDataViewController: UIViewController {
                 let vc = ViewController()
                 let backgrounds = self.checkForBackGround(name: filename!)
                 //Globals.shared.setCurrentBackGround(newBack: background)
+                Globals.shared.currentBackGround = backgrounds
                 vc.backImageName = backgrounds
                 self.dismiss(animated: false, completion: nil)
                 self.present(vc, animated: true, completion: nil)
@@ -257,16 +260,16 @@ class ImportDataViewController: UIViewController {
         }
         
     }
-    func checkForBackGround(name: [String]) -> String{
+    func checkForBackGround(name: [String]) -> BackgroundImage{
         for word in name{
             for back in Globals.shared.backGrounds{
-                if word == back
+                if word == back.title
                 {
-                    return word
+                    return back
                 }
             }
         }
-        return "mainTes"
+        return Globals.shared.backGrounds[1]
     }
     func getImportedData(boxitems: [BOXItem]){
         //let vc = PickerView()
