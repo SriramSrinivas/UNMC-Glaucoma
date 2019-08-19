@@ -201,9 +201,9 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                             //ADD CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                             if !(image == nil){
                             let temp = BackgroundImage()
-                            temp.Backgroundimage = image
-                            temp.ID = 1
-                            temp.title = "camera"
+                                temp.Backgroundimage = image
+                                temp.ID = Int(file!.id)
+                                temp.title = file?.name
                             Globals.shared.currentBackGround = temp
                             Globals.shared.cameraImage = temp.Backgroundimage
                             self.storage.SaveImageToLocal(name: file!.name, title: file!.name, id: 0, image: data)

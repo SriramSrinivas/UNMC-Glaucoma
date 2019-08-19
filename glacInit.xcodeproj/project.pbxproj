@@ -27,6 +27,7 @@
 		2132E47F22D3FAF300734063 /* LoadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */; };
 		2132E48122D3FCD200734063 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48022D3FCD200734063 /* UIExtensions.swift */; };
 		2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132E48222D3FD1700734063 /* UIGenerics.swift */; };
+		218CE584230AEE49002F0212 /* SaveImageData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CE583230AEE49002F0212 /* SaveImageData+CoreDataClass.swift */; };
 		2191E49A23030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2191E49923030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift */; };
 		2191E49C23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2191E49B23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift */; };
 		2191E49E23033C4F001B5FE5 /* LocationToSaveFilesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2191E49D23033C4F001B5FE5 /* LocationToSaveFilesController.swift */; };
@@ -98,6 +99,7 @@
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		2132E48222D3FD1700734063 /* UIGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGenerics.swift; sourceTree = "<group>"; };
+		218CE583230AEE49002F0212 /* SaveImageData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SaveImageData+CoreDataClass.swift"; path = "/Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/SaveImageData+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		2191E49923030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VisaulFieldData+CoreDataProperties.swift"; path = "glacInit/VisaulFieldData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2191E49B23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VisaulFieldData+CoreDataClass.swift"; path = "glacInit/VisaulFieldData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2191E49D23033C4F001B5FE5 /* LocationToSaveFilesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToSaveFilesController.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 		7752F64E1E50020A003ACC5F = {
 			isa = PBXGroup;
 			children = (
+				218CE583230AEE49002F0212 /* SaveImageData+CoreDataClass.swift */,
 				2191E49B23030477001B5FE5 /* VisaulFieldData+CoreDataClass.swift */,
 				2191E49923030463001B5FE5 /* VisaulFieldData+CoreDataProperties.swift */,
 				21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */,
@@ -752,6 +755,7 @@
 				2132E47922D38E2600734063 /* importFile.swift in Sources */,
 				211F7C5A22FC9C230001F584 /* PersistanceService.swift in Sources */,
 				2132E48322D3FD1700734063 /* UIGenerics.swift in Sources */,
+				218CE584230AEE49002F0212 /* SaveImageData+CoreDataClass.swift in Sources */,
 				21FD3B3222E891F900D4EDE8 /* BoxItemsData.swift in Sources */,
 				21A6BB1822CA9422009CDAD3 /* BackgroundChangeController.swift in Sources */,
 				211F7C5E22FDB21E0001F584 /* ImportDataViewController.swift in Sources */,
