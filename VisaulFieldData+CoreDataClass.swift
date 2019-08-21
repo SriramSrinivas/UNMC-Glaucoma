@@ -2,7 +2,7 @@
 //  VisaulFieldData+CoreDataClass.swift
 //  
 //
-//  Created by Lyle Reinholz on 8/13/19.
+//  Created by Lyle Reinholz on 8/20/19.
 //
 //
 

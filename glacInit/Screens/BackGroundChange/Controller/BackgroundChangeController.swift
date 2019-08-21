@@ -22,6 +22,7 @@
 import Foundation
 import UIKit
 import Reachability
+import PopupDialog
 
 protocol BackgroundChangeDelegate : class {
     func backgorundDidChange()
@@ -36,29 +37,7 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
     }
     
     
-    var images: [BackgroundImage] = {
-        var temp = BackgroundImage()
-        temp.Backgroundimage = UIImage(named: "tes")
-        temp.ID = 21
-        temp.title = "tes"
-        
-        var temp1 = BackgroundImage()
-        temp1.Backgroundimage = UIImage(named: "tes-1")
-        temp1.ID = 3
-        temp1.title = "tes-1"
-
-        var temp2 = BackgroundImage()
-        temp2.Backgroundimage = UIImage(named: "mainTes")
-        temp2.ID = 2
-        temp2.title = "mainTes"
-        
-        var temp3 = BackgroundImage()
-        temp3.Backgroundimage = UIImage(named:"plus")
-        temp3.ID = 4
-        temp3.title = "plus"
-        return [temp, temp1, temp2, temp3]
-   //     return [temp]
-    }()
+    var images = Globals.shared.backGrounds
     
     //let images = ["tes", "mainTes", "tes-1"]
     var pickerView = PickerView()
@@ -67,6 +46,11 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
     var currentSession: Session!
     let storage = LoaclStorage.init()
     var didChangeStatus = false
+    lazy var localStorage = LoaclStorage.init()
+    //this is to prevent the user to spam click buttons which will prevent multiple views from appearing and crashing the app
+    // this is a sub optimal way of dealing with this.. a completion handler would be better
+    var timer : Timer?
+    var buttonHasBeenPressed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,19 +61,12 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "cellID")
         fileObject.delegate = self
         pickerView.delegate = self
-        let imagesToBeAdded = PersistanceService.fetch(SaveImageData.self)
-        
-        for image in imagesToBeAdded {
-            let temp = BackgroundImage()
-            temp.Backgroundimage = UIImage(data: image.image!)
-            temp.ID = Int(image.id)
-            temp.title = "camera"
-            if !(temp.Backgroundimage == nil) {
-            images.insert(temp, at: images.count - 1)
-            }
-        }
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
+
     }
-    
+    @objc func reset(){
+        buttonHasBeenPressed = false
+    }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
@@ -99,30 +76,58 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         if indexPath.item == images.count - 1 {
             
         }
-        cell.imageAt = images[indexPath.item]
-
+         cell.imageAt = images[indexPath.item]
         return cell
+    }
+    
+    func deleteImage(cell: Int){
+        let imageBack = Globals.shared.backGrounds
+        let image = imageBack[cell]
+
+        storage.deleteBackgroundImage(image: image)
+        if Globals.shared.backGrounds[cell].isImported == .imported {
+            Globals.shared.backGrounds.remove(at: cell)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let imageName = images[indexPath.item].Backgroundimage!
         if !(indexPath.item == images.count - 1) {
-        let image = imageName
-            Globals.shared.setCurrentBackGround(newBack: images[indexPath.item])
-            if images[indexPath.item].title! == "camera"{
-                Globals.shared.cameraImage = images[indexPath.item].Backgroundimage
+           
+                let title = "Are you sure you want to Logout?"
+            
+                let message = "This is a very important message about logging out and how it is good to do so when the app is no longer in use"
+            
+            //let image = UIImage(named: "pexels-photo-103290")
+            
+            let popup = PopupDialog(title: title, message: message, tapGestureDismissal: true, panGestureDismissal: false)
+            // flag = true
+            let buttonOne = CancelButton(title: "CANCEL", dismissOnTap: true) {
+                
             }
-        delegate?.backgorundDidChange()
-        
-//        let viewController = MainMenuViewController()
-//        self.present(viewController, animated: true, completion: nil)
-            if self.didChangeStatus == true {
-                Globals.shared.importAndExportLoaction = .local
+            let buttonTwo = DefaultButton(title: "Use Photo", dismissOnTap: true) {
+                let image = imageName
+                Globals.shared.setCurrentBackGround(newBack: self.images[indexPath.item])
+                if self.images[indexPath.item].title! == "camera"{
+                    Globals.shared.cameraImage = self.images[indexPath.item].Backgroundimage
+                }
+                self.delegate?.backgorundDidChange()
+                if self.didChangeStatus == true {
+                    Globals.shared.importAndExportLoaction = .local
+                }
+                self.dismiss(animated: false,
+                             completion: nil)
             }
-        self.dismiss(animated: false,
-                     completion: nil)
+            let buttonThree = DefaultButton(title: "delete Photo", dismissOnTap: true) {
+                self.deleteImage(cell: indexPath.item)
+            }
+            popup.addButtons([buttonOne, buttonTwo, buttonThree])
+            
+            self.present(popup, animated: false, completion: nil)
+
         } else {
+            if buttonHasBeenPressed == false {
             reach = Reachability.forInternetConnection()
             if reach!.isReachableViaWiFi() || reach!.isReachableViaWWAN() {
                 
@@ -145,27 +150,14 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                 pickerView.delegate = self
             }
         }
+            buttonHasBeenPressed = true
+        }
         //self.dismiss(animated: true, completion: nil)
     }
     
     func getImportedData(boxitems: [BOXItem]){
-        //let vc = PickerView()
-        var twoDArray : [ExpandableNames] = []
-        var fileItems: [BoxItemsData] = []
-        var folderItems: [BoxItemsData] = []
-        for items in boxitems {
-            let changedata = BoxItemsData(boxItem: items)
-            if changedata.isFolder {
-                folderItems.append(changedata)
-            } else {
-                fileItems.append(changedata)
-            }
-        }
-        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
-        twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
-        twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
-        
-        pickerView.twodimArray = twoDArray
+    
+        pickerView.twodimArray = processData(boxitems: boxitems)
         let nav = UINavigationController(rootViewController: pickerView)
         nav.modalPresentationStyle = .overCurrentContext
         
@@ -177,10 +169,6 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         if !Files.isEmpty{
             //let filename = Files.first?.name.components(separatedBy: "_")
             let file = Files.first
-            //if file?.name.contains("saveFile"){
-            
-            //if checkForFileName(fileName: filename!){
-                // self.dismiss(animated: true, completion: nil)
                 let group = DispatchGroup()
                 group.enter()
                 
@@ -204,8 +192,10 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                                 temp.Backgroundimage = image
                                 temp.ID = Int(file!.id)
                                 temp.title = file?.name
+                                temp.isImported = .imported
                             Globals.shared.currentBackGround = temp
                             Globals.shared.cameraImage = temp.Backgroundimage
+                                Globals.shared.backGrounds.insert(temp, at: Globals.shared.backGrounds.count - 1)
                             self.storage.SaveImageToLocal(name: file!.name, title: file!.name, id: 0, image: data)
                             PersistanceService.save()
                             self.delegate?.backgorundDidChange()
@@ -216,9 +206,6 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                                 Globals.shared.importAndExportLoaction = .local
                             }
                             self.dismiss(animated: false, completion: nil)
-                        //conte
-                       // let data = self.cleanRows(file: content)
-                       // currentData = self.csv(data: data)
                         }
                     } catch {
                         self.showToast(message: "Did not load Data from \(file!.name), Incorrect: FileType/Data", theme: .error)

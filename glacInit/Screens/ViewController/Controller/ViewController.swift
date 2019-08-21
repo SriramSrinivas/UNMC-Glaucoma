@@ -75,7 +75,7 @@ class ViewController: UIViewController {
     let blackSlider = UISlider()
     let alphaToggle = UISwitch()
     let luminText = UILabel()
-    var customObjectList = [CustomObject]()
+    lazy var customObjectList = [CustomObject]()
     var tempImageView = UIView()
     var iterVal = 0
     
@@ -84,12 +84,12 @@ class ViewController: UIViewController {
     let delete = UIButton()
     var subjectID = ""
     let tempBlur = VisualEffectView()
-    let realm = try! Realm()
+    lazy var realm = try! Realm()
     var exportCount = 0
     var testPoint: CustomPoint!
     var reach: Reachability!
-    let file = importFile.init()
-    var pickerView = PickerView()
+    lazy var  file = importFile.init()
+    lazy var pickerView = PickerView()
     
     //amount of csv and png files uploaded
     
@@ -99,9 +99,10 @@ class ViewController: UIViewController {
     var uploadAttempt = 0
     var currentSession: Session!
     
-    var bottomMessageView = SwiftMessages()
+    lazy var bottomMessageView = SwiftMessages()
     var nameLabel = UILabel()
-    
+    var timer : Timer?
+    var buttonHasBeenPressed = false
     
     override func viewDidLoad() {
 
@@ -113,7 +114,7 @@ class ViewController: UIViewController {
         width = view.frame.width
         print(view.bounds.size.width)
         print(view.bounds.size.height)
-        
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         distances = Globals.shared.getdistancesINCGFloat()
 
         mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
@@ -160,7 +161,9 @@ class ViewController: UIViewController {
         }
         
     }
-    
+    @objc func reset(){
+        buttonHasBeenPressed = false
+    }
     override func viewDidAppear(_ animated: Bool) {
         if subjectID == "" {
             enterNameDialog()
@@ -775,6 +778,7 @@ class ViewController: UIViewController {
     }
 
     @objc func getReadyForPickerView(){
+        if buttonHasBeenPressed == false {
         if (Globals.shared.importAndExportLoaction == .box){
         let FolderId = Globals.shared.getcurrentFolderExport()
         if !(FolderId == "")
@@ -803,14 +807,14 @@ class ViewController: UIViewController {
         } else {
             exportTap(FolderID: "0")
         }
+            buttonHasBeenPressed = true
+        }
         
     }
     
     func exportTap(FolderID: String){
-       // bottomMessage("Uploading Files")
-        
+    
         currentSession.saveGridData(mainView: mainImgView, customViewList: customViewUpdateList, hasBox: false)
-        //currentSession.SaveFileToLocal(name: <#T##String#>, blurdata: <#T##String#>, colordata: <#T##String#>, greydata: <#T##String#>, savedata: <#T##String#>, image: <#T##NSData#>)
         if (Globals.shared.importAndExportLoaction == dataSource.local) {
             showToast(message: "Files saved to local was a success", theme: .success)
         }
@@ -1078,23 +1082,8 @@ class ViewController: UIViewController {
     }
     
     func getImportedData(boxitems: [BOXItem]){
-        //let vc = PickerView()
-        var twoDArray : [ExpandableNames] = []
-        var fileItems: [BoxItemsData] = []
-        var folderItems: [BoxItemsData] = []
-        for items in boxitems {
-            let changedata = BoxItemsData(boxItem: items)
-            if changedata.isFolder {
-                folderItems.append(changedata)
-            } else {
-                fileItems.append(changedata)
-            }
-        }
-        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
-        twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
-        twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
-        
-        pickerView.twodimArray = twoDArray
+      
+        pickerView.twodimArray = processData(boxitems: boxitems)
         let nav = UINavigationController(rootViewController: pickerView)
         nav.modalPresentationStyle = .overCurrentContext
         

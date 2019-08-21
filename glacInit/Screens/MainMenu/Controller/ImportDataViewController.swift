@@ -25,6 +25,7 @@ import Reachability
 
 class ImportDataViewController: UIViewController {
     
+    var buttonHasBeenPressed = false
     var ContinueFromSavedButton : UIButton = {
         var temp = UIButton(type: .system)
         setUpButton(&temp, title: "Continue From Saved", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
@@ -72,16 +73,22 @@ class ImportDataViewController: UIViewController {
     var currentSession: Session!
     var currentLocalData : [LocalFileModel]?
     lazy var localStorage = LoaclStorage.init()
+    var timer : Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.delegate = self
         file.delegate = self
         backgroundChanged()
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         [background, ContinueFromSavedButton, ViewDataButton, backMenuButton].forEach {view.addSubview($0)}
         layout()
     }
 
+    @objc func reset(){
+        buttonHasBeenPressed = false
+    }
+    
     private func layout() {
         let height = view.bounds.size.height
         let width = view.bounds.size.width
@@ -93,13 +100,10 @@ class ImportDataViewController: UIViewController {
         background.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         background.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
-        //mainMenuTitleLabel.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 3.5, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         ContinueFromSavedButton.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 7, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height:buttonHeight))
         ViewDataButton.anchor(top: ContinueFromSavedButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         backMenuButton.anchor(top: ViewDataButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
-        //        startOverMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
-        
-        
+       
         let frame = CGRect(x: 0, y:0, width: view.frame.width, height: view.frame.height)
         var c = CustomViewUpdate(frame: frame)
         changeCustomViewUpdate(customView: &c, value: 5, effect: .blur, constimage: nil, mainImgView: nil)
@@ -121,13 +125,17 @@ class ImportDataViewController: UIViewController {
     }
     
     @objc func viewDataTapped() {
-        let vc = LoadedImageViewController()
-        self.present(vc, animated: true, completion: nil)
+        if buttonHasBeenPressed == false {
+            let vc = LoadedImageViewController()
+            self.present(vc, animated: true, completion: nil)
+            buttonHasBeenPressed = true
+        }
     }
     
     //checks for interent connection
     // diplays pickerview at box root level
     @objc func continueFormSavedTapped() {
+        if buttonHasBeenPressed == false {
         if (Globals.shared.importAndExportLoaction == dataSource.box) {
         reach = Reachability.forInternetConnection()
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
@@ -181,7 +189,8 @@ class ImportDataViewController: UIViewController {
             //vc.twodimArray = twoDArray
             self.present(nav,animated: true, completion: nil)
         }
-        
+            buttonHasBeenPressed = true
+        }
     }
     @objc func backTapped() {
         self.dismiss(animated: false, completion: nil)
@@ -261,10 +270,10 @@ class ImportDataViewController: UIViewController {
         
     }
     func checkForBackGround(name: [String]) -> BackgroundImage{
-        for word in name{
-            for back in Globals.shared.backGrounds{
-                if word == back.title
-                {
+        for word in name {
+            for back in Globals.shared.backGrounds {
+                if word == back.title {
+                    Globals.shared.currentBackGround = back
                     return back
                 }
             }
@@ -272,23 +281,8 @@ class ImportDataViewController: UIViewController {
         return Globals.shared.backGrounds[1]
     }
     func getImportedData(boxitems: [BOXItem]){
-        //let vc = PickerView()
-        var twoDArray : [ExpandableNames] = []
-        var fileItems: [BoxItemsData] = []
-        var folderItems: [BoxItemsData] = []
-        for items in boxitems {
-            let changedata = BoxItemsData(boxItem: items)
-            if changedata.isFolder {
-                folderItems.append(changedata)
-            } else {
-                fileItems.append(changedata)
-            }
-        }
-        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
-        twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
-        twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
-        
-        pickerView.twodimArray = twoDArray
+       
+        pickerView.twodimArray = processData(boxitems: boxitems)
         let nav = UINavigationController(rootViewController: pickerView)
         nav.modalPresentationStyle = .overCurrentContext
         
@@ -298,10 +292,7 @@ class ImportDataViewController: UIViewController {
     func csv(data: String) -> [String] {
         var result: [String]?
         result = data.components(separatedBy: "\n")
-        //        for row in rows {
-        //            let columns = row.components(separatedBy: ",")
-        //            result.append(columns)
-        //        }
+    
         return result!
     }
     func cleanRows(file:String)->String{

@@ -17,6 +17,7 @@ PODS:
 DEPENDENCIES:
   - PopupDialog (~> 1.1)
   - Reachability
+  - Realm
   - RealmSwift
   - SwiftHSVColorPicker
   - SwiftMessages
@@ -43,6 +44,6 @@ SPEC CHECKSUMS:
   SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
   VisualEffectView: 9e9883f07d8a929b98c9c08a068f726279d92754
 
-PODFILE CHECKSUM: c1d12c30e4a40ce15d6fddcc2d145bba68fa76fb
+PODFILE CHECKSUM: fa7e622553ff2f54d27ab8def0ff935a1481581b
 
 COCOAPODS: 1.6.1

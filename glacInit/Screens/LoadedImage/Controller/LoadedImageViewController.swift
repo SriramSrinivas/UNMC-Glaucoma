@@ -179,26 +179,12 @@ class LoadedImageViewController: UIViewController {
     let distances = Globals.shared.getdistances()
     var currentSession: Session!
     lazy var localStorage = LoaclStorage.init()
+    var timer : Timer?
+    var buttonHasBeenPressed = false
     
     func getImportedData(boxitems: [BOXItem]){
-        pickerView = PickerView()
-        pickerView.delegate = self
-        var twoDArray : [ExpandableNames] = []
-        var fileItems: [BoxItemsData] = []
-        var folderItems: [BoxItemsData] = []
-        for items in boxitems {
-            let changedata = BoxItemsData(boxItem: items)
-            if changedata.isFolder {
-                folderItems.append(changedata)
-            } else {
-                fileItems.append(changedata)
-            }
-        }
-        //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
-        twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
-        twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
-   
-        pickerView.twodimArray = twoDArray
+        
+        pickerView.twodimArray = processData(boxitems: boxitems)
         let nav = UINavigationController(rootViewController: pickerView)
         nav.modalPresentationStyle = .overCurrentContext
         
@@ -213,27 +199,19 @@ class LoadedImageViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor.darkGray
         constImage = mainImageView.image
-        //NotificationCenter.default.addObserver(file, selector: #selector(getImportedData), name: NSNotification.Name("Getting Data"), object: nil)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch].forEach {view.addSubview($0)}
         if (Globals.shared.currentBackGround == Globals.shared.backGrounds.first){
             initCustomObjects(h: 0, w: 0)
         }
-        //checkAountOfFilesDownlaodinf()
         setUpView()
-       // file.getFolderItems(withID: "0")
         addGridLineUpdate(mainView: mainImageView)
-      //  let image = mainImageView.asImage()
-       // constimage = resizeImage(image: image, width: mainImageView.frame.size.width, height: mainImageView.frame.size.height)
-        //throw err0r
-        //addblur(currentFileType: 1, currentData: [[]])
     }
-    
-  
+    @objc func reset(){
+        buttonHasBeenPressed = false
+    }
     func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         let size = image.size
-        
-        
-        
         let widthRatio  = width  / size.width
         let heightRatio = height / size.height
         
@@ -329,8 +307,7 @@ class LoadedImageViewController: UIViewController {
             countx = 1
         }
     }
-    //will need some sort of local storage for it most likely
-    // give the file path.. this should work for any of the files (color, grey and blur)
+    
     func csv(data: String) -> [[String]] {
         var result: [[String]] = []
         let rows = data.components(separatedBy: "\n")
@@ -372,17 +349,16 @@ class LoadedImageViewController: UIViewController {
         
         mainImageView.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .zero, size: .init(width: view.frame.width - view.frame.width/5, height: view.frame.height))
         sideImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.rightAnchor, padding: .zero, size: .init(width: view.frame.width/5, height: view.frame.height))
-        //blurLabel.anchor(top: sideImageView.topAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 100, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+      
         blurLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((40 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
         blurSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((50 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
-        //illumLabel.anchor(top: blurLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
+      
         illumLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((100 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
         blackSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((110 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         colorLabel.anchor(top: illumLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((10 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
         colorSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((160 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
-        //IsHiddenLabel.anchor(top: colorLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: 50, left: 30, bottom: 0, right: 0), size: .init(width: 100, height: 25))
         IsHiddenLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((220 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
         isHiddenSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((230 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
          allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((10 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
@@ -589,6 +565,7 @@ class LoadedImageViewController: UIViewController {
     @objc func getNewFile(){
         let count = Globals.shared.importAndExportLoaction
         if (count == .box){
+            if buttonHasBeenPressed == false {
         self.reach = Reachability.forInternetConnection()
         //TODO perform internet check 
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
@@ -615,6 +592,8 @@ class LoadedImageViewController: UIViewController {
         else{
            showToast(message: "No Internet Connection", theme: .error)
         }
+                buttonHasBeenPressed = true
+            }
         } else {
             pickerView = PickerView()
             pickerView.delegate = self

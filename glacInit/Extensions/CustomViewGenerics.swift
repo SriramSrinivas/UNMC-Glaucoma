@@ -68,3 +68,22 @@ func captureScreen(view: UIView) -> UIImage? {
     UIGraphicsEndImageContext()
     return image
 }
+
+func processData(boxitems: [BOXItem]) -> [ExpandableNames]{
+    var twoDArray : [ExpandableNames] = []
+    var fileItems: [BoxItemsData] = []
+    var folderItems: [BoxItemsData] = []
+    for items in boxitems {
+        let changedata = BoxItemsData(boxItem: items)
+        if changedata.isFolder {
+            folderItems.append(changedata)
+        } else {
+            fileItems.append(changedata)
+        }
+    }
+    //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
+    twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
+    twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+    
+    return twoDArray
+}

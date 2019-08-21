@@ -25,6 +25,7 @@ class Basecell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        
     }
     func setupViews(){
         
@@ -42,6 +43,8 @@ class ChangeCell : Basecell {
             
         }
     }
+    
+    weak var link : BackgroundChangeController?
     
     let imageView : UIImageView = {
         let temp = UIImageView()
@@ -62,8 +65,20 @@ class ChangeCell : Basecell {
         return temp
     }()
     
+    var flag = false
     
     override func setupViews() {
+      //  let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handle(sender:)))
+      //  swipeRight.direction = [.left, .right]
+//        swipeRight.numberOfTouchesRequired = 2
+       // self.addGestureRecognizer(swipeRight)
+      //  let pan = UIPanGestureRecognizer(target: self, action: #selector(handle(sender:)))
+       // let pan = UITapGestureRecognizer(target: self, action: #selector(handle))
+        //pan.numberOfTapsRequired = 2
+        //pan.maximumNumberOfTouches = 2
+        //pan.minimumNumberOfTouches = 2
+      //  self.addGestureRecognizer(pan)
+        
         addSubview(imageView)
         addSubview(seperator)
         
@@ -73,5 +88,9 @@ class ChangeCell : Basecell {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0(5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0" : seperator]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(5)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": seperator]))
         
+    }
+    @objc func handle(sender: UITapGestureRecognizer){
+        //sender.maximumNumberOfTouches = 1
+       // link?.deleteImage(cell: self)
     }
 }

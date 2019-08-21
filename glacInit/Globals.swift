@@ -22,14 +22,13 @@
 //TODO for the project
 //refactorization - bring globals here for a starter, and make code easier to follow
 // error checking, not implemeneted in the filedownlaods
-// completion handler for files
-// switch mantiance
 // hidden objects still have to be dealt with
 // smaller view for the picker view would be nice
 // custom objects not being hardcoded into place.
 
-// broke loading in correct image
-// name save files
+// app crashes when tapping twice
+// slow transitions for new 
+
 
 import Foundation
 
@@ -60,7 +59,7 @@ import Foundation
     var distancesInCGFLOAT = CGFloat()
     var cameraImage : UIImage?
     var isLoggedIntoBox : Bool = false
-    var importAndExportLoaction = dataSource.local
+    var importAndExportLoaction = dataSource.box
     
     static let shared = Globals()
     
@@ -71,34 +70,36 @@ import Foundation
         backGrounds = {
             let temp = BackgroundImage()
             temp.Backgroundimage = UIImage(named: "tes")
-            temp.ID = 1
+            temp.ID = 0
             temp.title = "tes"
-            
+            temp.isImported = .original
             let temp1 = BackgroundImage()
             temp1.Backgroundimage = UIImage(named: "tes-1")
-            temp1.ID = 2
+            temp1.ID = 0
             temp1.title = "tes-1"
-            
+            temp1.isImported = .original
             let temp2 = BackgroundImage()
             temp2.Backgroundimage = UIImage(named: "mainTes")
-            temp2.ID = 3
+            temp2.ID = 0
             temp2.title = "mainTes"
-            
+            temp2.isImported = .original
             let temp3 = BackgroundImage()
             temp3.Backgroundimage = UIImage(named:"plus")
-            temp3.ID = 4
+            temp3.ID = 0
             temp3.title = "plus"
+            temp3.isImported = .original
             return [temp, temp1, temp2, temp3]
             //     return [temp]
         }()
         let imagesToBeAdded = PersistanceService.fetch(SaveImageData.self)
-        var count = 5
+        //var count = 5
         for image in imagesToBeAdded {
             let temp = BackgroundImage()
             temp.Backgroundimage = UIImage(data: image.image!)
-            temp.ID = count
-            temp.title = "camera"
-            count = count + 1
+            temp.ID = Int(image.id)
+            temp.title = image.name
+            temp.isImported = .imported
+           // count = count + 1
             if !(temp.Backgroundimage == nil) {
                 backGrounds.insert(temp, at: backGrounds.count - 1)
             }

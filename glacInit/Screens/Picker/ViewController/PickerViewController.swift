@@ -22,9 +22,6 @@
 //how to get rid of the grey for non selectable
 // bring up another view for showing which files will be imported
 
-//BUG: when not expanded
-
-
 import Foundation
 import UIKit
 import BoxContentSDK

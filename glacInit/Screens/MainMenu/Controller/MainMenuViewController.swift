@@ -183,12 +183,13 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     }
     
     @objc func cameraMenuButtonTapped(){
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker =  UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera
         
-        imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        
-        present(imagePicker, animated: true, completion: nil)
+            present(imagePicker, animated: true, completion: nil)
+        }
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = (info[.originalImage] as? UIImage)

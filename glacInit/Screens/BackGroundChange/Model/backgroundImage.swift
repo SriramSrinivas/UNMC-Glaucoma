@@ -20,12 +20,17 @@
  */
 import UIKit
 
+enum isBackGroundImported {
+    case original
+    case imported
+}
+
 class BackgroundImage: NSObject {
     
     var Backgroundimage: UIImage!
     var title: String!
     var ID: Int!
     var Data: Data?
-    
+    var isImported : isBackGroundImported!
     
 }

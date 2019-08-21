@@ -13,6 +13,8 @@ class LoaclStorage {
         
     }
     var data: [LocalFileModel] = []
+    var imageData: [SaveImageData] = []
+    
 
 func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata: String, hiddendata: String, savedata: String, image: NSData){
     //let data = LocalFileModel.init(name: name, blurdata: blurdata, colordata: colordata, greydata: greydata, savedata: savedata, image: image)
@@ -58,6 +60,19 @@ func deleteData(data: [FilesToDownload]) {
     }
     PersistanceService.save()
 }
+    func deleteBackgroundImage(image: BackgroundImage) {
+        let LocalFileModels = PersistanceService.fetch(SaveImageData.self)
+        if (image.isImported == isBackGroundImported.imported){
+            for data in LocalFileModels {
+                if image.title == data.title {
+                    PersistanceService.context.delete(data)
+                    PersistanceService.save()
+                }
+            }
+        }
+        //PersistanceService.context.
+    }
+    
 func loadData() throws -> [LocalFileModel] {
     let LocalFileModels = PersistanceService.fetch(VisaulFieldData.self)  //hared.fetch(VisaulFieldData.self)
     data = []
