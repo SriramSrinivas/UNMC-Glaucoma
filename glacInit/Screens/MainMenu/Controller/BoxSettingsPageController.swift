@@ -135,16 +135,18 @@ class BoxSettingsPage: UIViewController {
         if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
             self.currentSession = Session(currentSubjectId: ("import"))
             self.currentSession.boxAuthorize()
+            Globals.shared.importAndExportLoaction = .box
         }
     }
     @objc func logoutTapped() {
         let title = "Are you sure you want to Logout?"
-        let message = "This is a very important message about logging out and how it is good to do so when the app is no longer in use"
+        let message = "This is a very important message about logging out and how it is good to do so when the app is no longer in use, will automatically switch to local use"
         let popup = PopupDialog(title: title, message: message, tapGestureDismissal: true, panGestureDismissal: false)
         let buttonOne = CancelButton(title: "CANCEL", dismissOnTap: true) {
         }
         let buttonTwo = DefaultButton(title: "BOX LOGOUT", dismissOnTap: true) {
             BOXContentClient.logOutAll()
+            Globals.shared.importAndExportLoaction = .local
         }
         popup.addButtons([buttonOne, buttonTwo])
         self.present(popup, animated: false, completion: nil)

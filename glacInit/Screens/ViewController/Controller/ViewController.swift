@@ -176,16 +176,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let width = sideView.frame.width
         let height = view.frame.height
         
-        let gridHeight = sideView.frame.size.height*0.60
+        let gridHeight = sideView.frame.size.height*0.63
         let origHeight = sideView.frame.size.height*0.70
     
         let gridSwitch = UISwitch()
-        gridSwitch.frame = CGRect(x: ((30 / OW) * width), y: gridHeight, width: ((50 / OW) * width), height: ((100 / OH) * height))
+        gridSwitch.frame = CGRect(x: ((40 / OW) * width), y: gridHeight, width: ((50 / OW) * width), height: ((100 / OH) * height))
         gridSwitch.isOn = true 
         gridSwitch.addTarget(self, action: #selector(toggleGrid), for: UIControl.Event.valueChanged)
         
         let origSwitch = UISwitch()
-        origSwitch.frame = CGRect(x: ((30 / OW) * width), y: origHeight, width: ((50 / OW) * width), height: ((100 / OH) * height))
+        origSwitch.frame = CGRect(x: ((40 / OW) * width), y: origHeight, width: ((50 / OW) * width), height: ((100 / OH) * height))
         origSwitch.addTarget(self, action: #selector(toggleOriginal), for: UIControl.Event.valueChanged)
         
         let gridText = UILabel()
@@ -309,8 +309,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         tempView2.widthAnchor.constraint(equalToConstant: (view.frame.width - ((50 / OW) * width))).isActive = true
         tempView2.backgroundColor = UIColor(hexString: "#424242")
         
-        alphaToggle.heightAnchor.constraint(equalToConstant: ((30 / OH) * height)).isActive = true
-        alphaToggle.widthAnchor.constraint(equalToConstant: ((40 / OW) * width)).isActive = true
+        alphaToggle.heightAnchor.constraint(equalToConstant: ((50 / OH) * height)).isActive = true
+        alphaToggle.widthAnchor.constraint(equalToConstant: ((30 / OH) * height)).isActive = true
         alphaToggle.addTarget(self, action: #selector(switchAlpha), for: .valueChanged)
         alphaToggle.setOn(true, animated: true)
 
@@ -338,7 +338,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         sliderStack.axis = NSLayoutConstraint.Axis.vertical
         sliderStack.distribution = UIStackView.Distribution.equalSpacing
         sliderStack.alignment = UIStackView.Alignment.center
-        sliderStack.spacing = 4.0
+        sliderStack.spacing = 3.0
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
         
         sliderStack.addArrangedSubview(colorOnIcon)
@@ -362,7 +362,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
         sliderStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 50).isActive = true
+        sliderStack.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 70).isActive = true
         
         enableControl(value: .Disable)
     }
