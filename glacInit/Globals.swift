@@ -26,8 +26,9 @@
 // smaller view for the picker view would be nice
 // custom objects not being hardcoded into place.
 
-// app crashes when tapping twice
-// slow transitions for new 
+// add automatic switching when logging in and out box to .box or .local
+// slow transitions for new
+// switch added new functionality so got to update flow chart 
 
 
 import Foundation
@@ -35,21 +36,7 @@ import Foundation
 
 
 @objc class Globals : NSObject {
-//    if (word == "blurPoints")
-//    {
-//    return 1
-//    }
-//    if (word == "greyPoints"){
-//    return 2
-//    }
-//    if (word == "colorPoints"){
-//    return 3
-//    }
-//    if (word == "hiddenPoints"){
-//    return 4
-//    }
-//    if (word == "screenshot"){
-//    return 5
+
     
     var backGrounds : [BackgroundImage] 
     var fileTypes = ["blurPoints","greyPoints", "colorPoints", "hiddenPoints","screenshot" ]
@@ -69,26 +56,26 @@ import Foundation
     override init() {
         backGrounds = {
             let temp = BackgroundImage()
-            temp.Backgroundimage = UIImage(named: "tes")
+            temp.Backgroundimage = UIImage(named: "mainTes")
             temp.ID = 0
-            temp.title = "tes"
+            temp.title = "mainTes"
             temp.isImported = .original
-            let temp1 = BackgroundImage()
-            temp1.Backgroundimage = UIImage(named: "tes-1")
-            temp1.ID = 0
-            temp1.title = "tes-1"
-            temp1.isImported = .original
-            let temp2 = BackgroundImage()
-            temp2.Backgroundimage = UIImage(named: "mainTes")
-            temp2.ID = 0
-            temp2.title = "mainTes"
-            temp2.isImported = .original
+//            let temp1 = BackgroundImage()
+//            temp1.Backgroundimage = UIImage(named: "tes-1")
+//            temp1.ID = 0
+//            temp1.title = "tes-1"
+//            temp1.isImported = .original
+//            let temp2 = BackgroundImage()
+//            temp2.Backgroundimage = UIImage(named: "tes")
+//            temp2.ID = 0
+//            temp2.title = "tes"
+//            temp2.isImported = .original
             let temp3 = BackgroundImage()
             temp3.Backgroundimage = UIImage(named:"plus")
             temp3.ID = 0
             temp3.title = "plus"
             temp3.isImported = .original
-            return [temp, temp1, temp2, temp3]
+            return [temp, temp3]
             //     return [temp]
         }()
         let imagesToBeAdded = PersistanceService.fetch(SaveImageData.self)
@@ -104,7 +91,7 @@ import Foundation
                 backGrounds.insert(temp, at: backGrounds.count - 1)
             }
         }
-        currentBackGround = backGrounds[1]
+        currentBackGround = backGrounds[0]
     }
     
     func getCurrentBackGround() -> BackgroundImage{

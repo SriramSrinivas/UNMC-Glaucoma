@@ -33,7 +33,7 @@ import CoreGraphics
 
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
    
     //image heght 1024.0
     //image width 1366.0
@@ -103,6 +103,7 @@ class ViewController: UIViewController {
     var nameLabel = UILabel()
     var timer : Timer?
     var buttonHasBeenPressed = false
+
     
     override func viewDidLoad() {
 
@@ -114,7 +115,6 @@ class ViewController: UIViewController {
         width = view.frame.width
         print(view.bounds.size.width)
         print(view.bounds.size.height)
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         distances = Globals.shared.getdistancesINCGFloat()
 
         mainImgView = UIView(frame: CGRect(x: 0, y: 0, width: (screenSize.width - screenSize.width/5), height: screenSize.height))
@@ -808,6 +808,7 @@ class ViewController: UIViewController {
             exportTap(FolderID: "0")
         }
             buttonHasBeenPressed = true
+            timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         }
         
     }
@@ -846,14 +847,26 @@ class ViewController: UIViewController {
         //addWaterMark(name: subjectID)
     }
     
-    //MARK: box autho
+   
+   
+// Limits the user input to normal characters and limits length, prevents crashing 
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
+        let cs = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
+        let filtered = string.components(separatedBy: cs).joined(separator: "")
+        
+        let newString = ((textField.text! as NSString).replacingCharacters(in: range, with: string) as NSString) as String
+        return (string == filtered) && (newString.count <= 10)
+        //(string == filtered)
+    }
     func enterNameDialog(){
         let alert = UIAlertController(title: "Enter Subject Identifier", message: "", preferredStyle: .alert)
         var inputTextField: UITextField?
-        
+        //inputTextField?.delegate = self
         alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Subject ID"
             inputTextField = textField
+             inputTextField?.delegate = self
             textField.addTarget(alert, action: #selector(alert.textDidChangeInLoginAlert), for: .editingChanged)
         }
        

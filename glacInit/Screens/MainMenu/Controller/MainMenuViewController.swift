@@ -37,7 +37,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var versionNumber : UITextView = {
         var temp = UITextView()
-        nonEditableTextView(&temp, text: "-v 2.4.0", fontSize: 15)
+        nonEditableTextView(&temp, text: "-v 2.4.1", fontSize: 15)
         temp.textColor = .black
         temp.backgroundColor = .clear
         temp.textAlignment = .center
@@ -187,7 +187,6 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
             imagePicker =  UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .camera
-        
             present(imagePicker, animated: true, completion: nil)
         }
     }
@@ -229,7 +228,6 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         mainMenuButton.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space * 3.25, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height:buttonHeight))
         importMenuButton.anchor(top: mainMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         newMenuButton.anchor(top: importMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
-//        startOverMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         switchMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         cameraMenuButton.anchor(top: switchMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         logoutMenuButton.anchor(top: cameraMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))

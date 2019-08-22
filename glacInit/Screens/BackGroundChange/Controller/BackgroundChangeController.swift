@@ -61,7 +61,6 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "cellID")
         fileObject.delegate = self
         pickerView.delegate = self
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
 
     }
     @objc func reset(){
@@ -151,6 +150,7 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
             }
         }
             buttonHasBeenPressed = true
+            timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         }
         //self.dismiss(animated: true, completion: nil)
     }

@@ -80,7 +80,6 @@ class ImportDataViewController: UIViewController {
         pickerView.delegate = self
         file.delegate = self
         backgroundChanged()
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         [background, ContinueFromSavedButton, ViewDataButton, backMenuButton].forEach {view.addSubview($0)}
         layout()
     }
@@ -136,60 +135,60 @@ class ImportDataViewController: UIViewController {
     // diplays pickerview at box root level
     @objc func continueFormSavedTapped() {
         if buttonHasBeenPressed == false {
-        if (Globals.shared.importAndExportLoaction == dataSource.box) {
-        reach = Reachability.forInternetConnection()
-        if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
-            
-            file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
-                if let fileError = error {
-                    self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
-                    self.currentSession = Session(currentSubjectId: ("import"))
-                    self.currentSession.boxAuthorize()
-                }
-                else {
+            if (Globals.shared.importAndExportLoaction == dataSource.box) {
+                reach = Reachability.forInternetConnection()
+                if self.reach!.isReachableViaWiFi() || self.reach!.isReachableViaWWAN() {
                     
+                    file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
+                        if let fileError = error {
+                            self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
+                            self.currentSession = Session(currentSubjectId: ("import"))
+                            self.currentSession.boxAuthorize()
+                        }
+                        else {
+                            
+                        }
+                    })
+                    pickerView = PickerView()
+                    pickerView.delegate = self
                 }
-            })
-            pickerView = PickerView()
-            
-            pickerView.delegate = self
-        }
-        } else {
-            pickerView = PickerView()
-            
-            pickerView.delegate = self
-            currentSession = Session(currentSubjectId: "hello")
-            var hello : [LocalFileModel] = []
-            do {
-                try hello = localStorage.loadData()
-            } catch {
-                showToast(message: "Error In loading Data", theme: .error)
-                hello = localStorage.getDataThatDidLoad()
+            } else {
+                pickerView = PickerView()
+                
+                pickerView.delegate = self
+                currentSession = Session(currentSubjectId: "hello")
+                var hello : [LocalFileModel] = []
+                do {
+                    try hello = localStorage.loadData()
+                } catch {
+                    showToast(message: "Error In loading Data", theme: .error)
+                    hello = localStorage.getDataThatDidLoad()
+                }
+                currentLocalData = hello
+                var twoDArray : [ExpandableNames] = []
+                var fileItems: [BoxItemsData] = []
+                var folderItems: [BoxItemsData] = []
+                var count = 0;
+                for items in hello {
+                    let changedata = BoxItemsData(name: items.name!, id: String(count))
+                    count = count + 1
+                    fileItems.append(changedata)
+                }
+                //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
+                folderItems = fileItems
+                twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
+                twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
+                
+                pickerView.twodimArray = twoDArray
+                pickerView.Source = dataSource.local
+                let nav = UINavigationController(rootViewController: pickerView)
+                nav.modalPresentationStyle = .overCurrentContext
+                
+                //vc.twodimArray = twoDArray
+                self.present(nav,animated: true, completion: nil)
             }
-            currentLocalData = hello
-            var twoDArray : [ExpandableNames] = []
-            var fileItems: [BoxItemsData] = []
-            var folderItems: [BoxItemsData] = []
-            var count = 0;
-            for items in hello {
-                let changedata = BoxItemsData(name: items.name!, id: String(count))
-                count = count + 1
-                fileItems.append(changedata)
-            }
-            //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)
-            folderItems = fileItems
-            twoDArray.append(ExpandableNames(isExpanded: true, items: folderItems))
-            twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
-            
-            pickerView.twodimArray = twoDArray
-            pickerView.Source = dataSource.local
-            let nav = UINavigationController(rootViewController: pickerView)
-            nav.modalPresentationStyle = .overCurrentContext
-            
-            //vc.twodimArray = twoDArray
-            self.present(nav,animated: true, completion: nil)
-        }
             buttonHasBeenPressed = true
+            timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         }
     }
     @objc func backTapped() {

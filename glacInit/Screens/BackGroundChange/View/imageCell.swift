@@ -68,17 +68,7 @@ class ChangeCell : Basecell {
     var flag = false
     
     override func setupViews() {
-      //  let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handle(sender:)))
-      //  swipeRight.direction = [.left, .right]
-//        swipeRight.numberOfTouchesRequired = 2
-       // self.addGestureRecognizer(swipeRight)
-      //  let pan = UIPanGestureRecognizer(target: self, action: #selector(handle(sender:)))
-       // let pan = UITapGestureRecognizer(target: self, action: #selector(handle))
-        //pan.numberOfTapsRequired = 2
-        //pan.maximumNumberOfTouches = 2
-        //pan.minimumNumberOfTouches = 2
-      //  self.addGestureRecognizer(pan)
-        
+
         addSubview(imageView)
         addSubview(seperator)
         
@@ -89,8 +79,5 @@ class ChangeCell : Basecell {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(5)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": seperator]))
         
     }
-    @objc func handle(sender: UITapGestureRecognizer){
-        //sender.maximumNumberOfTouches = 1
-       // link?.deleteImage(cell: self)
-    }
+   
 }

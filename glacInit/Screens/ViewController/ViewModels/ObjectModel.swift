@@ -31,16 +31,7 @@ var customObjectList = [CustomObject]()
 
 func createobjects(pictureID: Int, height: CGFloat, width: CGFloat) -> [CustomObject] {
     
-    
-            //819.2
-    
-   //let hello = ((735.0 / 819.2) * width)
-//        let newHR = height / 768.0
-//        let newWR = width /  819.2
-//        var newt1 = 735.0 * newHR
-//        var newt2 = 237.6 * newWR
-//        print(newt1)
-//        print(newt2)
+
     if (pictureID == 1) {
     customObjectList = [CustomObject(imageName: "doggo", xPos: ((413 / 819.2) * width), yPos: ((413 / 768) * height), sideSize: ((90 / 819.2) * width), alphaValue: 1),
                     CustomObject(imageName: "trashcan", xPos: ((-21 / 819.2) * width), yPos: ((366 / 768) * height), sideSize: ((130 / 819.2) * width), alphaValue: 1),

@@ -199,7 +199,6 @@ class LoadedImageViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor.darkGray
         constImage = mainImageView.image
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch].forEach {view.addSubview($0)}
         if (Globals.shared.currentBackGround == Globals.shared.backGrounds.first){
             initCustomObjects(h: 0, w: 0)
@@ -593,6 +592,7 @@ class LoadedImageViewController: UIViewController {
            showToast(message: "No Internet Connection", theme: .error)
         }
                 buttonHasBeenPressed = true
+                timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
             }
         } else {
             pickerView = PickerView()
