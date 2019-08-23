@@ -112,9 +112,10 @@ class LoadedImageViewController: UIViewController {
         return temp
     }()
     
-    var colorLabel : UITextView = {
-        var temp = UITextView()
-        nonEditableTextView(&temp, text: "Color", fontSize: 15)
+    var colorLabel :  UIImageView = {
+        let image = UIImage(named: "lumin")
+        var temp = UIImageView.init(image: image)
+        temp.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
         return temp
     }()
     
@@ -159,6 +160,11 @@ class LoadedImageViewController: UIViewController {
         
         return temp
     }()
+    var textView : UITextView = {
+       var temp = UITextView()
+        nonEditableTextView(&temp, text: "", fontSize: 12)
+        return temp
+    }()
     
     var reach: Reachability?
     var backGroundImages = Globals.shared.backGrounds
@@ -169,6 +175,7 @@ class LoadedImageViewController: UIViewController {
     var isHiddenCustomUpdateList = [CustomViewUpdate]()
     //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
+    var secondImage : UIImage?
     lazy var file = importFile.init()
     var pickerView = PickerView()
     var LoadedImage = UIImage()
@@ -199,7 +206,7 @@ class LoadedImageViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor.darkGray
         constImage = mainImageView.image
-        [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch].forEach {view.addSubview($0)}
+        [sideImageView, mainImageView, blurLabel, blurSwitch, illumLabel, blackSwitch, colorLabel, colorSwitch, IsHiddenLabel, allSwitch, allLabel, isHiddenSwitch, gridLabel, gridSwitch, backButton, importButton, importedImageLabel, importBackgroundSwitch, textView].forEach {view.addSubview($0)}
         if (Globals.shared.currentBackGround == Globals.shared.backGrounds.first){
             initCustomObjects(h: 0, w: 0)
         }
@@ -235,7 +242,10 @@ class LoadedImageViewController: UIViewController {
         let height = view.frame.height
         var countx = 1
         var county = 1
-        constImage = resizeImage(image: constImage!, width: width, height: height + 1)
+       
+        constImage = resizeImage(image: constImage!, width: width, height: height)
+       
+        
         
         for number in distances {
             for numb in distances {
@@ -284,6 +294,8 @@ class LoadedImageViewController: UIViewController {
                 c.layer.borderWidth = 5
                 c.layer.borderColor = UIColor.red.cgColor
                 changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: constImage, mainImgView: mainImageView)
+                c.clipsToBounds = false
+                c.contentMode = .scaleAspectFit
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
                 }
@@ -349,28 +361,37 @@ class LoadedImageViewController: UIViewController {
         mainImageView.anchor(top: view.topAnchor, leading: view.leftAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .zero, size: .init(width: view.frame.width - view.frame.width/5, height: view.frame.height))
         sideImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.rightAnchor, padding: .zero, size: .init(width: view.frame.width/5, height: view.frame.height))
       
-        blurLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((40 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
-        blurSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((50 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
-        
+        blurLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((30 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
+        blurSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((40 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
       
-        illumLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((100 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
-        blackSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((110 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
-        colorLabel.anchor(top: illumLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((10 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
+        illumLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((90 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
+        blackSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((100 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+        
+        colorLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((150 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
         colorSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((160 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
-        IsHiddenLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((220 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
-        isHiddenSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((230 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
-         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((10 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
+        IsHiddenLabel.frame = CGRect(x: width - (sideWidth * 0.8), y: ((210 / OH) * height), width: ((50 / OW) * sideWidth), height: ((50 / OH) * height))
+        isHiddenSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((220 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+        
+         allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
         allSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((280 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+        
+//        allLabel.anchor(top: IsHiddenLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
+//        allSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((280 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
         gridLabel.anchor(top: allLabel.bottomAnchor, leading: mainImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((30 / OH) * height), left: width - (sideWidth * 0.85), bottom: 0, right: 0), size: .init(width: ((70 / OW) * sideWidth), height: ((25 / OH) * height)))
         gridSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((340 / OH) * height), width: ((100 / OW) * width), height: ((50 / OH) * height))
         
-        backButton.anchor(top: gridSwitch.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((30 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
-        importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((30 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        importedImageLabel.anchor(top: gridLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init( top: ((35 / OH) * height), left: ((20 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        importBackgroundSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((400 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
-        importedImageLabel.anchor(top: importButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init( top: ((35 / OH) * height), left: ((20 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
-        importBackgroundSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((555 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
+        backButton.anchor(top: importedImageLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((50 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        importButton.anchor(top: backButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: ((25 / OH) * height), left: ((50 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+        
+        textView.anchor(top: importButton.bottomAnchor, leading: sideImageView.leftAnchor, bottom: view.bottomAnchor, trailing: view.rightAnchor, padding: .init(top: 10, left: 10, bottom: 10, right: 10))
+        
+//        importedImageLabel.anchor(top: gridLabel.bottomAnchor, leading: sideImageView.leftAnchor, bottom: nil, trailing: nil, padding: .init( top: ((35 / OH) * height), left: ((20 / OW) * sideWidth), bottom: 0, right: 0), size: .init(width: ((100 / OW) * sideWidth), height: ((50 / OH) * height)))
+//        importBackgroundSwitch.frame = CGRect(x: width - (sideWidth * 0.5), y: ((400 / OH) * height), width: ((100 / OW) * sideWidth), height: ((50 / OH) * height))
         
     }
     
@@ -498,6 +519,10 @@ class LoadedImageViewController: UIViewController {
             }
             blurSwitch.setOn(true, animated: true)
             colorSwitch.setOn(true, animated: true)
+            isHiddenSwitch.setOn(true, animated: true)
+            for i in isHiddenCustomUpdateList {
+                i.isHidden = false
+            }
             for i in greyCustomViewUpdateList{
                 i.isHidden = false
             }
@@ -513,10 +538,14 @@ class LoadedImageViewController: UIViewController {
         blackSwitch.setOn(false, animated: true)
         blurSwitch.setOn(false, animated: true)
         colorSwitch.setOn(false, animated: true)
+        isHiddenSwitch.setOn(false, animated: true)
         for i in colorCustomViewUpdateList{
             i.isHidden = true
         }
         for i in greyCustomViewUpdateList{
+            i.isHidden = true
+        }
+        for i in blurCustomViewUpdateList{
             i.isHidden = true
         }
         for i in blurCustomViewUpdateList{
@@ -574,6 +603,7 @@ class LoadedImageViewController: UIViewController {
         colorCustomViewUpdateList.removeAll()
         objectCustomViewUpdateList.removeAll()
         isHiddenCustomUpdateList.removeAll()
+        textView.text = ""
             file.getFolderItems(withID: "0", completion: { (uploaded:Bool, error:Error?) in
                 if let fileError = error {
                     self.showToast(message: "\(fileError.localizedDescription)", theme: .error)
@@ -639,16 +669,19 @@ class LoadedImageViewController: UIViewController {
         else{
             for file in Files {
                 let names = file.name.components(separatedBy: "_")
+                
                 checkNameForBackGrounds(name: names)
                 //let back = backgroundChanged()
                 let back = Globals.shared.currentBackGround
                 Globals.shared.cameraImage = back.Backgroundimage
                 mainImageView.image = back.Backgroundimage
-                constImage = back.Backgroundimage
+                constImage = Globals.shared.currentBackGround.Backgroundimage
                 
                 mainImageView.reloadInputViews()
                 //if returns 0 it failed
                 let fileIntValue = checkForKindOfFile(name: names)
+                let effect = effectToString(name: fileIntValue)
+                textView.text.append(names.first! + "_" + effect + "\n")
                 let group = DispatchGroup()
                 group.enter()
                 
@@ -711,7 +744,7 @@ class LoadedImageViewController: UIViewController {
             //let back = backgroundChanged()
             //back = "MainTes"
             //mainImageView.image = image
-            constImage = mainImageView.image
+            constImage = Globals.shared.currentBackGround.Backgroundimage
             mainImageView.reloadInputViews()
             do{
                 //filesToLoad.blurdata
@@ -780,6 +813,26 @@ class LoadedImageViewController: UIViewController {
         }
         return .incorrectEffectType
     }
+    func effectToString(name: effectType) -> String{
+        if (name == .blur)
+        {
+            return "blurPoints"
+        }
+        if (name == .grey){
+            return "greyPoints"
+        }
+        if (name == .color){
+            return "colorPoints"
+        }
+        if (name == .isHidden){
+            return "hiddenPoints"
+        }
+        if (name == .PNG){
+            return "screenshot"
+        }
+        return "incorrectEffectType"
+    }
+    
     func checkNameForBackGrounds(name: [String]){
         for word in name {
             for back in Globals.shared.backGrounds {

@@ -41,7 +41,14 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         var cropImage = constimage
         customView.setImageConst(images: constimage!)
         customView.setValue(value: value)
-        cropImage = cropImage?.crop(rect: customView.frame)
+        var newView : CGRect
+        if (customView.frame.height > customView.frame.width){
+            newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.height, height: customView.frame.height)
+        } else {
+            newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
+        }
+        cropImage = cropImage?.crop(rect: newView)
+       // cropImage = cropToBounds(image: constimage!, width: Double(customView.frame.height), height: Double(customView.frame.width), x: customView.frame.minX, y: customView.frame.minY)
         cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
         mainImgView?.insertSubview(customView, belowSubview: customObjectList.first ?? mainImgView!)
         customView.backgroundColor = .clear
@@ -56,8 +63,14 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         else{
             customView.resetImage()
             customView.addImage(images: cropImage!)
+            
+            
         }
     }
+    customView.image.clipsToBounds = false
+   // customView.contentMode = .scaleAspectFit
+    //customView.contentMode = .bottomLeft
+    customView.layer.masksToBounds = false
     customView.includesEffect()
 }
 func captureScreen(view: UIView) -> UIImage? {
@@ -86,4 +99,45 @@ func processData(boxitems: [BOXItem]) -> [ExpandableNames]{
     twoDArray.append(ExpandableNames(isExpanded: true, items: fileItems))
     
     return twoDArray
+}
+func cropToBounds(image: UIImage, width: Double, height: Double, x : CGFloat, y : CGFloat) -> UIImage {
+    
+    let cgimage = image.cgImage!
+    let contextImage: UIImage = UIImage(cgImage: cgimage)
+    let contextSize: CGSize = contextImage.size
+    var posX: CGFloat = x
+    var posY: CGFloat = y
+    var cgwidth: CGFloat = CGFloat(width)
+    var cgheight: CGFloat = CGFloat(height)
+//    if (width >= height ){
+//        cgwidth = CGFloat(width)
+//        cgheight = CGFloat(width)
+//    } else {
+//        cgwidth = CGFloat(height)
+//        cgheight = CGFloat(height)
+//    }
+//
+    
+    // See what size is longer and create the center off of that
+    if contextSize.width > contextSize.height {
+        posX = ((contextSize.width - contextSize.height) / 2)
+        posY = 0
+        cgwidth = contextSize.height
+        cgheight = contextSize.height
+    } else {
+        posX = 0
+        posY = ((contextSize.height - contextSize.width) / 2)
+        cgwidth = contextSize.width
+        cgheight = contextSize.width
+    }
+    
+    let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
+    
+    // Create bitmap image from context using the rect
+    let imageRef: CGImage = cgimage.cropping(to: rect)!
+    
+    // Create a new image based on the imageRef and rotate back to the original orientation
+    let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+    
+    return image
 }
