@@ -38,18 +38,45 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.blur.blurRadius = 0
         customView.effect = effectType.grey
     } else if effect == .color {
+        //customView.image.frame = customView.frame
         var cropImage = constimage
         customView.setImageConst(images: constimage!)
         customView.setValue(value: value)
+        //https://cocoapods.org/pods/ImageCropper
         var newView : CGRect
         if (customView.frame.height > customView.frame.width){
-            newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.height, height: customView.frame.height)
+         
+            var height = CGFloat(0)
+            newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
+            while (height <= customView.frame.height) {
+                cropImage = constimage
+                newView = CGRect(x: customView.frame.minX, y: customView.frame.minY + height, width: customView.frame.width, height: customView.frame.width)
+                let imageview = UIImageView(frame: CGRect(x: 0, y: height, width: customView.frame.width, height: customView.frame.width))
+                height = customView.frame.width + height
+                cropImage = cropImage?.crop(rect: newView)
+                cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+                imageview.image = cropImage
+                customView.addSubview(imageview)
+                
+            }
+           
         } else {
             newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
+            cropImage = cropImage?.crop(rect: newView)
+            cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
         }
-        cropImage = cropImage?.crop(rect: newView)
+        //cropImage = cropImage(cropImage!, toRect: customView.frame, viewWidth: customView.frame.width, viewHeight: customView.frame.height)
+        //cropImage = cropImage?.crop(rect: newView)
+        
+        print("New Rect")
+        print(customView.frame.size.height)
+        print(customView.frame.size.width)
+        print(cropImage?.size.height)
+        print(cropImage?.size.width)
+        //cropImage = cropImage?.cropToRect(rect: customView.frame)
+        
        // cropImage = cropToBounds(image: constimage!, width: Double(customView.frame.height), height: Double(customView.frame.width), x: customView.frame.minX, y: customView.frame.minY)
-        cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+        //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
         mainImgView?.insertSubview(customView, belowSubview: customObjectList.first ?? mainImgView!)
         customView.backgroundColor = .clear
         mainImgView?.layoutSubviews()
@@ -63,14 +90,23 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         else{
             customView.resetImage()
             customView.addImage(images: cropImage!)
-            
-            
         }
     }
-    customView.image.clipsToBounds = false
-   // customView.contentMode = .scaleAspectFit
+    customView.image.clipsToBounds = true
+    customView.image.contentMode = .scaleAspectFill
+    customView.blur.contentMode = .scaleAspectFill
+    customView.blur.clipsToBounds = true
+    //customView.contentMode = .scaleToFill
+    //customView.clipsToBounds = false
+    //customView.linkedImage.contentMode = .scaleToFill
+    //customView.linkedImage.clipsToBounds = false
+    customView.blur.layer.borderWidth = 0
+    //customView.
+    //customView.blur.
+    //customView.image.
+    //customView.image.layer.frame = customView.frame
     //customView.contentMode = .bottomLeft
-    customView.layer.masksToBounds = false
+    //customView.layer.masksToBounds = false
     customView.includesEffect()
 }
 func captureScreen(view: UIView) -> UIImage? {
@@ -100,44 +136,19 @@ func processData(boxitems: [BOXItem]) -> [ExpandableNames]{
     
     return twoDArray
 }
-func cropToBounds(image: UIImage, width: Double, height: Double, x : CGFloat, y : CGFloat) -> UIImage {
+extension UIImage {
     
-    let cgimage = image.cgImage!
-    let contextImage: UIImage = UIImage(cgImage: cgimage)
-    let contextSize: CGSize = contextImage.size
-    var posX: CGFloat = x
-    var posY: CGFloat = y
-    var cgwidth: CGFloat = CGFloat(width)
-    var cgheight: CGFloat = CGFloat(height)
-//    if (width >= height ){
-//        cgwidth = CGFloat(width)
-//        cgheight = CGFloat(width)
-//    } else {
-//        cgwidth = CGFloat(height)
-//        cgheight = CGFloat(height)
-//    }
-//
-    
-    // See what size is longer and create the center off of that
-    if contextSize.width > contextSize.height {
-        posX = ((contextSize.width - contextSize.height) / 2)
-        posY = 0
-        cgwidth = contextSize.height
-        cgheight = contextSize.height
-    } else {
-        posX = 0
-        posY = ((contextSize.height - contextSize.width) / 2)
-        cgwidth = contextSize.width
-        cgheight = contextSize.width
+    func cropToRect(rect: CGRect!) -> UIImage? {
+        
+        let scaledRect = CGRect(x: rect.origin.x * self.scale, y: rect.origin.y * self.scale, width: rect.size.width * self.scale, height: rect.size.height * self.scale);
+        
+        
+        guard let imageRef: CGImage = self.cgImage?.cropping(to:scaledRect)
+            else {
+                return nil
+        }
+        
+        let croppedImage: UIImage = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
+        return croppedImage
     }
-    
-    let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
-    
-    // Create bitmap image from context using the rect
-    let imageRef: CGImage = cgimage.cropping(to: rect)!
-    
-    // Create a new image based on the imageRef and rotate back to the original orientation
-    let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
-    
-    return image
 }

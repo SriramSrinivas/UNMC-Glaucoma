@@ -91,6 +91,7 @@ class CustomViewUpdate : UIView{
 
         image =  UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.width))
         blur.contentView.addSubview(image)
+        blur.contentView.clipsToBounds = false
         blur.contentView.addSubview(valueLabel)
         addSubview(blur)
     }

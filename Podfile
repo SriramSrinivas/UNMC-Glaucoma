@@ -11,6 +11,7 @@
    pod 'SwiftMessages'
    pod 'Reachability'
    pod 'PopupDialog', '~> 1.1'
+   pod 'UIImageCropper'
    
    # Pods for glacInit
  

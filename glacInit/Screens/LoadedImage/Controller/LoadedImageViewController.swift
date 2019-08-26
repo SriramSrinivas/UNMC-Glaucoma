@@ -276,14 +276,14 @@ class LoadedImageViewController: UIViewController {
                     var c = CustomViewUpdate(frame: frame)
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .blur, constimage: nil, mainImgView: nil)
                     c.isActive = false
-                    c.blur.layer.borderWidth = 5
+                    c.blur.layer.borderWidth = 2
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 if (currentFileType == .grey && value != "0"){
                     var c = CustomViewUpdate(frame: frame)
                     c.isActive = false
-                    c.blur.layer.borderWidth = 5
+                    c.blur.layer.borderWidth = 2
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .grey, constimage: nil, mainImgView: nil)
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
@@ -291,11 +291,11 @@ class LoadedImageViewController: UIViewController {
                if (currentFileType == .color && value != "0"){
                 var c = CustomViewUpdate(frame: frame)
                 c.isActive = false
-                c.layer.borderWidth = 5
+                c.layer.borderWidth = 2
                 c.layer.borderColor = UIColor.red.cgColor
                 changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: constImage, mainImgView: mainImageView)
-                c.clipsToBounds = false
-                c.contentMode = .scaleAspectFit
+                c.clipsToBounds = true
+                //c.contentMode = .scaleAspectFit
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
                 }
@@ -303,7 +303,7 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
-                    c.layer.borderWidth = 5
+                    c.layer.borderWidth = 2
                     c.layer.borderColor = UIColor.red.cgColor
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
@@ -625,6 +625,13 @@ class LoadedImageViewController: UIViewController {
                 timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
             }
         } else {
+            HideAllObjects()
+            greyCustomViewUpdateList.removeAll()
+            blurCustomViewUpdateList.removeAll()
+            colorCustomViewUpdateList.removeAll()
+            objectCustomViewUpdateList.removeAll()
+            isHiddenCustomUpdateList.removeAll()
+            textView.text = ""
             pickerView = PickerView()
             pickerView.delegate = self
             currentSession = Session(currentSubjectId: "hello")
@@ -747,6 +754,7 @@ class LoadedImageViewController: UIViewController {
             constImage = Globals.shared.currentBackGround.Backgroundimage
             mainImageView.reloadInputViews()
             do{
+                textView.text.append(filesToLoad.name!)
                 //filesToLoad.blurdata
                 var currentData = self.csv(data: filesToLoad.blurdata!)
                 if (checksDataForErrors(newData: currentData) ){
@@ -768,12 +776,8 @@ class LoadedImageViewController: UIViewController {
                     self.addblur(currentFileType: .isHidden, currentData: currentData)
                     self.turnOnGrid(filetype: effectType.isHidden)
                 }
-                    //self.turnOnGrid(filetype: fileIntValue)
-                   // if let data = try? Data(contentsOf: filesToLoad.image) {
-                
+            }
         }
-                
-    }
     }
     func turnOnGrid(filetype: effectType){
         if filetype == .blur {

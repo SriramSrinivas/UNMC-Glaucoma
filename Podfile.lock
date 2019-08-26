@@ -12,6 +12,7 @@ PODS:
   - SwiftMessages (7.0.0):
     - SwiftMessages/App (= 7.0.0)
   - SwiftMessages/App (7.0.0)
+  - UIImageCropper (1.4.0)
   - VisualEffectView (4.0.0)
 
 DEPENDENCIES:
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - RealmSwift
   - SwiftHSVColorPicker
   - SwiftMessages
+  - UIImageCropper
   - VisualEffectView
 
 SPEC REPOS:
@@ -32,6 +34,7 @@ SPEC REPOS:
     - RealmSwift
     - SwiftHSVColorPicker
     - SwiftMessages
+    - UIImageCropper
     - VisualEffectView
 
 SPEC CHECKSUMS:
@@ -42,8 +45,9 @@ SPEC CHECKSUMS:
   RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
   SwiftHSVColorPicker: 69c9028dea168e0f8ee2439d31a899cf1df95678
   SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
+  UIImageCropper: ab1c519018189af90b0780e1c7c9c900945b896e
   VisualEffectView: 9e9883f07d8a929b98c9c08a068f726279d92754
 
-PODFILE CHECKSUM: fa7e622553ff2f54d27ab8def0ff935a1481581b
+PODFILE CHECKSUM: 8c442770f10c525abe2d323eb947db89a95e16e2
 
 COCOAPODS: 1.6.1
