@@ -175,10 +175,10 @@ class LoadedImageViewController: UIViewController {
     var isHiddenCustomUpdateList = [CustomViewUpdate]()
     //fileTypes blur = 1, grey = 2. color = 3 hidden = 4
     var constImage = UIImage(named: "mainTes")
-    var secondImage : UIImage?
+    //var secondImage : UIImage?
     lazy var file = importFile.init()
     var pickerView = PickerView()
-    var LoadedImage = UIImage()
+    var LoadedImage : UIImage?
     var loadedIMageBackground = false
     //var constimage = UIImage()
     var currentLocalData : [LocalFileModel]?
@@ -277,24 +277,31 @@ class LoadedImageViewController: UIViewController {
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .blur, constimage: nil, mainImgView: nil)
                     c.isActive = false
                     c.blur.layer.borderWidth = 2
+                    //c.layer.borderWidth = 2
+                    //c.contentMode = .scaleAs
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 if (currentFileType == .grey && value != "0"){
                     var c = CustomViewUpdate(frame: frame)
                     c.isActive = false
-                    c.blur.layer.borderWidth = 2
+                    //c.blur.layer.borderWidth = 2
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .grey, constimage: nil, mainImgView: nil)
+                    c.blur.layer.borderWidth = 2
+                    //c.layer.borderWidth = 2
+                    //c.contentMode = .scaleAs
                     greyCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                if (currentFileType == .color && value != "0"){
                 var c = CustomViewUpdate(frame: frame)
                 c.isActive = false
-                c.layer.borderWidth = 2
                 c.layer.borderColor = UIColor.red.cgColor
-                changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: constImage, mainImgView: mainImageView)
+                changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: LoadedImage ?? constImage, mainImgView: mainImageView)
+                //sadfdsaf
                 c.clipsToBounds = true
+                c.blur.layer.borderWidth = 2
+                c.layer.borderWidth = 2
                 //c.contentMode = .scaleAspectFit
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
@@ -309,6 +316,9 @@ class LoadedImageViewController: UIViewController {
                     c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
                     c.setValue(value: a!)
+                    c.blur.layer.borderWidth = 2
+                    //c.layer.borderWidth = 2
+                    //c.contentMode = .scaleAs
                     isHiddenCustomUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }

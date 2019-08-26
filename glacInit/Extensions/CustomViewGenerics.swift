@@ -45,7 +45,7 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         //https://cocoapods.org/pods/ImageCropper
         var newView : CGRect
         if (customView.frame.height > customView.frame.width){
-         
+         // since width was being bounded this while loops took multiple images and stacks one atop of the other
             var height = CGFloat(0)
             newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
             while (height <= customView.frame.height) {
