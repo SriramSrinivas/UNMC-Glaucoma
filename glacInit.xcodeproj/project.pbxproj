@@ -20,7 +20,6 @@
 		211F7C3922FB2B100001F584 /* CustomViewGenerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */; };
 		211F7C3C22FC708D0001F584 /* FileObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C3A22FC708D0001F584 /* FileObject.xcdatamodeld */; };
 		211F7C5622FC754C0001F584 /* LoadedDataChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */; };
-		211F7C5822FC9BC70001F584 /* SavingToLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5722FC9BC70001F584 /* SavingToLocal.swift */; };
 		211F7C5A22FC9C230001F584 /* PersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5922FC9C230001F584 /* PersistanceService.swift */; };
 		211F7C5C22FCC50D0001F584 /* BoxSettingsPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */; };
 		211F7C5E22FDB21E0001F584 /* ImportDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */; };
@@ -87,7 +86,6 @@
 		211F7C3822FB2B100001F584 /* CustomViewGenerics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewGenerics.swift; sourceTree = "<group>"; };
 		211F7C3B22FC708D0001F584 /* FileObject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileObject.xcdatamodel; sourceTree = "<group>"; };
 		211F7C5522FC754C0001F584 /* LoadedDataChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedDataChecker.swift; sourceTree = "<group>"; };
-		211F7C5722FC9BC70001F584 /* SavingToLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingToLocal.swift; sourceTree = "<group>"; };
 		211F7C5922FC9C230001F584 /* PersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceService.swift; sourceTree = "<group>"; };
 		211F7C5B22FCC50D0001F584 /* BoxSettingsPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxSettingsPageController.swift; sourceTree = "<group>"; };
 		211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDataViewController.swift; sourceTree = "<group>"; };
@@ -319,7 +317,6 @@
 				2132E47822D38E2600734063 /* importFile.swift */,
 				21E2B1FF22DE6683009FD72D /* Networking.swift */,
 				21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */,
-				211F7C5722FC9BC70001F584 /* SavingToLocal.swift */,
 				211F7C5922FC9C230001F584 /* PersistanceService.swift */,
 				21FF1D9C2306F43700F94D71 /* LocalStorage.swift */,
 			);
@@ -739,7 +736,6 @@
 				2191E49E23033C4F001B5FE5 /* LocationToSaveFilesController.swift in Sources */,
 				030BE09D1F7C1E1F00012B3C /* Regex.swift in Sources */,
 				21182C8822E5EBE100712670 /* DataProcessing.swift in Sources */,
-				211F7C5822FC9BC70001F584 /* SavingToLocal.swift in Sources */,
 				74E768561F2A2F8500F2FD9C /* CustomPoint.swift in Sources */,
 				7752F65D1E50020A003ACC5F /* ViewController.swift in Sources */,
 				21A6BB1C22CAB714009CDAD3 /* imageCell.swift in Sources */,

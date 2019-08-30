@@ -315,7 +315,7 @@ class LoadedImageViewController: UIViewController {
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
-                    c.setValue(value: a!)
+                    c.setColorValue(value: a!)
                     c.blur.layer.borderWidth = 2
                     //c.layer.borderWidth = 2
                     //c.contentMode = .scaleAs

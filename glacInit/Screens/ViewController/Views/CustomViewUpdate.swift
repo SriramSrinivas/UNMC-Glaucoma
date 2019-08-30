@@ -60,11 +60,14 @@ class CustomViewUpdate : UIView{
     var alphaValue = CGFloat(1)
     var greyValue = CGFloat(0)
     var colorValue = CGFloat(0)
-    var valueLabel = UILabel()
+    var colorValueLabel = UILabel()
+    var blurValueLabel = UILabel()
+    var greyValueLabel = UILabel()
     var image = UIImageView()
     var constImage = UIImage()
     var viewValue = 5
     var effect = effectType.blur
+    var greyRect = UIView()
     
      let screenSize: CGRect = UIScreen.main.bounds
     override init(frame: CGRect) {
@@ -72,16 +75,27 @@ class CustomViewUpdate : UIView{
         
         super.init(frame: frame)
         //self.frame.
+        greyRect.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         blur.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         blur.blurRadius = 0
         blur.layer.borderWidth = 5
         isActive(value: true)
         
         effect = effectType.blur
-        valueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        valueLabel.textAlignment = .center
-        valueLabel.text = "5"
-        valueLabel.textColor = .green
+        colorValueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        colorValueLabel.textAlignment = .center
+        colorValueLabel.text = "0"
+        colorValueLabel.textColor = .green
+        
+        blurValueLabel = UILabel(frame: CGRect(x: 40, y: 0, width: 40, height: 40))
+        blurValueLabel.textAlignment = .center
+        blurValueLabel.text = "0"
+        blurValueLabel.textColor = .orange
+        
+        greyValueLabel = UILabel(frame: CGRect(x: 80, y: 0, width: 40, height: 40))
+        greyValueLabel.textAlignment = .center
+        greyValueLabel.text = "0"
+        greyValueLabel.textColor = .blue
         
         let panRecog = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         let pinchZoom = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchZoom))
@@ -90,10 +104,13 @@ class CustomViewUpdate : UIView{
         addGestureRecognizer(panRecog)
 
         image =  UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.width))
-        blur.contentView.addSubview(image)
+        addSubview(image)
         blur.contentView.clipsToBounds = false
-        blur.contentView.addSubview(valueLabel)
+        blur.contentView.addSubview(colorValueLabel)
+        blur.contentView.addSubview(blurValueLabel)
+        blur.contentView.addSubview(greyValueLabel)
         addSubview(blur)
+        addSubview(greyRect)
     }
 
     func addImage(images: UIImage){
@@ -112,11 +129,19 @@ class CustomViewUpdate : UIView{
     func setImageConst(images: UIImage){
         constImage = images
     }
-    func setValue(value: Int){
-        viewValue = value
-        valueLabel.text = String(value)
+    func setColorValue(value: Int){
+        colorValue = CGFloat(value)
+        colorValueLabel.text = String(value)
+    }
+    func setGreyValue(value: Int){
+        greyValue = CGFloat(value)
+        greyValueLabel.text = String(value)
     }
 
+    func setBlurValue(value: Int){
+        viewValue = value
+        blurValueLabel.text = String(value)
+    }
     func isActive(value: Bool){
         switch value {
         case true:

@@ -28,7 +28,13 @@
 
 // add automatic switching when logging in and out box to .box or .local
 // slow transitions for new
-// switch added new functionality so got to update flow chart 
+// switch added new functionality so got to update flow chart
+// fix border
+// allow multiple changes to a view
+// maximize effiency
+// add different colors
+// add views for numbers
+// blob colors together import
 
 
 import Foundation

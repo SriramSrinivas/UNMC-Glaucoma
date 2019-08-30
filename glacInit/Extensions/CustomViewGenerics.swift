@@ -28,20 +28,24 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
     if effect == effectType.blur {
         customView.blur.backgroundColor = UIColor.clear
         customView.blur.alpha = 1
-        customView.setValue(value: value)
+        customView.setBlurValue(value: value)
         customView.blur.blurRadius = CGFloat(value)
         customView.effect = effectType.blur
+       // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
     } else if effect == .grey {
-        customView.blur.backgroundColor = UIColor.black
-        customView.setValue(value: value)
-        customView.blur.alpha = dvalue
-        customView.blur.blurRadius = 0
+        //customView.backgroundColor = UIColor.black
+        customView.setGreyValue(value: value)
+        customView.greyRect.alpha = dvalue
+        customView.greyRect.backgroundColor = .black
+       // customView.blurRadius = 1
         customView.effect = effectType.grey
+       // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
+        //customView.isActive = true
     } else if effect == .color {
         //customView.image.frame = customView.frame
         var cropImage = constimage
         customView.setImageConst(images: constimage!)
-        customView.setValue(value: value)
+        customView.setColorValue(value: value)
         //https://cocoapods.org/pods/ImageCropper
         var newView : CGRect
         if (customView.frame.height > customView.frame.width){
@@ -65,22 +69,11 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
             cropImage = cropImage?.crop(rect: newView)
             cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
         }
-        //cropImage = cropImage(cropImage!, toRect: customView.frame, viewWidth: customView.frame.width, viewHeight: customView.frame.height)
-        //cropImage = cropImage?.crop(rect: newView)
-        
-        print("New Rect")
-        print(customView.frame.size.height)
-        print(customView.frame.size.width)
-        print(cropImage?.size.height)
-        print(cropImage?.size.width)
-        //cropImage = cropImage?.cropToRect(rect: customView.frame)
-        
-       // cropImage = cropToBounds(image: constimage!, width: Double(customView.frame.height), height: Double(customView.frame.width), x: customView.frame.minX, y: customView.frame.minY)
-        //cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+     
         mainImgView?.insertSubview(customView, belowSubview: customObjectList.first ?? mainImgView!)
         customView.backgroundColor = .clear
         mainImgView?.layoutSubviews()
-        customView.setValue(value: Int(value))
+        customView.setColorValue(value: Int(value))
         customView.blur.alpha = dvalue
         customView.blur.blurRadius = 0
         customView.effect = effectType.color
@@ -96,17 +89,9 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
     customView.image.contentMode = .scaleAspectFill
     customView.blur.contentMode = .scaleAspectFill
     customView.blur.clipsToBounds = true
-    //customView.contentMode = .scaleToFill
-    //customView.clipsToBounds = false
-    //customView.linkedImage.contentMode = .scaleToFill
-    //customView.linkedImage.clipsToBounds = false
+ 
     customView.blur.layer.borderWidth = 0
-    //customView.
-    //customView.blur.
-    //customView.image.
-    //customView.image.layer.frame = customView.frame
-    //customView.contentMode = .bottomLeft
-    //customView.layer.masksToBounds = false
+  
     customView.includesEffect()
 }
 func captureScreen(view: UIView) -> UIImage? {

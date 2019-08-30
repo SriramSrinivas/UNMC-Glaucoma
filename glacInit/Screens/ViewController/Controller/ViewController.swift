@@ -499,7 +499,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 i.isHidden = true
                 isGridHidden = true
                 for i in customViewUpdateList{
-                    i.valueLabel.alpha = 0
+                    i.colorValueLabel.alpha = 0
                 }
             }
         case true:
@@ -507,7 +507,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 i.isHidden = false
                 isGridHidden = false
                 for i in customViewUpdateList{
-                    i.valueLabel.alpha = 1
+                    i.colorValueLabel.alpha = 1
                 }
             }
         }
@@ -565,9 +565,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             if i.isActive {
                 var temp = i
                 changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.blur, constimage: constimage, mainImgView: mainImgView)
-                greySlider.setValue(0, animated: false)
-                blackSlider.setValue(0, animated: false)
-                temp.resetImage()
+                //greySlider.setValue(0, animated: false)
+                //blackSlider.setValue(0, animated: false)
+                //temp.resetImage()
             }
         }
     }
@@ -578,17 +578,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let value = slider.value
         var temp = getCurrentActiveView()
         changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.color, constimage: constimage, mainImgView: mainImgView)
-        intSlider.setValue(0, animated: false)
-        greySlider.setValue(0, animated: false)
+//        intSlider.setValue(0, animated: false)
+//        greySlider.setValue(0, animated: false)
       
     }
     @objc func sliderGrey(slider: UISlider){
         let value = slider.value
         var temp = getCurrentActiveView()
         changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.grey, constimage: constimage, mainImgView: mainImgView)
-        intSlider.setValue(0, animated: false)
-        blackSlider.setValue(0, animated: false)
-        temp.resetImage()
+//        intSlider.setValue(0, animated: false)
+//        blackSlider.setValue(0, animated: false)
+       // temp.resetImage()
     }
     
     
@@ -602,8 +602,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 temp.alphaValue = 1
         case false:
 
-            greySlider.setValue(0, animated: false)
-            intSlider.setValue(0, animated: false)
+//            greySlider.setValue(0, animated: false)
+//            intSlider.setValue(0, animated: false)
             
                 temp.linkedImage.alpha = 0
                 temp.alphaValue = 0
@@ -612,7 +612,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         i.blur.blurRadius = CGFloat(0)
                         i.blur.backgroundColor = UIColor.clear
                         i.blur.alpha = 1
-                        i.setValue(value: Int(0))
+                        i.setBlurValue(value: Int(0))
                         i.effect = effectType.isHidden
                     }
                 }
@@ -941,20 +941,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     func createCustomViewUpdate(frame: CGRect){
 
-        intSlider.setValue(5, animated: false)
+        intSlider.setValue(0, animated: false)
         greySlider.setValue(0, animated: false)
         blackSlider.setValue(0, animated: false)
         let c = CustomViewUpdate(frame: frame)
         let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
         c.addGestureRecognizer(gestureTap)
         c.layer.zPosition = 2
-        c.blur.blurRadius = 5
+        //c.blur.blurRadius = 5
         //mainImgView.addSubview(c)
         mainImgView.insertSubview(c, aboveSubview: mainImgView)
         customViewUpdateList.append(c)
 
         if isGridHidden {
-            c.valueLabel.alpha = 0
+            c.colorValueLabel.alpha = 0
         }
         c.includesEffect()
     }
@@ -1066,7 +1066,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 customViewUpdateList.append(c)
                 
                 if isGridHidden {
-                    c.valueLabel.alpha = 0
+                    c.colorValueLabel.alpha = 0
                 }
                 
                 c.includesEffect()
@@ -1080,7 +1080,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         
                         temp?.isLinkedToImage = true
                         temp?.linkedImage = i
-                        temp?.setValue(value: 0)
+                        temp?.setColorValue(value: 0)
                         temp?.linkedImage.alpha = 0
                         temp?.blur.blurRadius = 0
                         //temp?.blur.alpha =  0

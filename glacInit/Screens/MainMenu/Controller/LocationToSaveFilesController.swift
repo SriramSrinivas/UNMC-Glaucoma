@@ -101,7 +101,7 @@ class LocationToSaveFilesController: UIViewController {
         var c = CustomViewUpdate(frame: frame)
         changeCustomViewUpdate(customView: &c, value: 5, effect: .blur, constimage: nil, mainImgView: nil)
         c.isActive = false
-        c.valueLabel.text = ""
+        c.colorValueLabel.text = ""
         c.blur.layer.borderWidth = 0
         
         background.addSubview(c)
