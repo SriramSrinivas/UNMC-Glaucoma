@@ -680,18 +680,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
             else {
                 //This handles sliders settings when you click on a custom object on the screen
                 i.isActive(value: true)
-                if ( i.blur.backgroundColor == UIColor.clear){
+                if ( i.viewValue != 0){
                     intSlider.setValue(Float(i.viewValue), animated: false)
                 } else{
                     intSlider.setValue(0, animated: false)
                 }
-                if(i.blur.backgroundColor == UIColor.black){
-                    greySlider.setValue(Float(i.viewValue), animated: false)
+                if(i.greyValue != 0){
+                    greySlider.setValue(Float(i.greyValue), animated: false)
                 } else {
                     greySlider.setValue(0, animated: false)
                 }
-                if i.image.image != nil {
-                    blackSlider.setValue(Float(i.viewValue), animated: false)
+                if i.colorValue != 0 {
+                    blackSlider.setValue(Float(i.colorValue), animated: false)
                 } else {
                     blackSlider.setValue(0, animated: false)
                 }
