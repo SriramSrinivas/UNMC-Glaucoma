@@ -97,20 +97,20 @@ class Session {
                 for o in customViewList{
                     if o.frame.contains(CGPoint(x: x, y: y)){
                         
-                        if(o.blur.blurRadius > 0 && o.effect == effectType.blur) {
+                        if(o.blur.blurRadius > 0 && o.effect.contains(effectType.blur) ) {
                             blurValue += o.viewValue
                         }
                         
-                        if(o.effect == effectType.grey){
+                        if(o.effect.contains(effectType.grey)){
                             greyValue += o.viewValue
                         }
                         
-                        if(o.effect == effectType.isHidden){
+                        if(o.effect.contains(effectType.isHidden)){
                             if(o.alphaValue == 0) {
                                 hiddenValue = hiddenValue + 10
                             }
                         }
-                        if(o.effect == effectType.color) {
+                        if(o.effect.contains(effectType.color)) {
                             colorValue += o.viewValue
                         }
                     }

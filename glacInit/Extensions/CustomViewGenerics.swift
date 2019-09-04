@@ -30,7 +30,7 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.blur.alpha = 1
         customView.setBlurValue(value: value)
         customView.blur.blurRadius = CGFloat(value)
-        customView.effect = effectType.blur
+        customView.effect.append(effectType.blur)
        // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
     } else if effect == .grey {
         //customView.backgroundColor = UIColor.black
@@ -38,7 +38,7 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.greyRect.alpha = dvalue
         customView.greyRect.backgroundColor = .black
        // customView.blurRadius = 1
-        customView.effect = effectType.grey
+        customView.effect.append(effectType.grey)
        // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
         //customView.isActive = true
     } else if effect == .color {
@@ -46,7 +46,6 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         var cropImage = constimage
         customView.setImageConst(images: constimage!)
         customView.setColorValue(value: value)
-        //https://cocoapods.org/pods/ImageCropper
         var newView : CGRect
         if (customView.frame.height > customView.frame.width){
          // since width was being bounded this while loops took multiple images and stacks one atop of the other
@@ -76,7 +75,7 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.setColorValue(value: Int(value))
         customView.blur.alpha = dvalue
         customView.blur.blurRadius = 0
-        customView.effect = effectType.color
+        customView.effect.append(effectType.color) 
         if (dvalue < 0.1){
             customView.resetImage()
         }
@@ -87,10 +86,10 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
     }
     customView.image.clipsToBounds = true
     customView.image.contentMode = .scaleAspectFill
-    customView.blur.contentMode = .scaleAspectFill
-    customView.blur.clipsToBounds = true
+//    customView.blur.contentMode = .scaleAspectFill
+//    customView.blur.clipsToBounds = true
  
-    customView.blur.layer.borderWidth = 0
+    //customView.blur.layer.borderWidth = 0
   
     customView.includesEffect()
 }

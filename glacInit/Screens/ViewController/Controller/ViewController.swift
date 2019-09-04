@@ -438,9 +438,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             mainImgView.insertSubview(i, aboveSubview: mainImgView)
             mainImgView.bringSubviewToFront(i)
         }
-         deSelectAll()
-        let image = mainImgView.asImage()
-        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+//         deSelectAll()
+//        let image = mainImgView.asImage()
+//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     
     func addControlIcons(){
@@ -480,9 +480,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             mainImgView.addSubview(i)
             mainImgView.bringSubviewToFront(i)
         }
-         deSelectAll()
-        let image = mainImgView.asImage()
-        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+//         deSelectAll()
+//        let image = mainImgView.asImage()
+//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     @objc func MenuTapped(_sender: UIButton){
         let vc = MainMenuViewController()
@@ -560,7 +560,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func sliderIntensity(slider: UISlider){
         let value = slider.value
         let temp = getCurrentActiveView()
-        temp.effect = effectType.blur
+        temp.effect.append(effectType.blur)
         for i in customViewUpdateList {
             if i.isActive {
                 var temp = i
@@ -613,7 +613,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         i.blur.backgroundColor = UIColor.clear
                         i.blur.alpha = 1
                         i.setBlurValue(value: Int(0))
-                        i.effect = effectType.isHidden
+                        i.effect.append(effectType.isHidden)
                     }
                 }
         }
@@ -667,9 +667,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @objc func handleTapUpdate(sender: UITapGestureRecognizer){
         
-        deSelectAll()
-        let image = mainImgView.asImage()
-        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+//        deSelectAll()
+//        let image = mainImgView.asImage()
+//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -1084,7 +1084,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         temp?.linkedImage.alpha = 0
                         temp?.blur.blurRadius = 0
                         //temp?.blur.alpha =  0
-                        temp?.effect = effectType.isHidden
+                        temp?.effect.append(effectType.isHidden) 
                         //temp?.alpha = 0
                         enableControl(value: .BlurAndAlpha)
                     }

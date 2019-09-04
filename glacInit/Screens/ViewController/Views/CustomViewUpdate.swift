@@ -28,6 +28,7 @@ enum effectType {
     case color
     case PNG
     case saveFile
+    case none
     case incorrectEffectType
 }
 extension effectType {
@@ -66,13 +67,13 @@ class CustomViewUpdate : UIView{
     var image = UIImageView()
     var constImage = UIImage()
     var viewValue = 5
-    var effect = effectType.blur
+    var effect : [effectType]
     var greyRect = UIView()
     
      let screenSize: CGRect = UIScreen.main.bounds
     override init(frame: CGRect) {
    
-        
+        effect = [effectType.none]
         super.init(frame: frame)
         //self.frame.
         greyRect.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
@@ -81,7 +82,7 @@ class CustomViewUpdate : UIView{
         blur.layer.borderWidth = 5
         isActive(value: true)
         
-        effect = effectType.blur
+        
         colorValueLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         colorValueLabel.textAlignment = .center
         colorValueLabel.text = "0"
