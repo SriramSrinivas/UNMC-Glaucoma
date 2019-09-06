@@ -33,18 +33,28 @@ enum effectType {
 }
 extension effectType {
     init?(effect: String) {
-        if effect == "blur"{
+        //var nstring = effect
+        var nstring = effect.components(separatedBy: ".")
+        var finalString = ""
+        if nstring.count > 1 {
+            finalString = nstring[2]
+        } else {
+            finalString = effect
+        }
+        if finalString == "blur"{
             self = .blur
-        } else if effect == "grey" {
+        } else if finalString == "grey" {
             self = .grey
-        } else if effect == "isHidden" {
+        } else if finalString == "isHidden" {
             self = .isHidden
-        } else if effect == "color" {
+        } else if finalString == "color" {
             self = .color
-        } else if effect == "saveFile"{
+        } else if finalString == "saveFile"{
             self = .saveFile
-        } else if effect == "PNG"{
+        } else if finalString == "PNG"{
             self = .PNG
+        } else if finalString == "none"{
+            self = .none
         } else {
             self = .incorrectEffectType
         }
@@ -106,12 +116,13 @@ class CustomViewUpdate : UIView{
 
         image =  UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.width))
         addSubview(image)
+        addSubview(blur)
+        addSubview(greyRect)
         blur.contentView.clipsToBounds = false
         blur.contentView.addSubview(colorValueLabel)
         blur.contentView.addSubview(blurValueLabel)
         blur.contentView.addSubview(greyValueLabel)
-        addSubview(blur)
-        addSubview(greyRect)
+        
     }
 
     func addImage(images: UIImage){

@@ -30,7 +30,9 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.blur.alpha = 1
         customView.setBlurValue(value: value)
         customView.blur.blurRadius = CGFloat(value)
+        if (!customView.effect.contains(effectType.blur)){
         customView.effect.append(effectType.blur)
+        }
        // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
     } else if effect == .grey {
         //customView.backgroundColor = UIColor.black
@@ -38,7 +40,9 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.greyRect.alpha = dvalue
         customView.greyRect.backgroundColor = .black
        // customView.blurRadius = 1
-        customView.effect.append(effectType.grey)
+        if (!customView.effect.contains(effectType.grey)){
+            customView.effect.append(effectType.grey)
+        }
        // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
         //customView.isActive = true
     } else if effect == .color {
@@ -75,7 +79,9 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.setColorValue(value: Int(value))
         customView.blur.alpha = dvalue
         customView.blur.blurRadius = 0
-        customView.effect.append(effectType.color) 
+        if (!customView.effect.contains(effectType.color)){
+            customView.effect.append(effectType.color)
+        }
         if (dvalue < 0.1){
             customView.resetImage()
         }
@@ -135,4 +141,29 @@ extension UIImage {
         let croppedImage: UIImage = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
         return croppedImage
     }
+}
+
+func topBorder(view: UIView) {
+    let border = UIView()
+    border.backgroundColor = .red
+    border.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 5)
+    view.addSubview(border)
+}
+func botBorder(view: UIView) {
+    let border = UIView()
+    border.backgroundColor = .red
+    border.frame = CGRect(x: 0, y: view.frame.height - 5, width: view.frame.width, height: 5)
+    view.addSubview(border)
+}
+func rightBorder(view: UIView) {
+    let border = UIView()
+    border.backgroundColor = .red
+    border.frame = CGRect(x: view.frame.width - 5, y: 0, width: 5, height: view.frame.height)
+    view.addSubview(border)
+}
+func leftBorder(view: UIView) {
+    let border = UIView()
+    border.backgroundColor = .red
+    border.frame = CGRect(x: 0, y: 0, width: 5, height: view.frame.height)
+    view.addSubview(border)
 }

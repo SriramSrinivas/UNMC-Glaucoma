@@ -276,18 +276,65 @@ class LoadedImageViewController: UIViewController {
                     var c = CustomViewUpdate(frame: frame)
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .blur, constimage: nil, mainImgView: nil)
                     c.isActive = false
-                    c.blur.layer.borderWidth = 2
-                    //c.layer.borderWidth = 2
-                    //c.contentMode = .scaleAs
+                    c.blurValueLabel.isHidden = true
+                    c.colorValueLabel.isHidden = true
+                    c.greyValueLabel.isHidden = true
+                    c.colorValueLabel.isHidden = false
+                    c.colorValueLabel.textColor = .orange
+                    c.colorValueLabel.text = value
+                    if currentData[countx - 1][county] != value {
+                        topBorder(view: c)
+//                        if currentData[countx][county - 1] != value  {
+////                            c.blurValueLabel.isHidden = false
+////                            c.colorValueLabel.isHidden = false
+//                            c.greyValueLabel.isHidden = false
+//                            c.greyValueLabel.textColor = .yellow
+//                        }
+                    }
+                    if currentData[countx + 1][county] != value  {
+                        botBorder(view: c)
+                    }
+                    if currentData[countx][county - 1] != value {
+                        leftBorder(view: c)
+                    }
+                    if currentData[countx][county + 1] != value {
+                        rightBorder(view: c)
+                    }
+                    c.blur.layer.borderWidth = 0
+                    c.layer.borderWidth = 0
                     blurCustomViewUpdateList.append(c)
                     mainImageView.addSubview(c)
                 }
                 if (currentFileType == .grey && value != "0"){
                     var c = CustomViewUpdate(frame: frame)
                     c.isActive = false
-                    //c.blur.layer.borderWidth = 2
                     changeCustomViewUpdate(customView: &c, value: a!, effect: .grey, constimage: nil, mainImgView: nil)
-                    c.blur.layer.borderWidth = 2
+                    c.blurValueLabel.isHidden = true
+                    c.colorValueLabel.isHidden = true
+                    c.greyValueLabel.isHidden = true
+                    c.colorValueLabel.isHidden = false
+                    c.colorValueLabel.textColor = .yellow
+                    c.colorValueLabel.text = value
+                    if currentData[countx - 1][county] != value {
+                        topBorder(view: c)
+//                        if currentData[countx][county - 1] != value  {
+////                            c.blurValueLabel.isHidden = false
+////                            c.colorValueLabel.isHidden = false
+//                            c.greyValueLabel.isHidden = false
+//                            c.greyValueLabel.textColor = .orange
+//                        }
+                    }
+                    if currentData[countx + 1][county] != value  {
+                        botBorder(view: c)
+                    }
+                    if currentData[countx][county - 1] != value {
+                     leftBorder(view: c)
+                    }
+                    if currentData[countx][county + 1] != value {
+                    rightBorder(view: c)
+                    }
+                    c.blur.layer.borderWidth = 0
+                    c.layer.borderWidth = 0
                     //c.layer.borderWidth = 2
                     //c.contentMode = .scaleAs
                     greyCustomViewUpdateList.append(c)
@@ -296,12 +343,36 @@ class LoadedImageViewController: UIViewController {
                if (currentFileType == .color && value != "0"){
                 var c = CustomViewUpdate(frame: frame)
                 c.isActive = false
-                c.layer.borderColor = UIColor.red.cgColor
+                //c.layer.borderColor = UIColor.red.cgColor
                 changeCustomViewUpdate(customView: &c, value: a!, effect: .color, constimage: LoadedImage ?? constImage, mainImgView: mainImageView)
+                c.blurValueLabel.isHidden = true
+                c.colorValueLabel.isHidden = true
+                c.greyValueLabel.isHidden = true
+                c.colorValueLabel.isHidden = false
+                c.colorValueLabel.textColor = .green
+                c.colorValueLabel.text = value
+                if currentData[countx - 1][county] != value {
+                    topBorder(view: c)
+//                    if currentData[countx][county - 1] != value  {
+//                        //c.blurValueLabel.isHidden = false
+//                        c.colorValueLabel.isHidden = false
+//                        c.colorValueLabel.textColor = .yellow
+//                        //c.greyValueLabel.isHidden = false
+//                    }
+                }
+                if currentData[countx + 1][county] != value  {
+                    botBorder(view: c)
+                }
+                if currentData[countx][county - 1] != value {
+                    leftBorder(view: c)
+                }
+                if currentData[countx][county + 1] != value {
+                    rightBorder(view: c)
+                }
                 //sadfdsaf
                 c.clipsToBounds = true
-                c.blur.layer.borderWidth = 2
-                c.layer.borderWidth = 2
+                c.blur.layer.borderWidth = 0
+                c.layer.borderWidth = 0
                 //c.contentMode = .scaleAspectFit
                 colorCustomViewUpdateList.append(c)
                 mainImageView.addSubview(c)
@@ -310,13 +381,37 @@ class LoadedImageViewController: UIViewController {
                     let c = CustomViewUpdate(frame: frame)
                     c.layer.zPosition = 2
                     c.isActive = false
-                    c.layer.borderWidth = 2
+                    c.blur.layer.borderWidth = 2
+                    c.blur.layer.borderWidth = 0
+                    c.blurValueLabel.isHidden = true
+                    c.colorValueLabel.isHidden = true
+                    c.greyValueLabel.isHidden = true
+                    c.colorValueLabel.isHidden = false
+                    c.colorValueLabel.textColor = .green
+                    c.colorValueLabel.text = value
+                    if currentData[countx - 1][county] != value {
+                        topBorder(view: c)
+//                        if currentData[countx][county - 1] != value  {
+//                            c.blurValueLabel.isHidden = false
+//                            c.blurValueLabel.textColor = .green
+//                        }
+                    }
+                    if currentData[countx + 1][county] != value  {
+                        botBorder(view: c)
+                    }
+                    if currentData[countx][county - 1] != value {
+                        leftBorder(view: c)
+                    }
+                    if currentData[countx][county + 1] != value {
+                        rightBorder(view: c)
+                    }
+                    c.layer.borderWidth = 0
                     c.layer.borderColor = UIColor.red.cgColor
                     c.blur.backgroundColor = UIColor.black
                     c.blur.alpha = CGFloat(a!/10)
                     c.blur.blurRadius = 0
                     c.setColorValue(value: a!)
-                    c.blur.layer.borderWidth = 2
+                    c.blur.layer.borderWidth = 0
                     //c.layer.borderWidth = 2
                     //c.contentMode = .scaleAs
                     isHiddenCustomUpdateList.append(c)

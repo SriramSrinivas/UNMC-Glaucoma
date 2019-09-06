@@ -438,9 +438,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             mainImgView.insertSubview(i, aboveSubview: mainImgView)
             mainImgView.bringSubviewToFront(i)
         }
-//         deSelectAll()
-//        let image = mainImgView.asImage()
-//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+         deSelectAll()
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     
     func addControlIcons(){
@@ -481,8 +481,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             mainImgView.bringSubviewToFront(i)
         }
 //         deSelectAll()
-//        let image = mainImgView.asImage()
-//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
     }
     @objc func MenuTapped(_sender: UIButton){
         let vc = MainMenuViewController()
@@ -667,9 +667,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @objc func handleTapUpdate(sender: UITapGestureRecognizer){
         
-//        deSelectAll()
-//        let image = mainImgView.asImage()
-//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+        deSelectAll()
+        let image = mainImgView.asImage()
+        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -1047,7 +1047,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             models?.append(model)
         }
         for model in models! {
-            if !(model.effect == .isHidden) {
+            if !(model.effect.contains(.isHidden)) {
                 let frame = CGRect(x: (model.midx * width) - ((model.width * width)/2), y: model.midy * Double(view.frame.size.height), width: (model.width * Double(mainImgView.frame.size.width)), height: model.height * Double(view.frame.size.height))
                 var c = CustomViewUpdate(frame: frame)
                 if (model.anchored == effectAnchored.isAnchored) {
@@ -1061,7 +1061,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
                 let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
                 c.addGestureRecognizer(gestureTap)
-                changeCustomViewUpdate(customView: &c, value: model.viewValue, effect: model.effect, constimage: constimage, mainImgView: mainImgView)
+                //TODO FIX BUG
+                if model.effect.contains(.blur){
+                    changeCustomViewUpdate(customView: &c, value: model.viewValue, effect: .blur, constimage: constimage, mainImgView: mainImgView)
+                }
+                if model.effect.contains(.grey){
+                    changeCustomViewUpdate(customView: &c, value: model.greyValue, effect: .grey, constimage: constimage, mainImgView: mainImgView)
+                }
+                if model.effect.contains(.color){
+                    changeCustomViewUpdate(customView: &c, value: model.colorValue, effect: .color, constimage: constimage, mainImgView: mainImgView)
+                }
                 mainImgView.insertSubview(c, aboveSubview: mainImgView)
                 customViewUpdateList.append(c)
                 

@@ -81,7 +81,8 @@ class Session {
             let midX = view.frame.midX / mainView.frame.width
             let midY = view.frame.minY / mainView.frame.height
             let anchor = effectAnchored(flag: view.isLinkedToImage)
-            csvText.append("\(view.effect),\(height),\(width),\(midX),\(midY),\(view.viewValue),\(anchor)\n")
+            
+            csvText.append("\(view.effect),\(height),\(width),\(midX),\(midY),\(view.viewValue),\(view.greyValue),\(view.colorValue),\(anchor)\n")
         }
         
         
