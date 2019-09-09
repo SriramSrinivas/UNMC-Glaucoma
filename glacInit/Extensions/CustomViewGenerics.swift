@@ -114,10 +114,10 @@ func processData(boxitems: [BOXItem]) -> [ExpandableNames]{
     var folderItems: [BoxItemsData] = []
     for items in boxitems {
         let changedata = BoxItemsData(boxItem: items)
-        if changedata.isFolder {
+        if changedata.isFolder && changedata.name == "GlaucomaApp" {
             folderItems.append(changedata)
         } else {
-            fileItems.append(changedata)
+            ///fileItems.append(changedata)
         }
     }
     //let newArray = ExpandableNames(isExpanded: true, items: folderItems!)

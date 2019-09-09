@@ -254,7 +254,8 @@ class PickerView: UITableViewController, PickerViewdelegate {
         refreshControll.addTarget(self, action: #selector(getCurrentFolder(_:)), for: .valueChanged)
         refreshControll.attributedTitle = NSAttributedString(string: "Fetching Data ...", attributes: .init())
         }
-        alltwodimArray = twodimArray
+        alltwodimArray = []
+        
        self.navigationController?.isNavigationBarHidden = false
         
         let cancel = (UIImage(named: "cancel"))

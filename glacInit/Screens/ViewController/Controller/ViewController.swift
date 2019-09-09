@@ -604,7 +604,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         switch sender.isOn {
         case true:
                 temp.linkedImage.alpha = 1
+                temp.image.alpha = 1
                 temp.alphaValue = 1
+                temp.greyRect.alpha = 1
+            
         case false:
 
 //            greySlider.setValue(0, animated: false)
@@ -612,12 +615,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
                 temp.linkedImage.alpha = 0
                 temp.alphaValue = 0
+                temp.greyRect.alpha = 0
+                temp.image.alpha = 0
                 for i in customViewUpdateList {
                     if i.isActive {
                         i.blur.blurRadius = CGFloat(0)
                         i.blur.backgroundColor = UIColor.clear
+//                        i.greyRect.alpha = 0
+//                        i.image.alpha = 0
                         i.blur.alpha = 1
                         i.setBlurValue(value: Int(0))
+                        i.setGreyValue(value: Int(0))
+                        i.setColorValue(value: Int(0))
+                        i.resetImage()
                         i.effect.append(effectType.isHidden)
                     }
                 }
@@ -942,6 +952,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //TODO not allo creating off sreen would be nice
         if !customViewActive() {
             createCustomViewUpdate(frame: CGRect(x: touchPoint.x - 100, y: touchPoint.y - 100, width: 200, height: 200))
+            enableControl(value: .OnlyBlur)
         }
     }
     func createCustomViewUpdate(frame: CGRect){

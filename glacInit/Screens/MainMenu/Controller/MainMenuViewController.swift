@@ -37,7 +37,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var versionNumber : UITextView = {
         var temp = UITextView()
-        nonEditableTextView(&temp, text: "-v 2.4.1", fontSize: 15)
+        nonEditableTextView(&temp, text: "-v 2.5.1", fontSize: 15)
         temp.textColor = .black
         temp.backgroundColor = .clear
         temp.textAlignment = .center
@@ -241,6 +241,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         changeCustomViewUpdate(customView: &c, value: 5, effect: .blur, constimage: nil, mainImgView: nil)
         c.isActive = false
         c.colorValueLabel.text = ""
+        c.greyValueLabel.isHidden = true
+        c.blurValueLabel.isHidden = true
         c.blur.layer.borderWidth = 0
     
         background.addSubview(c)
