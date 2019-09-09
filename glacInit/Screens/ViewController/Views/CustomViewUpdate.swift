@@ -119,9 +119,9 @@ class CustomViewUpdate : UIView{
         addSubview(blur)
         addSubview(greyRect)
         blur.contentView.clipsToBounds = false
-        blur.contentView.addSubview(colorValueLabel)
-        blur.contentView.addSubview(blurValueLabel)
-        blur.contentView.addSubview(greyValueLabel)
+        addSubview(colorValueLabel)
+        addSubview(blurValueLabel)
+        addSubview(greyValueLabel)
         
     }
 

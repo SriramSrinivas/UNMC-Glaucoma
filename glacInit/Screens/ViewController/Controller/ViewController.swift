@@ -500,6 +500,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 isGridHidden = true
                 for i in customViewUpdateList{
                     i.colorValueLabel.alpha = 0
+                    i.greyValueLabel.alpha = 0
+                    i.blurValueLabel.alpha = 0
                 }
             }
         case true:
@@ -508,6 +510,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 isGridHidden = false
                 for i in customViewUpdateList{
                     i.colorValueLabel.alpha = 1
+                    i.greyValueLabel.alpha = 1
+                    i.blurValueLabel.alpha = 1
                 }
             }
         }
@@ -551,6 +555,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         switch value {
         case false:
             tempImageView.isHidden = true
+            
         case true:
             tempImageView.isHidden = false
         default: break
@@ -1062,15 +1067,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 let gestureTap = UITapGestureRecognizer(target: self, action: #selector(handleTapUpdate))
                 c.addGestureRecognizer(gestureTap)
                 //TODO FIX BUG
+                if model.effect.contains(.color){
+                    changeCustomViewUpdate(customView: &c, value: model.colorValue, effect: .color, constimage: constimage, mainImgView: mainImgView)
+                }
                 if model.effect.contains(.blur){
                     changeCustomViewUpdate(customView: &c, value: model.viewValue, effect: .blur, constimage: constimage, mainImgView: mainImgView)
                 }
                 if model.effect.contains(.grey){
                     changeCustomViewUpdate(customView: &c, value: model.greyValue, effect: .grey, constimage: constimage, mainImgView: mainImgView)
                 }
-                if model.effect.contains(.color){
-                    changeCustomViewUpdate(customView: &c, value: model.colorValue, effect: .color, constimage: constimage, mainImgView: mainImgView)
-                }
+                
                 mainImgView.insertSubview(c, aboveSubview: mainImgView)
                 customViewUpdateList.append(c)
                 
@@ -1135,8 +1141,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             delete.alpha = 1
             delete.isEnabled =  true
             
-            blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
-            blackSlider.tintColor = UIColor(hexString: "EEEEEE")
+            //blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
+            //blackSlider.tintColor = UIColor(hexString: "EEEEEE")
             
             
             blackSlider.alpha = 1
@@ -1218,8 +1224,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             delete.alpha = 1
             delete.isEnabled =  true
             
-            blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
-            blackSlider.tintColor = UIColor(hexString: "EEEEEE")
+            //blackSlider.thumbTintColor = UIColor(hexString: "9E9E9E")
+            //blackSlider.tintColor = UIColor(hexString: "9E9E9E")
             blackSlider.alpha = 1
             blackSlider.isEnabled = true
             

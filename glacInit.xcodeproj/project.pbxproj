@@ -231,8 +231,8 @@
 		21182C9822E7B1E700712670 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				210898D022F1FBA50007FD25 /* MainMenu */,
 				21E13AF822CC0CA900429F58 /* ViewController */,
+				210898D022F1FBA50007FD25 /* MainMenu */,
 				21A6BB1122CA86FE009CDAD3 /* BackGroundChange */,
 				21182C8922E610D400712670 /* Picker */,
 				2132E47A22D3FA7B00734063 /* LoadedImage */,

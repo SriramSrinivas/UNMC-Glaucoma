@@ -30,6 +30,9 @@ class LocationToSaveFilesController: UIViewController {
         setUpButton(&temp, title: "Box", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
         temp.isOpaque = false
         temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        if Globals.shared.importAndExportLoaction == .box {
+            temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.50, alpha:0.65)
+        }
         temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
         temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(boxSetAsSave), for: .touchUpInside)
@@ -38,10 +41,14 @@ class LocationToSaveFilesController: UIViewController {
     
     var logoutMenuButton : UIButton = {
         var temp = UIButton(type: .system)
-        setUpButton(&temp, title: "Local", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        setUpButton(&temp, title: "This Device", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
+        if Globals.shared.importAndExportLoaction == .local {
+            temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.50, alpha:0.65)
+            temp.titleLabel?.textColor = .blue
+        }
         temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
         temp.isOpaque = false
-        temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
         temp.setTitleColor(.white, for: .normal)
         temp.addTarget(self, action: #selector(localSetAsSave), for: .touchUpInside)
         return temp
@@ -77,6 +84,11 @@ class LocationToSaveFilesController: UIViewController {
         backgroundChanged()
         [background, backMenuButton, logoutMenuButton, loginMenuButton].forEach {view.addSubview($0)}
         layout()
+        if Globals.shared.importAndExportLoaction == .box {
+            
+        } else {
+            
+        }
     }
     
     func layout() {
