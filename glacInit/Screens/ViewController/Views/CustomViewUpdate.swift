@@ -76,7 +76,7 @@ class CustomViewUpdate : UIView{
     var greyValueLabel = UILabel()
     var image = UIImageView()
     var constImage = UIImage()
-    var viewValue = 5
+    var viewValue = 0
     var effect : [effectType]
     var greyRect = UIView()
     
@@ -116,8 +116,10 @@ class CustomViewUpdate : UIView{
 
         image =  UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.width))
         addSubview(image)
-        addSubview(blur)
-        addSubview(greyRect)
+        insertSubview(greyRect, aboveSubview: image)
+        insertSubview(blur, aboveSubview:greyRect)
+        //addSubview(blur)
+        //addSubview(greyRect)
         blur.contentView.clipsToBounds = false
         addSubview(colorValueLabel)
         addSubview(blurValueLabel)
@@ -130,6 +132,8 @@ class CustomViewUpdate : UIView{
     }
     func resetImage()
     {
+        //image.removeFromSuperview()
+        image = UIImageView()
         image.image = nil
     }
     func getImageFromMain() -> UIImage {

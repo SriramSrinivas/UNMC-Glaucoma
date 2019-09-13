@@ -22,8 +22,8 @@
 import Foundation
 
 func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effect: effectType, constimage: UIImage?, mainImgView: UIView?){
-    customView.layer.zPosition = 2
-    customView.blur.blurRadius = 5
+    //customView.layer.zPosition = 2
+   // customView.blur.blurRadius = 5
     let dvalue = CGFloat(value)/10
     if effect == effectType.blur {
         customView.blur.backgroundColor = UIColor.clear
@@ -61,7 +61,7 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
                 let imageview = UIImageView(frame: CGRect(x: 0, y: height, width: customView.frame.width, height: customView.frame.width))
                 height = customView.frame.width + height
                 cropImage = cropImage?.crop(rect: newView)
-                cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+                cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(dvalue)), blendMode: .luminosity)
                 imageview.image = cropImage
                 customView.addSubview(imageview)
                 

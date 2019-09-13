@@ -565,7 +565,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func sliderIntensity(slider: UISlider){
         let value = slider.value
         let temp = getCurrentActiveView()
-        temp.effect.append(effectType.blur)
+        //temp.effect.append(effectType.blur)
         for i in customViewUpdateList {
             if i.isActive {
                 var temp = i
@@ -682,9 +682,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @objc func handleTapUpdate(sender: UITapGestureRecognizer){
         
-        deSelectAll()
-        let image = mainImgView.asImage()
-        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
+//        deSelectAll()
+//        let image = mainImgView.asImage()
+//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -727,6 +727,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func resetTap(sender: UIButton!){
         
         let temp = getCurrentActiveView()
+        temp.resetImage()
         
         if temp.isLinkedToImage {
             temp.linkedImage.alpha = 1
@@ -971,6 +972,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
         if isGridHidden {
             c.colorValueLabel.alpha = 0
+            c.greyValueLabel.alpha = 0
+            c.blurValueLabel.alpha = 0
         }
         c.includesEffect()
     }
@@ -1093,6 +1096,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 if isGridHidden {
                     c.colorValueLabel.alpha = 0
+                    c.greyValueLabel.alpha = 0
+                    c.blurValueLabel.alpha = 0
                 }
                 
                 c.includesEffect()
