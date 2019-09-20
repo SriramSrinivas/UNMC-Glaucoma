@@ -88,6 +88,7 @@ class CustomViewUpdate : UIView{
         //self.frame.
         greyRect.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         blur.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        image.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         blur.blurRadius = 0
         blur.layer.borderWidth = 5
         isActive(value: true)
@@ -133,7 +134,7 @@ class CustomViewUpdate : UIView{
     func resetImage()
     {
         //image.removeFromSuperview()
-        image = UIImageView()
+//        image = UIImageView()
         image.image = nil
     }
     func getImageFromMain() -> UIImage {

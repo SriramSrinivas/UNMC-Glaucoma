@@ -582,7 +582,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func sliderBlack(slider: UISlider){
         let value = slider.value
         var temp = getCurrentActiveView()
+        //this stops the views from changing, not sure why I have to do this but it works, there is prob a better way to do this
         changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.color, constimage: constimage, mainImgView: mainImgView)
+        changeCustomViewUpdate(customView: &temp, value: Int(temp.blurValueLabel.text!) ?? 0, effect: effectType.blur, constimage: constimage, mainImgView: mainImgView)
+        changeCustomViewUpdate(customView: &temp, value: Int(temp.greyValueLabel.text!) ?? 0, effect: effectType.grey, constimage: constimage, mainImgView: mainImgView)
 //        intSlider.setValue(0, animated: false)
 //        greySlider.setValue(0, animated: false)
       
@@ -591,6 +594,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let value = slider.value
         var temp = getCurrentActiveView()
         changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.grey, constimage: constimage, mainImgView: mainImgView)
+        
 //        intSlider.setValue(0, animated: false)
 //        blackSlider.setValue(0, animated: false)
        // temp.resetImage()
@@ -607,6 +611,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 temp.image.alpha = 1
                 temp.alphaValue = 1
                 temp.greyRect.alpha = 1
+                if temp.effect.contains(.isHidden) {
+                    var count = 0
+                    for effect in temp.effect {
+                        if effect == .isHidden {
+                            temp.effect.remove(at: count)
+                        }
+                        count = count + 1
+                    }
+            }
             
         case false:
 
@@ -623,7 +636,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         i.blur.backgroundColor = UIColor.clear
 //                        i.greyRect.alpha = 0
 //                        i.image.alpha = 0
-                        i.blur.alpha = 1
+                        i.blur.alpha = 0
                         i.setBlurValue(value: Int(0))
                         i.setGreyValue(value: Int(0))
                         i.setColorValue(value: Int(0))
@@ -1160,9 +1173,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
             //blackSlider.thumbTintColor = UIColor(hexString: "EEEEEE")
             //blackSlider.tintColor = UIColor(hexString: "EEEEEE")
             
+            colorOffIcon.isHidden = false
+            colorOnIcon.isHidden = true
+            blackSlider.alpha = 0.4
+            blackSlider.isEnabled = false
             
-            blackSlider.alpha = 1
-            blackSlider.isEnabled = true
             
             intSlider.alpha = 1
             intSlider.isEnabled = true
@@ -1171,8 +1186,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             blurOnIcon.isHidden = false
             
-            colorOffIcon.isHidden = true
-            colorOnIcon.isHidden = false
+//            colorOffIcon.isHidden = true
+//            colorOnIcon.isHidden = false
             
             blurOffIcon.isHidden = true
             
@@ -1262,6 +1277,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             sightOnIcon.isHidden = true
             sightOffIcon.isHidden = false
             
+            blackSlider.isEnabled = true
             alphaToggle.isEnabled = false
             alphaToggle.alpha = 0.4
             

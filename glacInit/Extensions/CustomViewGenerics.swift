@@ -52,30 +52,35 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         customView.setColorValue(value: value)
         var newView : CGRect
         if (customView.frame.height > customView.frame.width){
+            for view in customView.image.subviews {
+                view.removeFromSuperview()
+            }
          // since width was being bounded this while loops took multiple images and stacks one atop of the other
+           customView.resetImage()
             var height = CGFloat(0)
-            newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
+            //newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
             while (height <= customView.frame.height) {
                 cropImage = constimage
                 newView = CGRect(x: customView.frame.minX, y: customView.frame.minY + height, width: customView.frame.width, height: customView.frame.width)
-                let imageview = UIImageView(frame: CGRect(x: 0, y: height, width: customView.frame.width, height: customView.frame.width))
+                var imageview = UIImageView(frame: CGRect(x: 0, y: height, width: customView.image.frame.width, height: customView.image.frame.width))
                 height = customView.frame.width + height
                 cropImage = cropImage?.crop(rect: newView)
                 cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(dvalue)), blendMode: .luminosity)
                 imageview.image = cropImage
-                customView.addSubview(imageview)
+                //imageview = UIImageView(frame: CGRect(x: 0, y: height, width: customView.image.frame.width, height: customView.image.frame.width))
+                customView.image.addSubview(imageview)
                 
             }
            
         } else {
             newView = CGRect(x: customView.frame.minX, y: customView.frame.minY, width: customView.frame.width, height: customView.frame.width)
             cropImage = cropImage?.crop(rect: newView)
-            cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(value)), blendMode: .luminosity)
+            cropImage = cropImage?.tint(color: UIColor(red: 0, green: 0, blue: 0, alpha: CGFloat(dvalue)), blendMode: .luminosity)
         }
      
-        mainImgView?.insertSubview(customView, belowSubview: customObjectList.first ?? mainImgView!)
-        customView.backgroundColor = .clear
-        mainImgView?.layoutSubviews()
+        //mainImgView?.insertSubview(customView, belowSubview: customObjectList.first ?? mainImgView!)
+        //customView.backgroundColor = .clear
+        //mainImgView?.layoutSubviews()
         customView.setColorValue(value: Int(value))
         customView.blur.alpha = dvalue
         customView.blur.blurRadius = 0
