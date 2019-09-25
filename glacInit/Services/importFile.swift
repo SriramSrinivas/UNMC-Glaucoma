@@ -83,9 +83,7 @@ class importFile {
                 completion(true, nil)
                 self.delegate?.didReceiveData(boxItems: items!)
             }
-            
             //self.delegate?.didReceiveData(boxItems: items!)
-      
         })
     }
     func downLoadFile(withId: String, completion:@escaping (_ uploaded:Bool, _ error:Error?)-> Void) -> URL{
@@ -108,6 +106,9 @@ class importFile {
         })
         return fileURL!
     }
+    
+    //this is an attempt to make a newFolder
+    //the process method isn't working...
     
 //    func createBoxFoler(withName: String, parentFolderID: String){
 //        let contentClient = BOXContentClient.default()

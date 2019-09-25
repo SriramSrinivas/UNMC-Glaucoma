@@ -164,6 +164,7 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         //vc.twodimArray = twoDArray
         self.present(nav,animated: true, completion: nil)
     }
+    //checks gets files from box and presents it
     func checkFilesToDownLoad(Files: [FilesToDownload]) {
         var currentData : [String]?
         if !Files.isEmpty{

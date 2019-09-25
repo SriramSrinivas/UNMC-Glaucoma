@@ -26,6 +26,8 @@ enum dataSource {
     case local
 }
 
+//creates a static class to save to core data
+
 final class PersistanceService {
     
     // MARK: - Core Data stack
@@ -48,12 +50,8 @@ final class PersistanceService {
         })
         return container
     }()
-    
-    
-    
     //lazy var context = persistentContainer.viewContext
     // MARK: - Core Data Saving support
-    
     static func save() {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -67,8 +65,6 @@ final class PersistanceService {
             }
         }
     }
-    
-    
     static func fetch<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
         let entityName = String(describing: objectType)
         
@@ -80,40 +76,5 @@ final class PersistanceService {
             return [T]()
         }
     }
-//    static var imageContext: NSManagedObjectContext {
-//        return imagePersistentContainer.viewContext
-//    }
-//    
-//    static var imagePersistentContainer: NSPersistentContainer = {
-//        
-//        let container = NSPersistentContainer(name: "BackGroundImages")
-//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-//            if let error = error as NSError? {
-//                
-//                fatalError("Unresolved error \(error), \(error.userInfo)")
-//            }
-//        })
-//        return container
-//    }()
-//    
-//    
-//    
-//    //lazy var context = persistentContainer.viewContext
-//    // MARK: - Core Data Saving support
-//    
-//    static func saveImage() {
-//        let context = imagePersistentContainer.viewContext
-//        if context.hasChanges {
-//            do {
-//                try context.save()
-//                print("saved successfully")
-//            } catch {
-//                
-//                let nserror = error as NSError
-//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//            }
-//        }
-//    }
-//    
 }
 

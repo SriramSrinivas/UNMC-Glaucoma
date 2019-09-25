@@ -448,6 +448,7 @@ class PickerView: UITableViewController, PickerViewdelegate {
         }
         let isExpanded = twodimArray[section].isExpanded
         twodimArray[section].isExpanded = !isExpanded
+        //chevron up and chevron down are assets 
         let name = isExpanded ? "chevron-up" : "chevron-down"
         let image = UIImage(named: name)
         button.setImage(image, for: .normal)

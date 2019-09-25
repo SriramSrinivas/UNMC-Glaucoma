@@ -245,8 +245,6 @@ class LoadedImageViewController: UIViewController {
        
         constImage = resizeImage(image: constImage!, width: width, height: height)
        
-        
-        
         for number in distances {
             for numb in distances {
                 var rectWidth = 15.0

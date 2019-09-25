@@ -15,11 +15,10 @@ class LoaclStorage {
     var data: [LocalFileModel] = []
     var imageData: [SaveImageData] = []
     
-
+//fills model with data and saves the data.
 func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata: String, hiddendata: String, savedata: String, image: NSData){
-    //let data = LocalFileModel.init(name: name, blurdata: blurdata, colordata: colordata, greydata: greydata, savedata: savedata, image: image)
     let saveData = VisaulFieldData(context: PersistanceService.context)
-    //let saveData = VisaulFieldData(entity: VisaulFieldData.entity(), insertInto: PersistanceService.shared.context)
+   
     saveData.blurdata = blurdata
     saveData.colordata = colordata
     saveData.greydata = greydata
@@ -28,14 +27,6 @@ func SaveFileToLocal(name: String, blurdata: String, colordata: String, greydata
     saveData.savedata = savedata
     saveData.isHiddendata = hiddendata
     PersistanceService.save()
-    //        //PersistanceService.shared.save()
-    //        do {
-    //            try context.save()
-    //        }
-    //        catch {
-    //
-    //        }
-    
 }
     
     func SaveImageToLocal(name: String, title: String, id: Int, image: Data){
@@ -70,7 +61,6 @@ func deleteData(data: [FilesToDownload]) {
                 }
             }
         }
-        //PersistanceService.context.
     }
     
 func loadData() throws -> [LocalFileModel] {

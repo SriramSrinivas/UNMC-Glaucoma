@@ -103,7 +103,6 @@
 		21BA7FB222CCE6AF003DC229 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		21E14242228CBF1A004657BA /* FileObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileObject.swift; sourceTree = "<group>"; };
 		21E14244228CBF22004657BA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "glacInit-Bridging-Header.h"; sourceTree = "<group>"; };
 		21E2B1FF22DE6683009FD72D /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		21FD3B3122E891F900D4EDE8 /* BoxItemsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxItemsData.swift; sourceTree = "<group>"; };
 		21FF1D9C2306F43700F94D71 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
@@ -316,7 +315,6 @@
 				21E14242228CBF1A004657BA /* FileObject.swift */,
 				2132E47822D38E2600734063 /* importFile.swift */,
 				21E2B1FF22DE6683009FD72D /* Networking.swift */,
-				21E2B1FB22DD0155009FD72D /* glacInit-Bridging-Header.h */,
 				211F7C5922FC9C230001F584 /* PersistanceService.swift */,
 				21FF1D9C2306F43700F94D71 /* LocalStorage.swift */,
 			);

@@ -37,7 +37,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
     
     var versionNumber : UITextView = {
         var temp = UITextView()
-        nonEditableTextView(&temp, text: "-v 2.5.4", fontSize: 15)
+        nonEditableTextView(&temp, text: "-v 2.5.5", fontSize: 15)
         temp.textColor = .black
         temp.backgroundColor = .clear
         temp.textAlignment = .center
@@ -88,6 +88,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         temp.addTarget(self, action: #selector(newMenuButtonTapped), for: .touchUpInside)
         return temp
     }()
+    
+    //this can be implemented later just need to adjust UI 
 //    var switchMenuButton : UIButton = {
 //        var temp = UIButton(type: .system)
 //

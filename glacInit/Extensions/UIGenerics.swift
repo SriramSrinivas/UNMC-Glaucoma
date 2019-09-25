@@ -30,8 +30,6 @@ func setUpButton<T:UIButton>(_ a: inout T, title: String){
     a.translatesAutoresizingMaskIntoConstraints = false
 }
 func setUpButton<T:UIButton>(_ a: inout T, title: String, cornerRadius: Int, borderWidth: Int, color: CGColor){
-    
-    
     a.layer.borderColor = color
     a.backgroundColor = .gray
     a.setTitleColor(.black, for: .init())

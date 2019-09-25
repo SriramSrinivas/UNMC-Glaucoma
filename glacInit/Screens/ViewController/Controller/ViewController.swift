@@ -28,10 +28,12 @@ import Reachability
 import CoreImage
 import CoreGraphics
 
+// there are funtionalities not implemented in the working build and are commented out or not being used.
+// such as saving photos and importing photos. to implement them all you have to do uncomment them. most of the
+// it is in the menucontroller. 
 
-// YO grid is appearing in the images, when grid gets turn on and off we might need to update somehow,
-
-
+// sorry for poor naming convention for the saturation view
+// its named a few different things
 
 class ViewController: UIViewController, UITextFieldDelegate {
    
@@ -125,7 +127,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let sideView = UIView(frame:  CGRect(x: mainImgView.frame.size.width, y: 0, width: (screenSize.width - mainImgView.frame.size.width), height: screenSize.height))
         sideView.layer.zPosition = 2
         sideView.backgroundColor = UIColor(hexString: "#424242")
-
+        
         view.addSubview(mainImgView)
         view.addSubview(sideView)
 
@@ -570,9 +572,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             if i.isActive {
                 var temp = i
                 changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.blur, constimage: constimage, mainImgView: mainImgView)
-                //greySlider.setValue(0, animated: false)
-                //blackSlider.setValue(0, animated: false)
-                //temp.resetImage()
+               
             }
         }
     }

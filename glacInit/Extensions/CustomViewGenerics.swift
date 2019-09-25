@@ -21,6 +21,8 @@
 
 import Foundation
 
+
+// this method is called when setting up effect views for custom views. needs some work the saturation is broken for right now where it work for anything but square views 
 func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effect: effectType, constimage: UIImage?, mainImgView: UIView?){
     //customView.layer.zPosition = 2
    // customView.blur.blurRadius = 5
@@ -33,20 +35,14 @@ func changeCustomViewUpdate(customView: inout CustomViewUpdate, value: Int, effe
         if (!customView.effect.contains(effectType.blur)){
         customView.effect.append(effectType.blur)
         }
-       // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
     } else if effect == .grey {
-        //customView.backgroundColor = UIColor.black
         customView.setGreyValue(value: value)
         customView.greyRect.alpha = dvalue
         customView.greyRect.backgroundColor = .black
-       // customView.blurRadius = 1
         if (!customView.effect.contains(effectType.grey)){
             customView.effect.append(effectType.grey)
         }
-       // customView.blur.layer.borderColor = UIColor(hexString: "F44556").cgColor
-        //customView.isActive = true
     } else if effect == .color {
-        //customView.image.frame = customView.frame
         var cropImage = constimage
         customView.setImageConst(images: constimage!)
         customView.setColorValue(value: value)

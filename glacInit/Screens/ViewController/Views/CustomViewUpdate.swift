@@ -31,6 +31,9 @@ enum effectType {
     case none
     case incorrectEffectType
 }
+
+// this extension type isnt ideal
+// could prob be refactored later to be more clear with what it is dealing with (seperate effect types and files types)
 extension effectType {
     init?(effect: String) {
         //var nstring = effect
@@ -175,6 +178,9 @@ class CustomViewUpdate : UIView{
         }
     }
     
+    // so this was working early, it still works for the main view but not the saturation view
+    // i suspect it is something simple tho.
+    
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
         if isActive && !(isLinkedToImage){
@@ -184,6 +190,7 @@ class CustomViewUpdate : UIView{
                 gestureRecognizer.setTranslation(CGPoint.zero, in: self)
                 image.image? = getImageFromMain()
             }
+            //these if statements change restrict the view to remain in the MainView
             if(gestureRecognizer.view!.center.x < gestureRecognizer.view!.frame.height/2){
                 gestureRecognizer.view!.center.x = gestureRecognizer.view!.frame.height/2
             }
@@ -198,12 +205,16 @@ class CustomViewUpdate : UIView{
             }
         }
     }
+    // so this was working early, it still works for the main view but not the saturation view
+    // i suspect it is something simple tho. same as above 
     
     @objc func handlePinchZoom(_ gestureRecognizer: UIPinchGestureRecognizer){
         if isActive && !(isLinkedToImage){
             let currentCenter = center
             let gesCenter = gestureRecognizer.view?.center
             
+            
+            //these if statements change restrict the view to remain in the MainView
             var change = 200*(gestureRecognizer.scale)
             if change > screenSize.size.height {
                 change = screenSize.size.height

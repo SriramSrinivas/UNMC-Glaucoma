@@ -1,5 +1,12 @@
 The app screen is split into two views
 
+Installation steps:
+
+1. git clone 
+2. clean pods
+3. install pods
+
+
 1. MainImageView
 	
 	Takes up the larger portion of the screen. Includes the actual poster background and all the views upon it.
