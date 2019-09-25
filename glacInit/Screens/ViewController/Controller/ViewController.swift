@@ -582,7 +582,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func sliderBlack(slider: UISlider){
         let value = slider.value
         var temp = getCurrentActiveView()
-        //this stops the views from changing, not sure why I have to do this but it works, there is prob a better way to do this
+        //this stops the views from changing in hierarchy, not sure why I have to do this but it works, there is prob a better way to do this
         changeCustomViewUpdate(customView: &temp, value: Int(value), effect: effectType.color, constimage: constimage, mainImgView: mainImgView)
         changeCustomViewUpdate(customView: &temp, value: Int(temp.blurValueLabel.text!) ?? 0, effect: effectType.blur, constimage: constimage, mainImgView: mainImgView)
         changeCustomViewUpdate(customView: &temp, value: Int(temp.greyValueLabel.text!) ?? 0, effect: effectType.grey, constimage: constimage, mainImgView: mainImgView)
@@ -694,10 +694,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleTapUpdate(sender: UITapGestureRecognizer){
-        
-//        deSelectAll()
-//        let image = mainImgView.asImage()
-//        constimage = resizeImage(image: image, width: mainImgView.frame.size.width, height: mainImgView.frame.size.height)
         
         let temp = sender.view as! CustomViewUpdate
         
@@ -876,10 +872,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //addWaterMark(name: subjectID)
     }
     
-   
-   
 // Limits the user input to normal characters and limits length, prevents crashing 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //add any characters that you want to add to this string or they will not be allow in the subject ID
         let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
         let cs = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")

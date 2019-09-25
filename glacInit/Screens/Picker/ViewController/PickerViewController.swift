@@ -413,13 +413,11 @@ class PickerView: UITableViewController, PickerViewdelegate {
     @objc func rightHeaderClicked(){
         if Source == .box {
         let file = importFile.init()
-        //file.createBoxFoler(withName: "hello", parentFolderID: "0")
         print("file")
         } else {
             let session = Session(currentSubjectId: "")
             var files : [FilesToDownload] = []
             for section in twodimArray.indices{
-                //if twodimArray[section].isExpanded{
                 for index in twodimArray[section].items.indices{
                     if twodimArray[section].items[index].isSelected{
                         let name = twodimArray[section].items[index].name
@@ -430,7 +428,6 @@ class PickerView: UITableViewController, PickerViewdelegate {
                     }
                     
                 }
-                // }
             }
             localStorage.deleteData(data: files)
             dismiss(animated: true, completion: nil)

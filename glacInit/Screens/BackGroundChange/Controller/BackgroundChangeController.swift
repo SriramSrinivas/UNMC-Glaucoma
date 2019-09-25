@@ -55,9 +55,7 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isOpaque = false
-        //view.alpha = 0.5
         collectionView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-        //collectionView?.backgroundColor.
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "cellID")
         fileObject.delegate = self
         pickerView.delegate = self
@@ -95,15 +93,10 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
         if !(indexPath.item == images.count - 1) {
            
                 let title = "Are you sure you want to Logout?"
-            
                 let message = "This is a very important message about logging out and how it is good to do so when the app is no longer in use"
             
-            //let image = UIImage(named: "pexels-photo-103290")
-            
             let popup = PopupDialog(title: title, message: message, tapGestureDismissal: true, panGestureDismissal: false)
-            // flag = true
             let buttonOne = CancelButton(title: "CANCEL", dismissOnTap: true) {
-                
             }
             let buttonTwo = DefaultButton(title: "Use Photo", dismissOnTap: true) {
                 let image = imageName
@@ -152,7 +145,6 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
             buttonHasBeenPressed = true
             timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reset), userInfo: nil, repeats: true)
         }
-        //self.dismiss(animated: true, completion: nil)
     }
     
     func getImportedData(boxitems: [BOXItem]){
@@ -187,7 +179,7 @@ class BackgroundChangeController : UICollectionViewController, BackgroundChangeD
                         //UIImage(data: newfile)
                         if let data = try? Data(contentsOf: newfile) {
                             let image = UIImage(data: data)
-                            //ADD CHECKS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //add checks here for better code security 
                             if !(image == nil){
                             let temp = BackgroundImage()
                                 temp.Backgroundimage = image

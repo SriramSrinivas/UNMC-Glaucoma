@@ -36,9 +36,6 @@ class PickerCell: UITableViewCell {
         selectButton.addTarget(self, action: #selector(handleSelect), for: .touchUpInside)
         selectButton.layer.cornerRadius = 10
         
-        
-//        backgroundColor = .red
-        
         accessoryView = selectButton
     }
     
