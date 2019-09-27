@@ -8,10 +8,15 @@ Installation steps:
 4. carthage install
 
 -------------------------------------------------------------------
+
 IMPORTANT NOTES:
+
 1. You need a folder called "glaucomaApp" in the Box root folder
+
 2. There are several features implemented in this project that all you need to is uncomment them ot call them (picture saving, picture loading, etc)
+
 3. there are several bugs dealing with saturation. (these bugs were introduced when put all the effects on to one view) 
+
 	a. bugs include resizing and moving the view, and custom views cant use the effect.
 	
 --------------------------
