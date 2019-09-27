@@ -5,7 +5,7 @@ Installation steps:
 1. git clone 
 2. clean pods
 3. install pods
-
+4. carthage install
 
 1. MainImageView
 	
