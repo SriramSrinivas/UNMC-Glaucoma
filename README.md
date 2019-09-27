@@ -7,6 +7,7 @@ Installation steps:
 3. install pods
 4. carthage install
 
+-------------------------------------------------------------------
 1. MainImageView
 	
 	Takes up the larger portion of the screen. Includes the actual poster background and all the views upon it.
