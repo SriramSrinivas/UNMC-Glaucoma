@@ -91,6 +91,7 @@
 		211F7C5D22FDB21E0001F584 /* ImportDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDataViewController.swift; sourceTree = "<group>"; };
 		2122D18C230C2855002CFA97 /* VisaulFieldData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "VisaulFieldData+CoreDataClass.swift"; path = "/Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/VisaulFieldData+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		2122D18D230C2856002CFA97 /* VisaulFieldData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "VisaulFieldData+CoreDataProperties.swift"; path = "/Users/lreinholz/Desktop/Glaucoma/unmc_glaucoma/VisaulFieldData+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		212E63F8233E425B00754006 /* glacInit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "glacInit-Bridging-Header.h"; sourceTree = "<group>"; };
 		2132E47822D38E2600734063 /* importFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = importFile.swift; sourceTree = "<group>"; };
 		2132E47E22D3FAF300734063 /* LoadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageViewController.swift; sourceTree = "<group>"; };
 		2132E48022D3FCD200734063 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
@@ -315,6 +316,7 @@
 				21E14242228CBF1A004657BA /* FileObject.swift */,
 				2132E47822D38E2600734063 /* importFile.swift */,
 				21E2B1FF22DE6683009FD72D /* Networking.swift */,
+				212E63F8233E425B00754006 /* glacInit-Bridging-Header.h */,
 				211F7C5922FC9C230001F584 /* PersistanceService.swift */,
 				21FF1D9C2306F43700F94D71 /* LocalStorage.swift */,
 			);
