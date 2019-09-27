@@ -8,6 +8,15 @@ Installation steps:
 4. carthage install
 
 -------------------------------------------------------------------
+IMPORTANT NOTES:
+-You need a folder called "glaucomaApp" in the Box root folder
+-There are several features implemented in this project that all you need to is uncomment them ot call them (picture saving, picture loading, etc)
+-there are several bugs dealing with saturation. (these bugs were introduced when put all the effects on to one view) 
+	-bugs include resizing and moving the view, and custom views cant use the effect.
+	
+--------------------------
+
+
 1. MainImageView
 	
 	Takes up the larger portion of the screen. Includes the actual poster background and all the views upon it.
