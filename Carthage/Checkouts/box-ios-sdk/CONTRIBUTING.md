@@ -1,83 +1,91 @@
-Contributing
-============
+# Contributing Guidelines
 
-All contributions are welcome to this project.
+This document contains information and guidelines about contributing to this project.
+Please read it before you start participating.
 
-Contributor License Agreement
------------------------------
+**Topics**
 
-Before a contribution can be merged into this project, please fill out
-the [Contributor License Agreement (CLA)](http://box.github.io/cla).
+* [Asking Questions](#asking-questions)
+* [Reporting Security Issues](#reporting-security-issues)
+* [Reporting Issues](#reporting-other-issues)
+* [Developers Certificate of Origin](#developers-certificate-of-origin)
+* [Code of Conduct](#code-of-conduct)
 
-How to contribute
------------------
+## Asking Questions
 
--  **File an issue** - if you found a bug, want to request an
-   enhancement, or want to implement something (bug fix or feature).
--  **Send a pull request** - if you want to contribute code. Please be
-   sure to file an issue first.
+We don't use GitHub as a support forum.
+For any usage questions that are not specific to the project itself,
+please ask on [Stack Overflow](https://stackoverflow.com) instead.
+By doing so, you'll be more likely to quickly solve your problem,
+and you'll allow anyone else with the same question to find the answer.
+This also allows maintainers to focus on improving the project for others.
 
-Pull request best practices
-============
+## Reporting Security Issues
 
-We want to accept your pull requests. Please follow these steps:
+The BoxSDK maintainers takes security seriously.
+If you discover a security issue, please bring it to our attention right away!
 
-Step 1: File an issue
----------------------
+Please **DO NOT** file a public issue,
+instead send your report privately to <oss@box.com>.
+This will help ensure that any vulnerabilities that _are_ found
+can be [disclosed responsibly](http://en.wikipedia.org/wiki/Responsible_disclosure)
+to any affected parties.
 
-Before writing any code, please file an issue stating the problem you
-want to solve or the feature you want to implement. This allows us to
-give you feedback before you spend any time writing code. There may be a
-known limitation that can't be addressed, or a bug that has already been
-fixed in a different way. The issue allows us to communicate and figure
-out if it's worth your time to write a bunch of code for the project.
+## Reporting Other Issues
 
-Step 2: Fork this repository on GitHub
--------------------------------------
+A great way to contribute to the project
+is to send a detailed issue when you encounter a problem.
+We always appreciate a well-written, thorough bug report.
 
-This will create your own copy of our repository.
+Check that the project issues database
+doesn't already include that problem or suggestion before submitting an issue.
+If you find a match, add a quick "+1" or "I have this problem too."
+Doing this helps prioritize the most common problems and requests.
 
-Step 3: Set the remote fetch origin
--------------------------------
+When reporting issues, please include the following:
 
-The remote fetch origin is the project under the Box organization.
-Setting this will ensure you're pulling in the latest changes from the main repository.
+* The version of Xcode you're using
+* The version of iOS or macOS you're targeting
+* The full output of any stack trace or compiler error
+* A code snippet that reproduces the described behavior, if applicable
+* Any other details that would be useful in understanding the problem
 
-```
-git remote set-url origin https://github.com/box/box-ios-content-sdk.git
-```
+This information will help us review and fix your issue faster.
 
-```
-git remote set-url origin --push https://github.com/<YOUR_GITHUB_USERNAME>/box-ios-content-sdk.git
-```
+## Developer's Certificate of Origin 1.1
 
+By making a contribution to this project, I certify that:
 
-Step 4: Rebase
---------------
+- (a) The contribution was created in whole or in part by me and I
+      have the right to submit it under the open source license
+      indicated in the file; or
 
-Before sending a pull request, rebase against origin, like thus:
+- (b) The contribution is based upon previous work that, to the best
+      of my knowledge, is covered under an appropriate open source
+      license and I have the right under that license to submit that
+      work with modifications, whether created in whole or in part
+      by me, under the same open source license (unless I am
+      permitted to submit under a different license), as indicated
+      in the file; or
 
-```
-git fetch origin
-```
-```
-git pull --rebase
-```
+- (c) The contribution was provided directly to me by some other
+      person who certified (a), (b) or (c) and I have not modified
+      it.
 
+- (d) I understand and agree that this project and the contribution
+      are public and that a record of the contribution (including all
+      personal information I submit with it, including my sign-off) is
+      maintained indefinitely and may be redistributed consistent with
+      this project or the open source license(s) involved.
 
-This will add your changes on top of what's already in origin.
+## Code of Conduct
 
-Step 5: Run the tests
----------------------
+The Code of Conduct governs how we behave in public or in private
+whenever the project will be judged by our actions.
+We expect it to be honored by everyone who contributes to this project.
 
-Make sure that all tests are passing before submitting a pull request.
+See [CODE_OF_CONDUCT.md](https://github.com/box/box-swift-sdk//blob/master/CODE_OF_CONDUCT.md) for details.
 
-Step 6: Send the pull request
------------------------------
+---
 
-Send the pull request from your fork to us. Be sure to include
-a description that lets us know what work you did.
-
-Keep in mind that we like to see one issue addressed per pull request,
-as this helps keep our git history clean so we can more easily track
-down issues.
+*Some of the ideas and wording for the statements above were based on work by the [Docker](https://github.com/docker/docker/blob/master/CONTRIBUTING.md) and [Linux](http://elinux.org/Developer_Certificate_Of_Origin) communities. We commend them for their efforts to facilitate collaboration in their projects.*

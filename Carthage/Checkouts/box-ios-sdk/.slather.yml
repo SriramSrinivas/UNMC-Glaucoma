@@ -1,0 +1,7 @@
+coverage_service: coveralls
+xcodeproj: ./BoxSDK.xcodeproj
+workspace: ./BoxSDK.xcworkspace
+scheme: BoxSDK-iOS
+configuration: Release
+ignore:
+  - Tests/*

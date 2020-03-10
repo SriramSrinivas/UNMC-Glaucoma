@@ -26,7 +26,7 @@ DEPENDENCIES:
   - VisualEffectView
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - DynamicBlurView
     - PopupDialog
     - Reachability
@@ -50,4 +50,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8c442770f10c525abe2d323eb947db89a95e16e2
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.4

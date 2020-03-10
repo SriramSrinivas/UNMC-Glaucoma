@@ -101,16 +101,16 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
 //        temp.addTarget(self, action: #selector(switchMenuButtonTapped), for: .touchUpInside)
 //        return temp
 //    }()
-    var cameraMenuButton : UIButton = {
+    var imageMenuButton : UIButton = {
         var temp = UIButton(type: .system)
 
-        setUpButton(&temp, title: "Camera", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
+        setUpButton(&temp, title: "Pick an Image", cornerRadius: 0, borderWidth: 0, color: UIColor.gray.cgColor)
         temp.titleLabel?.font = UIFont(name: "Futura", size: 22)
         temp.isOpaque = false
         temp.backgroundColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.65)
 
         temp.setTitleColor(.white, for: .normal)
-        temp.addTarget(self, action: #selector(cameraMenuButtonTapped), for: .touchUpInside)
+        temp.addTarget(self, action: #selector(imageMenuButtonTapped), for: .touchUpInside)
         return temp
     }()
     
@@ -146,7 +146,7 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         backgroundChanged()
     
         navigationController?.navigationBar.isHidden = true
-        [background, mainMenuButton, importMenuButton, newMenuButton, logoutMenuButton, versionNumber, saveLocationButton, cameraMenuButton].forEach {view.addSubview($0)}
+        [background, mainMenuButton, importMenuButton, newMenuButton, logoutMenuButton, versionNumber, saveLocationButton, imageMenuButton].forEach {view.addSubview($0)}
         setUpView()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -184,11 +184,11 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         
     }
     
-    @objc func cameraMenuButtonTapped(){
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
+    @objc func imageMenuButtonTapped(){
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             imagePicker =  UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = .camera
+            imagePicker.sourceType = .photoLibrary
             present(imagePicker, animated: true, completion: nil)
         }
     }
@@ -231,8 +231,8 @@ class MainMenuViewController : UIViewController, UIImagePickerControllerDelegate
         importMenuButton.anchor(top: mainMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         newMenuButton.anchor(top: importMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         //switchMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
-        cameraMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
-        logoutMenuButton.anchor(top: cameraMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        imageMenuButton.anchor(top: newMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
+        logoutMenuButton.anchor(top: imageMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         saveLocationButton.anchor(top: logoutMenuButton.bottomAnchor, leading: view.leftAnchor, bottom: nil, trailing: nil, padding: .init(top: space, left: 0.33 * width, bottom: 0, right: 0), size: .init(width: 0.33 * width, height: buttonHeight))
         
         
