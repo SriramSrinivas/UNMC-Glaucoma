@@ -50,3 +50,21 @@ IMPORTANT NOTES:
 	When deleting, the item is deleted from the array as well as the view.(2 step process)
 	The export requires the app to have acces to photo gallery, needs to be given permission on first run. Suggested to test run and get this done so it is not brought up again.
 	Export saves into the photo gallery.
+	
+## App Screenshots
+
+![Test Image 1]( screenshots/3DTest.png)
+
+![Test Image 2](screenshots/)
+
+![Test Image 3](screenshots/)
+
+![Test Image 4](screenshots/)
+
+![Test Image 5](screenshots/)
+
+![Test Image 6](screenshots/)
+
+![Test Image 7](screenshots/)
+
+![Test Image 8](screenshots/)
